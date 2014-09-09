@@ -1,0 +1,116 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:orientation="vertical">
+    
+    <TextView
+    android:id="@+id/inputAll"
+    android:visibility="gone"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content" />
+
+    <TextView
+    android:id="@+id/inputAllUser"
+    android:visibility="gone"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content" />
+        
+    <TextView
+    android:id="@+id/inputAllServer"
+    android:visibility="gone"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content" />
+    
+    <TextView
+    	android:id="@+id/kosikIco"
+    	android:text="@string/kosikIco" 
+        android:textSize="17sp"
+    	android:visibility="visible"
+    	android:layout_width="match_parent"
+    	android:layout_height="wrap_content" />
+     <TextView
+    	android:id="@+id/kosikOdbm"
+        android:textSize="17sp"
+    	android:visibility="visible"
+    	android:layout_width="match_parent"
+    	android:layout_height="wrap_content" />
+
+     <LinearLayout android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">      
+
+        <TextView
+    	android:id="@+id/kosikMnoz"
+        android:text="@string/kosikMnoz" 
+        android:layout_weight="1"
+        android:textSize="17sp"
+    	android:visibility="visible"
+    	android:layout_width="match_parent"
+    	android:layout_height="wrap_content" />
+                 
+    	<TextView
+    	android:id="@+id/kosikBdph"
+    	android:text="@string/kosikBdph" 
+        android:layout_weight="1"
+        android:textSize="17sp"
+    	android:visibility="gone"
+    	android:layout_width="match_parent"
+    	android:layout_height="wrap_content" />
+    	
+    	<TextView
+    	android:id="@+id/kosikSdph"
+    	android:text="@string/spoluhod" 
+        android:layout_weight="1"
+        android:textSize="17sp"
+    	android:visibility="visible"
+    	android:layout_width="match_parent"
+    	android:layout_height="wrap_content" />
+    	
+    
+     </LinearLayout>
+     
+    <LinearLayout android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">      
+ 
+        <Button android:id="@+id/btnObjednaj"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:visibility="gone"
+        android:text="@string/popisbtnobjednaj"
+        android:layout_weight="1"/>
+        
+        <Button android:id="@+id/btnPolozky"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/popispolozkydok"
+        android:layout_weight="1"/>
+                 
+    	<TextView
+    	android:id="@+id/obsahKosika"
+        android:layout_weight="1"
+        android:textSize="19sp"
+    	android:visibility="gone"
+    	android:layout_width="match_parent"
+    	android:layout_height="wrap_content" />
+    	
+    	<Button android:id="@+id/btnFakturuj"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:visibility="gone"
+        android:text="@string/popisbtnfakturuj"
+        android:layout_weight="1"/>
+    
+     </LinearLayout>
+    
+    <!-- Main ListView
+         Always give id value as list(@android:id/list)
+    -->
+    
+    <ListView
+        android:id="@android:id/list"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"/>
+ 
+</LinearLayout>

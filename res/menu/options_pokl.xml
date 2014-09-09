@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android" >
+    
+    <item
+    android:id="@+id/kontextprevpage"
+    android:title="@string/kontprevpage"/>
+    <item
+    android:id="@+id/kontextnextpage"
+    android:title="@string/kontnextpage"/>
+    <item
+    android:id="@+id/kontextnewpri"
+    android:title="@string/kontnewpri"/>
+	<item
+    android:id="@+id/kontextnewvyd"
+    android:title="@string/kontnewvyd"/>
+	<item
+    android:id="@+id/kontextnewban"
+    android:title="@string/kontnewban"/>
+	<item
+    android:id="@+id/kontextnewodb"
+    android:title="@string/kontnewodb"/>
+	<item
+    android:id="@+id/kontextnewdod"
+    android:title="@string/kontnewdod"/>
+	<item
+    android:id="@+id/kontexthladaj"
+    android:title="@string/konthladaj"/>
+	<item
+    android:id="@+id/kontextvsetky"
+    android:title="@string/kontvsetky"/>
+	
+   
+    
+</menu>

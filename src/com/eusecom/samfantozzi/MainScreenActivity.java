@@ -1,0 +1,464 @@
+package com.eusecom.samfantozzi;
+
+//zaciatokprojektu 23.10.2013, na GooglePlay 01.12.2013
+
+import java.io.File;
+
+import android.app.Activity;
+import android.app.AlarmManager;
+import android.app.AlertDialog;
+import android.app.PendingIntent;
+import android.content.BroadcastReceiver;
+import android.content.Context;
+import android.content.DialogInterface;
+import android.content.Intent;
+import android.content.SharedPreferences;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
+import android.os.Bundle;
+import android.os.Environment;
+// ak jednorazove spustenie import android.os.SystemClock;
+import android.preference.PreferenceManager;
+import android.view.Menu;
+import android.view.MenuItem;
+import android.view.View;
+import android.widget.Button;
+import android.widget.ImageView;
+import android.widget.TextView;
+import android.view.MenuInflater;
+
+ 
+public class MainScreenActivity extends Activity implements
+SharedPreferences.OnSharedPreferenceChangeListener{
+	
+	protected static final int REQUEST_ADD_BOOK = 0;
+	
+	Button btnPokl;
+    Button btnSetPreferences;
+    Button btnBanka;
+    Button btnDod1;
+    Button btnOdb1;
+    Button btnZostavy;
+    Button btnDane;
+    Button btnRozne;
+    Button btnFirma;
+    
+    PendingIntent pi;
+    BroadcastReceiver br;
+    AlarmManager am;
+    
+    String incomplet;
+    
+    private static final String TAG_PAGEX = "page";
+    private static final String TAG_POKLX = "pokl";
+    private static final String TAG_CAT = "cat";
+    private static final String TAG_DCEX = "dcex";
+
+    
+    @Override
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        
+		PreferenceManager.getDefaultSharedPreferences(this)
+		.registerOnSharedPreferenceChangeListener(this);
+        
+        setContentView(R.layout.main_screen);
+        
+        btnFirma = (Button) findViewById(R.id.btnFirma);
+        btnFirma.setText(getResources().getString(R.string.popisbtnfirma) + " " + SettingsActivity.getFir(this) + " " + SettingsActivity.getFirnaz(this));
+        
+        if( SettingsActivity.getSDkarta(this).equals("1")) {
+    	this.setTitle(getResources().getString(R.string.app_namesd));
+        ((TextView) findViewById(R.id.inputOrder)).setText(getString(R.string.lokaldata));
+        }else
+        {
+        this.setTitle(getResources().getString(R.string.app_name));        	       	
+        ((TextView) findViewById(R.id.inputOrder)).setText(getString(R.string.webdata) + " " + SettingsActivity.getServerName(this));
+        }
+        
+
+        //String titlex = ((TextView) findViewById(R.id.inputOrder)).getText().toString();
+        //String titlex2 = (SettingsActivity.getFormTitle(this)).toString();
+        
+//ak sdkarta = 1
+if( SettingsActivity.getSDkarta(this).equals("1")) {
+	
+	incomplet = "0";
+	String serverx = SettingsActivity.getServerName(this);
+	String delims = "[/]+";
+	String[] serverxxx = serverx.split(delims);
+	
+	String baseDir2 = Environment.getExternalStorageDirectory().getAbsolutePath();
+	String fileName2 = "/eusecom/" + serverxxx[1] + "/ico.xml";
+	File myFile2 = new File(baseDir2 + File.separator + fileName2);
+	if (myFile2.exists()) { } else { incomplet = "1"; }
+	String fileName3 = "/eusecom/" + serverxxx[1] + "/odbm.xml";
+	File myFile3 = new File(baseDir2 + File.separator + fileName3);
+	if (myFile3.exists()) { } else { incomplet = "1"; }
+	String fileName4 = "/eusecom/" + serverxxx[1] + "/categories.xml";
+	File myFile4 = new File(baseDir2 + File.separator + fileName4);
+	if (myFile4.exists()) { } else { incomplet = "1"; }
+	String fileName5 = "/eusecom/" + serverxxx[1] + "/products.xml";
+	File myFile5 = new File(baseDir2 + File.separator + fileName5);
+	if (myFile5.exists()) { } else { incomplet = "1"; }
+	String fileName6 = "/eusecom/" + serverxxx[1] + "/services.xml";
+	File myFile6 = new File(baseDir2 + File.separator + fileName6);
+	if (myFile6.exists()) { } else { incomplet = "1"; }
+
+	
+		if( incomplet.equals("1")) {
+		new AlertDialog.Builder(this)
+        .setTitle(getString(R.string.niejelocaldata))
+        .setMessage(getString(R.string.potrebujetelocaldata))
+        .setPositiveButton(getString(R.string.textok), new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int which) { 
+              
+            	//finish();
+            }
+         })
+
+         .show();
+		}
+
+
+	  ImageView myImgView = (ImageView) findViewById(R.id.casnicka);
+	  myImgView.setImageResource(R.drawable.fantozzi3);	
+   
+	  
+	  // pokl button
+      btnPokl = (Button) findViewById(R.id.btnPokl);
+      btnPokl.setOnClickListener(new View.OnClickListener() {
+
+          @Override
+          public void onClick(View view) {
+              // Launching All products Activity
+              Intent i = new Intent(getApplicationContext(), SettingsActivity.class);
+              startActivity(i);
+
+          }
+      });
+     
+      // banka button
+      btnBanka = (Button) findViewById(R.id.btnBanka);
+      btnBanka.setOnClickListener(new View.OnClickListener() {
+
+          @Override
+          public void onClick(View view) {
+
+          	// Launching All products Activity
+              Intent i = new Intent(getApplicationContext(), SettingsActivity.class);
+              startActivity(i);
+              
+
+          }
+      });
+      
+	
+	
+}else //ak sdkarta=0 tj z webu
+{            
+        
+     //ak je pripojenie do internetu
+     if (isOnline()) 
+     {
+        
+    	 // Button firma
+         btnFirma = (Button) findViewById(R.id.btnFirma);
+         // new obj click event
+         btnFirma.setOnClickListener(new View.OnClickListener() {
+  
+             @Override
+             public void onClick(View view) {
+                 // Launching All products Activity
+                 Intent i = new Intent(getApplicationContext(), VyberFirmuActivity.class);
+                 Bundle extras = new Bundle();
+                 extras.putString("odkade", "2");
+                 extras.putString("pohx", "1");
+                 i.putExtras(extras);
+                 startActivityForResult(i, 100);
+  
+             }
+         });
+    	 
+    	 // Buttons
+        btnPokl = (Button) findViewById(R.id.btnPokl);
+        // new obj click event
+        btnPokl.setOnClickListener(new View.OnClickListener() {
+ 
+            @Override
+            public void onClick(View view) {
+                // Launching All products Activity
+                Intent i = new Intent(getApplicationContext(), PokladnicaActivity.class);
+                Bundle extras = new Bundle();
+                extras.putString(TAG_CAT, "1");
+                extras.putString(TAG_DCEX, "0");
+                extras.putString(TAG_PAGEX, "1");
+                i.putExtras(extras);
+                startActivity(i);
+ 
+            }
+        });
+        
+        btnBanka = (Button) findViewById(R.id.btnBanka);
+        // new obj click event
+        btnBanka.setOnClickListener(new View.OnClickListener() {
+ 
+            @Override
+            public void onClick(View view) {
+
+            	// Launching All products Activity
+            	Intent i = new Intent(getApplicationContext(), PokladnicaActivity.class);
+                Bundle extras = new Bundle();
+                extras.putString(TAG_CAT, "4");
+                extras.putString(TAG_DCEX, "0");
+                extras.putString(TAG_PAGEX, "1");
+                i.putExtras(extras);
+                startActivity(i);
+                
+ 
+            }
+        });
+        
+     // dodav button
+        btnDod1 = (Button) findViewById(R.id.btnDod1);
+        btnDod1.setOnClickListener(new View.OnClickListener() {
+
+            @Override
+            public void onClick(View view) {
+
+            	// Launching All products Activity
+            	Intent i = new Intent(getApplicationContext(), PokladnicaActivity.class);
+                Bundle extras = new Bundle();
+                extras.putString(TAG_CAT, "9");
+                extras.putString(TAG_DCEX, "0");
+                extras.putString(TAG_PAGEX, "1");
+                i.putExtras(extras);
+                startActivity(i);
+                
+
+            }
+        });
+        
+     // odber button
+        btnOdb1 = (Button) findViewById(R.id.btnOdb1);
+        btnOdb1.setOnClickListener(new View.OnClickListener() {
+
+            @Override
+            public void onClick(View view) {
+
+            	// Launching All products Activity
+            	Intent i = new Intent(getApplicationContext(), PokladnicaActivity.class);
+                Bundle extras = new Bundle();
+                extras.putString(TAG_CAT, "8");
+                extras.putString(TAG_DCEX, "0");
+                extras.putString(TAG_PAGEX, "1");
+                i.putExtras(extras);
+                startActivity(i);
+                
+
+            }
+        });
+
+ 
+        btnZostavy = (Button) findViewById(R.id.btnZostavy);
+        // new obj click event
+        btnZostavy.setOnClickListener(new View.OnClickListener() {
+ 
+            @Override
+            public void onClick(View view) {
+            	
+            	String akedruhid = SettingsActivity.getDruhId(getApplicationContext());
+        		if( akedruhid.equals("99")) {
+        			Intent i = new Intent(getApplicationContext(), ZostavyActivity.class);
+                    Bundle extras = new Bundle();
+                    extras.putString(TAG_PAGEX, "0");
+                    extras.putString(TAG_POKLX, "0");
+                    i.putExtras(extras);
+                    startActivity(i);
+        		}
+ 
+            }
+        });
+        
+        btnDane = (Button) findViewById(R.id.btnDane);    
+        // new obj click event
+        btnDane.setOnClickListener(new View.OnClickListener() {
+ 
+            @Override
+            public void onClick(View view) {
+            	
+            	String akedruhid = SettingsActivity.getDruhId(getApplicationContext());
+        		if( akedruhid.equals("99")) {
+        			Intent i = new Intent(getApplicationContext(), ZostavyActivity.class);
+                    Bundle extras = new Bundle();
+                    extras.putString(TAG_PAGEX, "1");
+                    extras.putString(TAG_POKLX, "0");
+                    i.putExtras(extras);
+                    startActivity(i);
+        		}
+ 
+            }
+        });
+        
+        btnRozne = (Button) findViewById(R.id.btnRozne);    
+        // new obj click event
+        btnRozne.setOnClickListener(new View.OnClickListener() {
+ 
+            @Override
+            public void onClick(View view) {
+            	
+            	String akedruhid = SettingsActivity.getDruhId(getApplicationContext());
+        		if( akedruhid.equals("99")) {
+        			Intent i = new Intent(getApplicationContext(), ZostavyActivity.class);
+                    Bundle extras = new Bundle();
+                    extras.putString(TAG_PAGEX, "2");
+                    extras.putString(TAG_POKLX, "0");
+                    i.putExtras(extras);
+                    startActivity(i);
+        		}
+ 
+            }
+        });
+       
+      }
+     //ak nie je pripojenie do internetu
+     else{
+     	 
+
+         new AlertDialog.Builder(this)
+         .setTitle(getString(R.string.niejeinternet))
+         .setMessage(getString(R.string.potrebujeteinternet))
+         .setPositiveButton(getString(R.string.textok), new DialogInterface.OnClickListener() {
+             public void onClick(DialogInterface dialog, int which) { 
+               
+             	//finish();
+             }
+          })
+
+          .show();
+         
+
+      }
+      //koniec ak nie je Internet
+  
+}
+//koniec ak sdkarta=0 tj z webu
+     
+    }
+    //koniec oncreate
+    
+ // Response from vyberfirmu
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        // if result code 100
+        if (resultCode == 100) {
+            // if result code 100 is received
+            // means user edited/deleted product
+            // reload this screen again
+            Intent intent = getIntent();
+            finish();
+            startActivity(intent);
+        }
+ 
+    }
+     
+    
+    
+// na ondestroy odregistrovanie zmeny preferences a alarm a broadcast
+	@Override
+	public void onDestroy() {
+
+		super.onDestroy();
+
+		PreferenceManager.getDefaultSharedPreferences(this)
+				.unregisterOnSharedPreferenceChangeListener(this);
+	}
+	//koniec ondestroy
+
+	
+	@Override
+	public void onSharedPreferenceChanged(SharedPreferences sharedPreferences,
+			String key) {
+		if (key.equals(SettingsActivity.NICK_NAME) || key.equals(SettingsActivity.SERVER_NAME)) {
+			//cinnost ktoru urobi ak sa zmenili preferences ORDE_BY alebo DESC alebo SERVER_NAME
+			((TextView) findViewById(R.id.inputOrder)).setText("Pripojenie k " + SettingsActivity.getServerName(this));
+		}
+
+		if( SettingsActivity.getSDkarta(this).equals("0")) {
+	       	this.setTitle(getResources().getString(R.string.app_name));
+	        ((TextView) findViewById(R.id.inputOrder)).setText(getString(R.string.webdata) + " " + SettingsActivity.getServerName(this));
+	       }
+	       if( SettingsActivity.getSDkarta(this).equals("1")) {
+		       	this.setTitle(getResources().getString(R.string.app_namesd));
+		        ((TextView) findViewById(R.id.inputOrder)).setText(getString(R.string.lokaldata));
+		       }
+	                  
+	}
+    //koniec onSharedPreferenceChanged
+
+	//optionsmenu
+	@Override
+	public boolean onCreateOptionsMenu(Menu menu) {
+		MenuInflater inflater = getMenuInflater();
+        String akedruhid = SettingsActivity.getDruhId(this);
+        String akesdkarta = SettingsActivity.getSDkarta(this);
+
+	if( akesdkarta.equals("0")) {
+		if( akedruhid.equals("99")) {
+		inflater.inflate(R.menu.options_menu, menu);
+		} else
+		{
+		inflater.inflate(R.menu.options_menumale, menu);
+		}
+	} else
+	{
+	inflater.inflate(R.menu.options_menusd, menu);
+	}
+		return true;
+	}
+
+	@Override
+	public boolean onOptionsItemSelected(MenuItem item) {
+		Intent i;
+		switch (item.getItemId()) {
+		case R.id.cisico:
+			i = new Intent(this, VyberIcoActivity.class);
+			Bundle extras = new Bundle();
+            extras.putString("odkade", "100");
+            extras.putString("page", "1");
+            i.putExtras(extras);
+			startActivity(i);
+			return true;
+		case R.id.preferences:
+			i = new Intent(this, SettingsActivity.class);
+			startActivity(i);
+			return true;
+		case R.id.connectserver:
+			i = new Intent(this, Pripojv2Activity.class);
+			startActivity(i);
+			return true;
+		default:
+			return super.onOptionsItemSelected(item);
+		}
+	}
+	//koniec optionsmenu
+	
+    //test ci je internet pripojeny
+    public boolean isOnline() {
+        ConnectivityManager cm =
+            (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
+        NetworkInfo netInfo = cm.getActiveNetworkInfo();
+        if (netInfo != null && netInfo.isConnected()) {
+            return true;
+        }
+        return false;
+    }
+    //koniec test ci je internet pripojeny
+    
+    
+
+    
+
+}
+//koniec MainScreenActivity

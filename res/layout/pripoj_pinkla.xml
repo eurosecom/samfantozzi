@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+android:layout_width="match_parent"
+android:layout_height="match_parent"
+android:orientation="vertical" >
+
+    <TextView
+    android:id="@+id/inputPriUser"
+    android:visibility="gone"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content" />
+        
+    <TextView
+    android:id="@+id/inputPriServer"
+    android:visibility="gone"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content" />
+    
+    <!-- server Label -->
+    <TextView android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/popisconserver"
+        android:paddingLeft="10dp"
+        android:paddingRight="10dp"
+        android:paddingTop="10dp"
+        android:textSize="15sp"/>
+    
+    <!-- Input server -->
+    <EditText android:id="@+id/inputConServer"
+        android:inputType="text"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="5dp"
+        android:layout_marginBottom="15dp"
+        android:singleLine="true"/>
+ 
+     <!-- nick Label -->
+    <TextView android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/popisconnick"
+        android:paddingLeft="10dp"
+        android:paddingRight="10dp"
+        android:paddingTop="10dp"
+        android:textSize="17sp"/>
+    
+    <!-- Input nick -->
+    <EditText android:id="@+id/inputConNick"
+        android:inputType="text"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="5dp"
+        android:layout_marginBottom="15dp"
+        android:singleLine="true"/>
+    
+        <!-- mail Label -->
+    <TextView android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/popisconmail"
+        android:paddingLeft="10dp"
+        android:paddingRight="10dp"
+        android:paddingTop="10dp"
+        android:textSize="17sp"/>
+    
+    <!-- Input mail -->
+    <EditText android:id="@+id/inputConMail"
+        android:inputType="textEmailAddress"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="5dp"
+        android:layout_marginBottom="15dp"
+        android:singleLine="true"/>
+    
+
+
+    <!-- Button Pripoj -->
+    <Button android:id="@+id/btnPripoj"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/popisbtnpripoj" />
+
+    <LinearLayout android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">  
+               
+    <ImageView
+		android:contentDescription="@string/descimg"
+		android:layout_width="50dp"
+		android:layout_height="wrap_content"
+        android:gravity="center"
+    	android:src="@drawable/eurosecom"/>
+    
+        <!-- Button EDcom.sk -->
+    <Button android:id="@+id/btnEDcomsk"
+        android:layout_width="70dp"
+        android:layout_height="wrap_content"
+        android:text="@string/byedcomsk"
+        android:textSize="12sp"
+        android:gravity="center" />
+    
+    
+      </LinearLayout>
+
+
+     	
+ 	</LinearLayout>	

@@ -1,0 +1,175 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="com.eusecom.samfantozzi"
+    android:versionCode="260"
+    android:versionName="2.6" >
+
+    <uses-sdk
+        android:minSdkVersion="14"
+        android:targetSdkVersion="20" />
+
+    <!-- Internet Permissions -->
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.READ_PHONE_STATE"/>
+    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" /> 
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+    <uses-permission android:name="android.permission.SEND_SMS"/>
+    <uses-permission android:name="android.permission.CALL_PHONE"></uses-permission>
+    
+    <uses-feature android:name="android.hardware.location" android:required="false" />
+    <uses-feature android:name="android.hardware.location.gps" android:required="false" />
+    <uses-feature android:name="android.hardware.telephony" android:required="false" />
+    
+    
+    <!-- toto skusim zaremovat lebo nevidim to v samsungtabletoch 10palcovych asi nemaju sms a telefon
+    <uses-permission android:name="android.permission.SEND_SMS"/>
+    <uses-permission android:name="android.permission.CALL_PHONE"></uses-permission>
+	
+    
+    -->
+    
+
+    <application
+        android:allowBackup="true"
+        android:icon="@drawable/ic_launcher"
+        android:label="@string/app_namelabel"> 
+        <!-- android:theme="@style/AppTheme" > -->
+        <activity
+            android:name="com.eusecom.samfantozzi.MainScreenActivity"
+            android:label="@string/app_namelabel" >
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        <activity
+            android:name="com.eusecom.samfantozzi.SettingsActivity"
+            android:label="@string/settings" >
+        </activity>
+        <activity
+            android:name="com.eusecom.samfantozzi.Pripojv2Activity"
+            android:label="@string/apppripoj_name" >
+        </activity>
+        <activity
+            android:name="com.eusecom.samfantozzi.OkPripojActivity"
+            android:label="@string/title_activity_ok_pripoj" >
+        </activity>
+        <activity
+            android:name="com.eusecom.samfantozzi.ZostavyActivity"
+            android:label="@string/settings" >
+        </activity>
+        <activity
+            android:name="com.eusecom.samfantozzi.PokladnicaActivity"
+            android:label="@string/popisbtnpokl" >
+        </activity>
+        <activity
+            android:name="com.eusecom.samfantozzi.UpravPoklZahActivity"
+            android:label="@string/kontuprzah" >
+        </activity>
+        <activity
+            android:name="com.eusecom.samfantozzi.NewPoklZahActivity"
+            android:label="@string/kontuprzah" >
+        </activity>
+        <activity
+            android:name="com.eusecom.samfantozzi.UpravFakZahActivity"
+            android:label="@string/kontuprzah" >
+        </activity>
+        <activity
+            android:name="com.eusecom.samfantozzi.NewFakZahActivity"
+            android:label="@string/kontuprzah" >
+        </activity>
+        <activity
+            android:name="com.eusecom.samfantozzi.NewPoklPridajActivity"
+            android:label="@string/kontuprzah" >
+        </activity>
+        <activity
+            android:name="com.eusecom.samfantozzi.UpravPoklPol1Activity"
+            android:label="@string/kontuprzah" >
+        </activity>
+        <activity
+            android:name="com.eusecom.samfantozzi.UpravPoklPolActivity"
+            android:label="@string/kontuprzah" >
+        </activity>
+        <activity
+            android:name="com.eusecom.samfantozzi.ZmazPoklZahActivity"
+            android:label="@string/kontuprzah" >
+        </activity>
+        <activity
+            android:name="com.eusecom.samfantozzi.ZmazPoklPolActivity"
+            android:label="@string/kontuprzah" >
+        </activity>
+        <activity
+            android:name="com.eusecom.samfantozzi.VyberIcoActivity"
+            android:label="@string/popisIco" >
+        </activity>
+        <activity
+            android:name="com.eusecom.samfantozzi.UpravIcoActivity"
+            android:label="@string/popisIco" >
+        </activity>
+        <activity
+            android:name="com.eusecom.samfantozzi.VyberUceActivity"
+            android:label="@string/popisUce" >
+        </activity>
+        <activity
+            android:name="com.eusecom.samfantozzi.VyberPohybActivity"
+            android:label="@string/popisUcd" >
+        </activity>
+        <activity
+            android:name="com.eusecom.samfantozzi.VypisPohybActivity"
+            android:label="@string/popisUcd" >
+        </activity>
+        <activity
+            android:name="com.eusecom.samfantozzi.VyberRdpActivity"
+            android:label="@string/popisRdp" >
+        </activity>
+        <activity
+            android:name="com.eusecom.samfantozzi.VyberFirmuActivity"
+            android:label="@string/popisbtnfirma" >
+        </activity>
+        <activity
+            android:name="com.eusecom.samfantozzi.VyberUmeActivity"
+            android:label="@string/popisUme" >
+        </activity>
+        <activity
+            android:name="com.eusecom.samfantozzi.UctoZosActivity"
+            android:label="@string/popisbtnzostavy" >
+        </activity>
+        <activity
+            android:name="com.eusecom.samfantozzi.DlhyActivity"
+            android:label="@string/popisbtnzostavy" >
+        </activity>
+        <activity
+            android:name="com.eusecom.samfantozzi.DphActivity"
+            android:label="@string/popisbtndph" >
+        </activity>
+        <activity
+            android:name="com.eusecom.samfantozzi.ZamkniActivity"
+            android:label="@string/popisKluc" >
+        </activity>
+        <activity
+            android:name="com.eusecom.samfantozzi.NastavDatum"
+            android:label="@string/popisDap" >
+        </activity>
+        <activity
+            android:name="com.eusecom.samfantozzi.OverIcdphActivity"
+            android:label="@string/overenieIcd" >
+        </activity>
+        <activity
+            android:name="com.eusecom.samfantozzi.VyberDomenuActivity"
+            android:label="@string/popisbtndomena" >
+        </activity>
+        <activity
+            android:name="com.eusecom.samfantozzi.OdvodyActivity"
+            android:label="@string/popisbtnplatbystatu" >
+        </activity>
+
+
+    </application>
+
+</manifest>
