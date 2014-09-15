@@ -8,6 +8,7 @@
 *.pydevproject
 .project
 .metadata
+gen/**
 bin/**
 tmp/**
 tmp/**/*
