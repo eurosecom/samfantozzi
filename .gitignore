@@ -9,6 +9,7 @@
 .project
 .metadata
 gen/**
+gen/com/eusecom/samfantozzi/
 bin/**
 tmp/**
 tmp/**/*
