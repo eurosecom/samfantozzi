@@ -10,6 +10,7 @@
 .metadata
 gen/**
 gen/com/eusecom/samfantozzi/
+gen/com/eusecom/samfantozzi/R.java
 bin/**
 tmp/**
 tmp/**/*
