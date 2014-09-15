@@ -95,15 +95,12 @@ if( SettingsActivity.getSDkarta(this).equals("1")) {
 	String fileName3 = "/eusecom/" + serverxxx[1] + "/odbm.xml";
 	File myFile3 = new File(baseDir2 + File.separator + fileName3);
 	if (myFile3.exists()) { } else { incomplet = "1"; }
-	String fileName4 = "/eusecom/" + serverxxx[1] + "/categories.xml";
+	String fileName4 = "/eusecom/" + serverxxx[1] + "/uctosnova.xml";
 	File myFile4 = new File(baseDir2 + File.separator + fileName4);
 	if (myFile4.exists()) { } else { incomplet = "1"; }
-	String fileName5 = "/eusecom/" + serverxxx[1] + "/products.xml";
+	String fileName5 = "/eusecom/" + serverxxx[1] + "/autopohyby.xml";
 	File myFile5 = new File(baseDir2 + File.separator + fileName5);
 	if (myFile5.exists()) { } else { incomplet = "1"; }
-	String fileName6 = "/eusecom/" + serverxxx[1] + "/services.xml";
-	File myFile6 = new File(baseDir2 + File.separator + fileName6);
-	if (myFile6.exists()) { } else { incomplet = "1"; }
 
 	
 		if( incomplet.equals("1")) {
@@ -420,15 +417,41 @@ if( SettingsActivity.getSDkarta(this).equals("1")) {
 
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
-		Intent i;
+		Intent i=null;
 		switch (item.getItemId()) {
 		case R.id.cisico:
-			i = new Intent(this, VyberIcoActivity.class);
+			if( SettingsActivity.getSDkarta(this).equals("1")) {
+			i = new Intent(this, VyberIcoActivitySD.class);
 			Bundle extras = new Bundle();
             extras.putString("odkade", "100");
             extras.putString("page", "1");
             i.putExtras(extras);
 			startActivity(i);
+			}else
+			{
+				if (isOnline()) 
+			     {
+					i = new Intent(this, VyberIcoActivity.class);
+					Bundle extras = new Bundle();
+		            extras.putString("odkade", "100");
+		            extras.putString("page", "1");
+		            i.putExtras(extras);
+					startActivity(i);
+			     }else{
+			    	 new AlertDialog.Builder(this)
+			         .setTitle(getString(R.string.niejeinternet))
+			         .setMessage(getString(R.string.potrebujeteinternet))
+			         .setPositiveButton(getString(R.string.textok), new DialogInterface.OnClickListener() {
+			             public void onClick(DialogInterface dialog, int which) { 
+			               
+			             	//finish();
+			             }
+			          })
+
+			          .show();
+			     }
+			}
+			
 			return true;
 		case R.id.preferences:
 			i = new Intent(this, SettingsActivity.class);

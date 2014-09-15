@@ -283,6 +283,7 @@
     <string name="popisCislo">Číslo</string>
     <string name="popisRetazec">Text</string>
     <string name="popisIco">IČO firmy</string>
+    <string name="popisIcoSD">IČO firmy SDkarta</string>
     <string name="popisKto">Osoba</string>
     <string name="popisTxp">Poznámka</string>
     <string name="popisUcm">Pokladnica</string>

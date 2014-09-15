@@ -287,6 +287,7 @@
     <string name="popisCislo">Number</string>
     <string name="popisRetazec">Text</string>
     <string name="popisIco">Company ID</string>
+    <string name="popisIcoSD">Company ID SDcard</string>
     <string name="popisKto">Person</string>
     <string name="popisTxp">Note</string>
     <string name="popisUcm">Cash register</string>

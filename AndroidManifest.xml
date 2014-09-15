@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.eusecom.samfantozzi"
-    android:versionCode="260"
-    android:versionName="2.6" >
+    android:versionCode="270"
+    android:versionName="2.7" >
 
     <uses-sdk
         android:minSdkVersion="14"
@@ -111,6 +111,10 @@
         <activity
             android:name="com.eusecom.samfantozzi.UpravIcoActivity"
             android:label="@string/popisIco" >
+        </activity>
+        <activity
+            android:name="com.eusecom.samfantozzi.VyberIcoActivitySD"
+            android:label="@string/popisIcoSD" >
         </activity>
         <activity
             android:name="com.eusecom.samfantozzi.VyberUceActivity"
