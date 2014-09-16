@@ -1,0 +1,19 @@
+<?xml version = "1.0" encoding="utf-8" standalone="yes" ?>
+<odbms>
+<odbmx>
+<ico>44551142</ico>
+<odbm>1</odbm>
+<onai>ODBM1</onai>
+<ouli></ouli>
+<opsc></opsc>
+<omes>Senica</omes>
+</odbmx>
+<odbmx>
+<ico>44551142</ico>
+<odbm>2</odbm>
+<onai>ODBM2</onai>
+<ouli></ouli>
+<opsc></opsc>
+<omes>trnava</omes>
+</odbmx>
+</odbms>

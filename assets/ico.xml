@@ -1,0 +1,21 @@
+﻿<?xml version = "1.0" encoding="utf-8" standalone="yes" ?>
+<customers>
+<customer>
+<ico>44551142</ico>
+<dic>2022753887</dic>
+<icd>SK2022753887</icd>
+<nai>EDcom s.r.o.</nai>
+<uli><![CDATA[Sotinska 1474/11]]></uli>
+<psc>90501</psc>
+<mes>Senica</mes>
+</customer>
+<customer>
+<ico>44811462</ico>
+<dic>2022858728</dic>
+<icd>SK2022858728</icd>
+<nai>BUSINESS RELATIONS s.r.o. </nai>
+<uli><![CDATA[Stefanikova 715]]></uli>
+<psc>90501</psc>
+<mes>Senica</mes>
+</customer>
+</customers>

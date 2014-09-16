@@ -401,6 +401,8 @@
     <string name="popiskvdphpdf">control VAT PDF</string>
     <string name="popiskvdphxml">control VAT XML</string>
     <string name="popisbtndomena">Domain</string>
+    
+    <string name="setdefaultxml">Default XML is set.</string>
          
         
 </resources>

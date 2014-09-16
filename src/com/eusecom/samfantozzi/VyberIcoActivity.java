@@ -25,6 +25,7 @@ import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.util.Log;
 import android.view.ContextMenu;
+import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
@@ -694,6 +695,38 @@ public class VyberIcoActivity extends ListActivity {
  
     }
     //koniec nacitanie odbm
+    
+    //optionsmenu
+  	@Override
+  	public boolean onCreateOptionsMenu(Menu menu) {
+  		MenuInflater inflater = getMenuInflater();
+
+  		inflater.inflate(R.menu.options_ico, menu);
+
+  		return true;
+  	}
+
+  	@Override
+  	public boolean onOptionsItemSelected(MenuItem item) {
+
+  		switch (item.getItemId()) {
+
+  		case R.id.optionsnewico:
+            
+            String icom = "0";
+            
+            Intent im = new Intent(getApplicationContext(), UpravIcoActivity.class);
+            Bundle extrasm = new Bundle();
+            extrasm.putString(TAG_ICOX, icom);
+            extrasm.putString(TAG_NEWX, "1");
+            im.putExtras(extrasm);
+            startActivityForResult(im, 100);
+  			return true;
+  		default:
+  			return super.onOptionsItemSelected(item);
+  		}
+  	}
+  	//koniec optionsmenu
     
 }
 //koniec activity

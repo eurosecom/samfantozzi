@@ -1,20 +1,16 @@
 package com.eusecom.samfantozzi;
  
+import java.io.File;
+import java.io.FileInputStream;
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
- 
-import org.apache.http.NameValuePair;
-import org.apache.http.message.BasicNameValuePair;
 import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
- 
-import android.app.AlertDialog;
+import org.w3c.dom.Document;
+import org.w3c.dom.Element;
+import org.w3c.dom.NodeList;
 import android.app.ListActivity;
 import android.app.ProgressDialog;
 import android.content.ContentValues;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
@@ -22,9 +18,10 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.os.Environment;
 import android.preference.PreferenceManager;
-import android.util.Log;
 import android.view.ContextMenu;
+import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
@@ -37,6 +34,9 @@ import android.widget.ListAdapter;
 import android.widget.ListView;
 import android.widget.SimpleAdapter;
 import android.widget.TextView;
+import android.widget.Toast;
+
+import com.eusecom.samfantozzi.defaultXML;
 
 import com.eusecom.samfantozzi.DatabaseHelper;
 
@@ -71,8 +71,7 @@ public class VyberIcoActivitySD extends ListActivity {
  
     
     // JSON Node names
-    private static final String TAG_SUCCESS = "success";
-    private static final String TAG_PRODUCTS = "products";
+    private static final String TAG_PRODUCT = "customer";
     private static final String TAG_PID = "pid";
     private static final String TAG_NAME = "name";
     private static final String TAG_PRICE = "price";
@@ -81,8 +80,16 @@ public class VyberIcoActivitySD extends ListActivity {
     private static final String TAG_NEWX = "newx";
     private static final String TAG_PAGEX = "page";
     
+    // XML node names
+    static final String NODE_PID = "ico";
+    static final String NODE_NAME = "nai";
+    static final String NODE_PRICE = "mes";
+    
+    
     // products JSONArray
     JSONArray products = null;
+    
+    String incomplet;
  
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -140,8 +147,6 @@ public class VyberIcoActivitySD extends ListActivity {
             inputOdbm.setText("0");
             inputOdbm.setVisibility(View.GONE);
         }
-        //inputIconaz = (TextView) findViewById(R.id.inputIconaz);
-        //inputIconaz.setVisibility(View.GONE);
         
         
         // Buttons uloz
@@ -232,29 +237,42 @@ public class VyberIcoActivitySD extends ListActivity {
             }
         });
         
-        //ak uzivatel 0 nepripojeny
-        if( SettingsActivity.getUserId(this).equals("0")) {
-        //dialog
-        new AlertDialog.Builder(this)
-        .setTitle(getString(R.string.oknepripojeny))
-        .setMessage(getString(R.string.oknepripojenymes))
-        .setPositiveButton(getString(R.string.textok), new DialogInterface.OnClickListener() {
-            public void onClick(DialogInterface dialog, int which) { 
-                // continue with click
-            	finish();
-            }
-        })
+        incomplet = "0";
+    	String serverx = SettingsActivity.getServerName(this);
+    	String delims = "[/]+";
+    	String[] serverxxx = serverx.split(delims);
+    	
+    	String baseDir2 = Environment.getExternalStorageDirectory().getAbsolutePath();
+    	String fileName2 = "/eusecom/" + serverxxx[1] + "/ico.xml";
+    	File myFile2 = new File(baseDir2 + File.separator + fileName2);
+    	if (myFile2.exists()) { } else { incomplet = "1"; }
+    	String fileName3 = "/eusecom/" + serverxxx[1] + "/odbm.xml";
+    	File myFile3 = new File(baseDir2 + File.separator + fileName3);
+    	if (myFile3.exists()) { } else { incomplet = "1"; }
+    	String fileName4 = "/eusecom/" + serverxxx[1] + "/uctosnova.xml";
+    	File myFile4 = new File(baseDir2 + File.separator + fileName4);
+    	if (myFile4.exists()) { } else { incomplet = "1"; }
+    	String fileName5 = "/eusecom/" + serverxxx[1] + "/autopohyby.xml";
+    	File myFile5 = new File(baseDir2 + File.separator + fileName5);
+    	if (myFile5.exists()) { } else { incomplet = "1"; }
+    	
+    	if( incomplet.equals("1")) {
+    		//int xxx=1;
+    		//defaultXML defxml = new defaultXML(xxx);
+    		
+    		int xxx2=1;
+    		int defxmlint;
+    		defxmlint = defaultXML.createdefaultXML(xxx2);
+    		if( defxmlint == 1 ){Toast.makeText(this, getResources().getString(R.string.setdefaultxml), Toast.LENGTH_LONG).show();}
 
-        .show();
-        } else
-        //koniec uzivatel 0 nepripojeny
-        //ak je pripojeny
-        {
+    	}
+    	
+    	
         // Hashmap for ListView
         productsList = new ArrayList<HashMap<String, String>>();
  
         // Loading products in Background Thread
-        //new LoadAllIcosSD().execute();
+        new LoadAllIcosSD().execute();
  
         // Get listview
         ListView lv = getListView();
@@ -310,8 +328,7 @@ public class VyberIcoActivitySD extends ListActivity {
         	
         						} else { vylistuj(); }
         
-        }
-        //ak je pripojeny
+
         
     }
  //koniec oncreate
@@ -476,76 +493,42 @@ public class VyberIcoActivitySD extends ListActivity {
          * */
         protected String doInBackground(String... args) {
             
-        	String prmall = inputAll.getText().toString();
-        	String serverx = inputAllServer.getText().toString();
-        	String delims = "[/]+";
-        	String[] serverxxx = serverx.split(delims);
-        	//String userx = inputAllUser.getText().toString();
-            inputBank = (EditText) findViewById(R.id.inputBank);
-        	String icox = inputBank.getText().toString();
-        	
-        	// Building Parameters
-            List<NameValuePair> params = new ArrayList<NameValuePair>();
-            //params.add(new BasicNameValuePair("triedenie", "22"));
-            //params.add(new BasicNameValuePair("orderbyx", orderbyx));         
-            params.add(new BasicNameValuePair("prmall", prmall));
-            params.add(new BasicNameValuePair("serverx", serverx));
-            //params.add(new BasicNameValuePair("userx", userx));
-            params.add(new BasicNameValuePair("icox", icox));
-            params.add(new BasicNameValuePair("pagex", pagex));
-            
-            // getting JSON string from URL
-            //JSONObject json = jParser.makeHttpRequest(url_all_products, "GET", params);
-            JSONObject json = jParser.makeHttpRequest("http://" + serverxxx[0] + "/androidfanti/get_all_icos.php", "GET", params);
-            
-            // Check your log cat for JSON reponse
+        	XMLDOMParser parser = new XMLDOMParser();
             try {
-            Log.d("All Products: ", json.toString());
-            } catch (NullPointerException e) {
-                //e.printStackTrace();
-            	Intent i = new Intent(getApplicationContext(), SettingsActivity.class);
-                startActivity(i);
-            }
- 
-            try {
-                // Checking for SUCCESS TAG
-                int success = json.getInt(TAG_SUCCESS);
- 
-                if (success == 1) {
-                    // products found
-                    // Getting Array of Products
-                    products = json.getJSONArray(TAG_PRODUCTS);
- 
-                    // looping through All Products
-                    for (int i = 0; i < products.length(); i++) {
-                        JSONObject c = products.getJSONObject(i);
- 
-                        // Storing each json item in variable
-                        String id = c.getString(TAG_PID);
-                        String name = c.getString(TAG_NAME);
-                        String price = c.getString(TAG_PRICE);
-                        
-                        // creating new HashMap
-                        HashMap<String, String> map = new HashMap<String, String>();
- 
-                        // adding each child node to HashMap key => value
-                        map.put(TAG_PID, id);
-                        map.put(TAG_NAME, name);
-                        map.put(TAG_PRICE, price);
-                        
-                        // adding HashList to ArrayList
-                        productsList.add(map);
-                    }
-                } else {
-                    // no products found
-                    // Launch Add New product Activity
-                    Intent i = new Intent(getApplicationContext(), SettingsActivity.class);
-                    // Closing all previous activities
-                    i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                    startActivity(i);
+            	String baseDir = Environment.getExternalStorageDirectory().getAbsolutePath();
+            	String fileName = "/eusecom/androiducto/ico.xml";
+            	File myFile = new File(baseDir + File.separator + fileName);
+                
+                Document doc = parser.getDocument(new FileInputStream(myFile));
+                
+                // Get elements by name employee
+                NodeList nodeList = doc.getElementsByTagName(TAG_PRODUCT);
+                
+                /*
+                 * for each <employee> element get text of name, salary and
+                 * designation
+                 */
+                // Here, we have only one <employee> element
+                for (int i = 0; i < nodeList.getLength(); i++) {
+                    Element e = (Element) nodeList.item(i);
+                    String id = parser.getValue(e, NODE_PID);
+                    String name = parser.getValue(e, NODE_NAME);
+                    String price = parser.getValue(e, NODE_PRICE);
+                    
+                    // creating new HashMap
+                    HashMap<String, String> map = new HashMap<String, String>();
+
+                    // adding each child node to HashMap key => value
+                    map.put(TAG_PID, id);
+                    map.put(TAG_NAME, name);
+                    map.put(TAG_PRICE, price);
+                    
+                    // adding HashList to ArrayList
+                    productsList.add(map);
                 }
-            } catch (JSONException e) {
-                e.printStackTrace();
+               
+            } catch (Exception e) {
+               
             }
  
             return null;
@@ -601,69 +584,43 @@ public class VyberIcoActivitySD extends ListActivity {
          * */
         protected String doInBackground(String... args) {
             
-        	String prmall = inputAll.getText().toString();
-        	String serverx = inputAllServer.getText().toString();
-        	String delims = "[/]+";
-        	String[] serverxxx = serverx.split(delims);
-        	String userx = inputAllUser.getText().toString();
-            inputBank = (EditText) findViewById(R.id.inputBank);
-        	String icox = inputBank.getText().toString();
-        	
-        	// Building Parameters
-            List<NameValuePair> params = new ArrayList<NameValuePair>();
-            //params.add(new BasicNameValuePair("triedenie", "22"));
-            //params.add(new BasicNameValuePair("orderbyx", orderbyx));         
-            params.add(new BasicNameValuePair("prmall", prmall));
-            params.add(new BasicNameValuePair("serverx", serverx));
-            params.add(new BasicNameValuePair("userx", userx));
-            params.add(new BasicNameValuePair("icox", icox));
-            
-            // getting JSON string from URL
-            //JSONObject json = jParser.makeHttpRequest(url_all_products, "GET", params);
-            JSONObject json = jParser.makeHttpRequest("http://" + serverxxx[0] + "/androiducto/get_all_icos.php", "GET", params);
-            
-            // Check your log cat for JSON reponse
-            Log.d("All Products: ", json.toString());
- 
+        	XMLDOMParser parser = new XMLDOMParser();
             try {
-                // Checking for SUCCESS TAG
-                int success = json.getInt(TAG_SUCCESS);
- 
-                if (success == 1) {
-                    // products found
-                    // Getting Array of Products
-                    products = json.getJSONArray(TAG_PRODUCTS);
- 
-                    // looping through All Products
-                    for (int i = 0; i < products.length(); i++) {
-                        JSONObject c = products.getJSONObject(i);
- 
-                        // Storing each json item in variable
-                        String id = c.getString(TAG_PID);
-                        String name = c.getString(TAG_NAME);
-                        String price = c.getString(TAG_PRICE);
-                        
-                        // creating new HashMap
-                        HashMap<String, String> map = new HashMap<String, String>();
- 
-                        // adding each child node to HashMap key => value
-                        map.put(TAG_PID, id);
-                        map.put(TAG_NAME, name);
-                        map.put(TAG_PRICE, price);
-                        
-                        // adding HashList to ArrayList
-                        productsList.add(map);
-                    }
-                } else {
-                    // no products found
-                    // Launch Add New product Activity
-                    Intent i = new Intent(getApplicationContext(), SettingsActivity.class);
-                    // Closing all previous activities
-                    i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                    startActivity(i);
+            	String baseDir = Environment.getExternalStorageDirectory().getAbsolutePath();
+            	String fileName = "/eusecom/androiducto/products.xml";
+            	//File myFile = new File("/mnt/sdcard/categories.xml");
+            	File myFile = new File(baseDir + File.separator + fileName);
+                
+                Document doc = parser.getDocument(new FileInputStream(myFile));
+                
+                // Get elements by name employee
+                NodeList nodeList = doc.getElementsByTagName(TAG_PRODUCT);
+                
+                /*
+                 * for each <employee> element get text of name, salary and
+                 * designation
+                 */
+                // Here, we have only one <employee> element
+                for (int i = 0; i < nodeList.getLength(); i++) {
+                    Element e = (Element) nodeList.item(i);
+                    String id = parser.getValue(e, NODE_PID);
+                    String name = parser.getValue(e, NODE_NAME);
+                    String price = parser.getValue(e, NODE_PRICE);
+                    
+                    // creating new HashMap
+                    HashMap<String, String> map = new HashMap<String, String>();
+
+                    // adding each child node to HashMap key => value
+                    map.put(TAG_PID, id);
+                    map.put(TAG_NAME, name);
+                    map.put(TAG_PRICE, price);
+                    
+                    // adding HashList to ArrayList
+                    productsList.add(map);
                 }
-            } catch (JSONException e) {
-                e.printStackTrace();
+               
+            } catch (Exception e) {
+               
             }
  
             return null;
@@ -694,6 +651,38 @@ public class VyberIcoActivitySD extends ListActivity {
  
     }
     //koniec nacitanie odbm
+    
+    //optionsmenu
+  	@Override
+  	public boolean onCreateOptionsMenu(Menu menu) {
+  		MenuInflater inflater = getMenuInflater();
+
+  		inflater.inflate(R.menu.options_ico, menu);
+
+  		return true;
+  	}
+
+  	@Override
+  	public boolean onOptionsItemSelected(MenuItem item) {
+
+  		switch (item.getItemId()) {
+
+  		case R.id.optionsnewico:
+            
+            String icom = "0";
+            
+            Intent im = new Intent(getApplicationContext(), UpravIcoActivity.class);
+            Bundle extrasm = new Bundle();
+            extrasm.putString(TAG_ICOX, icom);
+            extrasm.putString(TAG_NEWX, "1");
+            im.putExtras(extrasm);
+            startActivityForResult(im, 100);
+  			return true;
+  		default:
+  			return super.onOptionsItemSelected(item);
+  		}
+  	}
+  	//koniec optionsmenu
     
 }
 //koniec activity
