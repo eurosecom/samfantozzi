@@ -402,6 +402,7 @@
     
 
     <string name="setdefaultxml">Štandartné XML sú nastavené.</string>
+    <string name="icosynchro">Synchronizovať IČO</string>
    
                 
 </resources>

@@ -657,7 +657,7 @@ public class VyberIcoActivitySD extends ListActivity {
   	public boolean onCreateOptionsMenu(Menu menu) {
   		MenuInflater inflater = getMenuInflater();
 
-  		inflater.inflate(R.menu.options_ico, menu);
+  		inflater.inflate(R.menu.options_icosd, menu);
 
   		return true;
   	}
@@ -667,7 +667,7 @@ public class VyberIcoActivitySD extends ListActivity {
 
   		switch (item.getItemId()) {
 
-  		case R.id.optionsnewico:
+  			case R.id.optionsnewico:
             
             String icom = "0";
             
@@ -678,7 +678,13 @@ public class VyberIcoActivitySD extends ListActivity {
             im.putExtras(extrasm);
             startActivityForResult(im, 100);
   			return true;
-  		default:
+  			
+  			case R.id.optionssynchico:
+  				
+  	  		return true;
+            
+ 
+  			default:
   			return super.onOptionsItemSelected(item);
   		}
   	}
