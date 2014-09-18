@@ -117,6 +117,10 @@
             android:label="@string/popisIcoSD" >
         </activity>
         <activity
+            android:name="com.eusecom.samfantozzi.UpravIcoActivitySD"
+            android:label="@string/popisIcoSD" >
+        </activity>
+        <activity
             android:name="com.eusecom.samfantozzi.VyberUceActivity"
             android:label="@string/popisUce" >
         </activity>

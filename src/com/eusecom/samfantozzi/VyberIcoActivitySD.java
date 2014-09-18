@@ -402,7 +402,7 @@ public class VyberIcoActivitySD extends ListActivity {
             
             String icom = productsList.get(inpom).get(TAG_PID);
             
-            Intent im = new Intent(getApplicationContext(), UpravIcoActivity.class);
+            Intent im = new Intent(getApplicationContext(), UpravIcoActivitySD.class);
             Bundle extrasm = new Bundle();
             extrasm.putString(TAG_ICOX, icom);
             extrasm.putString(TAG_NEWX, "1");
@@ -416,7 +416,7 @@ public class VyberIcoActivitySD extends ListActivity {
             
             String icou = productsList.get(inpou).get(TAG_PID);
             
-            Intent iu = new Intent(getApplicationContext(), UpravIcoActivity.class);
+            Intent iu = new Intent(getApplicationContext(), UpravIcoActivitySD.class);
             Bundle extrasu = new Bundle();
             extrasu.putString(TAG_ICOX, icou);
             extrasu.putString(TAG_NEWX, "0");
@@ -671,7 +671,7 @@ public class VyberIcoActivitySD extends ListActivity {
             
             String icom = "0";
             
-            Intent im = new Intent(getApplicationContext(), UpravIcoActivity.class);
+            Intent im = new Intent(getApplicationContext(), UpravIcoActivitySD.class);
             Bundle extrasm = new Bundle();
             extrasm.putString(TAG_ICOX, icom);
             extrasm.putString(TAG_NEWX, "1");
