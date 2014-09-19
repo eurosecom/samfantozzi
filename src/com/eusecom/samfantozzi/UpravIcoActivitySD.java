@@ -3,27 +3,11 @@ package com.eusecom.samfantozzi;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileInputStream;
-import java.io.IOException;
-import java.io.InputStreamReader;
-import java.util.ArrayList;
-import java.util.List;
- 
-import org.apache.http.HttpResponse;
-import org.apache.http.HttpVersion;
-import org.apache.http.NameValuePair;
-import org.apache.http.client.ClientProtocolException;
-import org.apache.http.client.HttpClient;
-import org.apache.http.client.entity.UrlEncodedFormEntity;
-import org.apache.http.client.methods.HttpPost;
-import org.apache.http.impl.client.DefaultHttpClient;
-import org.apache.http.message.BasicNameValuePair;
-import org.apache.http.params.BasicHttpParams;
-import org.apache.http.params.HttpParams;
-import org.apache.http.protocol.HTTP;
+import java.io.FileOutputStream;
+import java.io.OutputStreamWriter;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.NodeList;
- 
 import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Intent;
@@ -36,9 +20,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
-
 import android.os.StrictMode;
-import com.eusecom.samfantozzi.MCrypt;
  
 public class UpravIcoActivitySD extends Activity {
  
@@ -72,16 +54,6 @@ public class UpravIcoActivitySD extends Activity {
  
  
     // JSON Node names
-    private static final String TAG_ICO = "ico";
-    private static final String TAG_DIC = "dic";
-    private static final String TAG_ICD = "icd";
-    private static final String TAG_NAI = "nai";
-    private static final String TAG_ULI = "uli";
-    private static final String TAG_MES = "mes";
-    private static final String TAG_PSC = "psc";
-    private static final String TAG_TEL = "tel";
-    private static final String TAG_MAIL = "mail";
-    private static final String TAG_WWW = "www";
     private static final String TAG_NEWX = "newx";
     private static final String TAG_ICOX = "icox";
     
@@ -347,101 +319,42 @@ public class UpravIcoActivitySD extends Activity {
             String tel = inputTel.getText().toString();
             String mail = inputMail.getText().toString();
             String www = inputWww.getText().toString();
-
-
+ 
             
-            String prmall = inputAll.getText().toString();
-        	String serverx = inputEdiServer.getText().toString();
-        	String delims = "[/]+";
-        	String[] serverxxx = serverx.split(delims);
-        	String userx = inputEdiUser.getText().toString();
-        	
-        	String userxplus = userx + "/" + icox;
-        	
-        	//String userhash = sha1Hash( userx );
-        	MCrypt mcrypt = new MCrypt();
-        	/* Encrypt */
-        	try {
-				encrypted = MCrypt.bytesToHex( mcrypt.encrypt(userxplus) );
-			} catch (Exception e1) {
-				// TODO Auto-generated catch block
-				e1.printStackTrace();
-			}
-        	/* Decrypt */
-        	//String decrypted = new String( mcrypt.decrypt( encrypted ) );
-        	
-            HttpParams httpParameters = new BasicHttpParams();
-
-            HttpClient client = new DefaultHttpClient(httpParameters);
-            client.getParams().setParameter("http.protocol.version", HttpVersion.HTTP_1_1);
-            client.getParams().setParameter("http.socket.timeout", 2000);
-            client.getParams().setParameter("http.protocol.content-charset", HTTP.UTF_8);
-            httpParameters.setBooleanParameter("http.protocol.expect-continue", false);
-            HttpPost request = new HttpPost("http://" + serverxxx[0] + "/androidfanti/uloz_ico1.php?sid=" + String.valueOf(Math.random()));
-            request.getParams().setParameter("http.socket.timeout", 5000);
-
-        	List<NameValuePair> postParameters = new ArrayList<NameValuePair>();
-        	postParameters.add(new BasicNameValuePair("prmall", prmall));
-            postParameters.add(new BasicNameValuePair(TAG_ICO, ico));
-            postParameters.add(new BasicNameValuePair(TAG_DIC, dic));
-            postParameters.add(new BasicNameValuePair(TAG_ICD, icd));
-            postParameters.add(new BasicNameValuePair(TAG_NAI, nai));
-            postParameters.add(new BasicNameValuePair(TAG_ULI, uli));
-            postParameters.add(new BasicNameValuePair(TAG_MES, mes));
-            postParameters.add(new BasicNameValuePair(TAG_PSC, psc));
-            postParameters.add(new BasicNameValuePair(TAG_TEL, tel));
-            postParameters.add(new BasicNameValuePair(TAG_MAIL, mail));
-            postParameters.add(new BasicNameValuePair(TAG_WWW, www));
-            
-        	postParameters.add(new BasicNameValuePair("serverx", serverx));
-        	//postParameters.add(new BasicNameValuePair("userx", userx));
-        	postParameters.add(new BasicNameValuePair("userhash", encrypted));
-        	postParameters.add(new BasicNameValuePair("fakx", fakx));
-        	postParameters.add(new BasicNameValuePair("newx", newx));
-        	postParameters.add(new BasicNameValuePair("pozx", pozx));
-        	postParameters.add(new BasicNameValuePair("icox", icox));
-            
+            // write on SD card file data in the text box
             try {
-            UrlEncodedFormEntity formEntity = new UrlEncodedFormEntity(postParameters, HTTP.UTF_8);
-            request.setEntity(formEntity);
-
-            HttpResponse response = client.execute(request);
-
-            in = new BufferedReader(new InputStreamReader(response.getEntity().getContent()));
-            StringBuffer sb = new StringBuffer("");
-            String line = "";
-            //String lineSeparator = System.getProperty("line.separator");
-            while ((line = in.readLine()) != null) {
-                sb.append(line);
-                //sb.append(lineSeparator);
-            }
-            in.close();
-            String result = sb.toString();
-  
-            String delimso = "[;]+";
-         	String[] resultxxx = result.split(delimso);
-
-             if( resultxxx[0].equals("1")) {
-
             	
-            	// successfully updated
-                Intent i = getIntent();
-                // send result code 100 to notify about product update
-                setResult(100, i);
-                finish();
-            }else {
+            	String baseDir = Environment.getExternalStorageDirectory().getAbsolutePath();
+            	String fileName = "/eusecom/androiducto/iconew.csv";
 
+            	File myFile = new File(baseDir + File.separator + fileName);
+
+        		if(!myFile.exists()){
+        			myFile.createNewFile();
+        		}
+                //myFile.createNewFile();
+                //to true znamena pridat append ked tam nie je prepise
+        		FileOutputStream fOut = new FileOutputStream(myFile, true);
+                OutputStreamWriter myOutWriter = new OutputStreamWriter(fOut);
+
+                
+                String datatxt = ico + ";" + dic + ";" + icd + ";" + nai + ";" + uli + ";" + psc 
+                		+ ";" + mes + ";" + tel +  ";" + mail + ";" + www + "\n";
+                myOutWriter.append(datatxt);
+                myOutWriter.close();
+                fOut.close();
+
+                	// successfully updated
+                    Intent i = getIntent();
+                    // send result code 100 to notify about product update
+                    setResult(100, i);
+                    finish();
+                
+                
+                //Toast.makeText(getBaseContext(),"Done writing SD 'mysdfile.txt'", Toast.LENGTH_SHORT).show();
+            } catch (Exception e) {
+                //Toast.makeText(getBaseContext(), e.getMessage(),Toast.LENGTH_SHORT).show();
             }
-            
-                 } catch (ClientProtocolException e) {
-            	   // TODO Auto-generated catch block
-            	   e.printStackTrace();
-            	   //Toast.makeText(EditProductv2Activity.this, e.toString(), Toast.LENGTH_LONG).show();
-            	  } catch (IOException e) {
-            		   // TODO Auto-generated catch block
-            		   e.printStackTrace();
-            		   //Toast.makeText(EditProductv2Activity.this, e.toString(), Toast.LENGTH_LONG).show();
-            		  }
 
  
             return null;
