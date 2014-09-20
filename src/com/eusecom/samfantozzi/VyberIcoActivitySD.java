@@ -1,7 +1,9 @@
 package com.eusecom.samfantozzi;
  
+import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.HashMap;
 import org.json.JSONArray;
@@ -495,11 +497,62 @@ public class VyberIcoActivitySD extends ListActivity {
             
         	XMLDOMParser parser = new XMLDOMParser();
             try {
+            	
             	String baseDir = Environment.getExternalStorageDirectory().getAbsolutePath();
-            	String fileName = "/eusecom/androiducto/ico.xml";
+            	String fileName = "/eusecom/androiducto/iconew.csv";
             	File myFile = new File(baseDir + File.separator + fileName);
+
+            	if( pagex.equals("1")) {
+            		
+                FileInputStream fIn = new FileInputStream(myFile);
+                BufferedReader myReader = new BufferedReader(
+                        new InputStreamReader(fIn));
+                String aDataRow = "";
+                String aBuffer = "";
+                //do ip napocitam kolko riadkov mam
+                int ip=0;
+            	
+                while ((aDataRow = myReader.readLine()) != null) {
+                    aBuffer += aDataRow + "\n";
+                    ip = ip+1;
                 
-                Document doc = parser.getDocument(new FileInputStream(myFile));
+                }
+
+                String kosikx = aBuffer;
+                myReader.close();
+
+            	String delims = "[\n]+";
+            	String delims2 = "[;]+";
+            	
+            	String[] riadokxxx = kosikx.split(delims);
+            	
+                for (int i = 0; i < riadokxxx.length; i++) {
+            	String riadok1 =  riadokxxx[i];
+
+            	String[] polozkyx = riadok1.split(delims2);
+            	String icox =  polozkyx[0];
+            	String naix =  polozkyx[3] + " " + polozkyx[6];
+
+                // creating new HashMap
+                HashMap<String, String> map = new HashMap<String, String>();
+
+                // adding each child node to HashMap key => value
+                map.put(TAG_PID, icox);
+                map.put(TAG_NAME, naix);
+                map.put(TAG_PRICE, "!!");
+
+                // adding HashList to ArrayList dam tam len poslednych 10 i >= ip
+                productsList.add(map);
+                }
+                //koniec for
+            	}
+            	//koniec ak pagex=1
+            	
+
+            	String fileName2 = "/eusecom/androiducto/ico.xml";
+            	File myFile2 = new File(baseDir + File.separator + fileName2);
+                
+                Document doc = parser.getDocument(new FileInputStream(myFile2));
                 
                 // Get elements by name employee
                 NodeList nodeList = doc.getElementsByTagName(TAG_PRODUCT);
@@ -515,13 +568,15 @@ public class VyberIcoActivitySD extends ListActivity {
                     String name = parser.getValue(e, NODE_NAME);
                     String price = parser.getValue(e, NODE_PRICE);
                     
+                    name = name + " " + price;
+                    
                     // creating new HashMap
                     HashMap<String, String> map = new HashMap<String, String>();
 
                     // adding each child node to HashMap key => value
                     map.put(TAG_PID, id);
                     map.put(TAG_NAME, name);
-                    map.put(TAG_PRICE, price);
+                    map.put(TAG_PRICE, " ");
                     
                     // adding HashList to ArrayList
                     productsList.add(map);
@@ -530,7 +585,8 @@ public class VyberIcoActivitySD extends ListActivity {
             } catch (Exception e) {
                
             }
- 
+            
+
             return null;
         }
  
@@ -548,7 +604,7 @@ public class VyberIcoActivitySD extends ListActivity {
                      * */
                     ListAdapter adapter = new SimpleAdapter(
                             VyberIcoActivitySD.this, productsList,
-                            R.layout.list_item_ico, new String[] { TAG_PID, TAG_NAME, TAG_PRICE},
+                            R.layout.list_item_icosd, new String[] { TAG_PID, TAG_NAME, TAG_PRICE},
                             new int[] { R.id.pid, R.id.name, R.id.price });
                     // updating listview
                     setListAdapter(adapter);
