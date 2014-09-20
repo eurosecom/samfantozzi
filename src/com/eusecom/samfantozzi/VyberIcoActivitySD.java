@@ -92,6 +92,8 @@ public class VyberIcoActivitySD extends ListActivity {
     JSONArray products = null;
     
     String incomplet;
+    String firmax;
+    String adresarx;
  
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -111,6 +113,11 @@ public class VyberIcoActivitySD extends ListActivity {
         
         db=(new DatabaseHelper(this)).getWritableDatabase();
        
+        firmax=SettingsActivity.getFir(this);
+        adresarx=SettingsActivity.getServerName(this);
+        String delims = "[/]+";
+    	String[] serverxxx = adresarx.split(delims);
+    	adresarx=serverxxx[1];
         inputAll = (TextView) findViewById(R.id.inputAll);
         inputAll.setText("Fir/" + SettingsActivity.getFir(this) + "/Firrok/" + SettingsActivity.getFirrok(this));
         inputAllServer = (TextView) findViewById(R.id.inputAllServer);
@@ -240,21 +247,18 @@ public class VyberIcoActivitySD extends ListActivity {
         });
         
         incomplet = "0";
-    	String serverx = SettingsActivity.getServerName(this);
-    	String delims = "[/]+";
-    	String[] serverxxx = serverx.split(delims);
     	
     	String baseDir2 = Environment.getExternalStorageDirectory().getAbsolutePath();
-    	String fileName2 = "/eusecom/" + serverxxx[1] + "/ico.xml";
+    	String fileName2 = "/eusecom/" + adresarx + "/ico.xml";
     	File myFile2 = new File(baseDir2 + File.separator + fileName2);
     	if (myFile2.exists()) { } else { incomplet = "1"; }
-    	String fileName3 = "/eusecom/" + serverxxx[1] + "/odbm.xml";
+    	String fileName3 = "/eusecom/" + adresarx + "/odbm.xml";
     	File myFile3 = new File(baseDir2 + File.separator + fileName3);
     	if (myFile3.exists()) { } else { incomplet = "1"; }
-    	String fileName4 = "/eusecom/" + serverxxx[1] + "/uctosnova.xml";
+    	String fileName4 = "/eusecom/" + adresarx + "/uctosnova.xml";
     	File myFile4 = new File(baseDir2 + File.separator + fileName4);
     	if (myFile4.exists()) { } else { incomplet = "1"; }
-    	String fileName5 = "/eusecom/" + serverxxx[1] + "/autopohyby.xml";
+    	String fileName5 = "/eusecom/" + adresarx + "/autopohyby.xml";
     	File myFile5 = new File(baseDir2 + File.separator + fileName5);
     	if (myFile5.exists()) { } else { incomplet = "1"; }
     	
@@ -263,8 +267,10 @@ public class VyberIcoActivitySD extends ListActivity {
     		//defaultXML defxml = new defaultXML(xxx);
     		
     		int xxx2=1;
+    		String adresar=adresarx;
+    		String firma=firmax;
     		int defxmlint;
-    		defxmlint = defaultXML.createdefaultXML(xxx2);
+    		defxmlint = defaultXML.createdefaultXML(xxx2, adresar, firma);
     		if( defxmlint == 1 ){Toast.makeText(this, getResources().getString(R.string.setdefaultxml), Toast.LENGTH_LONG).show();}
 
     	}
@@ -499,11 +505,11 @@ public class VyberIcoActivitySD extends ListActivity {
             try {
             	
             	String baseDir = Environment.getExternalStorageDirectory().getAbsolutePath();
-            	String fileName = "/eusecom/androiducto/iconew.csv";
+            	String fileName = "/eusecom/" + adresarx + "/iconew" + firmax + ".csv";
             	File myFile = new File(baseDir + File.separator + fileName);
 
             	if( pagex.equals("1")) {
-            		
+            			if(myFile.exists()){
                 FileInputStream fIn = new FileInputStream(myFile);
                 BufferedReader myReader = new BufferedReader(
                         new InputStreamReader(fIn));
@@ -545,11 +551,13 @@ public class VyberIcoActivitySD extends ListActivity {
                 productsList.add(map);
                 }
                 //koniec for
+            			}
+            			//koniec ak iconew.csv existuje
             	}
             	//koniec ak pagex=1
             	
 
-            	String fileName2 = "/eusecom/androiducto/ico.xml";
+            	String fileName2 = "/eusecom/" + adresarx + "/ico"+ firmax + ".xml";
             	File myFile2 = new File(baseDir + File.separator + fileName2);
                 
                 Document doc = parser.getDocument(new FileInputStream(myFile2));

@@ -14,15 +14,15 @@ import android.os.Environment;
 
             }
             
-            public static int createdefaultXML(int xxx)
+            public static int createdefaultXML(int xxx, String adresar, String firma)
             {
             	
  
-            	File folder = new File(Environment.getExternalStorageDirectory().toString()+"/eusecom/androiducto");
+            	File folder = new File(Environment.getExternalStorageDirectory().toString()+"/eusecom/" + adresar);
             	folder.mkdirs();
 
             	String baseDir = Environment.getExternalStorageDirectory().getAbsolutePath();  
-            	String fileName1 = "/eusecom/androiducto/ico.xml";
+            	String fileName1 = "/eusecom/" + adresar + "/ico" + firma + ".xml";
             	File myFile1 = new File(baseDir + File.separator + fileName1);
             	
             	if(!myFile1.exists()){
@@ -42,7 +42,7 @@ import android.os.Environment;
                     		datatxt1 += "<dic>2022753887</dic>";
                     		datatxt1 += "<icd>SK2022753887</icd>";
                     		datatxt1 += "<nai>EDcom s.r.o.</nai>";
-                    		datatxt1 += "<uli><![CDATA[Sotinska 1474/11]]></uli>";
+                    		datatxt1 += "<uli>Sotinska 1474/11</uli>";
                     		datatxt1 += "<psc>90501</psc>";
                     		datatxt1 += "<mes>Senica</mes>";
                     		datatxt1 += "<tel>0905/804265</tel>";

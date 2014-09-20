@@ -75,6 +75,8 @@ public class UpravIcoActivitySD extends Activity {
     String newx;
     String icox;
     String encrypted;
+    String firmax;
+    String adresarx;
     
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -91,7 +93,12 @@ public class UpravIcoActivitySD extends Activity {
         newx = extras.getString(TAG_NEWX);
         pozx = "1";
         fakx = "13001";
-          
+         
+        firmax=SettingsActivity.getFir(this);
+        adresarx=SettingsActivity.getServerName(this);
+        String delims = "[/]+";
+    	String[] serverxxx = adresarx.split(delims);
+    	adresarx=serverxxx[1];
         inputAll = (TextView) findViewById(R.id.inputAll);
         inputAll.setText("Fir/" + SettingsActivity.getFir(this) + "/Firrok/" + SettingsActivity.getFirrok(this));
         inputEdiServer = (TextView) findViewById(R.id.inputEdiServer);
@@ -195,7 +202,7 @@ public class UpravIcoActivitySD extends Activity {
                     	String baseDir = Environment.getExternalStorageDirectory().getAbsolutePath();
                     	String fileName = "";
                     	
-                    	fileName = "/eusecom/androiducto/ico.xml";
+                    	fileName = "/eusecom/" + adresarx + "/ico"+ firmax + ".xml";
                     	File myFile = new File(baseDir + File.separator + fileName);
                         
                         Document doc = parser.getDocument(new FileInputStream(myFile));
@@ -325,7 +332,7 @@ public class UpravIcoActivitySD extends Activity {
             try {
             	
             	String baseDir = Environment.getExternalStorageDirectory().getAbsolutePath();
-            	String fileName = "/eusecom/androiducto/iconew.csv";
+            	String fileName = "/eusecom/" + adresarx + "/iconew"+ firmax + ".csv";
 
             	File myFile = new File(baseDir + File.separator + fileName);
 
