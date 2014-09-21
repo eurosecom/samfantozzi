@@ -249,16 +249,13 @@ public class VyberIcoActivitySD extends ListActivity {
         incomplet = "0";
     	
     	String baseDir2 = Environment.getExternalStorageDirectory().getAbsolutePath();
-    	String fileName2 = "/eusecom/" + adresarx + "/ico.xml";
+    	String fileName2 = "/eusecom/" + adresarx + "/ico" + firmax + ".xml";
     	File myFile2 = new File(baseDir2 + File.separator + fileName2);
     	if (myFile2.exists()) { } else { incomplet = "1"; }
-    	String fileName3 = "/eusecom/" + adresarx + "/odbm.xml";
-    	File myFile3 = new File(baseDir2 + File.separator + fileName3);
-    	if (myFile3.exists()) { } else { incomplet = "1"; }
-    	String fileName4 = "/eusecom/" + adresarx + "/uctosnova.xml";
+    	String fileName4 = "/eusecom/" + adresarx + "/uctosnova" + firmax + ".xml";
     	File myFile4 = new File(baseDir2 + File.separator + fileName4);
     	if (myFile4.exists()) { } else { incomplet = "1"; }
-    	String fileName5 = "/eusecom/" + adresarx + "/autopohyby.xml";
+    	String fileName5 = "/eusecom/" + adresarx + "/autopohyby" + firmax + ".xml";
     	File myFile5 = new File(baseDir2 + File.separator + fileName5);
     	if (myFile5.exists()) { } else { incomplet = "1"; }
     	
