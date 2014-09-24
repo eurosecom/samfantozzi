@@ -121,6 +121,10 @@
             android:label="@string/popisIcoSD" >
         </activity>
         <activity
+            android:name="com.eusecom.samfantozzi.SynchroIcoActivitySD"
+            android:label="@string/synchroIcoSD" >
+        </activity>
+        <activity
             android:name="com.eusecom.samfantozzi.VyberUceActivity"
             android:label="@string/popisUce" >
         </activity>

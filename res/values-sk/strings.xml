@@ -29,6 +29,7 @@
     <string name="title_activity_all_products">AllProductsActivity</string>
     <string name="title_activity_new_product">NewProductActivity</string>
     <string name="potrebujeteinternet">Pre správnu funkciu programu potrebujete pripojenie do Internetu !</string>
+    <string name="potrebujeteinternetsync">Pre synchronizáciu potrebujete pripojenie do Internetu !</string>
     <string name="niejeinternet">Nemáte pripojenie do Internetu !</string>
     
     <string name="popisbutviewprod">Zoznam produktov</string>
@@ -284,6 +285,7 @@
     <string name="popisRetazec">Text</string>
     <string name="popisIco">IČO firmy</string>
     <string name="popisIcoSD">IČO firmy SDkarta</string>
+    <string name="synchroIcoSD">Synchronizácia IČO</string>
     <string name="popisKto">Osoba</string>
     <string name="popisTxp">Poznámka</string>
     <string name="popisUcm">Pokladnica</string>

@@ -29,6 +29,7 @@
     <string name="title_activity_all_products">AllProductsActivity</string>
     <string name="title_activity_new_product">NewProductActivity</string>
     <string name="potrebujeteinternet">For correct function of the program you need to connect to the Internet!</string>
+    <string name="potrebujeteinternetsync">For synchonizations you need to connect to the Internet!</string>
     <string name="niejeinternet">You do not have an Internet connection!</string>
     
     <string name="popisbutviewprod">List of products</string>
@@ -288,6 +289,7 @@
     <string name="popisRetazec">Text</string>
     <string name="popisIco">Company ID</string>
     <string name="popisIcoSD">Company ID SDcard</string>
+    <string name="synchroIcoSD">Synchronize IDcompany</string>
     <string name="popisKto">Person</string>
     <string name="popisTxp">Note</string>
     <string name="popisUcm">Cash register</string>

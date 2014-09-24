@@ -343,7 +343,7 @@ public class UpravPoklZahActivity extends Activity {
                         		"http://" + serverxxx[0] + "/androidfanti/get_poklzah.php", "GET", params);
  
                         // check your log for json response
-                        Log.d("Single Product Details", json.toString());
+                        Log.d("JSONObject json from parser", json.toString());
  
                         // json success tag
                         success = json.getInt(TAG_SUCCESS);
@@ -351,6 +351,9 @@ public class UpravPoklZahActivity extends Activity {
                             // successfully received product details
                             JSONArray productObj = json
                                     .getJSONArray(TAG_PRODUCT); // JSON Array
+                            
+                            // check your log for json response
+                            Log.d("JSONArray productObj", productObj.toString());
  
                             // get first product object from JSON Array
                             JSONObject product = productObj.getJSONObject(0);
