@@ -6,6 +6,19 @@ import java.io.FileInputStream;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
+
+import org.apache.http.HttpResponse;
+import org.apache.http.HttpVersion;
+import org.apache.http.NameValuePair;
+import org.apache.http.client.HttpClient;
+import org.apache.http.client.entity.UrlEncodedFormEntity;
+import org.apache.http.client.methods.HttpPost;
+import org.apache.http.impl.client.DefaultHttpClient;
+import org.apache.http.message.BasicNameValuePair;
+import org.apache.http.params.BasicHttpParams;
+import org.apache.http.params.HttpParams;
+import org.apache.http.protocol.HTTP;
 import org.json.JSONArray;
 import android.app.ListActivity;
 import android.app.ProgressDialog;
@@ -39,6 +52,7 @@ public class SynchroIcoActivitySD extends ListActivity {
     String idvalue;
     String odkade;
     String pagex;
+    BufferedReader in;
     
     ArrayList<HashMap<String, String>> productsList;
  
@@ -98,7 +112,8 @@ public class SynchroIcoActivitySD extends ListActivity {
         productsList = new ArrayList<HashMap<String, String>>();
  
         // Loading products in Background Thread
-        new LoadAllIcosSD().execute();
+        //new LoadAllIcosSD().execute();
+        new SynchroAllIcosSD().execute();
  
         // Get listview
         //ListView lv = getListView();
@@ -112,9 +127,131 @@ public class SynchroIcoActivitySD extends ListActivity {
  //koniec oncreate
     
 
+    //prenos iconew.csv na server
+    /**
+     * Background Async Task to Load all banks by making HTTP Request
+     * */
+    class SynchroAllIcosSD extends AsyncTask<String, String, String> {
+    	
+        /**
+         * Before starting background thread Show Progress Dialog
+         * */
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+            pDialog = new ProgressDialog(SynchroIcoActivitySD.this);
+            pDialog.setMessage(getString(R.string.progdata));
+            pDialog.setIndeterminate(false);
+            pDialog.setCancelable(false);
+            pDialog.show();
+        }
+ 
+        /**
+         * getting All banks from url
+         * */
+        protected String doInBackground(String... args) {
+            
+           try {
+            	
+            	String baseDir = Environment.getExternalStorageDirectory().getAbsolutePath();
+            	String fileName = "/eusecom/" + adresarx + "/iconew" + firmax + ".csv";
+            	File myFile = new File(baseDir + File.separator + fileName);
+
+            			if(myFile.exists()){
+                FileInputStream fIn = new FileInputStream(myFile);
+                BufferedReader myReader = new BufferedReader(
+                        new InputStreamReader(fIn));
+                String aDataRow = "";
+                String aBuffer = "";
+                //do ip napocitam kolko riadkov mam
+                int ip=0;
+            	
+                while ((aDataRow = myReader.readLine()) != null) {
+                    aBuffer += aDataRow + "\n";
+                    ip = ip+1;
+                
+                }
+
+                String kosikx = aBuffer;
+                myReader.close();
+
+            			}
+            			//koniec ak iconew.csv existuje
+            			
+            			String prmall="";
+            			
+            			HttpParams httpParameters = new BasicHttpParams();
+
+                        HttpClient client = new DefaultHttpClient(httpParameters);
+                        client.getParams().setParameter("http.protocol.version", HttpVersion.HTTP_1_1);
+                        client.getParams().setParameter("http.socket.timeout", 2000);
+                        client.getParams().setParameter("http.protocol.content-charset", HTTP.UTF_8);
+                        httpParameters.setBooleanParameter("http.protocol.expect-continue", false);
+                        HttpPost request = new HttpPost("http://www.eshoptest.sk/androidfanti/synchro_ico.php?sid=5");
+                        request.getParams().setParameter("http.socket.timeout", 5000);
+
+                    	List<NameValuePair> postParameters = new ArrayList<NameValuePair>();
+                    	postParameters.add(new BasicNameValuePair("prmall", prmall));
+
+
+                        UrlEncodedFormEntity formEntity = new UrlEncodedFormEntity(postParameters, HTTP.UTF_8);
+                        request.setEntity(formEntity);
+
+                        HttpResponse response = client.execute(request);
+
+                        in = new BufferedReader(new InputStreamReader(response.getEntity().getContent()));
+                        StringBuffer sb = new StringBuffer("");
+                        String line = "";
+                        //String lineSeparator = System.getProperty("line.separator");
+                        while ((line = in.readLine()) != null) {
+                            sb.append(line);
+                            //sb.append(lineSeparator);
+                        }
+                        in.close();
+                        String result = sb.toString();
+              
+                        String delimso = "[;]+";
+                     	String[] resultxxx = result.split(delimso);
+
+
+            	
+               
+            } catch (Exception e) {
+               
+            }
+            
+
+            return null;
+        }
+ 
+        /**
+         * After completing background task Dismiss the progress dialog
+         * **/
+        protected void onPostExecute(String file_url) {
+            // dismiss the dialog after getting all products
+            pDialog.dismiss();
+            // updating UI from Background Thread
+            runOnUiThread(new Runnable() {
+                public void run() {
+                    /**
+                     * Updating parsed JSON data into ListView
+                     * */
+                    ListAdapter adapter = new SimpleAdapter(
+                            SynchroIcoActivitySD.this, productsList,
+                            R.layout.list_item_icosd, new String[] { TAG_PID, TAG_NAME, TAG_PRICE},
+                            new int[] { R.id.pid, R.id.name, R.id.price });
+                    // updating listview
+                    setListAdapter(adapter);
+                }
+            });
+ 
+        }
+ 
+    }
+    //koniec prenos iconew.csv na server
 
  
-//nacitanie ico
+    //nacitanie ico
     /**
      * Background Async Task to Load all banks by making HTTP Request
      * */
