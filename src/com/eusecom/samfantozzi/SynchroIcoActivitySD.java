@@ -3,8 +3,10 @@ package com.eusecom.samfantozzi;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.io.OutputStreamWriter;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.ArrayList;
@@ -292,6 +294,15 @@ public class SynchroIcoActivitySD extends ListActivity {
             	   	String strret = LoadIcoXmlFromWebOperations(urls);
             	   	nacitanexml = (TextView) findViewById(R.id.nacitanexml);
             	    nacitanexml.setText(strret);
+            	    
+            	    // successfully updated
+             		Intent i = new Intent(getApplicationContext(), VyberIcoActivitySD.class);
+             		Bundle extras = new Bundle();
+             		extras.putString("odkade", "100");
+                    extras.putString("page", "1");
+                    i.putExtras(extras);
+        			startActivity(i);
+                    finish();
 
                 }
             });
@@ -440,6 +451,33 @@ public class SynchroIcoActivitySD extends ListActivity {
     	} catch (MalformedURLException e) {
     	} catch (IOException e) {
     	}
+
+    	String baseDir = Environment.getExternalStorageDirectory().getAbsolutePath();  
+    	String fileName1 = "/eusecom/" + adresarx + "/ico" + firmax + ".xml";
+    	File myFile1 = new File(baseDir + File.separator + fileName1);
+    	
+    	if(myFile1.exists()){ myFile1.delete(); }
+    		
+			try {
+				myFile1.createNewFile();
+
+				FileOutputStream fOut1 = null;
+				fOut1 = new FileOutputStream(myFile1, true);
+				OutputStreamWriter myOutWriter1 = new OutputStreamWriter(fOut1);
+				
+					String datatxt1 = strret;
+
+
+				myOutWriter1.append(datatxt1);
+				myOutWriter1.close();
+				fOut1.close();
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+
+			}
+
+    	
 		return strret;
     	
     }
