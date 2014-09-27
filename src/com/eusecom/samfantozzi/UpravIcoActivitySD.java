@@ -345,8 +345,8 @@ public class UpravIcoActivitySD extends Activity {
                 OutputStreamWriter myOutWriter = new OutputStreamWriter(fOut);
 
                 
-                String datatxt = ico + ";" + dic + ";" + icd + ";" + nai + ";" + uli + ";" + psc 
-                		+ ";" + mes + ";" + tel +  ";" + mail + ";" + www + "\n";
+                String datatxt = ico + " ;" + dic + " ;" + icd + " ;" + nai + " ;" + uli + " ;" + psc 
+                		+ " ;" + mes + " ;" + tel +  " ;" + mail + " ;" + www + "\n";
                 myOutWriter.append(datatxt);
                 myOutWriter.close();
                 fOut.close();

@@ -28,6 +28,7 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Environment;
 import android.preference.PreferenceManager;
+import android.util.Log;
 import android.view.ContextMenu;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -537,6 +538,7 @@ public class VyberIcoActivitySD extends ListActivity {
             	
                 for (int i = 0; i < riadokxxx.length; i++) {
             	String riadok1 =  riadokxxx[i];
+            	Log.d("riadok1", riadok1.toString());
 
             	String[] polozkyx = riadok1.split(delims2);
             	String icox =  polozkyx[0];

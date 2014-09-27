@@ -3,7 +3,10 @@ package com.eusecom.samfantozzi;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.IOException;
 import java.io.InputStreamReader;
+import java.net.MalformedURLException;
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -11,6 +14,7 @@ import java.util.List;
 import org.apache.http.HttpResponse;
 import org.apache.http.HttpVersion;
 import org.apache.http.NameValuePair;
+import org.apache.http.client.ClientProtocolException;
 import org.apache.http.client.HttpClient;
 import org.apache.http.client.entity.UrlEncodedFormEntity;
 import org.apache.http.client.methods.HttpPost;
@@ -26,10 +30,12 @@ import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Environment;
+import android.os.StrictMode;
 import android.widget.Button;
 import android.widget.ListAdapter;
 import android.widget.SimpleAdapter;
 import android.widget.TextView;
+import com.eusecom.samfantozzi.MCrypt;
 
 
 public class SynchroIcoActivitySD extends ListActivity {
@@ -47,12 +53,14 @@ public class SynchroIcoActivitySD extends ListActivity {
     TextView inputAll;
     TextView inputAllServer;
     TextView inputAllUser;
+    TextView nacitanexml;
     
     String idtitle;
     String idvalue;
     String odkade;
     String pagex;
     BufferedReader in;
+    String encrypted;
     
     ArrayList<HashMap<String, String>> productsList;
  
@@ -76,6 +84,7 @@ public class SynchroIcoActivitySD extends ListActivity {
     String incomplet;
     String firmax;
     String adresarx;
+    String obsahcsv;
  
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -104,7 +113,11 @@ public class SynchroIcoActivitySD extends ListActivity {
         inputAllServer.setText(SettingsActivity.getServerName(this));
         inputAllUser = (TextView) findViewById(R.id.inputAllUser);
         inputAllUser.setText("Nick/" + SettingsActivity.getNickName(this) + "/ID/" + SettingsActivity.getUserId(this) + "/PSW/" 
-                + SettingsActivity.getUserPsw(this) + "/druhID/" + SettingsActivity.getDruhId(this));
+                + SettingsActivity.getUserPsw(this) + "/druhID/" + SettingsActivity.getDruhId(this) + 
+                "/Fir/" + SettingsActivity.getFir(this) + "/Firrok/" + SettingsActivity.getFirrok(this));
+        
+        StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
+   		StrictMode.setThreadPolicy(policy);
     
         	
     	
@@ -150,14 +163,35 @@ public class SynchroIcoActivitySD extends ListActivity {
          * getting All banks from url
          * */
         protected String doInBackground(String... args) {
+        	
+        	String prmall = inputAll.getText().toString();
+        	String serverx = inputAllServer.getText().toString();
+        	String delims = "[/]+";
+        	String[] serverxxx = serverx.split(delims);
+        	String userx = inputAllUser.getText().toString();
+        	
+        	String userxplus = userx;
+        	
+        	//String userhash = sha1Hash( userx );
+        	MCrypt mcrypt = new MCrypt();
+        	/* Encrypt */
+        	try {
+				encrypted = MCrypt.bytesToHex( mcrypt.encrypt(userxplus) );
+			} catch (Exception e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}
+        	/* Decrypt */
+        	//String decrypted = new String( mcrypt.decrypt( encrypted ) );
+        	
             
-           try {
+        try {
             	
             	String baseDir = Environment.getExternalStorageDirectory().getAbsolutePath();
             	String fileName = "/eusecom/" + adresarx + "/iconew" + firmax + ".csv";
             	File myFile = new File(baseDir + File.separator + fileName);
 
-            			if(myFile.exists()){
+            	if(myFile.exists()){
                 FileInputStream fIn = new FileInputStream(myFile);
                 BufferedReader myReader = new BufferedReader(
                         new InputStreamReader(fIn));
@@ -167,18 +201,23 @@ public class SynchroIcoActivitySD extends ListActivity {
                 int ip=0;
             	
                 while ((aDataRow = myReader.readLine()) != null) {
-                    aBuffer += aDataRow + "\n";
+                    aBuffer += aDataRow + ";endLinexx;";
                     ip = ip+1;
                 
                 }
 
-                String kosikx = aBuffer;
+                obsahcsv = aBuffer;
                 myReader.close();
+                if(myFile.exists()){ myFile.delete(); }
 
-            			}
-            			//koniec ak iconew.csv existuje
+            	}
+            	//koniec ak iconew.csv existuje
             			
-            			String prmall="";
+           	} catch (Exception e) {
+               
+           	}
+        
+        		try {
             			
             			HttpParams httpParameters = new BasicHttpParams();
 
@@ -187,11 +226,14 @@ public class SynchroIcoActivitySD extends ListActivity {
                         client.getParams().setParameter("http.socket.timeout", 2000);
                         client.getParams().setParameter("http.protocol.content-charset", HTTP.UTF_8);
                         httpParameters.setBooleanParameter("http.protocol.expect-continue", false);
-                        HttpPost request = new HttpPost("http://www.eshoptest.sk/androidfanti/synchro_ico.php?sid=5");
+                        HttpPost request = new HttpPost("http://" + serverxxx[0] + "/androidfanti/synchro_ico.php?sid=5");
                         request.getParams().setParameter("http.socket.timeout", 5000);
 
                     	List<NameValuePair> postParameters = new ArrayList<NameValuePair>();
                     	postParameters.add(new BasicNameValuePair("prmall", prmall));
+                    	postParameters.add(new BasicNameValuePair("obsahcsv", obsahcsv));
+                    	postParameters.add(new BasicNameValuePair("serverx", serverx));
+                    	postParameters.add(new BasicNameValuePair("userhash", encrypted));
 
 
                         UrlEncodedFormEntity formEntity = new UrlEncodedFormEntity(postParameters, HTTP.UTF_8);
@@ -212,13 +254,25 @@ public class SynchroIcoActivitySD extends ListActivity {
               
                         String delimso = "[;]+";
                      	String[] resultxxx = result.split(delimso);
+                     	if( resultxxx[0].equals("1")) {
+                     		
+                        	// successfully updated
+                     		//Intent i = new Intent(getApplicationContext(), VyberIcoActivitySD.class);
+                			//extras.putString("odkade", "100");
+                            //extras.putString("page", "1");
+                            //i.putExtras(extras);
+                			//startActivity(i);
+                            //finish();
+                        }else {
+
+                        }
 
 
-            	
-               
-            } catch (Exception e) {
-               
-            }
+        			} catch (ClientProtocolException e) {
+        				e.printStackTrace();
+        			} catch (IOException e) {
+             		   	e.printStackTrace();
+             		}
             
 
             return null;
@@ -233,15 +287,12 @@ public class SynchroIcoActivitySD extends ListActivity {
             // updating UI from Background Thread
             runOnUiThread(new Runnable() {
                 public void run() {
-                    /**
-                     * Updating parsed JSON data into ListView
-                     * */
-                    ListAdapter adapter = new SimpleAdapter(
-                            SynchroIcoActivitySD.this, productsList,
-                            R.layout.list_item_icosd, new String[] { TAG_PID, TAG_NAME, TAG_PRICE},
-                            new int[] { R.id.pid, R.id.name, R.id.price });
-                    // updating listview
-                    setListAdapter(adapter);
+                	
+                	String urls = "http://www.eshoptest.sk/tmp/ico" + firmax + ".xml";
+            	   	String strret = LoadIcoXmlFromWebOperations(urls);
+            	   	nacitanexml = (TextView) findViewById(R.id.nacitanexml);
+            	    nacitanexml.setText(strret);
+
                 }
             });
  
@@ -334,7 +385,6 @@ public class SynchroIcoActivitySD extends ListActivity {
                
             }
             
-
             return null;
         }
  
@@ -363,8 +413,38 @@ public class SynchroIcoActivitySD extends ListActivity {
  
     }
     //koniec nacitanie ico
-
-
     
+	
+    public String LoadIcoXmlFromWebOperations(String urls) {
+    	
+    	String strret="";
+    	
+    	try {
+    	    // Create a URL for the desired page
+    		
+    	    URL url = new URL(urls);
+
+    	    // Read all the text returned by the server
+    	    BufferedReader in = new BufferedReader(new InputStreamReader(url.openStream()));
+    	    String aBuffer="";
+    	    String str="";
+    	    
+    	    while ((str = in.readLine()) != null) {
+    	        // str is one line of text; readLine() strips the newline character(s)
+    	    	aBuffer += str + "\n";
+    	    }
+    	    strret = aBuffer;
+    	    in.close();
+    	    
+    	    
+    	} catch (MalformedURLException e) {
+    	} catch (IOException e) {
+    	}
+		return strret;
+    	
+    }
+    //koniecloadfile
+	
+  
 }
 //koniec activity
