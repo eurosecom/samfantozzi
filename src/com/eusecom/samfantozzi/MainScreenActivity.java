@@ -7,6 +7,7 @@ import java.io.File;
 import android.app.Activity;
 import android.app.AlarmManager;
 import android.app.AlertDialog;
+import android.app.AlertDialog.Builder;
 import android.app.PendingIntent;
 import android.content.BroadcastReceiver;
 import android.content.Context;
@@ -127,24 +128,56 @@ if( SettingsActivity.getSDkarta(this).equals("1")) {
           @Override
           public void onClick(View view) {
               // Launching All products Activity
-              Intent i = new Intent(getApplicationContext(), SettingsActivity.class);
+        	  Intent i = new Intent(getApplicationContext(), PokladnicaActivitySD.class);
+              Bundle extras = new Bundle();
+              extras.putString(TAG_CAT, "1");
+              extras.putString(TAG_DCEX, "0");
+              extras.putString(TAG_PAGEX, "1");
+              i.putExtras(extras);
               startActivity(i);
 
           }
       });
      
+  
+      final Builder aaa = new AlertDialog.Builder(this)
+      .setTitle(getString(R.string.lokalnyrezim))
+      .setMessage(getString(R.string.lenpokladnicu))
+      .setPositiveButton(getString(R.string.textok), new DialogInterface.OnClickListener() {
+          public void onClick(DialogInterface dialog, int which) { 
+            
+          	//finish();
+          }
+       });
+
+  
       // banka button
       btnBanka = (Button) findViewById(R.id.btnBanka);
       btnBanka.setOnClickListener(new View.OnClickListener() {
 
           @Override
           public void onClick(View view) {
+              aaa.show();
+          }
+      });
+      
+      // dodav button
+      btnDod1 = (Button) findViewById(R.id.btnDod1);
+      btnDod1.setOnClickListener(new View.OnClickListener() {
 
-          	// Launching All products Activity
-              Intent i = new Intent(getApplicationContext(), SettingsActivity.class);
-              startActivity(i);
-              
+          @Override
+          public void onClick(View view) {
+              aaa.show();
+          }
+      });
+      
+      // Odber button
+      btnOdb1 = (Button) findViewById(R.id.btnOdb1);
+      btnOdb1.setOnClickListener(new View.OnClickListener() {
 
+          @Override
+          public void onClick(View view) {
+              aaa.show();
           }
       });
       

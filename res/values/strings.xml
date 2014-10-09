@@ -215,6 +215,9 @@
     <string name="potrebujetelocaldata">The local program functions need data files !</string>
     <string name="niejelocaldata">You do not have a data files !</string>
     
+    <string name="lenpokladnicu">In the local function you can insert only cash invoices !</string>
+    <string name="lokalnyrezim">The local program functions</string>
+    
     <string name="title_activity_vyberslu">Select service</string>
     <string name="title_activity_ulozslu">Selected service</string>
     <string name="title_activity_ulozfree">Selected free item</string>
@@ -237,7 +240,8 @@
     <string name="popisZlava">% discount</string>
     <string name="progukladamfak">Saving the invoice. Please wait.</string>
 
-<string name="popisbtnpokl">Cash</string>
+	<string name="popisbtnpokl">Cash</string>
+	<string name="popisbtnpoklsd">Cash SD</string>
     <string name="popisbtnbanka">Bank</string>
     <string name="popisbtndod1">Supplier</string>
     <string name="popisbtnodb1">Customer</string>

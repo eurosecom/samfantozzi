@@ -211,6 +211,9 @@
     <string name="potrebujetelocaldata">Pre lokálnu funkciu programu potrebujete dátové zdrojové súbory !</string>
     <string name="niejelocaldata">Nemáte dátové zdrojové súbory !</string>
     
+    <string name="lenpokladnicu">V lokálnej funkcii programu môžete nahrávať len pokladničné doklady !</string>
+    <string name="lokalnyrezim">Lokálna funkcia programu</string>
+    
     <string name="title_activity_vyberslu">Vyberte službu</string>
     <string name="title_activity_ulozslu">Vybraná služba</string>
     <string name="title_activity_ulozfree">Vybraná voľná položka</string>
@@ -234,6 +237,7 @@
     <string name="progukladamfak">Ukladám faktúru. Prosím čakajte.</string>
     
     <string name="popisbtnpokl">Pokladnica</string>
+    <string name="popisbtnpoklsd">Pokladnica SD</string>
     <string name="popisbtnbanka">Banka</string>
     <string name="popisbtndod1">Dodávatelia</string>
     <string name="popisbtnodb1">Odberatelia</string>
