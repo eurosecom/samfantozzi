@@ -202,6 +202,7 @@
     <string name="popisbutmojefaktury">Moje faktúry</string>
     <string name="progmojedoklady">Čítam doklady. Prosím čakajte.</string>
     <string name="konttlac">Detaily dokladu PDF</string>
+    <string name="konttlacsd">Detaily dokladu</string>
     <string name="kontfakt">Faktúrovať</string>
     <string name="title_activity_mojefak">Moje faktúry</string>
     <string name="progfakturujobj">Faktúrujem objednávku. Prosím čakajte.</string>
@@ -290,6 +291,7 @@
     <string name="popisIco">IČO firmy</string>
     <string name="popisIcoSD">IČO firmy SDkarta</string>
     <string name="synchroIcoSD">Synchronizácia IČO</string>
+    <string name="synchropokl">Synchronizácia Pokladnice</string>
     <string name="popisKto">Osoba</string>
     <string name="popisTxp">Poznámka</string>
     <string name="popisUcm">Pokladnica</string>

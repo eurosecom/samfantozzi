@@ -16,6 +16,7 @@ import android.app.ProgressDialog;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.AsyncTask;
+import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.ContextMenu;
@@ -265,13 +266,12 @@ public class PokladnicaActivitySD extends ListActivity implements SimpleGestureL
 		   
 		   case SimpleGestureFilter.SWIPE_RIGHT :
 			   
+			   if (Build.VERSION.SDK_INT<Build.VERSION_CODES.JELLY_BEAN) { } else {
+			   
 			   Intent slideactivityr = new Intent(PokladnicaActivitySD.this, PokladnicaActivitySD.class);
         	   
         	   Bundle extrasr = new Bundle();
-        	   if( cat.equals("1")) { extrasr.putString(TAG_CAT, "9"); }
-        	   if( cat.equals("4")) { extrasr.putString(TAG_CAT, "1"); }
-        	   if( cat.equals("8")) { extrasr.putString(TAG_CAT, "4"); }
-        	   if( cat.equals("9")) { extrasr.putString(TAG_CAT, "8"); }
+        	   extrasr.putString(TAG_CAT, "1");
                extrasr.putString(TAG_DCEX, "0");
                extrasr.putString(TAG_PAGEX, "1");
                slideactivityr.putExtras(extrasr);
@@ -280,18 +280,19 @@ public class PokladnicaActivitySD extends ListActivity implements SimpleGestureL
 						ActivityOptions.makeCustomAnimation(getApplicationContext(), R.anim.animation_toright,R.anim.animation_toright2).toBundle();
                startActivity(slideactivityr, bndlanimation);
                finish();
+               
+			   }
 
 
 		   break;
 		   case SimpleGestureFilter.SWIPE_LEFT :
+			   
+			   if (Build.VERSION.SDK_INT<Build.VERSION_CODES.JELLY_BEAN) { } else {
               
 			   Intent slideactivityl = new Intent(PokladnicaActivitySD.this, PokladnicaActivitySD.class);
         	   
         	   Bundle extras = new Bundle();
-        	   if( cat.equals("1")) { extras.putString(TAG_CAT, "4"); }
-        	   if( cat.equals("4")) { extras.putString(TAG_CAT, "8"); }
-        	   if( cat.equals("8")) { extras.putString(TAG_CAT, "9"); }
-        	   if( cat.equals("9")) { extras.putString(TAG_CAT, "1"); }
+        	   extras.putString(TAG_CAT, "1"); 
                extras.putString(TAG_DCEX, "0");
                extras.putString(TAG_PAGEX, "1");
                slideactivityl.putExtras(extras);
@@ -300,46 +301,18 @@ public class PokladnicaActivitySD extends ListActivity implements SimpleGestureL
 						ActivityOptions.makeCustomAnimation(getApplicationContext(), R.anim.animation_toleft,R.anim.animation_toleft2).toBundle();
                startActivity(slideactivityl, bndlanimationl);
                finish();
+               
+			   }
 
 		   break;
 		   case SimpleGestureFilter.SWIPE_DOWN :
 			   
-			   int dpagei = Integer.parseInt(pagex);
-               int dpageim = dpagei - 1;
-               if( dpageim == 0 ) { dpageim = 1; }
-               String dpageis = dpageim + "";
-			   
-			   Intent id = new Intent(getApplicationContext(), PokladnicaActivitySD.class);
-               Bundle extrasd = new Bundle();
-               if( cat.equals("1")) { extrasd.putString(TAG_CAT, "1"); }
-        	   if( cat.equals("4")) { extrasd.putString(TAG_CAT, "4"); }
-        	   if( cat.equals("8")) { extrasd.putString(TAG_CAT, "8"); }
-        	   if( cat.equals("9")) { extrasd.putString(TAG_CAT, "9"); }
-               extrasd.putString(TAG_DCEX, "0");
-               extrasd.putString(TAG_PAGEX, dpageis);
-               id.putExtras(extrasd);
-               startActivity(id);
-               finish();
+
  
 		   break;
 		   case SimpleGestureFilter.SWIPE_UP :
 			   
-			   int upagei = Integer.parseInt(pagex);
-               int upageim = upagei + 1;
-               if( upageim == 0 ) { upageim = 1; }
-               String upageis = upageim + "";
-			   
-			   Intent iu = new Intent(getApplicationContext(), PokladnicaActivitySD.class);
-               Bundle extrasu = new Bundle();
-               if( cat.equals("1")) { extrasu.putString(TAG_CAT, "1"); }
-        	   if( cat.equals("4")) { extrasu.putString(TAG_CAT, "4"); }
-        	   if( cat.equals("8")) { extrasu.putString(TAG_CAT, "8"); }
-        	   if( cat.equals("9")) { extrasu.putString(TAG_CAT, "9"); }
-               extrasu.putString(TAG_DCEX, "0");
-               extrasu.putString(TAG_PAGEX, upageis);
-               iu.putExtras(extrasu);
-               startActivity(iu);
-               finish();
+
 
 		   break;
 		                                            
@@ -371,7 +344,7 @@ public class PokladnicaActivitySD extends ListActivity implements SimpleGestureL
     menu.setHeaderTitle(mnox3 + " | " + name2 + " | " + price4);
     
     MenuInflater inflater = getMenuInflater();
-    inflater.inflate(R.menu.kontext_pokl, menu);
+    inflater.inflate(R.menu.kontext_poklsd, menu);
     
 
     }
@@ -381,7 +354,7 @@ public class PokladnicaActivitySD extends ListActivity implements SimpleGestureL
     	AdapterContextMenuInfo info = (AdapterContextMenuInfo) item.getMenuInfo();
     switch (item.getItemId()) {
     
-    	case R.id.kontextzmaz:
+    	case R.id.kontextzmazsd:
     		String pidm = String.valueOf(info.id);
             int inpom = Integer.parseInt(pidm);
             
@@ -397,7 +370,7 @@ public class PokladnicaActivitySD extends ListActivity implements SimpleGestureL
             break;
     
         
-        case R.id.kontexttlac:
+        case R.id.kontexttlacsd:
             String pidx = String.valueOf(info.id);
             int inpos = Integer.parseInt(pidx);
             
@@ -459,7 +432,7 @@ public class PokladnicaActivitySD extends ListActivity implements SimpleGestureL
             intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
             break;
             
-        case R.id.kontuprzah:
+        case R.id.kontuprzahsd:
             String pidz = String.valueOf(info.id);
             int inpoz = Integer.parseInt(pidz);
             
@@ -483,7 +456,7 @@ public class PokladnicaActivitySD extends ListActivity implements SimpleGestureL
             startActivityForResult(iz, 100);
             break;
             
-        case R.id.kontuprpol:
+        case R.id.kontuprpolsd:
         	String pidp = String.valueOf(info.id);
             int inpop = Integer.parseInt(pidp);
             
@@ -502,7 +475,7 @@ public class PokladnicaActivitySD extends ListActivity implements SimpleGestureL
     		
     		break;
 
-        case R.id.kontextnic:
+        case R.id.kontextnicsd:
             break;
 
         }
@@ -717,6 +690,12 @@ public class PokladnicaActivitySD extends ListActivity implements SimpleGestureL
             extrasv.putString(TAG_CAT, cat);
             iv.putExtras(extrasv);
             startActivityForResult(iv, 100);
+	
+			return true;
+			
+		case R.id.kontextsynpokl:
+			
+
 	
 			return true;
 		

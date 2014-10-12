@@ -204,6 +204,7 @@
     <string name="popisbutmojefaktury">My invoices</string>
     <string name="progmojedoklady">Loading the documents. Please wait.</string>
     <string name="konttlac">Details PDF document.</string>
+    <string name="konttlacsd">Details document.</string>
     <string name="kontfakt">invoice</string>
     <string name="title_activity_mojefak">My invoice</string>
     
@@ -294,6 +295,7 @@
     <string name="popisIco">Company ID</string>
     <string name="popisIcoSD">Company ID SDcard</string>
     <string name="synchroIcoSD">Synchronize IDcompany</string>
+    <string name="synchropokl">Synchronize cash Invoices</string>
     <string name="popisKto">Person</string>
     <string name="popisTxp">Note</string>
     <string name="popisUcm">Cash register</string>

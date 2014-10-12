@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu
+xmlns:android="http://schemas.android.com/apk/res/android">
+<item
+    android:id="@+id/kontexttlacsd"
+    android:title="@string/konttlacsd"/>
+<item
+    android:id="@+id/kontuprzahsd"
+    android:title="@string/kontuprzah"/>
+<item
+    android:id="@+id/kontuprpolsd"
+    android:title="@string/kontuprpol"/>
+<item
+    android:id="@+id/kontextzmazsd"
+    android:title="@string/kontzmazdok"/>
+<item
+    android:id="@+id/kontextnicsd"
+    android:title="@string/kontnic"/>
+</menu>
