@@ -703,7 +703,7 @@ public class PokladnicaActivitySD extends ListActivity implements SimpleGestureL
 
 		case R.id.kontextnewprisd:
   
-            Intent ip = new Intent(getApplicationContext(), NewPoklZahActivity.class);
+            Intent ip = new Intent(getApplicationContext(), NewPoklZahActivitySD.class);
             Bundle extrasp = new Bundle();
             extrasp.putString(TAG_POZX, "1");
             extrasp.putString(TAG_FAKX, "0");
@@ -716,7 +716,7 @@ public class PokladnicaActivitySD extends ListActivity implements SimpleGestureL
 			
 		case R.id.kontextnewvydsd:
 			
-			Intent iv = new Intent(getApplicationContext(), NewPoklZahActivity.class);
+			Intent iv = new Intent(getApplicationContext(), NewPoklZahActivitySD.class);
             Bundle extrasv = new Bundle();
             extrasv.putString(TAG_POZX, "2");
             extrasv.putString(TAG_FAKX, "0");

@@ -81,6 +81,10 @@
             android:label="@string/kontuprzah" >
         </activity>
         <activity
+            android:name="com.eusecom.samfantozzi.NewPoklZahActivitySD"
+            android:label="@string/kontuprzah" >
+        </activity>
+        <activity
             android:name="com.eusecom.samfantozzi.UpravFakZahActivity"
             android:label="@string/kontuprzah" >
         </activity>
