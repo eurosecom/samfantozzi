@@ -1,5 +1,6 @@
 package com.eusecom.samfantozzi;
  
+import java.io.File;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -18,6 +19,7 @@ import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.Environment;
 import android.util.Log;
 import android.view.ContextMenu;
 import android.view.Menu;
@@ -36,6 +38,7 @@ import android.widget.SimpleAdapter;
 import android.widget.TextView;
 import android.widget.Toast;
 import com.eusecom.samfantozzi.MCrypt;
+import com.eusecom.samfantozzi.defaultXML;
 
 import com.eusecom.samfantozzi.SimpleGestureFilter.SimpleGestureListener;
  
@@ -91,6 +94,9 @@ public class PokladnicaActivitySD extends ListActivity implements SimpleGestureL
     String pagex;
     String ucex;
 	String encrypted;
+	String incomplet;
+	String firmax;
+    String adresarx;
     
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -113,6 +119,11 @@ public class PokladnicaActivitySD extends ListActivity implements SimpleGestureL
 
         this.setTitle(getResources().getString(R.string.popisbtnpoklsd));
         ucex = SettingsActivity.getPokluce(this);
+        firmax=SettingsActivity.getFir(this);
+        adresarx=SettingsActivity.getServerName(this);
+        String delims = "[/]+";
+    	String[] serverxxx = adresarx.split(delims);
+    	adresarx=serverxxx[1];
         
      
         inputAll = (TextView) findViewById(R.id.inputAll);
@@ -137,6 +148,29 @@ public class PokladnicaActivitySD extends ListActivity implements SimpleGestureL
         btnUce = (Button) findViewById(R.id.btnUce);
         btnUce.setVisibility(View.GONE);
 
+        incomplet = "0";
+    	
+    	String baseDir2 = Environment.getExternalStorageDirectory().getAbsolutePath();
+    	String fileName2 = "/eusecom/" + adresarx + "/poklzah" + firmax + ".csv";
+    	File myFile2 = new File(baseDir2 + File.separator + fileName2);
+    	if (myFile2.exists()) { } else { incomplet = "1"; }
+    	String fileName4 = "/eusecom/" + adresarx + "/poklpol" + firmax + ".csv";
+    	File myFile4 = new File(baseDir2 + File.separator + fileName4);
+    	if (myFile4.exists()) { } else { incomplet = "1"; }
+    	
+    	if( incomplet.equals("1")) {
+    		//int xxx=1;
+    		//defaultXML defxml = new defaultXML(xxx);
+    		
+    		int xxx2=1;
+    		String adresar=adresarx;
+    		String firma=firmax;
+    		int defxmlint;
+    		defxmlint = defaultXML.createdefaultXML(xxx2, adresar, firma);
+    		if( defxmlint == 1 ){Toast.makeText(this, getResources().getString(R.string.setdefaultxml), Toast.LENGTH_LONG).show();}
+
+    	}
+        
         
         // Hashmap for ListView
         productsList = new ArrayList<HashMap<String, String>>();

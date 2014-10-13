@@ -71,7 +71,7 @@ import android.os.Environment;
             	if(!myFile2.exists()){
             		
         			try {
-						myFile1.createNewFile();
+						myFile2.createNewFile();
 
 						FileOutputStream fOut2 = null;
 						fOut2 = new FileOutputStream(myFile2, true);
@@ -149,7 +149,7 @@ import android.os.Environment;
             	if(!myFile3.exists()){
             		
         			try {
-						myFile1.createNewFile();
+						myFile3.createNewFile();
 
 						FileOutputStream fOut3 = null;
 						fOut3 = new FileOutputStream(myFile3, true);
@@ -216,9 +216,61 @@ import android.os.Environment;
 						e.printStackTrace();
 
 					}
+        			
+            		}
+            		//koniec myfile3 neexistuje
+        			
+        			String fileName4 = "/eusecom/" + adresar + "/poklzah" + firma + ".csv";
+                	File myFile4 = new File(baseDir + File.separator + fileName4);
+                	
+                	if(!myFile4.exists()){
+                		
+            			try {
+    						myFile4.createNewFile();
 
-            	}
-            	//koniec myfile3 neexistuje
+    						FileOutputStream fOut4 = null;
+    						fOut4 = new FileOutputStream(myFile4, true);
+    						OutputStreamWriter myOutWriter4 = new OutputStreamWriter(fOut4);
+    						
+    							String datatxt1 = "";
+    							
+
+    						myOutWriter4.append(datatxt1);
+    						myOutWriter4.close();
+    						fOut4.close();
+    					} catch (IOException e) {
+    						// TODO Auto-generated catch block
+    						e.printStackTrace();
+
+    					}
+                	}
+            		//koniec myfile4 neexistuje
+                	
+                	String fileName5 = "/eusecom/" + adresar + "/poklpol" + firma + ".csv";
+                	File myFile5 = new File(baseDir + File.separator + fileName5);
+                	
+                	if(!myFile5.exists()){
+                		
+            			try {
+    						myFile5.createNewFile();
+
+    						FileOutputStream fOut5 = null;
+    						fOut5 = new FileOutputStream(myFile5, true);
+    						OutputStreamWriter myOutWriter5 = new OutputStreamWriter(fOut5);
+    						
+    							String datatxt1 = "";
+    							
+
+    						myOutWriter5.append(datatxt1);
+    						myOutWriter5.close();
+    						fOut5.close();
+    					} catch (IOException e) {
+    						// TODO Auto-generated catch block
+    						e.printStackTrace();
+
+    					}
+                	}
+            		//koniec myfile5 neexistuje
             	
             	
             	int okset=1;
