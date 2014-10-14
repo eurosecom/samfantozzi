@@ -1,35 +1,24 @@
 package com.eusecom.samfantozzi;
 
 import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStreamReader;
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.OutputStreamWriter;
 import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.List;
- 
-import org.apache.http.HttpResponse;
-import org.apache.http.HttpVersion;
-import org.apache.http.NameValuePair;
-import org.apache.http.client.ClientProtocolException;
-import org.apache.http.client.HttpClient;
-import org.apache.http.client.entity.UrlEncodedFormEntity;
-import org.apache.http.client.methods.HttpPost;
-import org.apache.http.impl.client.DefaultHttpClient;
-import org.apache.http.message.BasicNameValuePair;
-import org.apache.http.params.BasicHttpParams;
-import org.apache.http.params.HttpParams;
-import org.apache.http.protocol.HTTP;
- 
+import java.util.Random;
 import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Intent;
+import android.content.SharedPreferences;
+import android.content.SharedPreferences.Editor;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.os.Environment;
 import android.view.View;
 import android.view.View.OnFocusChangeListener;
 import android.widget.Button;
@@ -37,6 +26,7 @@ import android.widget.EditText;
 import android.widget.TextView;
 
 import android.os.StrictMode;
+import android.preference.PreferenceManager;
  
 @SuppressLint("SimpleDateFormat")
 public class NewPoklZahActivitySD extends Activity {
@@ -86,10 +76,6 @@ public class NewPoklZahActivitySD extends Activity {
  
  
     // JSON Node names
-    private static final String TAG_DAT = "dat";
-    private static final String TAG_KTO = "kto";
-    private static final String TAG_TXP = "txp";
-    private static final String TAG_ICO = "ico";
     private static final String TAG_POZX = "pozx";
     private static final String TAG_FAKX = "fakx";
     private static final String TAG_ODKADE = "odkade";
@@ -111,6 +97,9 @@ public class NewPoklZahActivitySD extends Activity {
     String fakx;
     String newx;
     String cat;
+    String firmax;
+    String adresarx;
+    String dokladx;
     
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -127,6 +116,13 @@ public class NewPoklZahActivitySD extends Activity {
         cat = extras.getString(TAG_CAT);
         
         druhid = SettingsActivity.getDruhId(this);
+        firmax=SettingsActivity.getFir(this);
+        dokladx=SettingsActivity.getPokldok(this);
+        if(pozx.equals("2")) { dokladx=SettingsActivity.getPokldov(this); }
+        adresarx=SettingsActivity.getServerName(this);
+        String delims = "[/]+";
+    	String[] serverxxx = adresarx.split(delims);
+    	adresarx=serverxxx[1];
         
         db=(new DatabaseHelper(this)).getWritableDatabase();
         
@@ -642,101 +638,57 @@ public class NewPoklZahActivitySD extends Activity {
             String dn2 = inputDn2.getText().toString();
             String clk = inputCelkom.getText().toString();
             
-            String prmall = inputAll.getText().toString();
-        	String serverx = inputEdiServer.getText().toString();
-        	String delims = "[/]+";
-        	String[] serverxxx = serverx.split(delims);
-        	String userx = inputEdiUser.getText().toString();
-        	
-        	String userxplus = userx + "/" + cat;
-        	
-        	//String userhash = sha1Hash( userx );
-        	MCrypt mcrypt = new MCrypt();
-        	/* Encrypt */
-        	try {
-				encrypted = MCrypt.bytesToHex( mcrypt.encrypt(userxplus) );
-			} catch (Exception e1) {
-				// TODO Auto-generated catch block
-				e1.printStackTrace();
-			}
-        	/* Decrypt */
-        	//String decrypted = new String( mcrypt.decrypt( encrypted ) );
-        	
-            HttpParams httpParameters = new BasicHttpParams();
-
-            HttpClient client = new DefaultHttpClient(httpParameters);
-            client.getParams().setParameter("http.protocol.version", HttpVersion.HTTP_1_1);
-            client.getParams().setParameter("http.socket.timeout", 2000);
-            client.getParams().setParameter("http.protocol.content-charset", HTTP.UTF_8);
-            httpParameters.setBooleanParameter("http.protocol.expect-continue", false);
-            HttpPost request = new HttpPost("http://" + serverxxx[0] + "/androidfanti/uloz_newpoklzah.php?sid=" + String.valueOf(Math.random()));
-            request.getParams().setParameter("http.socket.timeout", 5000);
-
-        	List<NameValuePair> postParameters = new ArrayList<NameValuePair>();
-        	postParameters.add(new BasicNameValuePair("prmall", prmall));
-        	postParameters.add(new BasicNameValuePair("uce", uce));
-            postParameters.add(new BasicNameValuePair(TAG_DAT, dat));
-            postParameters.add(new BasicNameValuePair(TAG_KTO, kto));
-            postParameters.add(new BasicNameValuePair(TAG_TXP, txp));
-            postParameters.add(new BasicNameValuePair(TAG_ICO, ico));
-            postParameters.add(new BasicNameValuePair("poh", poh));
-            postParameters.add(new BasicNameValuePair("fak", fak));
-            postParameters.add(new BasicNameValuePair("zk0", zk0));
-            postParameters.add(new BasicNameValuePair("zk1", zk1));
-            postParameters.add(new BasicNameValuePair("zk2", zk2));
-            postParameters.add(new BasicNameValuePair("dn1", dn1));
-            postParameters.add(new BasicNameValuePair("dn2", dn2));
-            postParameters.add(new BasicNameValuePair("celkom", clk));
-            
-        	postParameters.add(new BasicNameValuePair("serverx", serverx));
-        	//postParameters.add(new BasicNameValuePair("userx", userx));
-        	postParameters.add(new BasicNameValuePair("userhash", encrypted));
-        	postParameters.add(new BasicNameValuePair("fakx", fakx));
-        	postParameters.add(new BasicNameValuePair("newx", newx));
-        	postParameters.add(new BasicNameValuePair("pozx", pozx));
-        	postParameters.add(new BasicNameValuePair("cat", cat));
-            
+            // write on SD card file data in the text box
             try {
-            UrlEncodedFormEntity formEntity = new UrlEncodedFormEntity(postParameters, HTTP.UTF_8);
-            request.setEntity(formEntity);
 
-            HttpResponse response = client.execute(request);
-
-            in = new BufferedReader(new InputStreamReader(response.getEntity().getContent()));
-            StringBuffer sb = new StringBuffer("");
-            String line = "";
-            //String lineSeparator = System.getProperty("line.separator");
-            while ((line = in.readLine()) != null) {
-                sb.append(line);
-                //sb.append(lineSeparator);
-            }
-            in.close();
-            String result = sb.toString();
+            	String baseDir = Environment.getExternalStorageDirectory().getAbsolutePath();
+            	String fileName = "/eusecom/" + adresarx + "/poklzah"+ firmax + ".csv";
   
-            String delimso = "[;]+";
-         	String[] resultxxx = result.split(delimso);
+            	File myFile = new File(baseDir + File.separator + fileName);
 
-             if( resultxxx[0].equals("1")) {
+            	//i get random number between 10 and 5000
+                Random r = new Random();
+                int i1=r.nextInt(15000-5000) + 5000;
+                int i2 = i1;
+                		
+        		if(!myFile.exists()){
+        			myFile.createNewFile();
+        		}
+        		
+                //to true znamena pridat append ked tam nie je prepise
+        		FileOutputStream fOut = new FileOutputStream(myFile, true);
+                OutputStreamWriter myOutWriter = new OutputStreamWriter(fOut);                
+                
+                String datatxt = i2 + " ;" + uce + " ;" + pozx + " ;" + dokladx + " ;" + dat + " ;" + ico + " ;" + fak + " ;" + kto
+                		 + " ;" + txp + " ;" + zk0 + " ;" + zk1 + " ;" + zk2 + " ;" + dn1 + " ;" + dn2 + " ;" + poh + " ;" + clk + " \n";
+                myOutWriter.append(datatxt);
+                myOutWriter.close();
+                fOut.close();
+                
+                int dokladn = Integer.parseInt(dokladx);
+                dokladn = dokladn + 1;
+                String doklads = dokladn + "";
+                
+                //toto uklada preference
+             	SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(getBaseContext());
+             	Editor editor = prefs.edit();
 
+             	if(pozx.equals("1")) { editor.putString("pokldok", doklads).apply(); }
+             	if(pozx.equals("2")) { editor.putString("pokldov", doklads).apply(); }
+             	
+             	editor.commit();
             	
-            	// successfully updated
+                // successfully saved
                 Intent i = getIntent();
                 // send result code 100 to notify about product update
                 setResult(100, i);
                 finish();
-            }else {
-
+                
+                
+                //Toast.makeText(getBaseContext(),"Done writing SD 'mysdfile.txt'", Toast.LENGTH_SHORT).show();
+            } catch (Exception e) {
+                //Toast.makeText(getBaseContext(), e.getMessage(),Toast.LENGTH_SHORT).show();
             }
-            
-                 } catch (ClientProtocolException e) {
-            	   // TODO Auto-generated catch block
-            	   e.printStackTrace();
-            	   //Toast.makeText(EditProductv2Activity.this, e.toString(), Toast.LENGTH_LONG).show();
-            	  } catch (IOException e) {
-            		   // TODO Auto-generated catch block
-            		   e.printStackTrace();
-            		   //Toast.makeText(EditProductv2Activity.this, e.toString(), Toast.LENGTH_LONG).show();
-            		  }
 
  
             return null;

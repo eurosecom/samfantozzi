@@ -1,16 +1,12 @@
 package com.eusecom.samfantozzi;
  
+import java.io.BufferedReader;
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
- 
-import org.apache.http.NameValuePair;
-import org.apache.http.message.BasicNameValuePair;
 import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
- 
 import android.app.ActivityOptions;
 import android.app.ListActivity;
 import android.app.ProgressDialog;
@@ -20,7 +16,6 @@ import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
-import android.util.Log;
 import android.view.ContextMenu;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -30,7 +25,6 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.AdapterView.AdapterContextMenuInfo;
 import android.widget.AdapterView.OnItemClickListener;
-import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListAdapter;
 import android.widget.ListView;
@@ -54,11 +48,7 @@ public class PokladnicaActivitySD extends ListActivity implements SimpleGestureL
     TextView inputAll;
     TextView inputAllServer;
     TextView inputAllUser;
-    TextView obsahKosika;
     TextView aktualplu;
-    Button btnUce;
-    Button btnNext;
-    Button btnMnedlzia;
     
     EditText txtTitle;
     EditText txtValue;
@@ -70,8 +60,6 @@ public class PokladnicaActivitySD extends ListActivity implements SimpleGestureL
  
     
     // JSON Node names
-    private static final String TAG_SUCCESS = "success";
-    private static final String TAG_PRODUCTS = "products";
     private static final String TAG_PID = "pid";
     private static final String TAG_NAME = "name";
     private static final String TAG_PRICE = "price";
@@ -97,11 +85,12 @@ public class PokladnicaActivitySD extends ListActivity implements SimpleGestureL
 	String incomplet;
 	String firmax;
     String adresarx;
+    String ipx="0";
     
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);     
-        setContentView(R.layout.pokladnica);
+        setContentView(R.layout.pokladnicasd);
          
         detector = new SimpleGestureFilter(this,this);
  
@@ -113,10 +102,7 @@ public class PokladnicaActivitySD extends ListActivity implements SimpleGestureL
         dcex = extras.getString(TAG_DCEX);
         pagex = extras.getString(TAG_PAGEX);
         
-        obsahKosika = (TextView) findViewById(R.id.obsahKosika);
-        btnMnedlzia = (Button) findViewById(R.id.btnMnedlzia);
         
-
         this.setTitle(getResources().getString(R.string.popisbtnpoklsd));
         ucex = SettingsActivity.getPokluce(this);
         firmax=SettingsActivity.getFir(this);
@@ -134,19 +120,6 @@ public class PokladnicaActivitySD extends ListActivity implements SimpleGestureL
         inputAllUser.setText("Nick/" + SettingsActivity.getNickName(this) + "/ID/" + SettingsActivity.getUserId(this) + "/PSW/" 
                 + SettingsActivity.getUserPsw(this) + "/druhID/" + SettingsActivity.getDruhId(this) 
                 + "/Doklad/" + SettingsActivity.getDoklad(this) + "/Kateg/" + cat);
- 
-        obsahKosika.setText(" " + "0" + " " + getText(R.string.mnozstvo) 
-        		+ "  " + getText(R.string.hodnota) + " = " +  "0" + "  " + getText(R.string.mena));
-        
-  
-        btnMnedlzia = (Button) findViewById(R.id.btnMnedlzia);
-        btnMnedlzia.setVisibility(View.GONE);
-       
-        btnNext = (Button) findViewById(R.id.btnNext);
-        btnNext.setVisibility(View.GONE);
-
-        btnUce = (Button) findViewById(R.id.btnUce);
-        btnUce.setVisibility(View.GONE);
 
         incomplet = "0";
     	
@@ -547,103 +520,69 @@ public class PokladnicaActivitySD extends ListActivity implements SimpleGestureL
          * */
         protected String doInBackground(String... args) {
             
-        	String prmall = inputAll.getText().toString();
-        	String serverx = inputAllServer.getText().toString();
-        	String delims = "[/]+";
-        	String[] serverxxx = serverx.split(delims);
-        	String userx = inputAllUser.getText().toString();
-        	
-        	hladaj1 = (TextView) findViewById(R.id.hladaj1);
-        	hladaj2 = (TextView) findViewById(R.id.hladaj2);
-        	hladaj3 = (TextView) findViewById(R.id.hladaj3);
-        	
-        	String hladaj1x = hladaj1.getText().toString();
-        	String hladaj2x = hladaj2.getText().toString();
-        	String hladaj3x = hladaj3.getText().toString();
-        	
-        	String userxplus = userx + "/" + cat;
-        	
-        	//String userhash = sha1Hash( userx );
-        	MCrypt mcrypt = new MCrypt();
-        	/* Encrypt */
-        	try {
-				encrypted = MCrypt.bytesToHex( mcrypt.encrypt(userxplus) );
-			} catch (Exception e1) {
-				// TODO Auto-generated catch block
-				e1.printStackTrace();
-			}
-        	/* Decrypt */
-        	//String decrypted = new String( mcrypt.decrypt( encrypted ) );
-        	
-        	// Building Parameters
-            List<NameValuePair> params = new ArrayList<NameValuePair>();
-            //params.add(new BasicNameValuePair("triedenie", "22"));
-            //params.add(new BasicNameValuePair("orderbyx", orderbyx));         
-            params.add(new BasicNameValuePair("prmall", prmall));
-            params.add(new BasicNameValuePair("serverx", serverx));
-            //params.add(new BasicNameValuePair("userx", userx));
-            params.add(new BasicNameValuePair("userhash", encrypted));
-            params.add(new BasicNameValuePair("pagex", pagex));
-            params.add(new BasicNameValuePair("ucex", ucex));
-            params.add(new BasicNameValuePair("cat", cat));
-            params.add(new BasicNameValuePair("hladaj1", hladaj1x));
-            params.add(new BasicNameValuePair("hladaj2", hladaj2x));
-            params.add(new BasicNameValuePair("hladaj3", hladaj3x));
-            
-            // getting JSON string from URL
-            JSONObject json = jParser.makeHttpRequest("http://" + serverxxx[0] + "/androidfanti/get_pokl.php", "GET", params);
-            
-            // Check your log cat for JSON reponse
-            Log.d("All Products: ", json.toString());
- 
+        	// read from SD card file data in the listview
             try {
-                // Checking for SUCCESS TAG
-                int success = json.getInt(TAG_SUCCESS);
-                //String minplu = json.getString(TAG_MINPLU);
-                //aktualplu = (TextView) findViewById(R.id.aktualplu);
-                //aktualplu.setText(minplu);
- 
-                if (success == 1) {
-                	
-                    // Getting Array of Products
-                    products = json.getJSONArray(TAG_PRODUCTS);
- 
-                    // looping through All Products
-                    for (int i = 0; i < products.length(); i++) {
-                        JSONObject c = products.getJSONObject(i);
- 
-                        // Storing each json item in variable
-                        String id = c.getString(TAG_PID);
-                        String name = c.getString(TAG_NAME);
-                        String price = c.getString(TAG_PRICE);
-                        String minplu = c.getString(TAG_MINPLU);
-                        String pohx = c.getString(TAG_POH);
-                        
-                        // creating new HashMap
-                        HashMap<String, String> map = new HashMap<String, String>();
- 
-                        // adding each child node to HashMap key => value
-                        map.put(TAG_PID, id);
-                        map.put(TAG_NAME, name);
-                        map.put(TAG_PRICE, price);
-                        map.put(TAG_MINPLU, minplu);
-                        map.put(TAG_POH, pohx);
-                        
-                        // adding HashList to ArrayList
-                        productsList.add(map);
-                        
-                    }
-                    
-                } else {
-                    // no products found
-                    // Launch Add New product Activity
-                    Intent i = new Intent(getApplicationContext(), SettingsActivity.class);
-                    // Closing all previous activities
-                    i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                    startActivity(i);
+            	
+            	String baseDir = Environment.getExternalStorageDirectory().getAbsolutePath();
+            	String fileName = "/eusecom/" + adresarx + "/poklzah"+ firmax + ".csv";
+            	File myFile = new File(baseDir + File.separator + fileName);
+
+                FileInputStream fIn = new FileInputStream(myFile);
+                BufferedReader myReader = new BufferedReader(new InputStreamReader(fIn));
+                String aDataRow = "";
+                String aBuffer = "";
+                //do ip napocitam kolko riadkov mam
+                int ip=0;
+            	
+                while ((aDataRow = myReader.readLine()) != null) {
+                    aBuffer += aDataRow + "\n";
+                    ip = ip+1;
+                
                 }
-            } catch (JSONException e) {
-                e.printStackTrace();
+                
+                //inputAll = (TextView) findViewById(R.id.inputAll);
+                //inputAll.setText(aBuffer);
+
+                String kosikx = aBuffer;
+                myReader.close();
+
+            	String delims = "[\n]+";
+            	String delims2 = "[;]+";
+            	
+            	String[] riadokxxx = kosikx.split(delims);
+            	ipx = ip + "";
+            	ip=ip-10;
+            	
+                for (int i = 0; i < riadokxxx.length; i++) {
+            	String riadok1 =  riadokxxx[i];
+
+            	String[] polozkyx = riadok1.split(delims2);
+            	//String cplx =  polozkyx[0];
+            	String dokx =  polozkyx[3];
+            	String txpx =  polozkyx[8];
+            	String hodx =  polozkyx[15];
+            	String hodmx =  polozkyx[15];
+            	String pohx =  polozkyx[14];
+
+
+                // creating new HashMap
+                HashMap<String, String> map = new HashMap<String, String>();
+
+                // adding each child node to HashMap key => value
+                map.put(TAG_PID, dokx);
+                map.put(TAG_NAME, txpx);
+                map.put(TAG_PRICE, hodx);
+                map.put(TAG_MINPLU, hodmx);
+                map.put(TAG_POH, pohx);
+
+                // adding HashList to ArrayList 
+                productsList.add(map); 
+
+                }
+                
+                
+            } catch (Exception e) {
+                //Toast.makeText(getBaseContext(), e.getMessage(),Toast.LENGTH_SHORT).show();
             }
  
             return null;
@@ -668,14 +607,7 @@ public class PokladnicaActivitySD extends ListActivity implements SimpleGestureL
                             new int[] { R.id.pid, R.id.name, R.id.price, R.id.poh });
                     // updating listview
                     setListAdapter(adapter);
-                    
-                    String zostatok = productsList.get(0).get(TAG_MINPLU);
-            	 	
-                    obsahKosika = (TextView) findViewById(R.id.obsahKosika);
-                    //kosikIco.setText(iconaz1);
-                    obsahKosika.setText(String.format(getString(R.string.kosikZos), zostatok));
-                   
-                    
+                 
                 }
             });
  
