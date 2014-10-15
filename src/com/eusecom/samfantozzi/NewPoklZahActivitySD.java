@@ -408,7 +408,7 @@ public class NewPoklZahActivitySD extends Activity {
             public void onClick(View view) {
                 // Launching All products Activity
                 
-                Intent iz = new Intent(getApplicationContext(), VyberIcoActivity.class);
+                Intent iz = new Intent(getApplicationContext(), VyberIcoActivitySD.class);
                 Bundle extrasz = new Bundle();
                 extrasz.putString(TAG_PAGEX, "1");
                 extrasz.putString(TAG_ODKADE, "1");
@@ -426,7 +426,7 @@ public class NewPoklZahActivitySD extends Activity {
             public void onClick(View view) {
                 // Launching All products Activity
                 
-                Intent iz = new Intent(getApplicationContext(), VyberPohybActivity.class);
+                Intent iz = new Intent(getApplicationContext(), VyberPohybActivitySD.class);
                 Bundle extrasz = new Bundle();
                 if(cat.equals("1")) {
                 if(pozx.equals("1")) { extrasz.putString(TAG_ODKADE, "1"); }

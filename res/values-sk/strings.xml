@@ -256,6 +256,7 @@
     <string name="progbank">Čítam banku. Prosím čakajte.</string>
     <string name="progbanka">Čítam banku. Prosím čakajte.</string>
     <string name="kosikZos">Zostatok %s</string>
+    <string name="localpoklsd">lokálne pokladničné doklady</string>
     
     <string name="pokluce_title">Účet pokladnice.</string>
     <string name="pokluce_summary">Predvolený účet pre pokladnicu 21100,21101 atď.</string>
@@ -292,6 +293,7 @@
     <string name="popisIcoSD">IČO firmy SDkarta</string>
     <string name="synchroIcoSD">Synchronizácia IČO</string>
     <string name="synchropokl">Synchronizácia Pokladnice</string>
+    <string name="syncdok">Synchronizovať doklad</string>
     <string name="popisKto">Osoba</string>
     <string name="popisTxp">Poznámka</string>
     <string name="popisUcm">Pokladnica</string>

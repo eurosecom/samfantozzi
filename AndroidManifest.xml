@@ -141,6 +141,10 @@
             android:label="@string/popisUcd" >
         </activity>
         <activity
+            android:name="com.eusecom.samfantozzi.VyberPohybActivitySD"
+            android:label="@string/popisUcd" >
+        </activity>
+        <activity
             android:name="com.eusecom.samfantozzi.VypisPohybActivity"
             android:label="@string/popisUcd" >
         </activity>

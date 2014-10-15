@@ -4,6 +4,7 @@ import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.InputStreamReader;
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.HashMap;
 import org.json.JSONArray;
@@ -130,6 +131,15 @@ public class PokladnicaActivitySD extends ListActivity implements SimpleGestureL
     	String fileName4 = "/eusecom/" + adresarx + "/poklpol" + firmax + ".csv";
     	File myFile4 = new File(baseDir2 + File.separator + fileName4);
     	if (myFile4.exists()) { } else { incomplet = "1"; }
+    	String fileName5 = "/eusecom/" + adresarx + "/autopohyby" + firmax + ".xml";
+    	File myFile5 = new File(baseDir2 + File.separator + fileName5);
+    	if (myFile5.exists()) { } else { incomplet = "1"; }
+    	String fileName6 = "/eusecom/" + adresarx + "/uctosnova" + firmax + ".xml";
+    	File myFile6 = new File(baseDir2 + File.separator + fileName6);
+    	if (myFile6.exists()) { } else { incomplet = "1"; }
+    	String fileName7 = "/eusecom/" + adresarx + "/ico" + firmax + ".xml";
+    	File myFile7 = new File(baseDir2 + File.separator + fileName7);
+    	if (myFile7.exists()) { } else { incomplet = "1"; }
     	
     	if( incomplet.equals("1")) {
     		//int xxx=1;
@@ -482,7 +492,7 @@ public class PokladnicaActivitySD extends ListActivity implements SimpleGestureL
     		
     		break;
 
-        case R.id.kontextnicsd:
+        case R.id.kontextsyncdoksd:
             break;
 
         }
@@ -561,8 +571,22 @@ public class PokladnicaActivitySD extends ListActivity implements SimpleGestureL
             	String dokx =  polozkyx[3];
             	String txpx =  polozkyx[8];
             	String hodx =  polozkyx[15];
+            	String pohx =  polozkyx[2].trim();
+            	
             	String hodmx =  polozkyx[15];
-            	String pohx =  polozkyx[14];
+            	if( pohx.equals("2")) {
+            		
+            		Float hodmf = 0f;
+                	if (hodmx.trim().length() > 0) { hodmf = Float.parseFloat(hodmx); }
+                	hodmf = -1 * hodmf;
+                	
+                	DecimalFormat df = new DecimalFormat("0.00");
+                	
+                	String hodmxs = df.format(hodmf);
+                	hodmxs = hodmxs.replace(',','.');
+                	hodx=hodmxs;
+            		
+            	}
 
 
                 // creating new HashMap

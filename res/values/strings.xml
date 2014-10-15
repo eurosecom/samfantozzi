@@ -260,6 +260,7 @@
     <string name="progbank">Loading a bank. Please wait.</string>
     <string name="progbanka">Loading a bank. Please wait.</string>
     <string name="kosikZos">Rest %s</string>
+    <string name="localpoklsd">local cash Invoices</string>
     
     <string name="pokluce_title">Cash register account.</string>
     <string name="pokluce_summary">Default account for cash register 21100,21101 etc.</string>
@@ -296,6 +297,7 @@
     <string name="popisIcoSD">Company ID SDcard</string>
     <string name="synchroIcoSD">Synchronize IDcompany</string>
     <string name="synchropokl">Synchronize cash Invoices</string>
+    <string name="syncdok">Synchronize cash Invoice</string>
     <string name="popisKto">Person</string>
     <string name="popisTxp">Note</string>
     <string name="popisUcm">Cash register</string>
