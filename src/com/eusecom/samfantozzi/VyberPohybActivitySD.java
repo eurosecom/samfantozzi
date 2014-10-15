@@ -183,9 +183,8 @@ public class VyberPohybActivitySD extends ListActivity {
                     Element e = (Element) nodeList.item(i);
                     String id = parser.getValue(e, TAG_CPOH);
                     String name = parser.getValue(e, TAG_POHP);
-                    String price = parser.getValue(e, TAG_DRUH);
+                    String druh = parser.getValue(e, TAG_DRUH);
                     
-                    name = name + " " + price;
                     
                     // creating new HashMap
                     HashMap<String, String> map = new HashMap<String, String>();
@@ -196,7 +195,10 @@ public class VyberPohybActivitySD extends ListActivity {
                     map.put(TAG_PRICE, " ");
                     
                     // adding HashList to ArrayList
-                    productsList.add(map);
+                    if( odkade.equals("1")) { 
+                    	if( druh.equals("1")) {productsList.add(map); } }
+                    if( odkade.equals("2")) { 
+                    	if( druh.equals("2")) {productsList.add(map); } }
                 }
                
             } catch (Exception e) {

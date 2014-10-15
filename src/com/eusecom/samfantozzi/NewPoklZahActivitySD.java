@@ -643,7 +643,6 @@ public class NewPoklZahActivitySD extends Activity {
 
             	String baseDir = Environment.getExternalStorageDirectory().getAbsolutePath();
             	String fileName = "/eusecom/" + adresarx + "/poklzah"+ firmax + ".csv";
-  
             	File myFile = new File(baseDir + File.separator + fileName);
 
             	//i get random number between 10 and 5000
@@ -651,9 +650,7 @@ public class NewPoklZahActivitySD extends Activity {
                 int i1=r.nextInt(15000-5000) + 5000;
                 int i2 = i1;
                 		
-        		if(!myFile.exists()){
-        			myFile.createNewFile();
-        		}
+        		if(!myFile.exists()){ myFile.createNewFile();}
         		
                 //to true znamena pridat append ked tam nie je prepise
         		FileOutputStream fOut = new FileOutputStream(myFile, true);
@@ -664,6 +661,29 @@ public class NewPoklZahActivitySD extends Activity {
                 myOutWriter.append(datatxt);
                 myOutWriter.close();
                 fOut.close();
+                
+                String fileName1 = "/eusecom/" + adresarx + "/poklpol"+ firmax + ".csv";
+            	File myFile1 = new File(baseDir + File.separator + fileName1);
+
+            	//i get random number between 10 and 5000
+                Random r1 = new Random();
+                int i11=r1.nextInt(15000-5000) + 5000;
+                		
+        		if(!myFile1.exists()){ myFile1.createNewFile();}
+        		
+                //to true znamena pridat append ked tam nie je prepise
+        		FileOutputStream fOut1 = new FileOutputStream(myFile1, true);
+                OutputStreamWriter myOutWriter1 = new OutputStreamWriter(fOut1);
+                
+                String ucm1="21100";
+                String ucd1="1";
+                String rdp1="1";
+                
+                String datatxt1 = i11 + " ;" + dokladx + " ;" + ucm1 + " ;" + ucd1 
+                		 + " ;" + rdp1 + " ;" + ico + " ;" + fak + " ;" + zk0 + " \n";
+                myOutWriter1.append(datatxt1);
+                myOutWriter1.close();
+                fOut1.close();
                 
                 int dokladn = Integer.parseInt(dokladx);
                 dokladn = dokladn + 1;
