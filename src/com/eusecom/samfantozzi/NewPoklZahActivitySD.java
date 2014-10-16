@@ -2,12 +2,18 @@ package com.eusecom.samfantozzi;
 
 import java.io.BufferedReader;
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.OutputStreamWriter;
 import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Random;
+
+import org.w3c.dom.Document;
+import org.w3c.dom.Element;
+import org.w3c.dom.NodeList;
+
 import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.app.ProgressDialog;
@@ -67,6 +73,7 @@ public class NewPoklZahActivitySD extends Activity {
     BufferedReader in;
     String druhid;
     String encrypted;
+    String ucp;
  
     // Progress Dialog
     private ProgressDialog pDialog;
@@ -82,6 +89,20 @@ public class NewPoklZahActivitySD extends Activity {
     private static final String TAG_NEWX = "newx";
     private static final String TAG_PAGEX = "page";
     private static final String TAG_CAT = "cat";
+    
+    private static final String TAG_UCTPOHYB = "uctpohyb";
+    private static final String TAG_CPOH = "cpoh";
+    private static final String TAG_UZK0 = "uzk0";
+    private static final String TAG_UZK1 = "uzk1";
+    private static final String TAG_UZK2 = "uzk2";
+    private static final String TAG_DZK0 = "dzk0";
+    private static final String TAG_DZK1 = "dzk1";
+    private static final String TAG_DZK2 = "dzk2";
+
+    private static final String TAG_UDN1 = "udn1";
+    private static final String TAG_UDN2 = "udn2";
+    private static final String TAG_DDN1 = "ddn1";
+    private static final String TAG_DDN2 = "ddn2";
 
     private SQLiteDatabase db=null;
     private Cursor constantsCursor=null;
@@ -123,6 +144,7 @@ public class NewPoklZahActivitySD extends Activity {
         String delims = "[/]+";
     	String[] serverxxx = adresarx.split(delims);
     	adresarx=serverxxx[1];
+    	ucp=SettingsActivity.getPokluce(this);
         
         db=(new DatabaseHelper(this)).getWritableDatabase();
         
@@ -638,6 +660,18 @@ public class NewPoklZahActivitySD extends Activity {
             String dn2 = inputDn2.getText().toString();
             String clk = inputCelkom.getText().toString();
             
+            Float zk2xf = 0f;
+        	Float zk1xf = 0f;
+        	Float zk0xf = 0f;
+        	Float dn2xf = 0f;
+        	Float dn1xf = 0f;
+        	
+        	if (inputZk2.getText().toString().trim().length() > 0) { zk2xf = Float.parseFloat(zk2); }
+        	if (inputZk1.getText().toString().trim().length() > 0) { zk1xf = Float.parseFloat(zk1); }
+        	if (inputZk0.getText().toString().trim().length() > 0) { zk0xf = Float.parseFloat(zk0); }
+        	if (inputDn2.getText().toString().trim().length() > 0) { dn2xf = Float.parseFloat(dn2); }
+        	if (inputDn1.getText().toString().trim().length() > 0) { dn1xf = Float.parseFloat(dn1); }
+            
             // write on SD card file data in the text box
             try {
 
@@ -662,6 +696,42 @@ public class NewPoklZahActivitySD extends Activity {
                 myOutWriter.close();
                 fOut.close();
                 
+                //read autopohyby
+                XMLDOMParser parser = new XMLDOMParser();
+                String fileNamep = "/eusecom/" + adresarx + "/autopohyby"+ firmax + ".xml";
+            	File myFilep = new File(baseDir + File.separator + fileNamep);
+                
+                Document doc = parser.getDocument(new FileInputStream(myFilep));
+                
+                // Get elements by name employee
+                NodeList nodeList = doc.getElementsByTagName(TAG_UCTPOHYB);
+                
+                String uzk0="";String uzk1="";String uzk2="";
+                String dzk0="";String dzk1="";String dzk2="";
+                String udn1="";String udn2="";
+                String ddn1="";String ddn2="";
+                
+                // Here, we have only one <employee> element
+                for (int i = 0; i < nodeList.getLength(); i++) {
+                    Element e = (Element) nodeList.item(i);
+                    String cpoh = parser.getValue(e, TAG_CPOH);
+                    
+                    if(cpoh.equals(poh)) {
+                    		uzk0 = parser.getValue(e, TAG_UZK0);
+                            uzk1 = parser.getValue(e, TAG_UZK1);
+                            uzk2 = parser.getValue(e, TAG_UZK2);
+                            dzk0 = parser.getValue(e, TAG_DZK0);
+                            dzk1 = parser.getValue(e, TAG_DZK1);
+                            dzk2 = parser.getValue(e, TAG_DZK2);
+
+                            udn1 = parser.getValue(e, TAG_UDN1);
+                            udn2 = parser.getValue(e, TAG_UDN2);
+                            ddn1 = parser.getValue(e, TAG_DDN1);
+                            ddn2 = parser.getValue(e, TAG_DDN2);
+                    }
+                    
+                }//koniec for
+                
                 String fileName1 = "/eusecom/" + adresarx + "/poklpol"+ firmax + ".csv";
             	File myFile1 = new File(baseDir + File.separator + fileName1);
 
@@ -675,13 +745,73 @@ public class NewPoklZahActivitySD extends Activity {
         		FileOutputStream fOut1 = new FileOutputStream(myFile1, true);
                 OutputStreamWriter myOutWriter1 = new OutputStreamWriter(fOut1);
                 
-                String ucm1="21100";
-                String ucd1="1";
-                String rdp1="1";
-                
-                String datatxt1 = i11 + " ;" + dokladx + " ;" + ucm1 + " ;" + ucd1 
-                		 + " ;" + rdp1 + " ;" + ico + " ;" + fak + " ;" + zk0 + " \n";
+                String datatxt1="";
+                if( zk0xf != 0 ){
+                	if(pozx.equals("1")) {
+                datatxt1 = i11 + " ;" + dokladx + " ;" + ucp + " ;" + uzk0 
+                		 + " ;" + dzk0 + " ;" + ico + " ;" + fak + " ;" + zk0 + " \n";
+                	}
+                	if(pozx.equals("2")) {
+                datatxt1 = i11 + " ;" + dokladx + " ;" + uzk0 + " ;" + ucp 
+                		 + " ;" + dzk0 + " ;" + ico + " ;" + fak + " ;" + zk0 + " \n";
+                	}
                 myOutWriter1.append(datatxt1);
+                }
+                datatxt1="";
+                i11=r1.nextInt(15000-5000) + 5000;
+                if( zk2xf != 0 ){
+                	if(pozx.equals("1")) {
+                datatxt1 = i11 + " ;" + dokladx + " ;" + ucp + " ;" + uzk2 
+                		 + " ;" + dzk2 + " ;" + ico + " ;" + fak + " ;" + zk2 + " \n";
+                	}
+                	if(pozx.equals("2")) {
+                datatxt1 = i11 + " ;" + dokladx + " ;" + uzk2 + " ;" + ucp 
+                		 + " ;" + dzk2 + " ;" + ico + " ;" + fak + " ;" + zk2 + " \n";
+                	}
+                myOutWriter1.append(datatxt1);
+                }
+                datatxt1="";
+                i11=r1.nextInt(15000-5000) + 5000;
+                if( dn2xf != 0 ){
+                	if(pozx.equals("1")) {
+                datatxt1 = i11 + " ;" + dokladx + " ;" + ucp + " ;" + udn2 
+                		 + " ;" + ddn2 + " ;" + ico + " ;" + fak + " ;" + dn2 + " \n";
+                	}
+                	if(pozx.equals("2")) {
+                datatxt1 = i11 + " ;" + dokladx + " ;" + udn2 + " ;" + ucp 
+                		 + " ;" + ddn2 + " ;" + ico + " ;" + fak + " ;" + dn2 + " \n";
+                	}
+                myOutWriter1.append(datatxt1);
+                }
+                datatxt1="";
+                i11=r1.nextInt(15000-5000) + 5000;
+                if( zk1xf != 0 ){
+                	if(pozx.equals("1")) {
+                datatxt1 = i11 + " ;" + dokladx + " ;" + ucp + " ;" + uzk1 
+                		 + " ;" + dzk1 + " ;" + ico + " ;" + fak + " ;" + zk1 + " \n";
+                	}
+                	if(pozx.equals("2")) {
+                datatxt1 = i11 + " ;" + dokladx + " ;" + uzk1 + " ;" + ucp 
+                		 + " ;" + dzk1 + " ;" + ico + " ;" + fak + " ;" + zk1 + " \n";
+                	}
+                myOutWriter1.append(datatxt1);
+                }
+                datatxt1="";
+                i11=r1.nextInt(15000-5000) + 5000;
+                if( dn1xf != 0 ){
+                	if(pozx.equals("1")) {
+                datatxt1 = i11 + " ;" + dokladx + " ;" + ucp + " ;" + udn1 
+                		 + " ;" + ddn1 + " ;" + ico + " ;" + fak + " ;" + dn1 + " \n";
+                	}
+                	if(pozx.equals("2")) {
+                datatxt1 = i11 + " ;" + dokladx + " ;" + udn1 + " ;" + ucp 
+                		 + " ;" + ddn1 + " ;" + ico + " ;" + fak + " ;" + dn1 + " \n";
+                	}
+                myOutWriter1.append(datatxt1);
+                }
+                
+                
+                
                 myOutWriter1.close();
                 fOut1.close();
                 
