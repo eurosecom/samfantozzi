@@ -282,6 +282,7 @@
     <string name="kontnewdod">New supplier invoice</string>
     <string name="konttlacpdf">View document in PDF</string>
     <string name="kontzmazdok">Delete document</string>
+    <string name="kontzmazalldok">Delete all documents</string>
     <string name="konthladaj">Find a document</string>
     <string name="kontvsetky">View all documents</string>
     <string name="kontnextpage">Next Page</string>
@@ -354,6 +355,8 @@
     
     <string name="okzmazdokl">Delete the whole document</string>
     <string name="okzmazdoklmes">If you want to delete whole document, press Yes.</string>
+    <string name="okzmazdoklall">Delete all documents</string>
+    <string name="okzmazdoklallmes">If you want to delete all documents, press Yes.</string>
     <string name="okzmazdoklpol">Deleting a single item of document</string>
     <string name="okzmazdoklpolmes">If you want to delete a single item of document, press Yes.</string>
     <string name="progzmazdokl">Deleting the document. Please wait.</string>

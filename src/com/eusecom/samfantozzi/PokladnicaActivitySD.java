@@ -11,8 +11,10 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import org.json.JSONArray;
 import android.app.ActivityOptions;
+import android.app.AlertDialog;
 import android.app.ListActivity;
 import android.app.ProgressDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
@@ -37,7 +39,6 @@ import android.widget.SimpleAdapter;
 import android.widget.TextView;
 import android.widget.Toast;
 import com.eusecom.samfantozzi.defaultXML;
-
 import com.eusecom.samfantozzi.SimpleGestureFilter.SimpleGestureListener;
  
 public class PokladnicaActivitySD extends ListActivity implements SimpleGestureListener{
@@ -377,20 +378,37 @@ public class PokladnicaActivitySD extends ListActivity implements SimpleGestureL
     switch (item.getItemId()) {
     
     	case R.id.kontextzmazsd:
+    		
     		String pidm = String.valueOf(info.id);
             int inpom = Integer.parseInt(pidm);
             
-            String dokladm = productsList.get(inpom).get(TAG_PID);
-            new ZmazDoklad().execute(dokladm);
-            
-            Intent i = new Intent(getApplicationContext(), PokladnicaActivitySD.class);
-            Bundle extras = new Bundle();
-            extras.putString(TAG_CAT, "1");
-            extras.putString(TAG_DCEX, "0");
-            extras.putString(TAG_PAGEX, "1");
-            i.putExtras(extras);
-            startActivity(i);
-            finish();
+            final String dokladm = productsList.get(inpom).get(TAG_PID);
+    		//dialog
+            new AlertDialog.Builder(this)
+            .setTitle(getString(R.string.okzmazdokl) + " " + dokladm)
+            .setMessage(getString(R.string.okzmazdoklmes))
+            .setPositiveButton(getString(R.string.textyes), new DialogInterface.OnClickListener() {
+                public void onClick(DialogInterface dialog, int which) { 
+                	
+                    new ZmazDoklad().execute(dokladm);
+                    
+                    Intent i = new Intent(getApplicationContext(), PokladnicaActivitySD.class);
+                    Bundle extras = new Bundle();
+                    extras.putString(TAG_CAT, "1");
+                    extras.putString(TAG_DCEX, "0");
+                    extras.putString(TAG_PAGEX, "1");
+                    i.putExtras(extras);
+                    startActivity(i);
+                    finish();
+                }
+             })
+            .setNegativeButton(getString(R.string.textno), new DialogInterface.OnClickListener() {
+                public void onClick(DialogInterface dialog, int which) { 
+                	
+                }
+             })
+             .show();
+    		
 
             break;
     
@@ -789,10 +807,48 @@ public class PokladnicaActivitySD extends ListActivity implements SimpleGestureL
 	
 			return true;
 			
-		case R.id.kontextsynpokl:
+		case R.id.kontextzmazall:
+			
+			new AlertDialog.Builder(this)
+            .setTitle(getString(R.string.okzmazdoklall))
+            .setMessage(getString(R.string.okzmazdoklallmes))
+            .setPositiveButton(getString(R.string.textyes), new DialogInterface.OnClickListener() {
+                public void onClick(DialogInterface dialog, int which) { 
+                	
+ 
+                	String baseDir = Environment.getExternalStorageDirectory().getAbsolutePath();
+                	String fileName4 = "/eusecom/" + adresarx + "/poklzah" + firmax + ".csv";
+                	File myFile4 = new File(baseDir + File.separator + fileName4);                	
+                	if(myFile4.exists()){myFile4.delete();}
+                	String fileName5 = "/eusecom/" + adresarx + "/poklpol" + firmax + ".csv";
+                	File myFile5 = new File(baseDir + File.separator + fileName5);                	
+                	if(myFile5.exists()){myFile5.delete();}
+                    
+                    Intent i = new Intent(getApplicationContext(), PokladnicaActivitySD.class);
+                    Bundle extras = new Bundle();
+                    extras.putString(TAG_CAT, "1");
+                    extras.putString(TAG_DCEX, "0");
+                    extras.putString(TAG_PAGEX, "1");
+                    i.putExtras(extras);
+                    startActivity(i);
+                    finish();
+                }
+             })
+            .setNegativeButton(getString(R.string.textno), new DialogInterface.OnClickListener() {
+                public void onClick(DialogInterface dialog, int which) { 
+                	
+                }
+             })
+             .show();
 			
 
 	
+			return true;
+			
+		case R.id.kontextsynpokl:
+			
+
+			
 			return true;
 		
 

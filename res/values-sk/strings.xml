@@ -278,6 +278,7 @@
     <string name="kontnewdod">Nový dodávateľský doklad</string>
     <string name="konttlacpdf">Zobrazenie dokladu PDF</string>
     <string name="kontzmazdok">Zmazať doklad</string>
+    <string name="kontzmazalldok">Zmazať všetky doklady</string>
     <string name="konthladaj">Hladať doklad</string>
     <string name="kontvsetky">Zobraziť všetky doklady</string>
     <string name="kontnextpage">Ďalšia strana</string>
@@ -352,6 +353,8 @@
     
     <string name="okzmazdokl">Zmazanie celého dokladu</string>
     <string name="okzmazdoklmes">Ak chcete zmazať celý doklad stlačte Áno.</string>
+    <string name="okzmazdoklall">Zmazanie všetkých dokladov</string>
+    <string name="okzmazdoklallmes">Ak chcete zmazať všetky doklady stlačte Áno.</string>
     <string name="okzmazdoklpol">Zmazanie jednej položky z dokladu</string>
     <string name="okzmazdoklpolmes">Ak chcete zmazať jednu položku z dokladu stlačte Áno.</string>
     <string name="progzmazdokl">Mažem doklad. Prosím čakajte.</string>

@@ -8,6 +8,9 @@
     android:id="@+id/kontextnewvydsd"
     android:title="@string/kontnewvyd"/>
 	<item
+    android:id="@+id/kontextzmazall"
+    android:title="@string/kontzmazalldok"/>
+	<item
     android:id="@+id/kontextsynpokl"
     android:title="@string/synchropokl"/>
 	
