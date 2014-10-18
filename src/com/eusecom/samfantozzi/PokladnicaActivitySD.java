@@ -14,10 +14,13 @@ import android.app.ActivityOptions;
 import android.app.AlertDialog;
 import android.app.ListActivity;
 import android.app.ProgressDialog;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
@@ -850,6 +853,35 @@ public class PokladnicaActivitySD extends ListActivity implements SimpleGestureL
 
 			
 			return true;
+			
+		case R.id.kontextsynpoh:
+			
+			if (isOnline()) 
+			     {
+					Intent i = new Intent(this, SynchroPohActivitySD.class);
+					Bundle extras = new Bundle();
+		            extras.putString("odkade", "100");
+		            extras.putString("page", "1");
+		            i.putExtras(extras);
+					startActivity(i);
+					//finish();
+			     }else{
+			    	 new AlertDialog.Builder(this)
+			         .setTitle(getString(R.string.niejeinternet))
+			         .setMessage(getString(R.string.potrebujeteinternetsync))
+			         .setPositiveButton(getString(R.string.textok), new DialogInterface.OnClickListener() {
+			             public void onClick(DialogInterface dialog, int which) { 
+			               
+			             	//finish();
+			             }
+			          })
+
+			          .show();
+			     }
+			
+
+			
+			return true;
 		
 
 		
@@ -858,6 +890,18 @@ public class PokladnicaActivitySD extends ListActivity implements SimpleGestureL
 		}
 	}
 	//koniec optionsmenu
+	
+	//test ci je internet pripojeny
+    public boolean isOnline() {
+        ConnectivityManager cm =
+            (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
+        NetworkInfo netInfo = cm.getActiveNetworkInfo();
+        if (netInfo != null && netInfo.isConnected()) {
+            return true;
+        }
+        return false;
+    }
+    //koniec test ci je internet pripojeny
 	
  
 }

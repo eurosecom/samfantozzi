@@ -133,6 +133,10 @@
             android:label="@string/synchroIcoSD" >
         </activity>
         <activity
+            android:name="com.eusecom.samfantozzi.SynchroPohActivitySD"
+            android:label="@string/synchropoh" >
+        </activity>
+        <activity
             android:name="com.eusecom.samfantozzi.VyberUceActivity"
             android:label="@string/popisUce" >
         </activity>

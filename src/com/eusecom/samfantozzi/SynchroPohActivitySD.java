@@ -2,7 +2,6 @@ package com.eusecom.samfantozzi;
  
 import java.io.BufferedReader;
 import java.io.File;
-import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -38,7 +37,7 @@ import android.widget.TextView;
 import com.eusecom.samfantozzi.MCrypt;
 
 
-public class SynchroIcoActivitySD extends ListActivity {
+public class SynchroPohActivitySD extends ListActivity {
 
 	Button btnUlozNewObj;
 	Button btnhladajico;
@@ -96,7 +95,7 @@ public class SynchroIcoActivitySD extends ListActivity {
         odkade = extras.getString(TAG_ODKADE);
         //odkade 1=prijmovy, 2=vydvkov, 100=z mainscreen
         
-        this.setTitle(getResources().getString(R.string.synchroIcoSD));
+        this.setTitle(getResources().getString(R.string.synchropoh));
 
        
         firmax=SettingsActivity.getFir(this);
@@ -116,42 +115,30 @@ public class SynchroIcoActivitySD extends ListActivity {
         StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
    		StrictMode.setThreadPolicy(policy);
     
-        	
-    	
-        // Hashmap for ListView
-        productsList = new ArrayList<HashMap<String, String>>();
+
+        new LoadAllPohSD().execute();
  
-        // Loading products in Background Thread
-        //new LoadAllIcosSD().execute();
-        new SynchroAllIcosSD().execute();
- 
-        
+  
     }
  //koniec oncreate
     
 
-    //prenos iconew.csv na server
-    /**
-     * Background Async Task to Load all banks by making HTTP Request
-     * */
-    class SynchroAllIcosSD extends AsyncTask<String, String, String> {
+ 
+    //nacitaj autopohyby144.csv
+
+    class LoadAllPohSD extends AsyncTask<String, String, String> {
     	
-        /**
-         * Before starting background thread Show Progress Dialog
-         * */
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
-            pDialog = new ProgressDialog(SynchroIcoActivitySD.this);
+            pDialog = new ProgressDialog(SynchroPohActivitySD.this);
             pDialog.setMessage(getString(R.string.progdata));
             pDialog.setIndeterminate(false);
             pDialog.setCancelable(false);
             pDialog.show();
         }
  
-        /**
-         * getting All banks from url
-         * */
+
         protected String doInBackground(String... args) {
         	
         	String prmall = inputAll.getText().toString();
@@ -174,38 +161,6 @@ public class SynchroIcoActivitySD extends ListActivity {
         	/* Decrypt */
         	//String decrypted = new String( mcrypt.decrypt( encrypted ) );
         	
-            
-        try {
-            	
-            	String baseDir = Environment.getExternalStorageDirectory().getAbsolutePath();
-            	String fileName = "/eusecom/" + adresarx + "/iconew" + firmax + ".csv";
-            	File myFile = new File(baseDir + File.separator + fileName);
-
-            	if(myFile.exists()){
-                FileInputStream fIn = new FileInputStream(myFile);
-                BufferedReader myReader = new BufferedReader(
-                        new InputStreamReader(fIn));
-                String aDataRow = "";
-                String aBuffer = "";
-                //do ip napocitam kolko riadkov mam
-                int ip=0;
-            	
-                while ((aDataRow = myReader.readLine()) != null) {
-                    aBuffer += aDataRow + ";endLinexx;";
-                    ip = ip+1;
-                
-                }
-
-                obsahcsv = aBuffer;
-                myReader.close();
-                if(myFile.exists()){ myFile.delete(); }
-
-            	}
-            	//koniec ak iconew.csv existuje
-            			
-           	} catch (Exception e) {
-               
-           	}
         
         		try {
             			
@@ -216,12 +171,11 @@ public class SynchroIcoActivitySD extends ListActivity {
                         client.getParams().setParameter("http.socket.timeout", 2000);
                         client.getParams().setParameter("http.protocol.content-charset", HTTP.UTF_8);
                         httpParameters.setBooleanParameter("http.protocol.expect-continue", false);
-                        HttpPost request = new HttpPost("http://" + serverxxx[0] + "/androidfanti/synchro_ico.php?sid=5");
+                        HttpPost request = new HttpPost("http://" + serverxxx[0] + "/androidfanti/synchro_poh.php?sid=5");
                         request.getParams().setParameter("http.socket.timeout", 5000);
 
                     	List<NameValuePair> postParameters = new ArrayList<NameValuePair>();
                     	postParameters.add(new BasicNameValuePair("prmall", prmall));
-                    	postParameters.add(new BasicNameValuePair("obsahcsv", obsahcsv));
                     	postParameters.add(new BasicNameValuePair("serverx", serverx));
                     	postParameters.add(new BasicNameValuePair("userhash", encrypted));
 
@@ -268,9 +222,7 @@ public class SynchroIcoActivitySD extends ListActivity {
             return null;
         }
  
-        /**
-         * After completing background task Dismiss the progress dialog
-         * **/
+
         protected void onPostExecute(String file_url) {
             // dismiss the dialog after getting all products
             pDialog.dismiss();
@@ -278,19 +230,16 @@ public class SynchroIcoActivitySD extends ListActivity {
             runOnUiThread(new Runnable() {
                 public void run() {
                 	
-                	String urls = "http://www.eshoptest.sk/tmp/ico" + firmax + ".xml";
-            	   	String strret = LoadIcoXmlFromWebOperations(urls);
+                	String urls = "http://www.eshoptest.sk/tmp/autopohyby" + firmax + ".xml";
+            	   	String strret = LoadPohXmlFromWebOperations(urls);
             	   	nacitanexml = (TextView) findViewById(R.id.nacitanexml);
             	    nacitanexml.setText(strret);
+            	   	String urlu = "http://www.eshoptest.sk/tmp/uctosnova" + firmax + ".xml";
+            	   	String strreu = LoadUceXmlFromWebOperations(urlu);
+            	   	nacitanexml = (TextView) findViewById(R.id.nacitanexml);
+            	    nacitanexml.setText(strreu);
+            	    finish();
             	    
-            	    // successfully updated
-             		Intent i = new Intent(getApplicationContext(), VyberIcoActivitySD.class);
-             		Bundle extras = new Bundle();
-             		extras.putString("odkade", "100");
-                    extras.putString("page", "1");
-                    i.putExtras(extras);
-        			startActivity(i);
-                    finish();
 
                 }
             });
@@ -298,13 +247,10 @@ public class SynchroIcoActivitySD extends ListActivity {
         }
  
     }
-    //koniec prenos iconew.csv na server
-
- 
-    
+    //koniec nacitaj autopohyby.csv
     
 	
-    public String LoadIcoXmlFromWebOperations(String urls) {
+    public String LoadUceXmlFromWebOperations(String urls) {
     	
     	String strret="";
     	
@@ -331,7 +277,64 @@ public class SynchroIcoActivitySD extends ListActivity {
     	}
 
     	String baseDir = Environment.getExternalStorageDirectory().getAbsolutePath();  
-    	String fileName1 = "/eusecom/" + adresarx + "/ico" + firmax + ".xml";
+    	String fileName1 = "/eusecom/" + adresarx + "/uctosnova" + firmax + ".xml";
+    	File myFile1 = new File(baseDir + File.separator + fileName1);
+    	
+    	if(myFile1.exists()){ myFile1.delete(); }
+    		
+			try {
+				myFile1.createNewFile();
+
+				FileOutputStream fOut1 = null;
+				fOut1 = new FileOutputStream(myFile1, true);
+				OutputStreamWriter myOutWriter1 = new OutputStreamWriter(fOut1);
+				
+					String datatxt1 = strret;
+
+
+				myOutWriter1.append(datatxt1);
+				myOutWriter1.close();
+				fOut1.close();
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+
+			}
+
+    	
+		return strret;
+    	
+    }
+    //koniecloadfile
+    
+public String LoadPohXmlFromWebOperations(String urls) {
+    	
+    	String strret="";
+    	
+    	try {
+    	    // Create a URL for the desired page
+    		
+    	    URL url = new URL(urls);
+
+    	    // Read all the text returned by the server
+    	    BufferedReader in = new BufferedReader(new InputStreamReader(url.openStream()));
+    	    String aBuffer="";
+    	    String str="";
+    	    
+    	    while ((str = in.readLine()) != null) {
+    	        // str is one line of text; readLine() strips the newline character(s)
+    	    	aBuffer += str + "\n";
+    	    }
+    	    strret = aBuffer;
+    	    in.close();
+    	    
+    	    
+    	} catch (MalformedURLException e) {
+    	} catch (IOException e) {
+    	}
+
+    	String baseDir = Environment.getExternalStorageDirectory().getAbsolutePath();  
+    	String fileName1 = "/eusecom/" + adresarx + "/autopohyby" + firmax + ".xml";
     	File myFile1 = new File(baseDir + File.separator + fileName1);
     	
     	if(myFile1.exists()){ myFile1.delete(); }

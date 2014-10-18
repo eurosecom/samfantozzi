@@ -294,9 +294,10 @@
     <string name="popisRetazec">Text</string>
     <string name="popisIco">IČO firmy</string>
     <string name="popisIcoSD">IČO firmy SDkarta</string>
-    <string name="synchroIcoSD">Synchronizácia IČO</string>
-    <string name="synchropokl">Synchronizácia Pokladnice</string>
-    <string name="syncdok">Synchronizovať doklad</string>
+    <string name="synchroIcoSD">Synchro IČO</string>
+    <string name="synchropokl">Synchro Pokladnice</string>
+    <string name="synchropoh">Synchro Pohybov a Účtov</string>
+    <string name="syncdok">Synchro doklad</string>
     <string name="popisKto">Osoba</string>
     <string name="popisTxp">Poznámka</string>
     <string name="popisUcm">Pokladnica</string>

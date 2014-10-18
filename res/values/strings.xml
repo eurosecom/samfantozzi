@@ -298,9 +298,10 @@
     <string name="popisRetazec">Text</string>
     <string name="popisIco">Company ID</string>
     <string name="popisIcoSD">Company ID SDcard</string>
-    <string name="synchroIcoSD">Synchronize IDcompany</string>
-    <string name="synchropokl">Synchronize cash Invoices</string>
-    <string name="syncdok">Synchronize cash Invoice</string>
+    <string name="synchroIcoSD">Sync IDcompany</string>
+    <string name="synchropokl">Sync cash Invoices</string>
+    <string name="synchropoh">Sync transfers, accounts</string>
+    <string name="syncdok">Sync cash Invoice</string>
     <string name="popisKto">Person</string>
     <string name="popisTxp">Note</string>
     <string name="popisUcm">Cash register</string>
