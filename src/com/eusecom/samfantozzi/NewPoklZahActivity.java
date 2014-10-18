@@ -22,8 +22,12 @@ import org.apache.http.params.BasicHttpParams;
 import org.apache.http.params.HttpParams;
 import org.apache.http.protocol.HTTP;
  
+import android.annotation.SuppressLint;
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.app.ProgressDialog;
+import android.app.AlertDialog.Builder;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
@@ -110,7 +114,8 @@ public class NewPoklZahActivity extends Activity {
     String newx;
     String cat;
     
-    @Override
+    @SuppressLint("SimpleDateFormat")
+	@Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.new_poklzah);
@@ -125,6 +130,9 @@ public class NewPoklZahActivity extends Activity {
         cat = extras.getString(TAG_CAT);
         
         druhid = SettingsActivity.getDruhId(this);
+        
+        inputPoh = (EditText) findViewById(R.id.inputPoh);
+        inputPoh.setText("0");
         
         db=(new DatabaseHelper(this)).getWritableDatabase();
         
@@ -446,13 +454,27 @@ public class NewPoklZahActivity extends Activity {
         // save button
         btnSave = (Button) findViewById(R.id.btnSave);
         
+        final Builder aaa = new AlertDialog.Builder(this)
+        .setTitle(getString(R.string.nopohyb))
+        .setMessage(getString(R.string.musitepohyb))
+        .setPositiveButton(getString(R.string.textok), new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int which) { 
+              
+            	//finish();
+            }
+         });
+        
         // save button click event
         btnSave.setOnClickListener(new View.OnClickListener() {
  
             @Override
             public void onClick(View arg0) {
-                // starting background task to update product
+            	String inppoh = inputPoh.getText().toString();
+            	if(inppoh.equals("0")) {            		
+            		aaa.show();	
+            	}else{
                 new SaveProductDetails().execute();
+            	}
             }
         });
         

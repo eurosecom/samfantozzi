@@ -218,6 +218,8 @@
     
     <string name="lenpokladnicu">In the local function you can insert only cash invoices !</string>
     <string name="lokalnyrezim">The local program functions</string>
+    <string name="musitepohyb">You must choose the Transfer !</string>
+    <string name="nopohyb">No Transfer choosing</string>
     
     <string name="title_activity_vyberslu">Select service</string>
     <string name="title_activity_ulozslu">Selected service</string>

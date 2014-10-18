@@ -214,6 +214,8 @@
     
     <string name="lenpokladnicu">V lokálnej funkcii programu môžete nahrávať len pokladničné doklady !</string>
     <string name="lokalnyrezim">Lokálna funkcia programu</string>
+    <string name="musitepohyb">Musíte vybrať pohyb !</string>
+    <string name="nopohyb">Žiadny pohyb</string>
     
     <string name="title_activity_vyberslu">Vyberte službu</string>
     <string name="title_activity_ulozslu">Vybraná služba</string>

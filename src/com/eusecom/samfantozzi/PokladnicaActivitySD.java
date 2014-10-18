@@ -3,7 +3,9 @@ package com.eusecom.samfantozzi;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.FileOutputStream;
 import java.io.InputStreamReader;
+import java.io.OutputStreamWriter;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -12,11 +14,13 @@ import android.app.ActivityOptions;
 import android.app.ListActivity;
 import android.app.ProgressDialog;
 import android.content.Intent;
-import android.net.Uri;
+import android.content.SharedPreferences;
+import android.content.SharedPreferences.Editor;
 import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
+import android.preference.PreferenceManager;
 import android.view.ContextMenu;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -32,7 +36,6 @@ import android.widget.ListView;
 import android.widget.SimpleAdapter;
 import android.widget.TextView;
 import android.widget.Toast;
-import com.eusecom.samfantozzi.MCrypt;
 import com.eusecom.samfantozzi.defaultXML;
 
 import com.eusecom.samfantozzi.SimpleGestureFilter.SimpleGestureListener;
@@ -49,6 +52,7 @@ public class PokladnicaActivitySD extends ListActivity implements SimpleGestureL
     TextView inputAll;
     TextView inputAllServer;
     TextView inputAllUser;
+    TextView inputAllKosik;
     TextView aktualplu;
     
     EditText txtTitle;
@@ -114,6 +118,7 @@ public class PokladnicaActivitySD extends ListActivity implements SimpleGestureL
         
      
         inputAll = (TextView) findViewById(R.id.inputAll);
+        inputAllKosik = (TextView) findViewById(R.id.inputAllKosik);
         inputAll.setText("Fir/" + SettingsActivity.getFir(this) + "/Firrok/" + SettingsActivity.getFirrok(this));
         inputAllServer = (TextView) findViewById(R.id.inputAllServer);
         inputAllServer.setText(SettingsActivity.getServerName(this));
@@ -376,77 +381,26 @@ public class PokladnicaActivitySD extends ListActivity implements SimpleGestureL
             int inpom = Integer.parseInt(pidm);
             
             String dokladm = productsList.get(inpom).get(TAG_PID);
+            new ZmazDoklad().execute(dokladm);
             
-            Intent im = new Intent(getApplicationContext(), ZmazPoklZahActivity.class);
-            Bundle extrasm = new Bundle();
-            extrasm.putString(TAG_CAT, cat);
-            extrasm.putString(TAG_POZX, "1");
-            extrasm.putString(TAG_FAKX, dokladm);
-            im.putExtras(extrasm);
-            startActivityForResult(im, 100);
+            Intent i = new Intent(getApplicationContext(), PokladnicaActivitySD.class);
+            Bundle extras = new Bundle();
+            extras.putString(TAG_CAT, "1");
+            extras.putString(TAG_DCEX, "0");
+            extras.putString(TAG_PAGEX, "1");
+            i.putExtras(extras);
+            startActivity(i);
+            finish();
+
             break;
     
         
         case R.id.kontexttlacsd:
-            String pidx = String.valueOf(info.id);
-            int inpos = Integer.parseInt(pidx);
+            //String pidx = String.valueOf(info.id);
+            //int inpos = Integer.parseInt(pidx);
+            //String dokladx = productsList.get(inpos).get(TAG_PID);
             
-            String dokladx = productsList.get(inpos).get(TAG_PID);
-            
-        	String serverx = inputAllServer.getText().toString();
-        	String delims = "[/]+";
-        	String[] serverxxx = serverx.split(delims);
-        	String userx = inputAllUser.getText().toString();
         	
-        	String allx = inputAll.getText().toString();
-        	String[] allxxx = allx.split(delims);
-        	
-        	String drupoh = "1";
-        	if( cat.equals("1")) { drupoh="1"; }
-        	if( cat.equals("4")) { drupoh="4"; }
-        	
-        	String userxplus = userx + "/" + dokladx;
-        	
-        	//String userhash = sha1Hash( userx );
-        	MCrypt mcrypt = new MCrypt();
-        	/* Encrypt */
-        	try {
-				encrypted = MCrypt.bytesToHex( mcrypt.encrypt(userxplus) );
-			} catch (Exception e1) {
-				// TODO Auto-generated catch block
-				e1.printStackTrace();
-			}
-        	/* Decrypt */
-        	//String decrypted = new String( mcrypt.decrypt( encrypted ) );
-            
-        	Uri uri = null;
-        	
-        	if( cat.equals("1")) {
-        	uri = Uri.parse("http://" + serverxxx[0] + 
-            		"/ucto/vspk_pdf.php?cislo_dok=" + dokladx + "&hladaj_dok=" + dokladx 
-            		+ "&sysx=UCT&rozuct=ANO&zandroidu=1&anduct=1&copern=20&drupoh="+ drupoh + "&page=1&serverx=" 
-            		+ serverx + "&userhash=" + encrypted + "&rokx=" + allxxx[3] + "&firx=" + allxxx[1] );
-        	}
-        	if( cat.equals("4")) {
-        	uri = Uri.parse("http://" + serverxxx[0] + 
-            		"/ucto/vspk_pdf.php?cislo_dok=" + dokladx + "&hladaj_dok=" + dokladx 
-            		+ "&sysx=UCT&rozuct=ANO&zandroidu=1&anduct=1&copern=20&drupoh="+ drupoh + "&page=1&serverx=" 
-            		+ serverx + "&userhash=" + encrypted + "&rokx=" + allxxx[3] + "&firx=" + allxxx[1] );
-        	}
-        	if( cat.equals("8")) {
-            uri = Uri.parse("http://" + serverxxx[0] + 
-            		"/faktury/vstf_pdf.php?cislo_dok=" + dokladx + "&mini=1&tlacitR=1&sysx=UCT&rozuct=ANO&zandroidu=1&anduct=1&h_razitko=1&copern=20&drupoh=1&page=1&serverx=" 
-            		+ serverx + "&userhash=" + encrypted + "&rokx=" + allxxx[3] + "&firx=" + allxxx[1] );
-        	}
-        	if( cat.equals("9")) {
-                uri = Uri.parse("http://" + serverxxx[0] + 
-                		"/faktury/vstf_pdf.php?cislo_dok=" + dokladx + "&mini=1&tlacitR=1&sysx=UCT&rozuct=ANO&zandroidu=1&anduct=1&h_razitko=1&copern=20&drupoh=2&page=1&serverx=" 
-                		+ serverx + "&userhash=" + encrypted + "&rokx=" + allxxx[3] + "&firx=" + allxxx[1] );
-            	}
-            
-            Intent intent = new Intent(Intent.ACTION_VIEW, uri);
-            startActivity(intent);
-            intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
             break;
             
         case R.id.kontuprzahsd:
@@ -639,6 +593,158 @@ public class PokladnicaActivitySD extends ListActivity implements SimpleGestureL
  
     }
     //koniec loadall
+    
+    /**
+     * Background Async Task to Delete doklad
+     * */
+    class ZmazDoklad extends AsyncTask<String, String, String> {
+    	
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+            pDialog = new ProgressDialog(PokladnicaActivitySD.this);
+            if( cat.equals("1")) {pDialog.setMessage(getString(R.string.progpokl)); }
+            if( cat.equals("4")) {pDialog.setMessage(getString(R.string.progbank)); }
+            if( cat.equals("8")) {pDialog.setMessage(getString(R.string.progdata)); }
+            if( cat.equals("9")) {pDialog.setMessage(getString(R.string.progdata)); }
+            pDialog.setIndeterminate(false);
+            pDialog.setCancelable(false);
+            pDialog.show();
+        }
+ 
+
+        protected String doInBackground(String... args) {
+        	
+        	String zmazdoklad=args[0];
+        	String pozx ="0";
+        	
+            try {
+            	
+            	String baseDir = Environment.getExternalStorageDirectory().getAbsolutePath();
+            	String fileName = "/eusecom/" + adresarx + "/poklzah"+ firmax + ".csv";
+            	File myFile = new File(baseDir + File.separator + fileName);
+
+                FileInputStream fIn = new FileInputStream(myFile);
+                BufferedReader myReader = new BufferedReader(
+                        new InputStreamReader(fIn));
+                String aDataRow = "";
+                String aBuffer = "";
+                String testBuffer = "";
+            	
+                while ((aDataRow = myReader.readLine()) != null) {
+
+                	testBuffer = aDataRow + "\n";
+                	
+                	String indexx = testBuffer;
+                	String delims2 = "[;]+";
+                	String[] riadokxxx = indexx.split(delims2);
+                	String cplzmaz =  riadokxxx[3];
+
+                	if( cplzmaz.equals(zmazdoklad)) { 
+                		
+                		pozx =  riadokxxx[2].trim();
+                	
+                	}else{
+                		aBuffer += aDataRow + "\n";
+                	}
+               
+
+                }
+
+            	inputAllKosik = (TextView) findViewById(R.id.inputAllKosik);                
+            	inputAllKosik.setText(aBuffer);
+                myReader.close();
+                
+
+                	String baseDir2 = Environment.getExternalStorageDirectory().getAbsolutePath();
+                	String fileName2 = "/eusecom/" + adresarx + "/poklzah"+ firmax + ".csv";
+
+                	File myFile2 = new File(baseDir2 + File.separator + fileName2);
+                	
+                    myFile2.createNewFile();
+                    FileOutputStream fOut2 = new FileOutputStream(myFile2);
+                    OutputStreamWriter myOutWriter2 = 
+                                            new OutputStreamWriter(fOut2);
+                    myOutWriter2.append(inputAllKosik.getText());
+                    myOutWriter2.close();
+                    fOut2.close();
+
+                	String fileName3 = "/eusecom/" + adresarx + "/poklzah"+ firmax + ".csv";
+                	File myFile3 = new File(baseDir + File.separator + fileName3);
+
+                    FileInputStream fIn3 = new FileInputStream(myFile3);
+                    BufferedReader myReader3 = new BufferedReader(
+                            new InputStreamReader(fIn3));
+                    String aDataRow3 = "";
+                    String aBuffer3 = "";
+                    String testBuffer3 = "";
+                	
+                    while ((aDataRow3 = myReader3.readLine()) != null) {
+
+                    	testBuffer3 = aDataRow3 + "\n";
+                    	
+                    	String indexx = testBuffer3;
+                    	String delims2 = "[;]+";
+                    	String[] riadokxxx = indexx.split(delims2);
+                    	String cplzmaz =  riadokxxx[1];
+
+                    	if( cplzmaz.equals(zmazdoklad)) { 
+                    	
+                    	}else{
+                    		aBuffer3 += aDataRow3 + "\n";
+                    	}
+                   
+
+                    }
+
+                	inputAllKosik = (TextView) findViewById(R.id.inputAllKosik);                
+                	inputAllKosik.setText(aBuffer3);
+                    myReader3.close();
+                    
+
+                    	String baseDir4 = Environment.getExternalStorageDirectory().getAbsolutePath();
+                    	String fileName4 = "/eusecom/" + adresarx + "/poklpol"+ firmax + ".csv";
+
+                    	File myFile4 = new File(baseDir4 + File.separator + fileName4);
+                    	
+                        myFile4.createNewFile();
+                        FileOutputStream fOut4 = new FileOutputStream(myFile4);
+                        OutputStreamWriter myOutWriter4 = 
+                                                new OutputStreamWriter(fOut4);
+                        myOutWriter4.append(inputAllKosik.getText());
+                        myOutWriter4.close();
+                        fOut4.close();
+                        
+                        //toto uklada preference
+                     	SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(getBaseContext());
+                     	Editor editor = prefs.edit();
+
+                     	if(pozx.equals("1")) { editor.putString("pokldok", zmazdoklad.trim()).apply(); }
+                     	if(pozx.equals("2")) { editor.putString("pokldov", zmazdoklad.trim()).apply(); }
+                     	
+                     	editor.commit();
+                    
+                    
+                
+                } catch (Exception e) {
+                    
+                }
+        	
+
+            return null;
+        }
+ 
+
+        protected void onPostExecute(String file_url) {
+            // dismiss the dialog after getting all products
+            pDialog.dismiss();
+            
+
+ 
+        }
+ 
+    }
+    //koniec zmazdoklad
     
     
 	//optionsmenu
