@@ -107,6 +107,15 @@ public class NewPoklZahActivitySD extends Activity {
     private static final String TAG_UDN2 = "udn2";
     private static final String TAG_DDN1 = "ddn1";
     private static final String TAG_DDN2 = "ddn2";
+    
+    private static final String NODE_CUSTOMER = "customer";
+    private static final String NODE_ICO = "ico";
+    private static final String NODE_NAI = "nai";
+    private static final String NODE_MES = "mes";
+    
+    private static final String NODE_UCTPOHYB = "uctpohyb";
+    private static final String NODE_CPOH = "cpoh";
+    private static final String NODE_POHP = "pohp";
 
     private SQLiteDatabase db=null;
     private Cursor constantsCursor=null;
@@ -125,6 +134,8 @@ public class NewPoklZahActivitySD extends Activity {
     String firmax;
     String adresarx;
     String dokladx;
+    String icoxy;
+    String pohxy;
     
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -970,14 +981,10 @@ public class NewPoklZahActivitySD extends Activity {
     }
  //koniec save
     
-    /**
-     * Background Async Task to  Save product Details
-     * */
+
     class GetProductDetails extends AsyncTask<String, String, String> {
  
-        /**
-         * Before starting background thread Show Progress Dialog
-         * */
+
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
@@ -988,15 +995,16 @@ public class NewPoklZahActivitySD extends Activity {
             pDialog.show();
         }
  
-        /**
-         * Saving product
-         * */
+
         protected String doInBackground(String... args) {
         	
+        	// updating UI from Background Thread
+            runOnUiThread(new Runnable() {
+                public void run() {
+        	
+                String upravdoklad = dokladx.trim();
         	try {
         	
-        	//String zmazdoklad = dokladx.trim(); 
-
         	inputZk0 = (EditText) findViewById( R.id.inputZk0 );
             inputZk1 = (EditText) findViewById( R.id.inputZk1 );
             inputZk2 = (EditText) findViewById( R.id.inputZk2 );
@@ -1010,13 +1018,129 @@ public class NewPoklZahActivitySD extends Activity {
             inputKto = (EditText) findViewById( R.id.inputKto );
             inputTxp = (EditText) findViewById( R.id.inputTxp );
             inputIco = (EditText) findViewById( R.id.inputIco );
+            inputIconaz = (TextView) findViewById(R.id.inputIconaz);
+            btnPohyb = (Button) findViewById(R.id.btnPohyb);
+
+            String baseDir = Environment.getExternalStorageDirectory().getAbsolutePath();
+        	String fileName = "/eusecom/" + adresarx + "/poklzah"+ firmax + ".csv";
+        	File myFile = new File(baseDir + File.separator + fileName);
+
+            FileInputStream fIn = new FileInputStream(myFile);
+            BufferedReader myReader = new BufferedReader(
+                    new InputStreamReader(fIn));
+            String aDataRow = "";
+            String aBuffer = "";
+            String datx="";String fakx="";String ktox="";String txpx=""; icoxy=""; pohxy="";
+            String zk0x="";String zk1x="";String zk2x="";String dn1x="";String dn2x="";String clkx="";
             
+            //String datatxt = i2 + " ;" + uce + " ;" + pozx + " ;" + dokladx + " ;" + dat + " ;" + ico + " ;" + fak + " ;" + kto
+           	//	 + " ;" + txp + " ;" + zk0 + " ;" + zk1 + " ;" + zk2 + " ;" + dn1 + " ;" + dn2 + " ;" + poh + " ;" + clk + " 
 
-            } catch (Exception e) {
+        	String delimsx2 = "[;]+";
 
+            while ((aDataRow = myReader.readLine()) != null) {
+                aBuffer = aDataRow;
+                String[] riadokxxx = aBuffer.split(delimsx2);
+                String dokx =  riadokxxx[3].trim();
+                if( dokx.equals(upravdoklad)) {
+                datx =  riadokxxx[4].trim();
+                icoxy =  riadokxxx[5].trim();
+                fakx =  riadokxxx[6].trim();
+                ktox =  riadokxxx[7].trim();
+                txpx =  riadokxxx[8].trim();
+                zk0x =  riadokxxx[9].trim();
+                zk1x =  riadokxxx[10].trim();
+                zk2x =  riadokxxx[11].trim();
+                dn1x =  riadokxxx[12].trim();
+                dn2x =  riadokxxx[13].trim();
+                pohxy =  riadokxxx[14].trim();
+                clkx =  riadokxxx[15].trim();
+                }
+            
             }
 
+            myReader.close();
+            inputDat.setText(datx);
+            inputIco.setText(icoxy);
+            inputFak.setText(fakx);
+            inputKto.setText(ktox);
+            inputTxp.setText(txpx);
+            inputPoh.setText(pohxy);
+            inputZk0.setText(zk0x);
+            inputZk1.setText(zk1x);
+            inputZk2.setText(zk2x);
+            inputDn1.setText(dn1x);
+            inputDn2.setText(dn2x);
+            inputCelkom.setText(clkx);
+
+        	} catch (Exception e) {
+            
+        	}
+        
+        	XMLDOMParser parser = new XMLDOMParser();
+        	try {
+        		
+        		String baseDir2 = Environment.getExternalStorageDirectory().getAbsolutePath();
+            	String fileName2 = "/eusecom/" + adresarx + "/ico"+ firmax + ".xml";
+            	File myFile2 = new File(baseDir2 + File.separator + fileName2);
+            
+            	Document doc = parser.getDocument(new FileInputStream(myFile2));
+            
+            	// Get elements by name employee
+            	NodeList nodeList = doc.getElementsByTagName(NODE_CUSTOMER);
+            
+
+            	for (int i = 0; i < nodeList.getLength(); i++) {
+                Element e = (Element) nodeList.item(i);
+
+                String icoy = parser.getValue(e, NODE_ICO);
+                		if( icoy.equals(icoxy)) {
+                			String naiy = parser.getValue(e, NODE_NAI);
+                			String mesy = parser.getValue(e, NODE_MES);
+                			inputIconaz.setText(naiy + "" + mesy);
+                		}
+
+            		}
+            		//koniec for
+
+            	} catch (Exception e) {
+
+            	}
+        	
+
+        	try {
+        		
+        		String baseDir2 = Environment.getExternalStorageDirectory().getAbsolutePath();
+            	String fileName2 = "/eusecom/" + adresarx + "/autopohyby"+ firmax + ".xml";
+            	File myFile2 = new File(baseDir2 + File.separator + fileName2);
+            
+            	Document doc = parser.getDocument(new FileInputStream(myFile2));
+            
+            	// Get elements by name employee
+            	NodeList nodeList = doc.getElementsByTagName(NODE_UCTPOHYB);
+            
+
+            	for (int i = 0; i < nodeList.getLength(); i++) {
+                Element e = (Element) nodeList.item(i);
+
+                String cpohy = parser.getValue(e, NODE_CPOH);
+                		if( cpohy.equals(pohxy)) {
+                			String pohpy = parser.getValue(e, NODE_POHP);
+                			btnPohyb.setText(pohpy);
+
+                		}
+
+            		}
+            		//koniec for
+
+            	} catch (Exception e) {
+
+            	}
+
  
+                }//koniec run   
+            });//koniec runable
+            
             return null;
         }
  
