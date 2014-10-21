@@ -5,11 +5,8 @@ xmlns:android="http://schemas.android.com/apk/res/android">
     android:id="@+id/kontexttlacsd"
     android:title="@string/konttlacsd"/>
 <item
-    android:id="@+id/kontuprzahsd"
-    android:title="@string/kontuprzah"/>
-<item
-    android:id="@+id/kontuprpolsd"
-    android:title="@string/kontuprpol"/>
+    android:id="@+id/kontuprdoksd"
+    android:title="@string/kontuprdok"/>
 <item
     android:id="@+id/kontextzmazsd"
     android:title="@string/kontzmazdok"/>

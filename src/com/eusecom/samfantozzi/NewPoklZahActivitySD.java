@@ -4,6 +4,7 @@ import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
+import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
 import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
@@ -143,6 +144,9 @@ public class NewPoklZahActivitySD extends Activity {
         firmax=SettingsActivity.getFir(this);
         dokladx=SettingsActivity.getPokldok(this);
         if(pozx.equals("2")) { dokladx=SettingsActivity.getPokldov(this); }
+        
+        if(newx.equals("0")) { dokladx=fakx; }
+        
         adresarx=SettingsActivity.getServerName(this);
         String delims = "[/]+";
     	String[] serverxxx = adresarx.split(delims);
@@ -155,27 +159,19 @@ public class NewPoklZahActivitySD extends Activity {
         db=(new DatabaseHelper(this)).getWritableDatabase();
         
         if(cat.equals("1")) {
-        if(pozx.equals("1")) { this.setTitle(SettingsActivity.getPokluce(this) + " " + getResources().getString(R.string.kontnewpri)); }
-        if(pozx.equals("2")) { this.setTitle(SettingsActivity.getPokluce(this) + " " + getResources().getString(R.string.kontnewvyd)); }
+        if(pozx.equals("1")) { this.setTitle(SettingsActivity.getPokluce(this) + "/" + dokladx + " " + getResources().getString(R.string.kontnewpri)); }
+        if(pozx.equals("2")) { this.setTitle(SettingsActivity.getPokluce(this) + "/" + dokladx + " " + getResources().getString(R.string.kontnewvyd)); }
         inputUce = (EditText) findViewById(R.id.inputUce);
         inputUce.setText(SettingsActivity.getPokluce(this));
         }
+        if(newx.equals("0")) {
+            if(pozx.equals("1")) { this.setTitle(SettingsActivity.getPokluce(this) + "/" + dokladx + " " 
+        + getResources().getString(R.string.popisprijmovy) + " " + getResources().getString(R.string.kontuprzah)); }
+            if(pozx.equals("2")) { this.setTitle(SettingsActivity.getPokluce(this) + "/" + dokladx + " " 
+        + getResources().getString(R.string.popisvydavkovy) + " " + getResources().getString(R.string.kontuprzah)); }
+            }
         
-        if(cat.equals("4")) { 
-        this.setTitle(SettingsActivity.getBankuce(this) + " " + getResources().getString(R.string.kontnewban)); 
-        inputUce = (EditText) findViewById(R.id.inputUce);
-        inputUce.setText(SettingsActivity.getBankuce(this));	
-        }
-        if(cat.equals("8")) { 
-            this.setTitle(SettingsActivity.getBankuce(this) + " " + getResources().getString(R.string.kontnewodb)); 
-            inputUce = (EditText) findViewById(R.id.inputUce);
-            inputUce.setText(SettingsActivity.getOdbuce(this));	
-            }
-        if(cat.equals("9")) { 
-            this.setTitle(SettingsActivity.getBankuce(this) + " " + getResources().getString(R.string.kontnewdod)); 
-            inputUce = (EditText) findViewById(R.id.inputUce);
-            inputUce.setText(SettingsActivity.getDoduce(this));	
-            }
+
         
         
         
@@ -213,7 +209,6 @@ public class NewPoklZahActivitySD extends Activity {
           inputDat.setText(formattedDate);
           
         inputAll = (TextView) findViewById(R.id.inputAll);
-        inputAll.setText("Fir/" + SettingsActivity.getFir(this) + "/Firrok/" + SettingsActivity.getFirrok(this));
         inputEdiServer = (TextView) findViewById(R.id.inputEdiServer);
         inputEdiServer.setText(SettingsActivity.getServerName(this));
         inputEdiUser = (TextView) findViewById(R.id.inputEdiUser);
@@ -518,6 +513,10 @@ public class NewPoklZahActivitySD extends Activity {
         });
         
         
+        if(newx.equals("0")) {
+        	new GetProductDetails().execute();
+        }
+        
     }
     //koniec oncreate
     
@@ -649,8 +648,107 @@ public class NewPoklZahActivitySD extends Activity {
          * Saving product
          * */
         protected String doInBackground(String... args) {
- 
         	
+        	try {
+        	
+        	String zmazdoklad = dokladx.trim(); 
+        	//najprv zmazat
+        	String baseDirz1 = Environment.getExternalStorageDirectory().getAbsolutePath();
+        	String fileNamez1 = "/eusecom/" + adresarx + "/poklzah"+ firmax + ".csv";
+        	File myFilez1 = new File(baseDirz1 + File.separator + fileNamez1);
+
+            FileInputStream fInz1 = new FileInputStream(myFilez1);
+            BufferedReader myReaderz1 = new BufferedReader(
+                    new InputStreamReader(fInz1));
+            String aDataRowz1 = "";
+            String aBufferz1 = "";
+            String testBufferz1 = "";
+        	
+            while ((aDataRowz1 = myReaderz1.readLine()) != null) {
+
+            	testBufferz1 = aDataRowz1 + "\n";
+            	
+            	String indexxz1 = testBufferz1;
+            	String delims2z1 = "[;]+";
+            	String[] riadokxxxz1 = indexxz1.split(delims2z1);
+            	String cplzmazz1 =  riadokxxxz1[3].trim();
+
+            	if( cplzmazz1.equals(zmazdoklad)) { 
+            		
+            	
+            	}else{
+            		aBufferz1 += aDataRowz1 + "\n";
+            	}
+           
+
+            }
+
+        	inputAll = (TextView) findViewById(R.id.inputAll);                
+        	inputAll.setText(aBufferz1);
+            myReaderz1.close();
+            
+
+            	String baseDirz2 = Environment.getExternalStorageDirectory().getAbsolutePath();
+            	String fileNamez2 = "/eusecom/" + adresarx + "/poklzah"+ firmax + ".csv";
+
+            	File myFilez2 = new File(baseDirz2 + File.separator + fileNamez2);
+            	
+                myFilez2.createNewFile();
+                FileOutputStream fOutz2 = new FileOutputStream(myFilez2);
+                OutputStreamWriter myOutWriterz2 = 
+                                        new OutputStreamWriter(fOutz2);
+                myOutWriterz2.append(inputAll.getText());
+                myOutWriterz2.close();
+                fOutz2.close();
+
+                String baseDir3 = Environment.getExternalStorageDirectory().getAbsolutePath();
+            	String fileName3 = "/eusecom/" + adresarx + "/poklpol"+ firmax + ".csv";
+            	File myFile3 = new File(baseDir3 + File.separator + fileName3);
+
+                FileInputStream fIn3 = new FileInputStream(myFile3);
+                BufferedReader myReader3 = new BufferedReader(
+                        new InputStreamReader(fIn3));
+                String aDataRow3 = "";
+                String aBuffer3 = "";
+                String testBuffer3 = "";
+            	
+                while ((aDataRow3 = myReader3.readLine()) != null) {
+
+                	testBuffer3 = aDataRow3 + "\n";
+                	
+                	String indexx = testBuffer3;
+                	String delims2 = "[;]+";
+                	String[] riadokxxx = indexx.split(delims2);
+                	String cplzmaz =  riadokxxx[1].trim();
+
+                	if( cplzmaz.equals(zmazdoklad)) { 
+                	
+                	}else{
+                		aBuffer3 += aDataRow3 + "\n";
+                	}
+               
+
+                }
+
+            	inputAll = (TextView) findViewById(R.id.inputAll);                
+            	inputAll.setText(aBuffer3);
+                myReader3.close();
+                
+
+                	String baseDir4 = Environment.getExternalStorageDirectory().getAbsolutePath();
+                	String fileName4 = "/eusecom/" + adresarx + "/poklpol"+ firmax + ".csv";
+
+                	File myFile4 = new File(baseDir4 + File.separator + fileName4);
+                	
+                    myFile4.createNewFile();
+                    FileOutputStream fOut4 = new FileOutputStream(myFile4);
+                    OutputStreamWriter myOutWriter4 = 
+                                            new OutputStreamWriter(fOut4);
+                    myOutWriter4.append(inputAll.getText());
+                    myOutWriter4.close();
+                    fOut4.close();
+ 
+        	//teraz ulozit novy
         	inputZk0 = (EditText) findViewById( R.id.inputZk0 );
             inputZk1 = (EditText) findViewById( R.id.inputZk1 );
             inputZk2 = (EditText) findViewById( R.id.inputZk2 );
@@ -692,8 +790,6 @@ public class NewPoklZahActivitySD extends Activity {
         	if (inputDn2.getText().toString().trim().length() > 0) { dn2xf = Float.parseFloat(dn2); }
         	if (inputDn1.getText().toString().trim().length() > 0) { dn1xf = Float.parseFloat(dn1); }
             
-            // write on SD card file data in the text box
-            try {
 
             	String baseDir = Environment.getExternalStorageDirectory().getAbsolutePath();
             	String fileName = "/eusecom/" + adresarx + "/poklzah"+ firmax + ".csv";
@@ -873,5 +969,65 @@ public class NewPoklZahActivitySD extends Activity {
         }
     }
  //koniec save
+    
+    /**
+     * Background Async Task to  Save product Details
+     * */
+    class GetProductDetails extends AsyncTask<String, String, String> {
+ 
+        /**
+         * Before starting background thread Show Progress Dialog
+         * */
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+            pDialog = new ProgressDialog(NewPoklZahActivitySD.this);
+            pDialog.setMessage(getString(R.string.progdata));
+            pDialog.setIndeterminate(false);
+            pDialog.setCancelable(true);
+            pDialog.show();
+        }
+ 
+        /**
+         * Saving product
+         * */
+        protected String doInBackground(String... args) {
+        	
+        	try {
+        	
+        	//String zmazdoklad = dokladx.trim(); 
+
+        	inputZk0 = (EditText) findViewById( R.id.inputZk0 );
+            inputZk1 = (EditText) findViewById( R.id.inputZk1 );
+            inputZk2 = (EditText) findViewById( R.id.inputZk2 );
+            inputDn1 = (EditText) findViewById( R.id.inputDn1 );
+            inputDn2 = (EditText) findViewById( R.id.inputDn2 );
+            inputCelkom = (EditText) findViewById( R.id.inputCelkom );
+            inputPoh = (EditText) findViewById( R.id.inputPoh );
+            inputDat = (EditText) findViewById( R.id.inputDat );
+            inputFak = (EditText) findViewById( R.id.inputFak );
+            inputUce = (EditText) findViewById( R.id.inputUce );
+            inputKto = (EditText) findViewById( R.id.inputKto );
+            inputTxp = (EditText) findViewById( R.id.inputTxp );
+            inputIco = (EditText) findViewById( R.id.inputIco );
+            
+
+            } catch (Exception e) {
+
+            }
+
+ 
+            return null;
+        }
+ 
+        /**
+         * After completing background task Dismiss the progress dialog
+         * **/
+        protected void onPostExecute(String file_url) {
+            // dismiss the dialog once product uupdated
+            pDialog.dismiss();
+        }
+    }
+    //koniec get
 
 }

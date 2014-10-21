@@ -230,6 +230,7 @@
     
     <string name="popisbtnzfak">of invoices</string>
     <string name="popisbtnzcis">of default</string>
+    <string name="kontuprdok">Edit a document</string>
     <string name="kontuprzah">Edit a heading</string>
     <string name="kontuprpol">Edit a items</string>
     <string name="kontuprpoz">Edit a notes</string>

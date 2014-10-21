@@ -226,6 +226,7 @@
     
     <string name="popisbtnzfak">z faktúr</string>
     <string name="popisbtnzcis">z predvolených</string>
+    <string name="kontuprdok">Úprava dokladu</string>
     <string name="kontuprzah">Úprava záhlavia</string>
     <string name="kontuprpol">Úprava položiek</string>
     <string name="kontuprpoz">Úprava poznámky</string>

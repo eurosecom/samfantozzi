@@ -80,7 +80,6 @@ public class PokladnicaActivitySD extends ListActivity implements SimpleGestureL
     private static final String TAG_POZX = "pozx";
     private static final String TAG_FAKX = "fakx";
     private static final String TAG_PAGEX = "page";
-    private static final String TAG_POHX = "pohx";
     private static final String TAG_NEWX = "newx";
 
     
@@ -112,8 +111,8 @@ public class PokladnicaActivitySD extends ListActivity implements SimpleGestureL
         pagex = extras.getString(TAG_PAGEX);
         
         
-        this.setTitle(getResources().getString(R.string.popisbtnpoklsd));
         ucex = SettingsActivity.getPokluce(this);
+        this.setTitle(getResources().getString(R.string.popisbtnpoklsd) + " " + ucex );        
         firmax=SettingsActivity.getFir(this);
         adresarx=SettingsActivity.getServerName(this);
         String delims = "[/]+";
@@ -424,48 +423,23 @@ public class PokladnicaActivitySD extends ListActivity implements SimpleGestureL
         	
             break;
             
-        case R.id.kontuprzahsd:
+        case R.id.kontuprdoksd:
             String pidz = String.valueOf(info.id);
             int inpoz = Integer.parseInt(pidz);
             
             String dokladz = productsList.get(inpoz).get(TAG_PID);
+            String pozz = productsList.get(inpoz).get(TAG_POH);
             
-            //Intent iz = new Intent(getApplicationContext(), UpravPoklZahActivity.class);
-            Intent iz = new Intent();
-            if( cat.equals("1")) {iz = new Intent(getApplicationContext(), UpravPoklZahActivity.class);}
-            if( cat.equals("4")) {iz = new Intent(getApplicationContext(), UpravPoklZahActivity.class);}
-            if( cat.equals("8")) {iz = new Intent(getApplicationContext(), UpravFakZahActivity.class);}
-            if( cat.equals("9")) {iz = new Intent(getApplicationContext(), UpravFakZahActivity.class);}
-            Bundle extrasz = new Bundle();
-            extrasz.putString(TAG_CAT, cat);
-            extrasz.putString(TAG_POZX, "1");
-            extrasz.putString(TAG_FAKX, dokladz);
-            extrasz.putString(TAG_NEWX, "0");
-            iz.putExtras(extrasz);
-            //startActivity(iz);
-            //finish();
-            //starting new activity and expecting some response back
-            startActivityForResult(iz, 100);
+            Intent iu = new Intent(getApplicationContext(), NewPoklZahActivitySD.class);
+            Bundle extrasu = new Bundle();
+            extrasu.putString(TAG_POZX, pozz);
+            extrasu.putString(TAG_FAKX, dokladz);
+            extrasu.putString(TAG_NEWX, "0");
+            extrasu.putString(TAG_CAT, cat);
+            iu.putExtras(extrasu);
+            startActivityForResult(iu, 100);
             break;
             
-        case R.id.kontuprpolsd:
-        	String pidp = String.valueOf(info.id);
-            int inpop = Integer.parseInt(pidp);
-            
-            String dokladp = productsList.get(inpop).get(TAG_PID);
-            String pohp = productsList.get(inpop).get(TAG_POH);
-            
-            Intent ip = new Intent(getApplicationContext(), UpravPoklPolActivity.class);
-            Bundle extrasp = new Bundle();
-            extrasp.putString(TAG_POZX, "1");
-            extrasp.putString(TAG_FAKX, dokladp);
-            extrasp.putString(TAG_POHX, pohp);
-            extrasp.putString(TAG_CAT, cat);
-            ip.putExtras(extrasp);
-            startActivity(ip);
-            finish();
-    		
-    		break;
 
         case R.id.kontextsyncdoksd:
             break;
@@ -636,7 +610,7 @@ public class PokladnicaActivitySD extends ListActivity implements SimpleGestureL
 
         protected String doInBackground(String... args) {
         	
-        	String zmazdoklad=args[0];
+        	String zmazdoklad=args[0].trim();
         	String pozx ="0";
         	
             try {
@@ -659,7 +633,7 @@ public class PokladnicaActivitySD extends ListActivity implements SimpleGestureL
                 	String indexx = testBuffer;
                 	String delims2 = "[;]+";
                 	String[] riadokxxx = indexx.split(delims2);
-                	String cplzmaz =  riadokxxx[3];
+                	String cplzmaz =  riadokxxx[3].trim();
 
                 	if( cplzmaz.equals(zmazdoklad)) { 
                 		
@@ -690,7 +664,7 @@ public class PokladnicaActivitySD extends ListActivity implements SimpleGestureL
                     myOutWriter2.close();
                     fOut2.close();
 
-                	String fileName3 = "/eusecom/" + adresarx + "/poklzah"+ firmax + ".csv";
+                	String fileName3 = "/eusecom/" + adresarx + "/poklpol"+ firmax + ".csv";
                 	File myFile3 = new File(baseDir + File.separator + fileName3);
 
                     FileInputStream fIn3 = new FileInputStream(myFile3);
@@ -707,7 +681,7 @@ public class PokladnicaActivitySD extends ListActivity implements SimpleGestureL
                     	String indexx = testBuffer3;
                     	String delims2 = "[;]+";
                     	String[] riadokxxx = indexx.split(delims2);
-                    	String cplzmaz =  riadokxxx[1];
+                    	String cplzmaz =  riadokxxx[1].trim();
 
                     	if( cplzmaz.equals(zmazdoklad)) { 
                     	
