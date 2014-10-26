@@ -81,6 +81,8 @@ public class PokladnicaActivitySD extends ListActivity implements SimpleGestureL
     private static final String TAG_FAKX = "fakx";
     private static final String TAG_PAGEX = "page";
     private static final String TAG_NEWX = "newx";
+    
+    private static final String TAG_PAGEXR = "pagr";
 
     
     // products JSONArray
@@ -419,6 +421,26 @@ public class PokladnicaActivitySD extends ListActivity implements SimpleGestureL
             //String pidx = String.valueOf(info.id);
             //int inpos = Integer.parseInt(pidx);
             //String dokladx = productsList.get(inpos).get(TAG_PID);
+        	
+        	if (android.os.Build.VERSION.SDK_INT>=16) {
+        		
+                Intent slideactivity = new Intent(PokladnicaActivitySD.this, ReklamaPagerActivity.class);
+          	   
+          	   	Bundle extras = new Bundle();
+          	   	extras.putString(TAG_PAGEXR, "0");
+                slideactivity.putExtras(extras);
+
+  				Bundle bndlanimation =
+  						ActivityOptions.makeCustomAnimation(getApplicationContext(), R.anim.animation_toleft,R.anim.animation_toleft2).toBundle();
+  				startActivity(slideactivity, bndlanimation);
+            	}else{
+            	
+            		Intent i = new Intent(getApplicationContext(), ReklamaPagerActivity.class);
+                    Bundle extras = new Bundle();
+                    extras.putString(TAG_PAGEXR, "0");
+                    i.putExtras(extras);
+                    startActivity(i);
+            	}
             
         	
             break;
@@ -442,6 +464,34 @@ public class PokladnicaActivitySD extends ListActivity implements SimpleGestureL
             
 
         case R.id.kontextsyncdoksd:
+        	
+        	String pidd = String.valueOf(info.id);
+            int inpod = Integer.parseInt(pidd);
+            
+            final String dokladd = productsList.get(inpod).get(TAG_PID);
+        	
+        	if (isOnline()) 
+		     {
+				Intent i = new Intent(this, SynchroDokActivitySD.class);
+				Bundle extras = new Bundle();
+	            extras.putString("odkade", "100");
+	            extras.putString("page", dokladd);
+	            i.putExtras(extras);
+				startActivity(i);
+				//finish();
+		     }else{
+		    	 new AlertDialog.Builder(this)
+		         .setTitle(getString(R.string.niejeinternet))
+		         .setMessage(getString(R.string.potrebujeteinternetsync))
+		         .setPositiveButton(getString(R.string.textok), new DialogInterface.OnClickListener() {
+		             public void onClick(DialogInterface dialog, int which) { 
+		               
+		             	//finish();
+		             }
+		          })
+
+		          .show();
+		     }
             break;
 
         }
@@ -823,6 +873,29 @@ public class PokladnicaActivitySD extends ListActivity implements SimpleGestureL
 			return true;
 			
 		case R.id.kontextsynpokl:
+			
+			if (isOnline()) 
+		     {
+				Intent i = new Intent(this, SynchroDokActivitySD.class);
+				Bundle extras = new Bundle();
+	            extras.putString("odkade", "100");
+	            extras.putString("page", "0");
+	            i.putExtras(extras);
+				startActivity(i);
+				//finish();
+		     }else{
+		    	 new AlertDialog.Builder(this)
+		         .setTitle(getString(R.string.niejeinternet))
+		         .setMessage(getString(R.string.potrebujeteinternetsync))
+		         .setPositiveButton(getString(R.string.textok), new DialogInterface.OnClickListener() {
+		             public void onClick(DialogInterface dialog, int which) { 
+		               
+		             	//finish();
+		             }
+		          })
+
+		          .show();
+		     }
 			
 
 			

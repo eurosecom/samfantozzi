@@ -105,8 +105,8 @@ public class NewPoklZahActivitySD extends Activity {
 
     private static final String TAG_UDN1 = "udn1";
     private static final String TAG_UDN2 = "udn2";
-    private static final String TAG_DDN1 = "ddn1";
-    private static final String TAG_DDN2 = "ddn2";
+    //private static final String TAG_DDN1 = "ddn1";
+    //private static final String TAG_DDN2 = "ddn2";
     
     private static final String NODE_CUSTOMER = "customer";
     private static final String NODE_ICO = "ico";
@@ -836,7 +836,7 @@ public class NewPoklZahActivitySD extends Activity {
                 String uzk0="";String uzk1="";String uzk2="";
                 String dzk0="";String dzk1="";String dzk2="";
                 String udn1="";String udn2="";
-                String ddn1="";String ddn2="";
+                //String ddn1="";String ddn2="";
                 
                 // Here, we have only one <employee> element
                 for (int i = 0; i < nodeList.getLength(); i++) {
@@ -853,8 +853,8 @@ public class NewPoklZahActivitySD extends Activity {
 
                             udn1 = parser.getValue(e, TAG_UDN1);
                             udn2 = parser.getValue(e, TAG_UDN2);
-                            ddn1 = parser.getValue(e, TAG_DDN1);
-                            ddn2 = parser.getValue(e, TAG_DDN2);
+                            //ddn1 = parser.getValue(e, TAG_DDN1);
+                            //ddn2 = parser.getValue(e, TAG_DDN2);
                     }
                     
                 }//koniec for
@@ -902,11 +902,11 @@ public class NewPoklZahActivitySD extends Activity {
                 if( dn2xf != 0 ){
                 	if(pozx.equals("1")) {
                 datatxt1 = i11 + " ;" + dokladx + " ;" + ucp + " ;" + udn2 
-                		 + " ;" + ddn2 + " ;" + ico + " ;" + fak + " ;" + dn2 + " \n";
+                		 + " ;" + dzk2 + " ;" + ico + " ;" + fak + " ;" + dn2 + " \n";
                 	}
                 	if(pozx.equals("2")) {
                 datatxt1 = i11 + " ;" + dokladx + " ;" + udn2 + " ;" + ucp 
-                		 + " ;" + ddn2 + " ;" + ico + " ;" + fak + " ;" + dn2 + " \n";
+                		 + " ;" + dzk2 + " ;" + ico + " ;" + fak + " ;" + dn2 + " \n";
                 	}
                 myOutWriter1.append(datatxt1);
                 }
@@ -928,11 +928,11 @@ public class NewPoklZahActivitySD extends Activity {
                 if( dn1xf != 0 ){
                 	if(pozx.equals("1")) {
                 datatxt1 = i11 + " ;" + dokladx + " ;" + ucp + " ;" + udn1 
-                		 + " ;" + ddn1 + " ;" + ico + " ;" + fak + " ;" + dn1 + " \n";
+                		 + " ;" + dzk1 + " ;" + ico + " ;" + fak + " ;" + dn1 + " \n";
                 	}
                 	if(pozx.equals("2")) {
                 datatxt1 = i11 + " ;" + dokladx + " ;" + udn1 + " ;" + ucp 
-                		 + " ;" + ddn1 + " ;" + ico + " ;" + fak + " ;" + dn1 + " \n";
+                		 + " ;" + dzk1 + " ;" + ico + " ;" + fak + " ;" + dn1 + " \n";
                 	}
                 myOutWriter1.append(datatxt1);
                 }
@@ -950,8 +950,10 @@ public class NewPoklZahActivitySD extends Activity {
              	SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(getBaseContext());
              	Editor editor = prefs.edit();
 
+             	if(newx.equals("1")) {
              	if(pozx.equals("1")) { editor.putString("pokldok", doklads).apply(); }
              	if(pozx.equals("2")) { editor.putString("pokldov", doklads).apply(); }
+             	}
              	
              	editor.commit();
             	

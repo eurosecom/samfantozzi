@@ -14,6 +14,7 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.SharedPreferences.Editor;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Bundle;
@@ -77,9 +78,16 @@ SharedPreferences.OnSharedPreferenceChangeListener{
         ((TextView) findViewById(R.id.inputOrder)).setText(getString(R.string.webdata) + " " + SettingsActivity.getServerName(this));
         }
         
-
-        //String titlex = ((TextView) findViewById(R.id.inputOrder)).getText().toString();
-        //String titlex2 = (SettingsActivity.getFormTitle(this)).toString();
+        ImageView onlinex = (ImageView) findViewById(R.id.onlinex);
+        onlinex.setOnClickListener(new View.OnClickListener() {
+  
+            @Override
+            public void onClick(View arg0) {
+            	
+            	websd();
+ 
+            }
+        });
         
 //ak sdkarta = 1
 if( SettingsActivity.getSDkarta(this).equals("1")) {
@@ -118,7 +126,8 @@ if( SettingsActivity.getSDkarta(this).equals("1")) {
 
 
 	  ImageView myImgView = (ImageView) findViewById(R.id.casnicka);
-	  myImgView.setImageResource(R.drawable.fantozzi3);	
+	  myImgView.setImageResource(R.drawable.fantozzi3);
+	  onlinex.setImageResource(R.drawable.stop);
    
 	  
 	  // pokl button
@@ -509,10 +518,39 @@ if( SettingsActivity.getSDkarta(this).equals("1")) {
         return false;
     }
     //koniec test ci je internet pripojeny
-    
-    
 
+    //prepni web sd
+    public boolean websd() {
     
+    	ImageView onlinex = (ImageView) findViewById(R.id.onlinex);
+    	String onlinexs = SettingsActivity.getSDkarta(this);
+    	if( onlinexs.equals("1")) {
+		onlinex.setImageResource(R.drawable.go);
+		this.setTitle(getResources().getString(R.string.app_name));
+		SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(getBaseContext());
+     	Editor editor = prefs.edit();
+     	editor.putString("sdkarta", "0").apply(); 
+     	editor.commit();
+     	Intent i = new Intent(this, MainScreenActivity.class);
+		startActivity(i);
+		finish();
+     	
+    	}else{
+		onlinex.setImageResource(R.drawable.stop);
+		this.setTitle(getResources().getString(R.string.app_namesd));
+		SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(getBaseContext());
+     	Editor editor = prefs.edit();
+     	editor.putString("sdkarta", "1").apply(); 
+     	editor.commit();
+     	Intent i = new Intent(this, MainScreenActivity.class);
+		startActivity(i);
+		finish();
+		
+    	}
+    
+    return true;
+    }
+    //koniec prepni web sd
 
 }
 //koniec MainScreenActivity

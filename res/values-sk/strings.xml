@@ -299,6 +299,8 @@
     <string name="synchropokl">Synchro Pokladnice</string>
     <string name="synchropoh">Synchro Pohybov a Účtov</string>
     <string name="syncdok">Synchro doklad</string>
+    <string name="synchrook">Doklady prenesené na server.</string>
+    <string name="synchrono">Doklady NEBOLI prenesené na server.</string>
     <string name="popisKto">Osoba</string>
     <string name="popisTxp">Poznámka</string>
     <string name="popisUcm">Pokladnica</string>
@@ -353,6 +355,10 @@
     <string name="ume_title">Účtovné obdobie.</string>
     <string name="ume_summary">Nastavenie účtovného obdobia pre vytváranie prehľadov a zostáv, napr. 12.2014.</string>
     
+    <string name="oksyncdokl">Synchronizácia dokladu</string>
+    <string name="oksyncdoklmes">Ak chcete synchronizovať doklad stlačte Áno.</string>
+    <string name="oksyncdoklall">Synchronizácia všetkých dokladov</string>
+    <string name="oksyncdoklallmes">Ak chcete synchronizovať všetky doklady stlačte Áno.</string>
     <string name="okzmazdokl">Zmazanie celého dokladu</string>
     <string name="okzmazdoklmes">Ak chcete zmazať celý doklad stlačte Áno.</string>
     <string name="okzmazdoklall">Zmazanie všetkých dokladov</string>

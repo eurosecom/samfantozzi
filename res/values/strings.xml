@@ -303,6 +303,8 @@
     <string name="synchropokl">Sync cash Invoices</string>
     <string name="synchropoh">Sync transfers, accounts</string>
     <string name="syncdok">Sync cash Invoice</string>
+    <string name="synchrook">Documents transferred on server.</string>
+    <string name="synchrono">Documents NOT transferred on server.</string>
     <string name="popisKto">Person</string>
     <string name="popisTxp">Note</string>
     <string name="popisUcm">Cash register</string>
@@ -355,6 +357,10 @@
     <string name="ume_title">Accounting period.</string>
     <string name="ume_summary">Setting the accounting period for creating reports, for example 12.2013.</string>
     
+    <string name="oksyncdokl">Sync the document</string>
+    <string name="oksyncdoklmes">If you want to sync document, press Yes.</string>
+    <string name="oksyncdoklall">Sync all documents</string>
+    <string name="oksyncdoklallmes">If you want to sync all documents, press Yes.</string>
     <string name="okzmazdokl">Delete the whole document</string>
     <string name="okzmazdoklmes">If you want to delete whole document, press Yes.</string>
     <string name="okzmazdoklall">Delete all documents</string>
@@ -421,6 +427,23 @@
     
     <string name="setdefaultxml">Default XML is set.</string>
     <string name="icosynchro">Synchronize company ID</string>
+    
+    <string name="myadd">My Add</string>
+	<string name="myinfo">My Info</string>
+	<string name="addtext">Add text</string>
+	<string name="addtext1">Add text1</string>
+	<string name="addtext2">Add text2</string>
+	<string name="addtext3">Add text3</string>
+	<string name="infotext">Add text</string>
+	<string name="infotext1">Info text1</string>
+	<string name="infotext2">Info text2</string>
+	<string name="infotext3">Info text3</string>
+	<string name="infourl1">http://www.edcom.sk/android</string>
+	<string name="infourl2">http://www.edcom.sk/android</string>
+	<string name="infourl3">http://www.edcom.sk/android</string>
+	<string name="buyproduct">Buy</string>
+	<string name="moreinfo">More Info</string>
+	<string name="changeinfopage">Changed to infopage </string>
          
         
 </resources>
