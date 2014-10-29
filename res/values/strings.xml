@@ -227,6 +227,8 @@
     <string name="popiscat_sluzby">Services</string>
     <string name="popispid_volanpolozka">Free item</string>
     <string name="kontuprav">Edit an item</string>
+    <string name="upravit">Edit</string>
+    <string name="zoznam">List</string>
     
     <string name="popisbtnzfak">of invoices</string>
     <string name="popisbtnzcis">of default</string>

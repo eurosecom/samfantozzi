@@ -223,6 +223,8 @@
     <string name="popiscat_sluzby">Služby</string>
     <string name="popispid_volanpolozka">Voľná položka</string>
     <string name="kontuprav">Upraviť položku</string>
+    <string name="upravit">Upraviť</string>
+    <string name="zoznam">Zoznam</string>
     
     <string name="popisbtnzfak">z faktúr</string>
     <string name="popisbtnzcis">z predvolených</string>

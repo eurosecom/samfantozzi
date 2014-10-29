@@ -39,8 +39,9 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.AsyncTask;
 import com.eusecom.samfantozzi.MCrypt;
+import com.eusecom.samfantozzi.ImageAdapterFromRes.OnPagerItemSelected;
 
-public class ReklamaPagerActivity extends Activity {
+public class ReklamaPagerActivity extends Activity implements OnPagerItemSelected  {
 	
     private ProgressDialog pDialog;
     String encrypted;
@@ -59,11 +60,10 @@ public class ReklamaPagerActivity extends Activity {
     
     String firmax;
     String adresarx;
+    
 
-
-	
 	  @Override
-	  public void onCreate(Bundle savedInstanceState) {
+	  public void onCreate(Bundle savedInstanceState){
 	    super.onCreate(savedInstanceState);
 	    setContentView(R.layout.activity_reklamapager);
 	    
@@ -197,10 +197,9 @@ public class ReklamaPagerActivity extends Activity {
 	                	//toto vyrabam adapter dynamicky
 	                	//ImageAdapter adapter = new ImageAdapter(MainActivity.this, bitmap1, bitmapArray );
 	                	//toto skusim vyrobit adapter nafuknuty z rozlozenia
-	                	ImageAdapterFromRes adapter = new ImageAdapterFromRes(ReklamaPagerActivity.this, textArray, urlArray, bitmapArray );
+	                	ImageAdapterFromRes adapter = new ImageAdapterFromRes(ReklamaPagerActivity.this, textArray, urlArray, bitmapArray, ReklamaPagerActivity.this );
 	            	    viewPager.setAdapter(adapter);
 	            	    
-
 		
 	                }
 	            });
@@ -342,7 +341,7 @@ public class ReklamaPagerActivity extends Activity {
 	                	//toto vyrabam adapter dynamicky
 	                	//ImageAdapter adapter = new ImageAdapter(MainActivity.this, bitmap1, bitmapArray );
 	                	//toto skusim vyrobit adapter nafuknuty z rozlozenia
-	                	ImageAdapterFromRes adapter = new ImageAdapterFromRes(ReklamaPagerActivity.this, textArray, urlArray, bitmapArray );
+	                	ImageAdapterFromRes adapter = new ImageAdapterFromRes(ReklamaPagerActivity.this, textArray, urlArray, bitmapArray, ReklamaPagerActivity.this );
 	            	    viewPager.setAdapter(adapter);
 	            	    
 
@@ -456,6 +455,10 @@ public class ReklamaPagerActivity extends Activity {
 	        return false;
 	    }
 	    //koniec test ci je internet pripojeny
+	    
+	    public void pagerItemSelected() {
+	        finish();
+	    }
 	    
 	  
 	  

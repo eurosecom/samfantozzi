@@ -8,7 +8,7 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
-import android.net.Uri;
+import android.os.Bundle;
 import android.support.v4.view.PagerAdapter;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -22,12 +22,13 @@ public class ImageAdapterFromRes extends PagerAdapter {
 	
  
         Context context;
+        OnPagerItemSelected mListener;
         ArrayList<String> textArray;
         ArrayList<String> urlArray;
         ArrayList<Bitmap> bitmapArray;
         ImageView imageView;
         TextView textreklama1;
-        Button btnMoreinfo1;
+        Button btnZoznam;
         public Activity activity;
  
         private int[] GalImages = new int[] { 
@@ -37,11 +38,13 @@ public class ImageAdapterFromRes extends PagerAdapter {
             R.drawable.three
         };
  
-        ImageAdapterFromRes(Context context, ArrayList<String> textArray, ArrayList<String> urlArray, ArrayList<Bitmap> bitmapArray){
+        ImageAdapterFromRes(Context context, ArrayList<String> textArray, ArrayList<String> urlArray, ArrayList<Bitmap> bitmapArray, OnPagerItemSelected listener){
             this.context=context;
             this.textArray=textArray;
             this.urlArray=urlArray;
             this.bitmapArray=bitmapArray;
+            
+            this.mListener = listener;
         }
  
         @Override
@@ -53,7 +56,7 @@ public class ImageAdapterFromRes extends PagerAdapter {
         	 LayoutInflater inflater = (LayoutInflater) collection.getContext()
         	 .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         	 
-        	 final String urlx = urlArray.get(position).toString();
+        	 //final String urlx = urlArray.get(position).toString();
  
         	 View view = inflater.inflate(R.layout.reklamator_new, null);
         	 
@@ -63,22 +66,28 @@ public class ImageAdapterFromRes extends PagerAdapter {
         	 textreklama1 = (TextView) view.findViewById(R.id.textreklama1);
         	 textreklama1.setText(textArray.get(position).toString());
         	 
-        	 btnMoreinfo1 = (Button) view.findViewById(R.id.btnMoreinfo1);
-        	 btnMoreinfo1.setOnClickListener(new View.OnClickListener() {
+        	 btnZoznam = (Button) view.findViewById(R.id.btnZoznam);
+        	 btnZoznam.setOnClickListener(new View.OnClickListener() {
   
                  @Override
                  public void onClick(View v) {
-                 	
 
-                	 //String uris = urlArray.get(position).toString();
-                	 Uri uri = Uri.parse(urlx);
-                	 //Uri uri = Uri.parse("http://www.edcom.sk");
-                     Intent intent = new Intent(Intent.ACTION_VIEW, uri);
-                     context.startActivity(intent);
-
-                     
+                	 Intent i = new Intent(v.getContext(), PokladnicaActivitySD.class);
+                     Bundle extras = new Bundle();
+                     extras.putString("cat", "1");
+                     extras.putString("dcex", "0");
+                     extras.putString("pagex", "1");
+                     i.putExtras(extras);
+                     context.startActivity(i);
+                     //it is running ok but better is implement interface
+                     //((Activity) context).finish();
+                     mListener.pagerItemSelected();
+   
                  }
+                 
+                 
              });
+        	 
         	 
         	 ((ViewGroup) collection).addView(view, 0);
         	 return view;
@@ -93,6 +102,10 @@ public class ImageAdapterFromRes extends PagerAdapter {
         	 public boolean isViewFromObject(View arg0, Object arg1) {
         	 return arg0 == ((View) arg1);
         	 }
+        	 
+        	 public interface OnPagerItemSelected {
+                 void pagerItemSelected();
+             }
 
-//koniec adapter
+//end of adapter
 }
