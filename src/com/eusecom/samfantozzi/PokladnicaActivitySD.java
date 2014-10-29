@@ -261,19 +261,13 @@ public class PokladnicaActivitySD extends ListActivity implements SimpleGestureL
 	   
 	   case SimpleGestureFilter.SWIPE_RIGHT : 
 	
-		   if( cat.equals("1")) { str = getString(R.string.popisbtndod1); }
-		   if( cat.equals("4")) { str = getString(R.string.popisbtnpokl); }
-		   if( cat.equals("8")) { str = getString(R.string.popisbtnbanka); }
-		   if( cat.equals("9")) { str = getString(R.string.popisbtnodb1); }
+		   str = getString(R.string.popisbtnpokl); 
 		   Toast.makeText(this, str, Toast.LENGTH_SHORT).show();
 
 	   break;
 	   case SimpleGestureFilter.SWIPE_LEFT :  
 
-		   if( cat.equals("1")) { str = getString(R.string.popisbtnbanka); }
-		   if( cat.equals("4")) { str = getString(R.string.popisbtnodb1); }
-		   if( cat.equals("8")) { str = getString(R.string.popisbtndod1); }
-		   if( cat.equals("9")) { str = getString(R.string.popisbtnpokl); }
+		   str = getString(R.string.popisbtnpokl);
 		   Toast.makeText(this, str, Toast.LENGTH_SHORT).show();
 
 	   break;
@@ -295,13 +289,11 @@ public class PokladnicaActivitySD extends ListActivity implements SimpleGestureL
 			   
 			   if (Build.VERSION.SDK_INT<Build.VERSION_CODES.JELLY_BEAN) { } else {
 			   
-			   Intent slideactivityr = new Intent(PokladnicaActivitySD.this, PokladnicaActivitySD.class);
-        	   
-        	   Bundle extrasr = new Bundle();
-        	   extrasr.putString(TAG_CAT, "1");
-               extrasr.putString(TAG_DCEX, "0");
-               extrasr.putString(TAG_PAGEX, "1");
-               slideactivityr.putExtras(extrasr);
+				   	Intent slideactivityr = new Intent(PokladnicaActivitySD.this, ReklamaPagerActivity.class);
+	          	   
+	          	   	Bundle extras = new Bundle();
+	          	   	extras.putString(TAG_PAGEXR, "0");
+	                slideactivityr.putExtras(extras);
         	   
                Bundle bndlanimation =
 						ActivityOptions.makeCustomAnimation(getApplicationContext(), R.anim.animation_toright,R.anim.animation_toright2).toBundle();
@@ -316,13 +308,11 @@ public class PokladnicaActivitySD extends ListActivity implements SimpleGestureL
 			   
 			   if (Build.VERSION.SDK_INT<Build.VERSION_CODES.JELLY_BEAN) { } else {
               
-			   Intent slideactivityl = new Intent(PokladnicaActivitySD.this, PokladnicaActivitySD.class);
-        	   
-        	   Bundle extras = new Bundle();
-        	   extras.putString(TAG_CAT, "1"); 
-               extras.putString(TAG_DCEX, "0");
-               extras.putString(TAG_PAGEX, "1");
-               slideactivityl.putExtras(extras);
+				   	Intent slideactivityl = new Intent(PokladnicaActivitySD.this, ReklamaPagerActivity.class);
+	          	   
+	          	   	Bundle extras = new Bundle();
+	          	   	extras.putString(TAG_PAGEXR, "0");
+	                slideactivityl.putExtras(extras);
         	   
                Bundle bndlanimationl =
 						ActivityOptions.makeCustomAnimation(getApplicationContext(), R.anim.animation_toleft,R.anim.animation_toleft2).toBundle();

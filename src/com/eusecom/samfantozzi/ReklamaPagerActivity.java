@@ -3,6 +3,7 @@ package com.eusecom.samfantozzi;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Bundle;
+import android.os.Environment;
 import android.app.Activity;
 import android.support.v4.view.ViewPager;
 import android.view.Menu;
@@ -10,6 +11,8 @@ import android.view.MenuItem;
 import android.widget.Toast;
 
 import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
@@ -53,6 +56,9 @@ public class ReklamaPagerActivity extends Activity {
     String strana="1";
     private MenuItem menuitem0;
     private MenuItem menuitem1;
+    
+    String firmax;
+    String adresarx;
 
 
 	
@@ -60,6 +66,12 @@ public class ReklamaPagerActivity extends Activity {
 	  public void onCreate(Bundle savedInstanceState) {
 	    super.onCreate(savedInstanceState);
 	    setContentView(R.layout.activity_reklamapager);
+	    
+	    firmax=SettingsActivity.getFir(this);
+        adresarx=SettingsActivity.getServerName(this);
+        String delims = "[/]+";
+    	String[] serverxxx = adresarx.split(delims);
+    	adresarx=serverxxx[1];
 	    
 
 	     	//ak je pripojenie natiahni text a obr z webu TUTO NEBUDEM NATAHOVAT z WEBU LEN local
@@ -124,9 +136,30 @@ public class ReklamaPagerActivity extends Activity {
 	        protected String doInBackground(String... args) {
 	        	
 	        	 textArray = new ArrayList<String>();
-	  			 textArray.add(getString(R.string.infotext1));
-	  			 textArray.add(getString(R.string.infotext2));
-	  			 textArray.add(getString(R.string.infotext3));
+	  			 //textArray.add(getString(R.string.infotext1));
+	  			 //textArray.add(getString(R.string.infotext2));
+	  			 //textArray.add(getString(R.string.infotext3));
+	  			 
+	  			 //read poklzah144.csv and full textArray
+	  			try {
+	            	
+	            	String baseDir = Environment.getExternalStorageDirectory().getAbsolutePath();
+	            	String fileName = "/eusecom/" + adresarx + "/poklzah"+ firmax + ".csv";
+	            	File myFile = new File(baseDir + File.separator + fileName);
+
+	                FileInputStream fIn = new FileInputStream(myFile);
+	                BufferedReader myReader = new BufferedReader(new InputStreamReader(fIn));
+	                String aDataRow = "";
+	                //do ip napocitam kolko riadkov mam
+	                int ip=0;
+	            	
+	                while ((aDataRow = myReader.readLine()) != null) {
+	                    String aBuffer = aDataRow;
+	                    ip = ip+1;
+	                    textArray.add(aBuffer);
+	                }
+
+	                myReader.close();
 	  			 
 
 	  			 urlArray = new ArrayList<String>();
@@ -141,6 +174,10 @@ public class ReklamaPagerActivity extends Activity {
 		   	  	 bitmapArray.add(bitmap2);
 		   	  	 bitmap3 = BitmapFactory.decodeResource(getResources(), R.drawable.add3new);
 		   	  	 bitmapArray.add(bitmap3);
+		   	  	 
+	  			} catch (Exception e) {
+	                //Toast.makeText(getBaseContext(), e.getMessage(),Toast.LENGTH_SHORT).show();
+	            }
 
 	 
 	            return null;
