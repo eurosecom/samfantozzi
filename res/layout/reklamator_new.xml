@@ -12,7 +12,7 @@
         <ImageView
 		android:contentDescription="@string/descimg"
 		android:id="@+id/imgreklama1"
-		android:layout_weight="2"
+		android:layout_weight="1.2"
 		android:layout_height="40dp"
 		android:layout_width="match_parent"
 		android:layout_gravity="center"
@@ -20,6 +20,14 @@
 		android:clickable="true"
     	android:src="@drawable/add1"/>
 
+    	<Button android:id="@+id/btnUprav"
+        android:layout_weight="1"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:text="@string/upravit"
+        android:layout_marginBottom="5dip"
+        android:layout_marginTop="5dip"/>
+    
     	<Button android:id="@+id/btnZoznam"
         android:layout_weight="1"
         android:layout_width="match_parent"
@@ -27,11 +35,39 @@
         android:text="@string/zoznam"
         android:layout_marginBottom="5dip"
         android:layout_marginTop="5dip"/>
-    
     </LinearLayout>
     
+    <LinearLayout android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+    	
     <TextView
         android:id="@+id/textreklama1"
+	    android:gravity="center"
+        android:textSize="16sp"
+        android:textStyle="bold"
+        android:textColor="@drawable/white"
+    	android:visibility="visible"
+    	android:layout_width="match_parent"
+    	android:layout_height="wrap_content"
+    	android:text="@string/infotext1"
+    	android:layout_marginBottom="5dp"
+    	android:layout_weight="1"/>
+    
+    <EditText android:id="@+id/inputUce"
+        android:inputType="text"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:focusable="false" 
+        android:textSize="18sp"
+        android:textStyle="bold"
+        android:textColor="@drawable/white"
+        android:layout_margin="5dp"
+        android:layout_marginBottom="15dp"
+        android:layout_weight="1"/>
+    
+    <TextView
+        android:id="@+id/textDok"
 	    android:gravity="center"
         android:textSize="18sp"
         android:textStyle="bold"
@@ -39,27 +75,49 @@
     	android:visibility="visible"
     	android:layout_width="match_parent"
     	android:layout_height="wrap_content"
-    	android:text="@string/infotext1"
-    	android:layout_marginBottom="5dp" />
+    	android:text="@string/popisCislo"
+    	android:layout_marginBottom="5dp"
+    	android:layout_weight="1"/>
+    
+    <EditText android:id="@+id/inputDok"
+        android:inputType="text"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:focusable="false" 
+        android:textSize="18sp"
+        android:textStyle="bold"
+        android:textColor="@drawable/white"
+        android:layout_margin="5dp"
+        android:layout_marginBottom="15dp"
+        android:layout_weight="1"/>
+    
+    </LinearLayout>
     
     <LinearLayout android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal">
     
      <TextView android:layout_width="fill_parent"
-        android:id="@+id/inputUceDok"
+        android:id="@+id/popisDat"
+        android:text="@string/popisDap"
         android:layout_height="wrap_content"
         android:paddingLeft="10dp"
         android:paddingRight="10dp"
         android:paddingTop="10dp"
-        android:textSize="14sp"
+        android:textSize="18sp"
+        android:textStyle="bold"
+        android:textColor="@drawable/white"
         android:layout_weight="1"/>
   
     
     <EditText android:id="@+id/inputDat"
-        android:inputType="date"
+        android:inputType="text"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
+        android:focusable="false" 
+        android:textSize="18sp"
+        android:textStyle="bold"
+        android:textColor="@drawable/white"
         android:layout_margin="5dp"
         android:layout_marginBottom="15dp"
         android:layout_weight="1"/>
@@ -72,19 +130,26 @@
         
     <TextView android:layout_width="fill_parent"
         android:id="@+id/textIco"
+        android:text="@string/popisbtnfirma"
         android:layout_height="wrap_content"
         android:paddingLeft="10dp"
         android:paddingRight="10dp"
         android:paddingTop="10dp"
-        android:textSize="14sp"
-        android:layout_weight="2.2"/>   
+        android:textSize="18sp"
+        android:textStyle="bold"
+        android:textColor="@drawable/white"
+        android:layout_weight="2.8"/>   
     
     <EditText android:id="@+id/inputIco"
-        android:inputType="number"
+        android:inputType="text"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:layout_margin="5dp"
         android:layout_marginBottom="15dp"
+        android:focusable="false" 
+        android:textSize="18sp"
+        android:textStyle="bold"
+        android:textColor="@drawable/white"
         android:layout_weight="1"/>
     
     </LinearLayout>
@@ -98,12 +163,18 @@
         android:text="@string/popisFak"
         android:paddingLeft="10dp"
         android:paddingRight="10dp"
-        android:paddingTop="10dp"
-        android:textSize="14sp"
+        android:paddingTop="10dp" 
+        android:textSize="16sp"
+        android:textStyle="bold"
+        android:textColor="@drawable/white"
         android:layout_weight="1.2"/>    
     
     <EditText android:id="@+id/inputFak"
-        android:inputType="number"
+        android:inputType="text"
+        android:focusable="false" 
+        android:textSize="16sp"
+        android:textStyle="bold"
+        android:textColor="@drawable/white"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:layout_margin="5dp"
@@ -116,7 +187,9 @@
         android:paddingLeft="10dp"
         android:paddingRight="10dp"
         android:paddingTop="10dp"
-        android:textSize="14sp"
+        android:textSize="15sp"
+        android:textStyle="bold"
+        android:textColor="@drawable/white"
         android:layout_weight="1.2"/>    
     
     <EditText android:id="@+id/inputKto"
@@ -125,6 +198,10 @@
         android:layout_height="wrap_content"
         android:layout_margin="5dp"
         android:layout_marginBottom="15dp"
+        android:focusable="false" 
+        android:textSize="16sp"
+        android:textStyle="bold"
+        android:textColor="@drawable/white"
         android:layout_weight="1"/>
     
     </LinearLayout>
@@ -141,6 +218,8 @@
         android:paddingRight="10dp"
         android:paddingTop="10dp"
         android:textSize="16sp"
+        android:textStyle="bold"
+        android:textColor="@drawable/white"
         android:layout_weight="1"/>    
     
     <TextView android:layout_width="fill_parent"
@@ -151,6 +230,8 @@
         android:paddingRight="10dp"
         android:paddingTop="10dp"
         android:textSize="16sp"
+        android:textStyle="bold"
+        android:textColor="@drawable/white"
         android:layout_weight="1"/>
     
     <TextView android:layout_width="fill_parent"
@@ -159,8 +240,10 @@
         android:id="@+id/textzakl1"
         android:paddingLeft="10dp"
         android:paddingRight="10dp"
-        android:paddingTop="10dp"
+        android:paddingTop="10dp" 
         android:textSize="16sp"
+        android:textStyle="bold"
+        android:textColor="@drawable/white"
         android:layout_weight="1.1"/>    
     
     <TextView android:layout_width="fill_parent"
@@ -169,8 +252,10 @@
         android:id="@+id/textdph1"
         android:paddingLeft="10dp"
         android:paddingRight="10dp"
-        android:paddingTop="10dp"
+        android:paddingTop="10dp" 
         android:textSize="16sp"
+        android:textStyle="bold"
+        android:textColor="@drawable/white"
         android:layout_weight="1.1"/>
     
     </LinearLayout>
@@ -180,7 +265,11 @@
         android:orientation="horizontal">   
     
     <EditText android:id="@+id/inputZk2"
-        android:inputType="numberDecimal"
+        android:inputType="text"
+        android:focusable="false" 
+        android:textSize="16sp"
+        android:textStyle="bold"
+        android:textColor="@drawable/white"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:layout_margin="0dp"
@@ -188,7 +277,11 @@
         android:layout_weight="1"/>
     
     <EditText android:id="@+id/inputDn2"
-        android:inputType="numberDecimal"
+        android:inputType="text"
+        android:focusable="false" 
+        android:textSize="16sp"
+        android:textStyle="bold"
+        android:textColor="@drawable/white"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:layout_margin="0dp"
@@ -196,7 +289,11 @@
         android:layout_weight="1"/>    
     
     <EditText android:id="@+id/inputZk1"
-        android:inputType="numberDecimal"
+        android:inputType="text"
+        android:focusable="false" 
+        android:textSize="16sp"
+        android:textStyle="bold"
+        android:textColor="@drawable/white"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:layout_margin="0dp"
@@ -204,7 +301,11 @@
         android:layout_weight="1.1"/>
     
     <EditText android:id="@+id/inputDn1"
-        android:inputType="numberDecimal"
+        android:inputType="text"
+        android:focusable="false" 
+        android:textSize="16sp"
+        android:textStyle="bold"
+        android:textColor="@drawable/white"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:layout_margin="0dp"
@@ -214,7 +315,11 @@
     </LinearLayout>
 
     <EditText android:id="@+id/inputPoh"
-        android:inputType="numberDecimal"
+        android:inputType="text"
+        android:focusable="false" 
+        android:textSize="16sp"
+        android:textStyle="bold"
+        android:textColor="@drawable/white"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:layout_margin="0dp"
@@ -229,8 +334,10 @@
         android:text="@string/popzakl0"
         android:paddingLeft="10dp"
         android:paddingRight="10dp"
-        android:paddingTop="10dp"
+        android:paddingTop="10dp" 
         android:textSize="16sp"
+        android:textStyle="bold"
+        android:textColor="@drawable/white"
         android:layout_weight="1"/>    
     
     <TextView android:layout_width="fill_parent"
@@ -238,18 +345,11 @@
         android:text="@string/hodnota"
         android:paddingLeft="10dp"
         android:paddingRight="10dp"
-        android:paddingTop="10dp"
+        android:paddingTop="10dp" 
         android:textSize="16sp"
-        android:layout_weight="1"/>
-    
-    <TextView android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:visibility="invisible"
-        android:paddingLeft="10dp"
-        android:paddingRight="10dp"
-        android:paddingTop="10dp"
-        android:textSize="16sp"
-        android:layout_weight="1.1"/>    
+        android:textStyle="bold"
+        android:textColor="@drawable/white"
+        android:layout_weight="1"/>    
     
     <TextView android:layout_width="fill_parent"
         android:layout_height="wrap_content"
@@ -267,7 +367,11 @@
         android:orientation="horizontal">   
     
     <EditText android:id="@+id/inputZk0"
-        android:inputType="numberDecimal"
+        android:inputType="text"
+        android:focusable="false" 
+        android:textSize="16sp"
+        android:textStyle="bold"
+        android:textColor="@drawable/white"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:layout_margin="1dp"
@@ -275,7 +379,11 @@
         android:layout_weight="1"/>
     
     <EditText android:id="@+id/inputCelkom"
-        android:inputType="numberDecimal"
+        android:inputType="text"
+        android:focusable="false" 
+        android:textSize="16sp"
+        android:textStyle="bold"
+        android:textColor="@drawable/white"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:layout_margin="1dp"
@@ -299,8 +407,10 @@
         android:text="@string/popisTxp"
         android:paddingLeft="10dp"
         android:paddingRight="10dp"
-        android:paddingTop="10dp"
+        android:paddingTop="10dp" 
         android:textSize="14sp"
+        android:textStyle="bold"
+        android:textColor="@drawable/white"
         android:layout_weight="3"/>
  	
     <EditText
@@ -312,6 +422,10 @@
         android:layout_marginBottom="15dp"
         android:singleLine="true"
         android:inputType="text"
+        android:focusable="false" 
+        android:textSize="16sp"
+        android:textStyle="bold"
+        android:textColor="@drawable/white"
         android:layout_weight="1"/>
     
     </LinearLayout>
