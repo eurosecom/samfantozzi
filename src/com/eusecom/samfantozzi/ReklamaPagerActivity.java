@@ -35,6 +35,7 @@ import org.apache.http.params.HttpParams;
 import org.apache.http.protocol.HTTP;
 import android.app.ProgressDialog;
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.AsyncTask;
@@ -55,11 +56,17 @@ public class ReklamaPagerActivity extends Activity implements OnPagerItemSelecte
     ArrayList<String> textArray=null;
     ArrayList<String> urlArray=null;
     String strana="1";
-    private MenuItem menuitem0;
-    private MenuItem menuitem1;
+    MenuItem menuitem0;
+    MenuItem menuitem1;
     
     String firmax;
     String adresarx;
+    
+    private static final String TAG_PAGEXR = "pagr";
+    private static final String TAG_POHXR = "pohr";
+    String pagexr;
+    String pohxr;
+    int pagexi;
     
 
 	  @Override
@@ -72,29 +79,40 @@ public class ReklamaPagerActivity extends Activity implements OnPagerItemSelecte
         String delims = "[/]+";
     	String[] serverxxx = adresarx.split(delims);
     	adresarx=serverxxx[1];
-	    
+    	
+    	Intent i = getIntent();
+        
+        Bundle extras = i.getExtras();
+        pagexr = extras.getString(TAG_PAGEXR);
+        pohxr = extras.getString(TAG_POHXR);
+        pagexi = Integer.valueOf(pagexr);
+        pohxr = "1";
 
 	     	//ak je pripojenie natiahni text a obr z webu TUTO NEBUDEM NATAHOVAT z WEBU LEN local
 	     	// new nacitajTextyAobr().execute();
+	    
+        viewPager = (ViewPager) findViewById(R.id.view_pager);
+        //viewPager.setCurrentItem(pagexi);
 	    	 
-	    	 
-	    	 bitmapArray = new ArrayList<Bitmap>();
-	    	 new nacitajTextyAobrOffline().execute();
-
+        bitmapArray = new ArrayList<Bitmap>();
+        new nacitajTextyAobrOffline().execute();
+        
+        //int sss=2;
+	    //viewPager.setCurrentItem(sss);
 	 
-	    viewPager = (ViewPager) findViewById(R.id.view_pager);
 	    viewPager.setOnPageChangeListener(new ViewPager.OnPageChangeListener() {
             @Override
             public void onPageSelected(int position) {
             	int stranai = position + 1;
             	strana=stranai + "";
             	
-            	menuitem0.setEnabled(true);
-            	menuitem1.setEnabled(true);
+            	//if run than error
+            	//menuitem0.setEnabled(true);
+            	//menuitem1.setEnabled(true);
     	        
 
-    	        if( strana.equals("1")) { menuitem0.setEnabled(false); }
-    	        if( strana.equals("3")) { menuitem1.setEnabled(false); }
+    	        //if( strana.equals("1")) { menuitem0.setEnabled(false); }
+    	        //if( strana.equals("3")) { menuitem1.setEnabled(false); }
             	
             	
                 Toast.makeText(ReklamaPagerActivity.this, getString(R.string.changeinfopage) + " " + strana, Toast.LENGTH_SHORT).show();
@@ -108,6 +126,8 @@ public class ReklamaPagerActivity extends Activity implements OnPagerItemSelecte
             public void onPageScrollStateChanged(int state) {
             }
         });
+	    
+	    
 
 	  }
 	  //koniec oncreate
@@ -167,13 +187,13 @@ public class ReklamaPagerActivity extends Activity implements OnPagerItemSelecte
 	  			 urlArray.add(getString(R.string.infourl2));
 	  			 urlArray.add(getString(R.string.infourl3));
 	  			 
-	  			
-	  			 bitmap1 = BitmapFactory.decodeResource(getResources(), R.drawable.add1new);
-	   	   	  	 bitmapArray.add(bitmap1);
-	   	   	  	 bitmap2 = BitmapFactory.decodeResource(getResources(), R.drawable.add2new);
-		   	  	 bitmapArray.add(bitmap2);
-		   	  	 bitmap3 = BitmapFactory.decodeResource(getResources(), R.drawable.add3new);
-		   	  	 bitmapArray.add(bitmap3);
+	  			 //problem pri navrate z pageru do zoznamu a znovu spustenie pageru ????? pamat
+	  			 //bitmap1 = BitmapFactory.decodeResource(getResources(), R.drawable.add1new);
+	   	   	  	 //bitmapArray.add(bitmap1);
+	   	   	  	 //bitmap2 = BitmapFactory.decodeResource(getResources(), R.drawable.add2new);
+		   	  	 //bitmapArray.add(bitmap2);
+		   	  	 //bitmap3 = BitmapFactory.decodeResource(getResources(), R.drawable.add3new);
+		   	  	 //bitmapArray.add(bitmap3);
 		   	  	 
 	  			} catch (Exception e) {
 	                //Toast.makeText(getBaseContext(), e.getMessage(),Toast.LENGTH_SHORT).show();
@@ -197,10 +217,11 @@ public class ReklamaPagerActivity extends Activity implements OnPagerItemSelecte
 	                	//toto vyrabam adapter dynamicky
 	                	//ImageAdapter adapter = new ImageAdapter(MainActivity.this, bitmap1, bitmapArray );
 	                	//toto skusim vyrobit adapter nafuknuty z rozlozenia
-	                	ImageAdapterFromRes adapter = new ImageAdapterFromRes(ReklamaPagerActivity.this, textArray, urlArray, bitmapArray, ReklamaPagerActivity.this );
-	            	    viewPager.setAdapter(adapter);
-	            	    
-		
+	                	ImageAdapterFromRes adapter = new ImageAdapterFromRes(ReklamaPagerActivity.this, 
+	                			textArray, urlArray, bitmapArray, ReklamaPagerActivity.this );
+	                    viewPager.setAdapter(adapter);
+	    	    	    viewPager.setCurrentItem(pagexi);
+
 	                }
 	            });
 	        }
@@ -341,7 +362,8 @@ public class ReklamaPagerActivity extends Activity implements OnPagerItemSelecte
 	                	//toto vyrabam adapter dynamicky
 	                	//ImageAdapter adapter = new ImageAdapter(MainActivity.this, bitmap1, bitmapArray );
 	                	//toto skusim vyrobit adapter nafuknuty z rozlozenia
-	                	ImageAdapterFromRes adapter = new ImageAdapterFromRes(ReklamaPagerActivity.this, textArray, urlArray, bitmapArray, ReklamaPagerActivity.this );
+	                	ImageAdapterFromRes adapter = new ImageAdapterFromRes(ReklamaPagerActivity.this, 
+	                			textArray, urlArray, bitmapArray, ReklamaPagerActivity.this );
 	            	    viewPager.setAdapter(adapter);
 	            	    
 
@@ -387,17 +409,8 @@ public class ReklamaPagerActivity extends Activity implements OnPagerItemSelecte
 	        
 	        menuitem0 = menu.getItem(0);
 	        menuitem1 = menu.getItem(1);
-	        menuitem0.setEnabled(false);
-	        //tuto nereagoval na premennu strana a nezhasinal menu item a
-	    	//menu.findItem(R.id.action_previous).setEnabled(true);
-	        //menu.findItem(R.id.action_next).setEnabled(true);
-	    	//menu.getItem(0).setEnabled(true);
-	        //menu.getItem(1).setEnabled(true);
-	        
-	        //if( strana.equals("1")) { menu.findItem(R.id.action_previous).setEnabled(false); }
-	        //if( strana.equals("3")) { menu.findItem(R.id.action_next).setEnabled(false); }
+	        //menuitem0.setEnabled(false);
 
-	        //if( strana.equals("3")) { menu.getItem(1).setEnabled(false); }
 
 
 	        return true;
@@ -406,16 +419,6 @@ public class ReklamaPagerActivity extends Activity implements OnPagerItemSelecte
 	    @Override
 	    public boolean onPrepareOptionsMenu (Menu menu) {
 	    	
-	    	//tuto nereagoval na premennu strana a nezhasinal menu item a
-	    	//menu.findItem(R.id.action_previous).setEnabled(true);
-	        //menu.findItem(R.id.action_next).setEnabled(true);
-	    	//menu.getItem(0).setEnabled(true);
-	        //menu.getItem(1).setEnabled(true);
-	        
-	        //if( strana.equals("1")) { menu.findItem(R.id.action_previous).setEnabled(false); }
-	        //if( strana.equals("3")) { menu.findItem(R.id.action_next).setEnabled(false); }
-
-	        //if( strana.equals("3")) { menu.getItem(1).setEnabled(false); }
 	
 	        return true;
 	    }

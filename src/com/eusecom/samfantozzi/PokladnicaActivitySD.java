@@ -408,7 +408,7 @@ public class PokladnicaActivitySD extends ListActivity implements SimpleGestureL
     
         
         case R.id.kontexttlacsd:
-            //String pidx = String.valueOf(info.id);
+            String pidx = String.valueOf(info.id);
             //int inpos = Integer.parseInt(pidx);
             //String dokladx = productsList.get(inpos).get(TAG_PID);
         	
@@ -417,7 +417,7 @@ public class PokladnicaActivitySD extends ListActivity implements SimpleGestureL
                 Intent slideactivity = new Intent(PokladnicaActivitySD.this, ReklamaPagerActivity.class);
           	   
           	   	Bundle extras = new Bundle();
-          	   	extras.putString(TAG_PAGEXR, "0");
+          	   	extras.putString(TAG_PAGEXR, pidx);
                 slideactivity.putExtras(extras);
 
   				Bundle bndlanimation =
@@ -427,7 +427,7 @@ public class PokladnicaActivitySD extends ListActivity implements SimpleGestureL
             	
             		Intent i = new Intent(getApplicationContext(), ReklamaPagerActivity.class);
                     Bundle extras = new Bundle();
-                    extras.putString(TAG_PAGEXR, "0");
+                    extras.putString(TAG_PAGEXR, pidx);
                     i.putExtras(extras);
                     startActivity(i);
             	}
