@@ -240,6 +240,7 @@ public class ImageAdapterFromRes extends PagerAdapter {
                      extras.putString(TAG_FAKX, dokup);
                      extras.putString(TAG_NEWX, "0");
                      extras.putString("cat", "1");
+                     extras.putString("ktovola", "1");
                      i.putExtras(extras);
                      ((Activity) context).startActivity(i);
                      mListener.pagerItemSelected();

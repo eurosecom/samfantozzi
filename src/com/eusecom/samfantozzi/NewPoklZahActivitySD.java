@@ -93,6 +93,7 @@ public class NewPoklZahActivitySD extends Activity {
     private static final String TAG_NEWX = "newx";
     private static final String TAG_PAGEX = "page";
     private static final String TAG_CAT = "cat";
+    private static final String TAG_KTOVOLA = "ktovola";
     
     private static final String TAG_UCTPOHYB = "uctpohyb";
     private static final String TAG_CPOH = "cpoh";
@@ -136,6 +137,7 @@ public class NewPoklZahActivitySD extends Activity {
     String dokladx;
     String icoxy;
     String pohxy;
+    String ktovola;
     
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -150,6 +152,8 @@ public class NewPoklZahActivitySD extends Activity {
         fakx = extras.getString(TAG_FAKX);
         newx = extras.getString(TAG_NEWX);
         cat = extras.getString(TAG_CAT);
+        //ktovola=0 z PokladnicaActivitySD, 1 z ReklamaPagerActivity
+        ktovola = extras.getString(TAG_KTOVOLA);
         
         druhid = SettingsActivity.getDruhId(this);
         firmax=SettingsActivity.getFir(this);
@@ -957,10 +961,19 @@ public class NewPoklZahActivitySD extends Activity {
              	
              	editor.commit();
             	
-                // successfully saved
+             	if( ktovola.equals("0")) {
                 Intent i = getIntent();
                 // send result code 100 to notify about product update
                 setResult(100, i);
+             	}else{
+             		Intent i = new Intent(getApplicationContext(), PokladnicaActivitySD.class);
+                    Bundle extras = new Bundle();
+                    extras.putString(TAG_CAT, "1");
+                    extras.putString("dcex", "0");
+                    extras.putString(TAG_PAGEX, "1");
+                    i.putExtras(extras);
+                    startActivity(i);
+             	}
                 finish();
                 
                 

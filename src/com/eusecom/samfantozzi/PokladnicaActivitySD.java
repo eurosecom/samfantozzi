@@ -81,6 +81,7 @@ public class PokladnicaActivitySD extends ListActivity implements SimpleGestureL
     private static final String TAG_FAKX = "fakx";
     private static final String TAG_PAGEX = "page";
     private static final String TAG_NEWX = "newx";
+    private static final String TAG_KTOVOLA = "ktovola";
     
     private static final String TAG_PAGEXR = "pagr";
 
@@ -448,6 +449,7 @@ public class PokladnicaActivitySD extends ListActivity implements SimpleGestureL
             extrasu.putString(TAG_FAKX, dokladz);
             extrasu.putString(TAG_NEWX, "0");
             extrasu.putString(TAG_CAT, cat);
+            extrasu.putString(TAG_KTOVOLA, "0");
             iu.putExtras(extrasu);
             startActivityForResult(iu, 100);
             break;
@@ -806,6 +808,8 @@ public class PokladnicaActivitySD extends ListActivity implements SimpleGestureL
             extrasp.putString(TAG_FAKX, "0");
             extrasp.putString(TAG_NEWX, "1");
             extrasp.putString(TAG_CAT, cat);
+            extrasp.putString(TAG_KTOVOLA, "0");
+            
             ip.putExtras(extrasp);
             startActivityForResult(ip, 100);
             
@@ -819,6 +823,7 @@ public class PokladnicaActivitySD extends ListActivity implements SimpleGestureL
             extrasv.putString(TAG_FAKX, "0");
             extrasv.putString(TAG_NEWX, "1");
             extrasv.putString(TAG_CAT, cat);
+            extrasv.putString(TAG_KTOVOLA, "0");
             iv.putExtras(extrasv);
             startActivityForResult(iv, 100);
 	
