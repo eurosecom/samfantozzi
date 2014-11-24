@@ -31,6 +31,7 @@
     <string name="potrebujeteinternet">For correct function of the program you need to connect to the Internet!</string>
     <string name="potrebujeteinternetsync">For synchonizations you need to connect to the Internet!</string>
     <string name="niejeinternet">You do not have an Internet connection!</string>
+    <string name="potrebujeteinternetdemo">For creating DEMO company you need to connect to the Internet!</string>
     
     <string name="popisbutviewprod">List of products</string>
     <string name="popisbutnewprod">New product</string>
@@ -46,6 +47,8 @@
     <string name="popisbtnprep">Serve</string>
     <string name="popisbtnfin">End</string>
     <string name="popisbtnrefresh">Update</string>
+    <string name="popisbtnmydemo">Free DEMO company</string>
+    <string name="popisbtncreatedemo">Create Free DEMO company</string>
                          
     <string name="settings">Settings</string>
     
@@ -137,6 +140,9 @@
     <string name="popisbtnpripoj">Connect</string>
     <string name="popisconnick">Your NickName for identification orders</string>
     <string name="popisconmail">Your email address, we will send you the login data</string>
+    <string name="popisconico">ID your company</string>
+    <string name="popisconnazov">Name your company</string>
+    <string name="popisconrok">Account year</string>
 
     <string name="okpripojpinkla">Connecting Fantozzi is OK!</string>
     <string name="okpripojpinklames">Successfully connect to the Fantozzi. Your login data entered into the settings and get them to the specified email. To continue, press OK.</string>
@@ -445,7 +451,7 @@
 	<string name="infourl3">http://www.edcom.sk/android</string>
 	<string name="buyproduct">Buy</string>
 	<string name="moreinfo">More Info</string>
-	<string name="changeinfopage">Changed to infopage </string>
+	<string name="changeinfopage">Page </string>
          
         
 </resources>

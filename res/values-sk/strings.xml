@@ -31,6 +31,7 @@
     <string name="potrebujeteinternet">Pre správnu funkciu programu potrebujete pripojenie do Internetu !</string>
     <string name="potrebujeteinternetsync">Pre synchronizáciu potrebujete pripojenie do Internetu !</string>
     <string name="niejeinternet">Nemáte pripojenie do Internetu !</string>
+    <string name="potrebujeteinternetdemo">Pre vytvorenie DEMO firmy potrebujete pripojenie do Internetu !</string>
     
     <string name="popisbutviewprod">Zoznam produktov</string>
     <string name="popisbutnewprod">Nový produkt</string>
@@ -46,6 +47,8 @@
     <string name="popisbtnprep">Obslúžiť</string>
     <string name="popisbtnfin">Koniec</string>
     <string name="popisbtnrefresh">Aktualizovať</string>
+    <string name="popisbtnmydemo">Chcem DEMO firmu zadarmo</string>
+    <string name="popisbtncreatedemo">Vytvoriť DEMO firmu zadarmo</string>
                          
     <string name="settings">Nastavenia</string>
     
@@ -137,6 +140,9 @@
     <string name="popisbtnpripoj">Pripojiť</string>
     <string name="popisconnick">Váš NickName pre identifikáciu</string>
     <string name="popisconmail">Váš Email, pošleme Vám prístupové údaje</string>
+    <string name="popisconico">IČO Vašej firmy</string>
+    <string name="popisconnazov">Názov Vašej firmy</string>
+    <string name="popisconrok">Účtovný rok</string>
 
     <string name="okpripojpinkla">Pripojenie Fantozziho je OK !</string>
     <string name="okpripojpinklames">Pripojili ste sa úspešne na Fantozziho. Vaše prístupové údaje sú zapísané v Nastaveniach a dostanete ich do zadaného mailu. Pre pokračovanie stlačte OK.</string>
@@ -428,6 +434,23 @@
 
     <string name="setdefaultxml">Štandartné XML sú nastavené.</string>
     <string name="icosynchro">Synchronizovať IČO</string>
+    
+    <string name="myadd">Moja reklama</string>
+	<string name="myinfo">Moje Info</string>
+	<string name="addtext">Reklamný text</string>
+	<string name="addtext1">Reklamný text1</string>
+	<string name="addtext2">Reklamný text2</string>
+	<string name="addtext3">Reklamný text3</string>
+	<string name="infotext">Reklamný text</string>
+	<string name="infotext1">Info text1</string>
+	<string name="infotext2">Info text2</string>
+	<string name="infotext3">Info text3</string>
+	<string name="infourl1">http://www.edcom.sk/android</string>
+	<string name="infourl2">http://www.edcom.sk/android</string>
+	<string name="infourl3">http://www.edcom.sk/android</string>
+	<string name="buyproduct">Kúpiť</string>
+	<string name="moreinfo">Viac Info</string>
+	<string name="changeinfopage">Strana </string>
    
                 
 </resources>

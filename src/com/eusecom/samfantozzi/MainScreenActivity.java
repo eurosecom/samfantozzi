@@ -38,6 +38,7 @@ SharedPreferences.OnSharedPreferenceChangeListener{
 	Button btnPokl;
     Button btnSetPreferences;
     Button btnBanka;
+    Button btnMydemo;
     Button btnDod1;
     Button btnOdb1;
     Button btnZostavy;
@@ -380,6 +381,18 @@ if( SettingsActivity.getSDkarta(this).equals("1")) {
   
 }
 //koniec ak sdkarta=0 tj z webu
+
+		btnMydemo = (Button) findViewById(R.id.btnMydemo);    
+		btnMydemo.setOnClickListener(new View.OnClickListener() {
+
+			@Override
+			public void onClick(View view) {
+
+					Intent i = new Intent(getApplicationContext(), MyDemoActivity.class);
+					startActivity(i);
+
+			}
+		});
      
     }
     //koniec oncreate

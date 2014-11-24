@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.eusecom.samfantozzi"
-    android:versionCode="290"
-    android:versionName="2.9" >
+    android:versionCode="300"
+    android:versionName="3.0" >
 
     <uses-sdk
-        android:minSdkVersion="16"
+        android:minSdkVersion="14"
         android:targetSdkVersion="20" />
 
     <!-- Internet Permissions -->
@@ -199,6 +199,10 @@
         <activity
             android:name="com.eusecom.samfantozzi.OdvodyActivity"
             android:label="@string/popisbtnplatbystatu" >
+        </activity>
+        <activity
+            android:name="com.eusecom.samfantozzi.MyDemoActivity"
+            android:label="@string/popisbtnmydemo" >
         </activity>
         <activity android:name="com.eusecom.samfantozzi.ReklamaPagerActivity" android:label="@string/app_name"> </activity>
 
