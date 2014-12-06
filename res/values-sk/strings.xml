@@ -49,6 +49,8 @@
     <string name="popisbtnrefresh">Aktualizovať</string>
     <string name="popisbtnmydemo">Chcem DEMO firmu zadarmo</string>
     <string name="popisbtncreatedemo">Vytvoriť DEMO firmu zadarmo</string>
+    <string name="popisbtnmydemook">DEMO firmu máte vytvorenú</string>
+    <string name="popisbtnmydemouzje">DEMO firmu už máte skôr zaregistrovanú, prístupové kódy sme Vám poslali do emailu.</string>
                          
     <string name="settings">Nastavenia</string>
     

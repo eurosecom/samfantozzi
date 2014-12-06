@@ -49,6 +49,8 @@
     <string name="popisbtnrefresh">Update</string>
     <string name="popisbtnmydemo">Free DEMO company</string>
     <string name="popisbtncreatedemo">Create Free DEMO company</string>
+    <string name="popisbtnmydemook">DEMO company have created</string>
+    <string name="popisbtnmydemouzje">DEMO company you have previously registered, access codes we sent to email.</string>
                          
     <string name="settings">Settings</string>
     

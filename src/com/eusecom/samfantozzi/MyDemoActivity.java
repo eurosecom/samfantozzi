@@ -24,6 +24,7 @@ import org.apache.http.protocol.HTTP;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.ProgressDialog;
+import android.app.AlertDialog.Builder;
 import android.content.ContentValues;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -39,6 +40,7 @@ import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.provider.Settings.Secure;
 import android.telephony.TelephonyManager;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -71,6 +73,9 @@ public class MyDemoActivity extends Activity {
     String uzid2xx;
     String device_id;
     String device_td;
+    Builder aabbregok;
+    Builder aabbjeuz;
+    String akoreg;
 
     
     private SQLiteDatabase db2=null;
@@ -108,6 +113,26 @@ public class MyDemoActivity extends Activity {
         TelephonyManager tm = (TelephonyManager) this.getSystemService(Context.TELEPHONY_SERVICE);
         device_id = tm.getDeviceId();
         device_td = Secure.getString(this.getContentResolver(), Secure.ANDROID_ID); //*** use for tablets
+        
+        aabbregok = new AlertDialog.Builder(this)
+        .setTitle(getString(R.string.popisbtnmydemo))
+        .setMessage(getString(R.string.popisbtnmydemook))
+        .setPositiveButton(getString(R.string.textok), new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int which) { 
+              
+            	finish();
+            }
+         });
+        
+        aabbjeuz = new AlertDialog.Builder(this)
+        .setTitle(getString(R.string.popisbtnmydemo))
+        .setMessage(getString(R.string.popisbtnmydemouzje))
+        .setPositiveButton(getString(R.string.textok), new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int which) { 
+              
+            	finish();
+            }
+         });
 
         Button btnEDcomsk = (Button) findViewById(R.id.btnEDcomsk);
         
@@ -177,10 +202,8 @@ public class MyDemoActivity extends Activity {
          * Creating product
          * */
         protected String doInBackground(String... args) {
-            String server = inputConServer.getText().toString();
-            String nick = inputConNick.getText().toString();
-            String mail = inputConMail.getText().toString();
         	String serverx = inputConServer.getText().toString();
+        	String mailxx = inputConMail.getText().toString();
         	String delims = "[/]+";
         	String[] serverxxx = serverx.split(delims);
         	String userx = inputPriUser.getText().toString();
@@ -188,7 +211,7 @@ public class MyDemoActivity extends Activity {
         	String nazovx = inputConNazov.getText().toString();
         	String rokx = inputConRok.getText().toString();
         	
-        	String userxplus = userx + "/" + icox + "/" + nazovx + "/" + rokx + "/" + device_id + "/" + device_td;
+        	String userxplus = userx + "/" + icox + "/" + nazovx + "/" + rokx + "/" + device_id + "/" + device_td + "/" + mailxx;
         	
         	//String userhash = sha1Hash( userx );
         	MCrypt mcrypt = new MCrypt();
@@ -213,9 +236,6 @@ public class MyDemoActivity extends Activity {
              request.getParams().setParameter("http.socket.timeout", 5000);
 
          	List<NameValuePair> postParameters = new ArrayList<NameValuePair>();
-         	postParameters.add(new BasicNameValuePair("server", server));
-         	postParameters.add(new BasicNameValuePair("nick", nick));
-         	postParameters.add(new BasicNameValuePair("mail", mail));
          	postParameters.add(new BasicNameValuePair("serverx", serverx));
          	postParameters.add(new BasicNameValuePair("userhash", encrypted));
 
@@ -235,11 +255,15 @@ public class MyDemoActivity extends Activity {
              }
              in.close();
              String result = sb.toString();
+             Log.d("result",sb.toString());
              
          	String delimso = "[;]+";
          	String[] resultxxx = result.split(delimso);
+         	akoreg = resultxxx[0].trim();
 
-             if( resultxxx[0].equals("1")) {
+         	//0;test2345;mu83vd;eahdfp;;www.eshoptest.sk/androiducto;andrejd@edcom.sk;10;144;0;
+         	//21100;1003;2002;xxxxxx;9;1;10;20;2014;22100;3001;32100;84001;31100;74001;0
+             if( akoreg.equals("0")) {
              	String nickname = resultxxx[1];
              	String heslo = resultxxx[2];
              	String meno = resultxxx[3];
@@ -269,14 +293,12 @@ public class MyDemoActivity extends Activity {
              	SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(getBaseContext());
              	Editor editor = prefs.edit();
 
-                 if( druhid.equals("10")) {
                 editor.putString("nickname", nickname).apply();
                 editor.putString("userpsw", heslo).apply();
              	editor.putString("username", meno).apply();
              	editor.putString("userid", uzid).apply();
              	editor.putString("servername", servery).apply();
              	editor.putString("mojmail", email).apply();
-                 }
              	editor.putString("druhid", druhid).apply();
              	editor.putString("pokluce", pokluce).apply();
              	editor.putString("pokldok", pokldok).apply();
@@ -299,9 +321,7 @@ public class MyDemoActivity extends Activity {
              	editor.commit();
              	
              	ContentValues values=new ContentValues(2);
-        		
-             	
-             	
+
         		values.put("server2", servery);
         		values.put("nick2", nickname);
         		values.put("mail2", email);
@@ -314,12 +334,9 @@ public class MyDemoActivity extends Activity {
         		db2.delete("mojedomeny", "server2=?", argsx);
         		db2.insert("mojedomeny", "server2", values);
                  
-             	// successfully created product
-                 Intent i = new Intent(getApplicationContext(), OkPripojActivity.class);
-                 startActivity(i);
-                 finish();
              }else {
 
+            	 
              }
              
                   } catch (ClientProtocolException e) {
@@ -333,15 +350,24 @@ public class MyDemoActivity extends Activity {
              		  }
              
         	
-            return null;
+            return akoreg;
         }
  
         /**
          * After completing background task Dismiss the progress dialog
          * **/
-        protected void onPostExecute(String file_url) {
+        protected void onPostExecute(final String akoregx) {
             // dismiss the dialog once done
             pDialog.dismiss();
+            // updating UI from Background Thread
+            runOnUiThread(new Runnable() {
+                public void run() {
+
+                	if( akoregx.equals("1")) {
+                		aabbjeuz.show();
+               	 	}else{aabbregok.show();}
+                }
+            });
         }
  
     }//end createmydemo
