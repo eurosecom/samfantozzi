@@ -173,6 +173,13 @@
         android:defaultValue="0"
         android:enabled="false"
         android:summary="@string/doklad_summary"
-        android:title="@string/doklad_title" />  
+        android:title="@string/doklad_title" />
+    
+    <EditTextPreference
+        android:key="mydemo"
+        android:defaultValue="0"
+        android:enabled="true"
+        android:summary="@string/mydemo_summary"
+        android:title="@string/mydemo_title" /> 
         
 </PreferenceScreen>

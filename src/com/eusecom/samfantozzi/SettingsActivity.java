@@ -38,6 +38,7 @@ public class SettingsActivity extends android.preference.PreferenceActivity {
 	public static final String DODDOK = "doddok";
 	public static final String ODBUCE = "odbuce";
 	public static final String ODBDOK = "odbdok";
+	public static final String MYDEMO = "mydemo";
 	
 	protected static final String[] ORDER_BY_COLUMNS = {
 		"pid",
@@ -161,6 +162,10 @@ public class SettingsActivity extends android.preference.PreferenceActivity {
 	
 	public static String getUserPsw(Context ctx){
 		return PreferenceManager.getDefaultSharedPreferences(ctx).getString(USER_PSW, "");
+	}
+	
+	public static String getMydemo(Context ctx){
+		return PreferenceManager.getDefaultSharedPreferences(ctx).getString(MYDEMO, "0");
 	}
 	
 } 

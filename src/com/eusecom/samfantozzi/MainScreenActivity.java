@@ -389,10 +389,16 @@ if( SettingsActivity.getSDkarta(this).equals("1")) {
 			public void onClick(View view) {
 
 					Intent i = new Intent(getApplicationContext(), MyDemoActivity.class);
-					startActivity(i);
+					startActivityForResult(i, 190);
 
 			}
 		});
+		
+		String mydemox = SettingsActivity.getMydemo(this);
+		if( mydemox.equals("1")) {
+
+			btnMydemo.setVisibility(View.GONE);
+	        }
      
     }
     //koniec oncreate
@@ -407,6 +413,12 @@ if( SettingsActivity.getSDkarta(this).equals("1")) {
             // means user edited/deleted product
             // reload this screen again
             Intent intent = getIntent();
+            finish();
+            startActivity(intent);
+        }
+        if (resultCode == 190) {
+
+        	Intent intent = getIntent();
             finish();
             startActivity(intent);
         }

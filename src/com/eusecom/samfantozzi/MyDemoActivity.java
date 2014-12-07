@@ -120,6 +120,8 @@ public class MyDemoActivity extends Activity {
         .setPositiveButton(getString(R.string.textok), new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialog, int which) { 
               
+            	Intent i = getIntent();
+                setResult(100, i);
             	finish();
             }
          });
@@ -293,6 +295,7 @@ public class MyDemoActivity extends Activity {
              	SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(getBaseContext());
              	Editor editor = prefs.edit();
 
+             	editor.putString("mydemo", "1").apply();
                 editor.putString("nickname", nickname).apply();
                 editor.putString("userpsw", heslo).apply();
              	editor.putString("username", meno).apply();

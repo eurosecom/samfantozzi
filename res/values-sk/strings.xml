@@ -86,6 +86,9 @@
 
     <string name="doklad_title">Číslo objednávky.</string>
     <string name="doklad_summary">Číslo objednávky nastaví program pri vytvorení novej objednávky</string>
+    
+    <string name="mydemo_title">Demo firma.</string>
+    <string name="mydemo_summary">Mám vytvorenú moju demo firmu 0=nie, 1=áno</string>
 
     <string name="dokmno_title">Množstvo na objednávke.</string>
     <string name="dokmno_summary">Množtvo na objednávke nastaví program pri ukladaní tovaru</string>

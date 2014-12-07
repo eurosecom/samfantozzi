@@ -86,6 +86,9 @@
 
     <string name="doklad_title">The order number.</string>
     <string name="doklad_summary">Program sets the order number when creating a new order</string>
+    
+    <string name="mydemo_title">Demo company.</string>
+    <string name="mydemo_summary">I have created mz demo company 0=no, 1=yes</string>
 
     <string name="dokmno_title">Quantity of the order.</string>
     <string name="dokmno_summary">Quantity of the order sets a program for saving goods</string>
