@@ -10,11 +10,13 @@ import android.app.AlertDialog;
 import android.app.AlertDialog.Builder;
 import android.app.PendingIntent;
 import android.content.BroadcastReceiver;
+import android.content.ContentValues;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
+import android.database.sqlite.SQLiteDatabase;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Bundle;
@@ -57,6 +59,7 @@ SharedPreferences.OnSharedPreferenceChangeListener{
     private static final String TAG_CAT = "cat";
     private static final String TAG_DCEX = "dcex";
 
+    private SQLiteDatabase db2=null;
     
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -69,6 +72,55 @@ SharedPreferences.OnSharedPreferenceChangeListener{
         
         btnFirma = (Button) findViewById(R.id.btnFirma);
         btnFirma.setText(getResources().getString(R.string.popisbtnfirma) + " " + SettingsActivity.getFir(this) + " " + SettingsActivity.getFirnaz(this));
+        
+        String serverxx = SettingsActivity.getServerName(this);
+        if(serverxx != null){
+        	serverxx="www.eshoptest.sk/androiducto";
+        	SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(getBaseContext());
+        	Editor editor = prefs.edit();
+        	editor.putString("mydemo", "0").apply();
+            editor.putString("nickname", "test2345").apply();
+            editor.putString("userpsw", "cp41cs").apply();
+         	editor.putString("username", "epxeas").apply();
+         	editor.putString("userid", "1001").apply();
+         	editor.putString("servername", serverxx).apply();
+         	editor.putString("mojmail", "andrejsg4@gmail.com").apply();
+         	editor.putString("druhid", "10").apply();
+         	editor.putString("pokluce", "21100").apply();
+         	editor.putString("pokldok", "1001").apply();
+         	editor.putString("pokldov", "2001").apply();
+         	editor.putString("fir", "144").apply();
+         	editor.putString("firnaz", "DEMO FUCTO 2014").apply();
+         	editor.putString("firduct", "9").apply();
+         	editor.putString("cisloico", "31213124").apply();
+         	editor.putString("firdph", "1").apply();
+         	editor.putString("firdph1", "10").apply();
+         	editor.putString("firdph2", "20").apply();
+         	editor.putString("firrok", "2014").apply();
+         	editor.putString("bankuce", "22100").apply();
+         	editor.putString("bankdok", "3001").apply();
+         	editor.putString("doduce", "32100").apply();
+         	editor.putString("doddok", "84001").apply();
+         	editor.putString("odbuce", "31100").apply();
+         	editor.putString("odbdok", "74001").apply();
+        	editor.commit();
+        	
+        	ContentValues values=new ContentValues(2);
+
+    		values.put("server2", serverxx);
+    		values.put("nick2", "test2345");
+    		values.put("mail2", "andrejsg4@gmail.com");
+    		values.put("uzid2", "1001");
+    		values.put("name2", "epxeas");
+    		values.put("pswd2", "cp41cs");
+    		values.put("uzid2", "1001");
+    		
+    		String[] argsx={serverxx};
+    		db2=(new DatabaseDomeny(this)).getWritableDatabase();
+    		db2.delete("mojedomeny", "server2=?", argsx);
+    		db2.insert("mojedomeny", "server2", values);
+    		db2.close();
+        }
         
         if( SettingsActivity.getSDkarta(this).equals("1")) {
     	this.setTitle(getResources().getString(R.string.app_namesd));
@@ -398,6 +450,8 @@ if( SettingsActivity.getSDkarta(this).equals("1")) {
 		if( mydemox.equals("1")) {
 
 			btnMydemo.setVisibility(View.GONE);
+	        }else{
+	        	btnMydemo.setVisibility(View.GONE);	
 	        }
      
     }
