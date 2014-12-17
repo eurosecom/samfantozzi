@@ -38,7 +38,7 @@ import android.widget.TextView;
 import android.os.StrictMode;
 import com.eusecom.samfantozzi.MCrypt;
  
-public class UpravIcoActivity extends Activity {
+public class EditDemoActivity extends Activity {
  
 
 	EditText inputIco;
@@ -101,6 +101,7 @@ public class UpravIcoActivity extends Activity {
         
         Bundle extras = i.getExtras();
         icox = extras.getString(TAG_ICOX);
+        icox = "44551142";
         //pozx = extras.getString(TAG_POZX);
         //fakx = extras.getString(TAG_FAKX);
         newx = extras.getString(TAG_NEWX);
@@ -133,8 +134,8 @@ public class UpravIcoActivity extends Activity {
             }
         });
         
-        if( newx.equals("0")) { 
-        	
+        if( newx.equals("0")) {  
+
         inputIco = (EditText) findViewById(R.id.inputIco);
         inputIco.setEnabled(false);
     	inputIco.setFocusable(false);
@@ -168,9 +169,10 @@ public class UpravIcoActivity extends Activity {
         });
         
 
-        if( newx.equals("0")) {
-        new GetProductDetails().execute();
-        }
+        if( newx.equals("0")) { 
+        	new GetProductDetails().execute(); 
+        	}
+        
         
     }
     //koniec oncreate
@@ -188,7 +190,7 @@ public class UpravIcoActivity extends Activity {
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
-            pDialog2 = new ProgressDialog(UpravIcoActivity.this);
+            pDialog2 = new ProgressDialog(EditDemoActivity.this);
             pDialog2.setMessage(getString(R.string.progdata));
             pDialog2.setIndeterminate(false);
             pDialog2.setCancelable(true);
@@ -241,7 +243,7 @@ public class UpravIcoActivity extends Activity {
                         // getting product details by making HTTP request
                         // Note that product details url will use GET request
                         JSONObject json = jsonParser.makeHttpRequest(
-                        		"http://" + serverxxx[0] + "/androidfanti/get_ico1.php", "GET", params);
+                        		"http://" + serverxxx[0] + "/androidfanti/get_ufir.php", "GET", params);
  
                         // check your log for json response
                         Log.d("Single Product Details", json.toString());
@@ -315,7 +317,7 @@ public class UpravIcoActivity extends Activity {
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
-            pDialog = new ProgressDialog(UpravIcoActivity.this);
+            pDialog = new ProgressDialog(EditDemoActivity.this);
             pDialog.setMessage(getString(R.string.progdata));
             pDialog.setIndeterminate(false);
             pDialog.setCancelable(true);
@@ -380,7 +382,7 @@ public class UpravIcoActivity extends Activity {
             client.getParams().setParameter("http.socket.timeout", 2000);
             client.getParams().setParameter("http.protocol.content-charset", HTTP.UTF_8);
             httpParameters.setBooleanParameter("http.protocol.expect-continue", false);
-            HttpPost request = new HttpPost("http://" + serverxxx[0] + "/androidfanti/uloz_ico1.php?sid=" + String.valueOf(Math.random()));
+            HttpPost request = new HttpPost("http://" + serverxxx[0] + "/androidfanti/uloz_ufir.php?sid=" + String.valueOf(Math.random()));
             request.getParams().setParameter("http.socket.timeout", 5000);
 
         	List<NameValuePair> postParameters = new ArrayList<NameValuePair>();

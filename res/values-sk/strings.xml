@@ -3,6 +3,7 @@
 
     <string name="app_name">Sam Fantozzi</string>
     <string name="app_namesd">Sam Fantozzi SD</string>
+    <string name="app_nameweb">Sam Fantozzi WEB</string>
     <string name="app_namelabel">Fantozzi</string>
     <string name="appvyber_name">Zoznam produktov - úprava</string>    
     <string name="appnew_name">Nová položka</string>
@@ -48,6 +49,7 @@
     <string name="popisbtnfin">Koniec</string>
     <string name="popisbtnrefresh">Aktualizovať</string>
     <string name="popisbtnmydemo">Chcem DEMO firmu zadarmo</string>
+    <string name="popisbtneditdemo">Upravit DEMO firmu</string>
     <string name="popisbtncreatedemo">Vytvoriť DEMO firmu zadarmo</string>
     <string name="popisbtnmydemook">DEMO firmu máte vytvorenú</string>
     <string name="popisbtnmydemouzje">DEMO firmu už máte skôr zaregistrovanú, prístupové kódy sme Vám poslali do emailu.</string>
@@ -456,6 +458,14 @@
 	<string name="buyproduct">Kúpiť</string>
 	<string name="moreinfo">Viac Info</string>
 	<string name="changeinfopage">Strana </string>
+	
+	<string-array name="Planets">
+	<item>2014</item>
+	<item>2015</item>
+	</string-array>
+	<string name="planet_prompt">Vyberte rok</string>
+	
+	<string name="udajefir">Údaje mojej firmy</string>
    
                 
 </resources>

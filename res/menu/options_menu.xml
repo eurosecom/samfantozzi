@@ -16,4 +16,9 @@
         android:title="@string/connectserver">
     </item>
     
+    <item
+        android:id="@+id/udajefir"
+        android:title="@string/udajefir">
+    </item>
+    
 </menu>

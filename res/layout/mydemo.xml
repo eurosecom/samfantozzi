@@ -113,6 +113,7 @@ android:orientation="vertical" >
         android:layout_marginBottom="15dp"
         android:singleLine="true"/>
     
+
     <!-- rok Label -->
     <TextView android:layout_width="fill_parent"
         android:layout_height="wrap_content"
@@ -122,8 +123,19 @@ android:orientation="vertical" >
         android:paddingTop="10dp"
         android:textSize="17sp"/>
     
+    <!-- Creates a spinner widget called Spinner01, within the Linear Layout The prompt text comes from the string "planet_prompt" 
+    in strings.xml -->
+
+
+	<Spinner android:layout_height="wrap_content" 
+	    android:layout_width="fill_parent" 
+	    android:prompt="@string/planet_prompt" 
+	    android:drawSelectorOnTop="true" 
+	    android:id="@+id/Spinner01"> </Spinner>
+    
     <!-- Input rok -->
     <EditText android:id="@+id/inputConRok"
+        android:visibility="gone"
         android:inputType="number"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
@@ -131,7 +143,9 @@ android:orientation="vertical" >
         android:layout_marginBottom="15dp"
         android:singleLine="true"/>
     
-
+    <TextView android:layout_width="fill_parent"
+        android:layout_height="5dp"/>
+    
 
     <!-- Button Pripoj -->
     <Button android:id="@+id/btnPripoj"

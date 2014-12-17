@@ -3,6 +3,7 @@
 
     <string name="app_name">Fantozzi</string>
     <string name="app_namesd">Fantozzi SD</string>
+    <string name="app_nameweb">Sam Fantozzi WEB</string>
     <string name="app_namelabel">Fantozzi</string>
     <string name="appvyber_name">List of products-edit</string>    
     <string name="appnew_name">New item</string>
@@ -48,6 +49,7 @@
     <string name="popisbtnfin">End</string>
     <string name="popisbtnrefresh">Update</string>
     <string name="popisbtnmydemo">Free DEMO company</string>
+    <string name="popisbtneditdemo">Edit DEMO company</string>
     <string name="popisbtncreatedemo">Create Free DEMO company</string>
     <string name="popisbtnmydemook">DEMO company have created</string>
     <string name="popisbtnmydemouzje">DEMO company you have previously registered, access codes we sent to email.</string>
@@ -457,6 +459,14 @@
 	<string name="buyproduct">Buy</string>
 	<string name="moreinfo">More Info</string>
 	<string name="changeinfopage">Page </string>
+	
+	<string-array name="Planets">
+	<item>2014</item>
+	<item>2015</item>
+	</string-array>
+	<string name="planet_prompt">Select a year</string>
+	
+	<string name="udajefir">Settings my company</string>
          
         
 </resources>

@@ -42,8 +42,12 @@ import android.provider.Settings.Secure;
 import android.telephony.TelephonyManager;
 import android.util.Log;
 import android.view.View;
+import android.widget.AdapterView;
+import android.widget.AdapterView.OnItemSelectedListener;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Spinner;
 import android.widget.TextView;
 import com.eusecom.samfantozzi.MCrypt;
 
@@ -76,9 +80,12 @@ public class MyDemoActivity extends Activity {
     Builder aabbregok;
     Builder aabbjeuz;
     String akoreg;
-
-    
+   
     private SQLiteDatabase db2=null;
+    
+    protected ArrayAdapter<CharSequence> mAdapter;
+    protected int mPos;
+    protected String mSelection;
 	  
     
     @Override
@@ -105,6 +112,7 @@ public class MyDemoActivity extends Activity {
         inputConIco = (EditText) findViewById(R.id.inputConIco);
         inputConNazov = (EditText) findViewById(R.id.inputConNazov);
         inputConRok = (EditText) findViewById(R.id.inputConRok);
+        inputConRok.setText("2014");
         
         name2xx = SettingsActivity.getUserName(this);
         pswd2xx = SettingsActivity.getUserPsw(this);
@@ -150,6 +158,16 @@ public class MyDemoActivity extends Activity {
             }
         });
         
+        Spinner spinner = (Spinner) findViewById(R.id.Spinner01);
+        this.mAdapter = ArrayAdapter.createFromResource(this, R.array.Planets,
+                android.R.layout.simple_spinner_dropdown_item);
+        spinner.setAdapter(this.mAdapter);
+        
+
+        OnItemSelectedListener spinnerListener = new myOnItemSelectedListener(this,this.mAdapter);
+        spinner.setOnItemSelectedListener(spinnerListener);
+
+
 
         if (isOnline()) 
 	     {
@@ -182,7 +200,41 @@ public class MyDemoActivity extends Activity {
 	     }
         
     }
- //koniec oncreate
+    //koniec oncreate
+    
+    public class myOnItemSelectedListener implements OnItemSelectedListener {
+
+
+        ArrayAdapter<CharSequence> mLocalAdapter;
+        Activity mLocalContext;
+
+        public myOnItemSelectedListener(Activity c, ArrayAdapter<CharSequence> ad) {
+
+          this.mLocalContext = c;
+          this.mLocalAdapter = ad;
+
+        }
+
+
+        public void onItemSelected(AdapterView<?> parent, View v, int pos, long row) {
+
+            MyDemoActivity.this.mPos = pos;
+            MyDemoActivity.this.mSelection = parent.getItemAtPosition(pos).toString();
+
+            inputConRok = (EditText) findViewById(R.id.inputConRok);
+            inputConRok.setText(MyDemoActivity.this.mSelection);
+
+        }
+        
+        public void onNothingSelected(AdapterView<?> parent) {
+
+            // do nothing
+
+        }
+    }
+
+    
+    
     
     
     class CreateMyDemo extends AsyncTask<String, String, String> {

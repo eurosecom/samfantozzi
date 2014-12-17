@@ -74,7 +74,15 @@ SharedPreferences.OnSharedPreferenceChangeListener{
         btnFirma.setText(getResources().getString(R.string.popisbtnfirma) + " " + SettingsActivity.getFir(this) + " " + SettingsActivity.getFirnaz(this));
         
         String serverxx = SettingsActivity.getServerName(this);
+        String useridxx = SettingsActivity.getUserId(this);
+        int useridxxi = 0;
+        try {
+        	useridxxi= Integer.parseInt(useridxx);
+        } catch(NumberFormatException nfe) {
+           System.out.println("Could not parse " + nfe);
+        } 
         if(serverxx != null){
+        	if(useridxxi < 1002 && useridxxi != 1001){
         	serverxx="www.eshoptest.sk/androiducto";
         	SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(getBaseContext());
         	Editor editor = prefs.edit();
@@ -85,7 +93,7 @@ SharedPreferences.OnSharedPreferenceChangeListener{
          	editor.putString("userid", "1001").apply();
          	editor.putString("servername", serverxx).apply();
          	editor.putString("mojmail", "andrejsg4@gmail.com").apply();
-         	editor.putString("druhid", "10").apply();
+         	editor.putString("druhid", "99").apply();
          	editor.putString("pokluce", "21100").apply();
          	editor.putString("pokldok", "1001").apply();
          	editor.putString("pokldov", "2001").apply();
@@ -120,6 +128,11 @@ SharedPreferences.OnSharedPreferenceChangeListener{
     		db2.delete("mojedomeny", "server2=?", argsx);
     		db2.insert("mojedomeny", "server2", values);
     		db2.close();
+    		
+            btnFirma = (Button) findViewById(R.id.btnFirma);
+            btnFirma.setText(getResources().getString(R.string.popisbtnfirma) + " " + SettingsActivity.getFir(this) + " " + SettingsActivity.getFirnaz(this));
+
+        	}
         }
         
         if( SettingsActivity.getSDkarta(this).equals("1")) {
@@ -127,7 +140,7 @@ SharedPreferences.OnSharedPreferenceChangeListener{
         ((TextView) findViewById(R.id.inputOrder)).setText(getString(R.string.lokaldata));
         }else
         {
-        this.setTitle(getResources().getString(R.string.app_name));        	       	
+        this.setTitle(getResources().getString(R.string.app_nameweb));        	       	
         ((TextView) findViewById(R.id.inputOrder)).setText(getString(R.string.webdata) + " " + SettingsActivity.getServerName(this));
         }
         
@@ -451,7 +464,7 @@ if( SettingsActivity.getSDkarta(this).equals("1")) {
 
 			btnMydemo.setVisibility(View.GONE);
 	        }else{
-	        	btnMydemo.setVisibility(View.GONE);	
+	        	//btnMydemo.setVisibility(View.GONE);	
 	        }
      
     }
@@ -502,7 +515,7 @@ if( SettingsActivity.getSDkarta(this).equals("1")) {
 		}
 
 		if( SettingsActivity.getSDkarta(this).equals("0")) {
-	       	this.setTitle(getResources().getString(R.string.app_name));
+	       	this.setTitle(getResources().getString(R.string.app_nameweb));
 	        ((TextView) findViewById(R.id.inputOrder)).setText(getString(R.string.webdata) + " " + SettingsActivity.getServerName(this));
 	       }
 	       if( SettingsActivity.getSDkarta(this).equals("1")) {
@@ -580,6 +593,36 @@ if( SettingsActivity.getSDkarta(this).equals("1")) {
 			i = new Intent(this, Pripojv2Activity.class);
 			startActivity(i);
 			return true;
+			
+		case R.id.udajefir:
+			if( SettingsActivity.getSDkarta(this).equals("1")) {
+
+			}else
+			{
+				if (isOnline()) 
+			     {
+					Intent im = new Intent(getApplicationContext(), EditDemoActivity.class);
+		            Bundle extrasm = new Bundle();
+		            extrasm.putString("icox", "0");
+		            extrasm.putString("newx", "0");
+		            im.putExtras(extrasm);
+		            startActivityForResult(im, 100);
+			     }else{
+			    	 new AlertDialog.Builder(this)
+			         .setTitle(getString(R.string.niejeinternet))
+			         .setMessage(getString(R.string.potrebujeteinternet))
+			         .setPositiveButton(getString(R.string.textok), new DialogInterface.OnClickListener() {
+			             public void onClick(DialogInterface dialog, int which) { 
+			               
+			             	//finish();
+			             }
+			          })
+
+			          .show();
+			     }
+			}
+			
+			return true;
 		default:
 			return super.onOptionsItemSelected(item);
 		}
@@ -605,7 +648,7 @@ if( SettingsActivity.getSDkarta(this).equals("1")) {
     	String onlinexs = SettingsActivity.getSDkarta(this);
     	if( onlinexs.equals("1")) {
 		onlinex.setImageResource(R.drawable.go);
-		this.setTitle(getResources().getString(R.string.app_name));
+		this.setTitle(getResources().getString(R.string.app_nameweb));
 		SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(getBaseContext());
      	Editor editor = prefs.edit();
      	editor.putString("sdkarta", "0").apply(); 
