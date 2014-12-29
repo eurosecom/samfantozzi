@@ -193,7 +193,7 @@ if( SettingsActivity.getSDkarta(this).equals("1")) {
 
 	  ImageView myImgView = (ImageView) findViewById(R.id.casnicka);
 	  myImgView.setImageResource(R.drawable.fantozzi3);
-	  onlinex.setImageResource(R.drawable.stop);
+	  onlinex.setImageResource(R.drawable.sdkarta);
    
 	  
 	  // pokl button
@@ -647,7 +647,7 @@ if( SettingsActivity.getSDkarta(this).equals("1")) {
     	ImageView onlinex = (ImageView) findViewById(R.id.onlinex);
     	String onlinexs = SettingsActivity.getSDkarta(this);
     	if( onlinexs.equals("1")) {
-		onlinex.setImageResource(R.drawable.go);
+		onlinex.setImageResource(R.drawable.web);
 		this.setTitle(getResources().getString(R.string.app_nameweb));
 		SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(getBaseContext());
      	Editor editor = prefs.edit();
@@ -658,7 +658,7 @@ if( SettingsActivity.getSDkarta(this).equals("1")) {
 		finish();
      	
     	}else{
-		onlinex.setImageResource(R.drawable.stop);
+		onlinex.setImageResource(R.drawable.sdkarta);
 		this.setTitle(getResources().getString(R.string.app_namesd));
 		SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(getBaseContext());
      	Editor editor = prefs.edit();

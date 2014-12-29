@@ -137,9 +137,9 @@ public class EditDemoActivity extends Activity {
         if( newx.equals("0")) {  
 
         inputIco = (EditText) findViewById(R.id.inputIco);
-        inputIco.setEnabled(false);
-    	inputIco.setFocusable(false);
-    	inputIco.setFocusableInTouchMode(false);
+        //inputIco.setEnabled(false);
+    	//inputIco.setFocusable(false);
+    	//inputIco.setFocusableInTouchMode(false);
         }
         
         // tel button

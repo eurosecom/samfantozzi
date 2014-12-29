@@ -461,7 +461,6 @@
 	
 	<string-array name="Planets">
 	<item>2014</item>
-	<item>2015</item>
 	</string-array>
 	<string name="planet_prompt">Vyberte rok</string>
 	
