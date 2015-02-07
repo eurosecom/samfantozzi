@@ -52,6 +52,10 @@ public class EditDemoActivity extends Activity {
 	EditText inputMail;
 	EditText inputWww;
 	
+	EditText dprie;
+	EditText dmeno;
+	EditText dtitl;
+	
     Button btnSave;
     Button btnTel;
 
@@ -84,6 +88,10 @@ public class EditDemoActivity extends Activity {
     private static final String TAG_WWW = "www";
     private static final String TAG_NEWX = "newx";
     private static final String TAG_ICOX = "icox";
+    
+    private static final String TAG_DPRIE = "dprie";
+    private static final String TAG_DMENO = "dmeno";
+    private static final String TAG_DTITL = "dtitl";
 
     String pozx;
     String fakx;
@@ -94,7 +102,7 @@ public class EditDemoActivity extends Activity {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.uprav_ico);
+        setContentView(R.layout.uprav_myfir);
         
         // getting product details from intent
         Intent i = getIntent();
@@ -270,6 +278,10 @@ public class EditDemoActivity extends Activity {
                             inputTel = (EditText) findViewById(R.id.inputTel);
                             inputMail = (EditText) findViewById(R.id.inputMail);
                             inputWww = (EditText) findViewById(R.id.inputWww);
+                            
+                            dprie = (EditText) findViewById(R.id.dprie);
+                            dmeno = (EditText) findViewById(R.id.dmeno);
+                            dtitl = (EditText) findViewById(R.id.dtitl);
 
                             // display product data in EditText
                             inputIco.setText(product.getString(TAG_ICO));
@@ -282,6 +294,10 @@ public class EditDemoActivity extends Activity {
                             inputTel.setText(product.getString(TAG_TEL));
                             inputMail.setText(product.getString(TAG_MAIL));
                             inputWww.setText(product.getString(TAG_WWW));
+                            
+                            dprie.setText(product.getString(TAG_DPRIE));
+                            dmeno.setText(product.getString(TAG_DMENO));
+                            dtitl.setText(product.getString(TAG_DTITL));
                             
                             
                         }else{
@@ -341,6 +357,10 @@ public class EditDemoActivity extends Activity {
             inputMail = (EditText) findViewById(R.id.inputMail);
             inputWww = (EditText) findViewById(R.id.inputWww);
             
+            dprie = (EditText) findViewById(R.id.dprie);
+            dmeno = (EditText) findViewById(R.id.dmeno);
+            dtitl = (EditText) findViewById(R.id.dtitl);
+            
             // getting updated data from EditTexts
             String ico = inputIco.getText().toString();
             String dic = inputDic.getText().toString();
@@ -352,9 +372,11 @@ public class EditDemoActivity extends Activity {
             String tel = inputTel.getText().toString();
             String mail = inputMail.getText().toString();
             String www = inputWww.getText().toString();
-
-
             
+            String dpriex = dprie.getText().toString();
+            String dmenox = dmeno.getText().toString();
+            String dtitlx = dtitl.getText().toString();
+
             String prmall = inputAll.getText().toString();
         	String serverx = inputEdiServer.getText().toString();
         	String delims = "[/]+";
@@ -397,6 +419,10 @@ public class EditDemoActivity extends Activity {
             postParameters.add(new BasicNameValuePair(TAG_TEL, tel));
             postParameters.add(new BasicNameValuePair(TAG_MAIL, mail));
             postParameters.add(new BasicNameValuePair(TAG_WWW, www));
+            
+            postParameters.add(new BasicNameValuePair(TAG_DPRIE, dpriex));
+            postParameters.add(new BasicNameValuePair(TAG_DMENO, dmenox));
+            postParameters.add(new BasicNameValuePair(TAG_DTITL, dtitlx));
             
         	postParameters.add(new BasicNameValuePair("serverx", serverx));
         	//postParameters.add(new BasicNameValuePair("userx", userx));

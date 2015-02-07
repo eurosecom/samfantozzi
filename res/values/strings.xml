@@ -466,6 +466,10 @@
 	<string name="planet_prompt">Select a year</string>
 	
 	<string name="udajefir">Settings my company</string>
+	
+	<string name="pdprie">Owner last name</string>
+	<string name="pdmeno">Owner first name</string>
+	<string name="pdtitl">Owner title</string>
          
         
 </resources>

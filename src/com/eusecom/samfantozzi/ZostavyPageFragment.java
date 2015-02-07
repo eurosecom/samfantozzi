@@ -332,7 +332,7 @@ public class ZostavyPageFragment extends Fragment {
                 	Uri uri = null;
 
                 	uri = Uri.parse("http://" + serverxxx[0] + 
-                    		"/ucto/priznanie_fob2013.php?copern=10&drupoh=1&page=1&zandroidu=1&anduct=1&kli_vume=" + kli_vume + "&serverx=" 
+                    		"/ucto/priznanie_fob2014.php?copern=10&drupoh=1&page=1&zandroidu=1&anduct=1&kli_vume=" + kli_vume + "&serverx=" 
                     		+ serverx + "&userhash=" + encrypted + "&rokx=" + allxxx[3] + "&firx=" + allxxx[1] );
                 	
                 	Intent intent = new Intent(Intent.ACTION_VIEW, uri);

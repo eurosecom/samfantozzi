@@ -465,6 +465,10 @@
 	<string name="planet_prompt">Vyberte rok</string>
 	
 	<string name="udajefir">Údaje mojej firmy</string>
+	
+	<string name="pdprie">FO priezvisko</string>
+	<string name="pdmeno">FO meno</string>
+	<string name="pdtitl">FO titul</string>
    
                 
 </resources>
