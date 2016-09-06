@@ -1,0 +1,482 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="app_name">Fantozzi</string>
+    <string name="app_namesd">Fantozzi SD</string>
+    <string name="app_nameweb">Sam Fantozzi WEB</string>
+    <string name="app_namelabel">Fantozzi</string>
+    <string name="appvyber_name">List of products-edit</string>    
+    <string name="appnew_name">New item</string>
+    <string name="appnewobj_name">New order</string>
+    <string name="appedit_name">Editing items</string>
+    <string name="apppripoj_name">Join Fantozzi</string>
+    <string name="title_activity_ok_pripoj">Connecting Fantozzi is OK</string>
+    <string name="title_activity_ok_newobj">New order</string>
+    <string name="title_activity_vyberkat">Select a category</string>
+    <string name="title_activity_vybertov">Select the product item</string>
+    <string name="title_activity_uloztov">The selected product item</string>
+    <string name="title_activity_mojkosik">My shopping cart number %s</string>
+    <string name="title_activity_zmaztov">Delete item</string>
+    <string name="title_activity_objednajkosik">Order my shopping cart</string>
+    <string name="title_activity_mojeobj">Unfurnished order</string>
+    <string name="title_activity_mojeobjdetaily">Detail of the order</string>
+    <string name="title_activity_obsluzit">Service orders</string>
+    <string name="title_activity_nodoklad">No items for the operator</string>
+                                              
+    <string name="descimg">Powered by EDcom</string>
+    
+    <string name="action_settings">Setting</string>
+    <string name="hello_world">Hello world!</string>
+    <string name="title_activity_all_products">AllProductsActivity</string>
+    <string name="title_activity_new_product">NewProductActivity</string>
+    <string name="potrebujeteinternet">For correct function of the program you need to connect to the Internet!</string>
+    <string name="potrebujeteinternetsync">For synchonizations you need to connect to the Internet!</string>
+    <string name="niejeinternet">You do not have an Internet connection!</string>
+    <string name="potrebujeteinternetdemo">For creating DEMO company you need to connect to the Internet!</string>
+    
+    <string name="popisbutviewprod">List of products</string>
+    <string name="popisbutnewprod">New product</string>
+    <string name="popisbutpref">Settings</string>
+    <string name="popisbutnewobj">New order</string> 
+    <string name="popisbutvybertov">Choose an item of goods</string>
+    <string name="popisbutvybranytov">My shopping cart</string>
+    <string name="popisbtnplus"> + </string>
+    <string name="popisbtnminus"> - </string>
+    <string name="popisbtnkosik">The shopping cart</string>
+    <string name="popisbtnobjednaj">Order</string>
+    <string name="popisbutmojeobjednavky">My orders</string>
+    <string name="popisbtnprep">Serve</string>
+    <string name="popisbtnfin">End</string>
+    <string name="popisbtnrefresh">Update</string>
+    <string name="popisbtnmydemo">Free DEMO company 2016</string>
+    <string name="popisbtneditdemo">Edit DEMO company</string>
+    <string name="popisbtncreatedemo">Create Free DEMO company</string>
+    <string name="popisbtnmydemook">DEMO company have created</string>
+    <string name="popisbtnmydemouzje">DEMO company you have previously registered, access codes we sent to email.</string>
+                         
+    <string name="settings">Settings</string>
+    
+    <string name="add_new_book_summary">Description of the setting of the text.</string>
+    <string name="add_new_book_title">Setting text</string>
+    
+    <string name="servername_title">Server name.</string>
+    <string name="servername_summary">Name of the server to which you want to connect for example www.eshoptest.sk/androiducto</string>
+ 
+    <string name="nickname_title">Your nickname.</string>
+    <string name="nickname_summary">To mark the order</string>
+
+    <string name="druhid_title">Type of user.</string>
+    <string name="druhid_summary">The priotity (0,10,20,99) sets program when you connect</string>
+    
+    <string name="cisloico_title">Customer ID.</string>
+    <string name="cisloico_summary">Setting of customer ID</string>
+    
+    <string name="cisloodbm_title">Delivery place.</string>
+    <string name="cisloodbm_summary">Delivery place of customer</string>
+       
+    <string name="userid_title">User number.</string>
+    <string name="userid_summary">Set the program to connect to the Fantozzi - do not change the value</string>
+
+    <string name="mojmail_title">Mail address.</string>
+    <string name="mojmail_summary">It is not mandatory, it will send you to login data</string>
+    
+    <string name="username_title">Login user name.</string>
+    <string name="username_summary"> </string>
+
+    <string name="userpsw_title">User password.</string>
+    <string name="userpsw_summary"> </string>
+
+    <string name="doklad_title">The order number.</string>
+    <string name="doklad_summary">Program sets the order number when creating a new order</string>
+    
+    <string name="mydemo_title">Demo company.</string>
+    <string name="mydemo_summary">I have created mz demo company 0=no, 1=yes</string>
+
+    <string name="mydemo16_title">Demo company 2016.</string>
+    <string name="mydemo16_summary">I have created my demo 2016 company 0=no, 1=yes</string>
+
+    <string name="dokmno_title">Quantity of the order.</string>
+    <string name="dokmno_summary">Quantity of the order sets a program for saving goods</string>
+    
+    <string name="dokhod_title">The value of the order.</string>
+    <string name="dokhod_summary">The value of orders sets the program for saving goods</string>
+
+    <string name="vyhra_title">Winning order.</string>
+    <string name="vyhra_summary">The program identifies the order as a winning and send you a warning</string>
+    
+    <string name="ordering">Classification List</string>
+    
+    <string name="order_by_title">Sorting the list by item</string>
+    
+    <string name="desc">Sorting-Ascending / Descending</string>
+    <string name="desc_off">Ascending</string>
+    <string name="desc_on">Descending</string>
+ 
+    <string name="tovpricetext">Here will be price</string>
+        
+    <string name="preferences">Setting</string>
+    <string name="connectserver">Join Fantozzi</string>
+    <string name="zoznamtovaru">List of products</string>
+    <string name="novytovar">New product</string>
+            
+    <string name="popiseditname">Title</string>        
+    <string name="popiseditprice">Price</string>        
+    <string name="popiseditmnoz">Quantity</string> 
+    <string name="popiseditspecify">Description of item</string>
+    <string name="popiseditdescription">Description</string>
+    <string name="popiseditsave">Save</string>
+    <string name="popiseditdelete">Delete</string>
+
+    <string name="popisaddname">Title</string>        
+    <string name="popisaddprice">Price</string>        
+    <string name="popisadddescription">Description</string>
+    <string name="popisaddcreate">Save</string>
+
+    <string name="progallproducts">Loading the products. Please wait.</string>
+    <string name="prognewproducts">Creating product. Please wait.</string>
+    <string name="progsavproduct">Saving product. Please wait.</string>
+    <string name="progdelproduct">Deleting product. Please wait.</string>
+    <string name="progpripojpinkla">Connecting Fantozzi. Please wait.</string>
+    <string name="prognewobj">Loading customers. Please wait.</string>
+    <string name="prognewodbm">Loading delivery place. Please wait.</string>    
+    <string name="progukladamobj">Saving a new order. Please wait.</string>
+    <string name="progallkategorie">Loading category. Please wait.</string>
+    <string name="progobjednajkosik">Ordering shopping cart. Please wait.</string>
+    <string name="progmojeobj">Loading the order. Please wait.</string>
+                          
+    <string name="popisconserver">Where do you want to connect, for example. www.eshoptest.sk/androiducto</string>        
+    <string name="popisconid">User number</string>        
+    <string name="popisconpsw">User password</string>
+    <string name="popisbtnpripoj">Connect</string>
+    <string name="popisconnick">Your NickName for identification orders</string>
+    <string name="popisconmail">Your email address, we will send you the login data</string>
+    <string name="popisconico">ID your company</string>
+    <string name="popisconnazov">Name your company</string>
+    <string name="popisconrok">Account year</string>
+
+    <string name="okpripojpinkla">Connecting Fantozzi is OK!</string>
+    <string name="okpripojpinklames">Successfully connect to the Fantozzi. Your login data entered into the settings and get them to the specified email. To continue, press OK.</string>
+    <string name="okobjednajkosik">Ordering the shopping cart</string>
+    <string name="okobjednajkosikmes">If you want to order all selected items in your shopping cart, press Yes.</string>
+    <string name="okprazdnykosik">Your shopping cart is empty!</string>
+    <string name="okprazdnykosikmes">You must first select the product items to your cart. To continue, press OK.</string>
+    <string name="oknepripojeny">You are not connected to the Fantozzi!</string>
+    <string name="oknepripojenymes">You must first set user and password and connect through menukey to the Fantozzi. To continue, press OK.</string>
+    <string name="oknedok">You do not have created a new order!</string>
+    <string name="oknedokmes">You must first set user and password and connect through menukey to the Fantozzi. To continue, press OK.</string>
+    <string name="nodoklad">No items to the operator!</string>
+    <string name="nodokladmes">Current evidence has been served or has no items for use. To continue, press OK.</string>
+
+    <string name="objvyhrala">Your order won.</string>
+    <string name="prihlovyhru">Sign up at the service of winning.</string>
+    
+    <string name="oknewobj">New order is created!</string>
+    <string name="oknewobjmes">You can select product items to your order. To continue, press OK.</string>
+
+    <string name="mnozstvo">qty</string> 
+    <string name="hodnota">am.</string> 
+    <string name="mena">EUR</string> 
+            
+    <string name="popisinputbank">ID</string>
+    <string name="popisinputodbm">Delivery place</string>   
+    <string name="popisbtnuloz">Save order</string>
+
+    <string name="kontzmaz">Delete an item</string> 
+    <string name="kontnic">Back</string>
+    
+    <string name="textok">OK</string>
+    <string name="textyes">Yes</string>
+    <string name="textno">No</string>
+    <string name="byedcomsk">by EDcom.sk</string>
+    
+    <string name="fir_title">Firm number </string>
+    <string name="fir_summary">Set the program to connect to the Fantozzi - do not change the value</string>
+    <string name="popisbtnvybrat">Choose</string>
+    <string name="popisbtninfo">info PLU</string>
+    <string name="popisbtnprev">Prev PLU</string>
+    <string name="popisbtnnext">Next PLU</string>
+    <string name="popisbtnup">Prev image</string>
+    <string name="popisbtndn">Next image</string> 
+    
+    <string name="sdkarta_title">Date WEB or local.</string>
+    <string name="sdkarta_summary">0=WEB, 1=Phone, Tablet</string>
+    <string name="lokaldata">Connecting to Date in Phone, Tablet.</string>    
+    <string name="webdata">Connecting to </string> 
+    
+    <string name="kosikMnoz">items </string>
+    <string name="kosikBdph">whVAT %s</string>
+    <string name="kosikSdph">woVAT %s Eur</string>
+    <string name="kosikIco">ID %s</string>
+    <string name="kosikOdbm">Delivery point %s</string>
+    <string name="popisbtnfakturuj">invoice</string>
+    <string name="popisbtnpoznamka">note</string>
+    <string name="dokbez_title">The value of the order without VAT.</string>
+    <string name="dokbez_summary">Order value without VAT set program for storing goods</string>
+    <string name="title_activity_poznamkakosik">Note shopping cart number %s</string>
+    <string name="progfakturujkosik">Invoicing a shopping cart. Please, wait.</string>
+    <string name="okfakturujkosik">The invoicing of shopping cart</string>
+    <string name="okfakturujkosikmes">If you want to invoice all selected items in your shopping cart, press OK.</string>
+    <string name="title_activity_fakturujkosik">Invoice my shopping Cart</string>
+    <string name="popisbutmojefaktury">My invoices</string>
+    <string name="progmojedoklady">Loading the documents. Please wait.</string>
+    <string name="konttlac">Details PDF document.</string>
+    <string name="konttlacsd">Details document.</string>
+    <string name="kontfakt">invoice</string>
+    <string name="title_activity_mojefak">My invoice</string>
+    
+    <string name="progfakturujobj">Invoicing the order. Please wait.</string>
+    <string name="okfakturujobj">Invoicing order</string>
+    <string name="okfakturujobjmes">If you want to invoice all items selected orders press OK.</string>
+    <string name="title_activity_fakturujobj">Invoice the order</string>
+    
+    <string name="potrebujetelocaldata">The local program functions need data files !</string>
+    <string name="niejelocaldata">You do not have a data files !</string>
+    
+    <string name="lenpokladnicu">In the local function you can insert only cash invoices !</string>
+    <string name="lokalnyrezim">The local program functions</string>
+    <string name="musitepohyb">You must choose the Transfer !</string>
+    <string name="nopohyb">No Transfer choosing</string>
+    
+    <string name="title_activity_vyberslu">Select service</string>
+    <string name="title_activity_ulozslu">Selected service</string>
+    <string name="title_activity_ulozfree">Selected free item</string>
+    <string name="popiscat_sluzby">Services</string>
+    <string name="popispid_volanpolozka">Free item</string>
+    <string name="kontuprav">Edit an item</string>
+    <string name="upravit">Edit</string>
+    <string name="zoznam">List</string>
+    
+    <string name="popisbtnzfak">of invoices</string>
+    <string name="popisbtnzcis">of default</string>
+    <string name="kontuprdok">Edit a document</string>
+    <string name="kontuprzah">Edit a heading</string>
+    <string name="kontuprpol">Edit a items</string>
+    <string name="kontuprpoz">Edit a notes</string>
+    <string name="title_activity_poznamkafak">Note the invoice number %s</string>
+    <string name="title_activity_upravfak">invoice number %s</string>
+    <string name="popisDat">exposed</string>
+    <string name="popisDaz">date transaction</string>
+    <string name="popisDas">Payable</string>
+    <string name="popisKsy">constant symbol</string>
+    <string name="popisSsy">specific symbol</string>
+    <string name="popisZlava">% discount</string>
+    <string name="progukladamfak">Saving the invoice. Please wait.</string>
+
+	<string name="popisbtnpokl">Cash</string>
+	<string name="popisbtnpoklsd">Cash SD</string>
+    <string name="popisbtnbanka">Bank</string>
+    <string name="popisbtndod1">Supplier</string>
+    <string name="popisbtnodb1">Customer</string>
+    <string name="popisbtndod1k">Suppl.</string>
+    <string name="popisbtnodb1k">Custom.</string>
+    <string name="popisbtnzostavy">Accounting reports</string>
+    <string name="popisbtndane">Tax reports</string>
+    <string name="popisbtnrozne">Differently</string>
+    <string name="popisbtnpenden">Cash receipts journal</string>
+    <string name="popisbtnpenden2">Cash receipts journal sort 2</string>
+    <string name="popisbtnprivyd">Profit and Loss Statement</string>
+    <string name="popisbtndph">VAT</string>
+    <string name="popisbtnfob">Taxes on personal income sort B</string>
+    <string name="progpokl">Loading a cash register. Please wait.</string>
+    <string name="progbank">Loading a bank. Please wait.</string>
+    <string name="progbanka">Loading a bank. Please wait.</string>
+    <string name="kosikZos">Rest %s</string>
+    <string name="localpoklsd">local cash Invoices</string>
+    
+    <string name="pokluce_title">Cash register account.</string>
+    <string name="pokluce_summary">Default account for cash register 21100,21101 etc.</string>
+    <string name="pokldok_title">Receipt cash document.</string>
+    <string name="pokldok_summary">The following number of receipt cash document.</string>
+    <string name="pokldov_title">Expense cash dokument.</string>
+    <string name="pokldov_summary">The following number of expense cash document.</string>
+    <string name="bankuce_title">Bank account.</string>
+    <string name="bankuce_summary">Default account for the bank 22100,22101 etc.</string>
+    <string name="bankdok_title">Bank document.</string>
+    <string name="bankdok_summary">The following number of bank document.</string>
+    
+    <string name="kontnewpri">New receipt cash document</string>
+    <string name="kontnewvyd">New expense cash document</string>
+    <string name="kontnewban">New bank document</string>
+    <string name="kontnewodb">New customer invoice</string>
+    <string name="kontnewdod">New supplier invoice</string>
+    <string name="konttlacpdf">View document in PDF</string>
+    <string name="kontzmazdok">Delete document</string>
+    <string name="kontzmazalldok">Delete all documents</string>
+    <string name="konthladaj">Find a document</string>
+    <string name="kontvsetky">View all documents</string>
+    <string name="kontnextpage">Next Page</string>
+    <string name="kontprevpage">Previous Page</string>
+    <string name="kontnewpol">New item</string>
+    <string name="page">Page</string>
+    <string name="title_activity_upravdok">Document number %s</string>
+    <string name="spoluhod">The total amount %s Eur</string>
+    
+    <string name="popisUce">Account</string>
+    <string name="popisDap">Date</string>
+    <string name="popisCislo">Number</string>
+    <string name="popisRetazec">Text</string>
+    <string name="popisIco">Company ID</string>
+    <string name="popisIcoSD">Company ID SDcard</string>
+    <string name="synchroIcoSD">Sync IDcompany</string>
+    <string name="synchropokl">Sync cash Invoices</string>
+    <string name="synchropoh">Sync transfers, accounts</string>
+    <string name="syncdok">Sync cash Invoice</string>
+    <string name="synchrook">Documents transferred on server.</string>
+    <string name="synchrono">Documents NOT transferred on server.</string>
+    <string name="popisKto">Person</string>
+    <string name="popisTxp">Note</string>
+    <string name="popisUcm">Cash register</string>
+    <string name="popisUcd">Transfer</string>
+    <string name="popisUcmbank">Bank/transfer</string>
+    <string name="popisUcdbank">Bank/transfer</string>
+    <string name="popisUcmdod">Supplier/transfer</string>
+    <string name="popisUcddod">Supplier/transfer</string>
+    <string name="popisUcmodb">Customer/transfer</string>
+    <string name="popisUcdodb">Customer/transfer</string>
+    <string name="popisRdp">VAT type</string>
+    <string name="popisFak">Invoice number</string>
+    <string name="popisVsy">Variable symbol</string>
+    <string name="popisStr">Centre</string>
+    <string name="popisZak">Order</string>
+    <string name="popisHod">Total</string>
+    <string name="popispolozkydok">Dokument item</string>
+    <string name="popisbtnfirma">Company</string>
+    <string name="popisprijmovy">receipt cash document</string>
+    <string name="popisvydavkovy">expense cash document</string>
+    <string name="popisbankovy">Bank</string>
+    <string name="popisbtnhladico">Select ID</string>
+    <string name="popisbtnvybico">Select ID</string>
+    <string name="popisUme">Accounting period</string>
+    <string name="popisMnedlzia">receiv.</string>
+    <string name="popisJadlzim">payable</string>
+    
+    <string name="popisDic">Tax ID</string>
+    <string name="popisIcd">VAT Number</string>
+    <string name="popisNai">Name</string>
+    <string name="popisUli">Street, number</string>
+    <string name="popisMes">City</string>
+    <string name="popisTel">Phone number</string>
+    <string name="popisMail">E-mail</string>
+    <string name="popisWww">WWW</string>
+    <string name="popisPsc">Postal code</string>
+    
+    <string name="firnaz_title">Name of company.</string>
+    <string name="firnaz_summary">Set the program to connect to Fantozzi.</string>
+    <string name="firduct_title">Sort of Accounting 0=double-entry accounting, 9=single-entry accounting.</string>
+    <string name="firduct_summary">Set the program to connect to Fantozzi.</string>
+    <string name="firdph_title">VAT payment 0=No, 1=monthly, 2=quarterly.</string>
+    <string name="firdph_summary">Set the program to connect to Fantozzi.</string>
+    <string name="firdph1_title">The reduced rate of VAT No.1 ( 10 % ).</string>
+    <string name="firdph1_summary">Set the program to connect to Fantozzi.</string>
+    <string name="firdph2_title">Basic, higher VAT rate No.2 ( 20 % ).</string>
+    <string name="firdph2_summary">Set the program to connect to Fantozzi.</string>
+    <string name="firrok_title">Year accounting period.</string>
+    <string name="firrok_summary">Set the program to connect to Fantozzi.</string>
+    <string name="ume_title">Accounting period.</string>
+    <string name="ume_summary">Setting the accounting period for creating reports, for example 12.2013.</string>
+    
+    <string name="oksyncdokl">Sync the document</string>
+    <string name="oksyncdoklmes">If you want to sync document, press Yes.</string>
+    <string name="oksyncdoklall">Sync all documents</string>
+    <string name="oksyncdoklallmes">If you want to sync all documents, press Yes.</string>
+    <string name="okzmazdokl">Delete the whole document</string>
+    <string name="okzmazdoklmes">If you want to delete whole document, press Yes.</string>
+    <string name="okzmazdoklall">Delete all documents</string>
+    <string name="okzmazdoklallmes">If you want to delete all documents, press Yes.</string>
+    <string name="okzmazdoklpol">Deleting a single item of document</string>
+    <string name="okzmazdoklpolmes">If you want to delete a single item of document, press Yes.</string>
+    <string name="progzmazdokl">Deleting the document. Please wait.</string>
+    <string name="progdata">Loading data. Please wait.</string>
+    
+    <string name="popzakl2">Basis %s</string>
+    <string name="popdph2">VAT%s</string>
+    <string name="popzakl1">Basis %s</string>
+    <string name="popdph1">VAT%s</string>
+    <string name="popzakl0">Basis0%</string>
+    
+    <string name="popisbtnvyppoh">Transfer report</string>
+    <string name="popisbtnhladok">Search documents</string>
+    <string name="popisbtnmajzav">Assets and Liabilities reports</string>
+    <string name="popisbtnkniodb">Book of Accounts receivable</string>
+    <string name="popisbtnknidod">Book of Accounts payable</string>
+    <string name="popisbtnplatbystatu">Income tax payments and social and health insurance charges</string>
+    
+    <string name="action_previous">Backward</string>
+    <string name="action_next">Next</string>
+    
+    <string name="doduce_title">Account of supplier.</string>
+    <string name="doduce_summary">Default account of supplier invoice 32100,32101 etc.</string>
+    <string name="doddok_title">Supplier document.</string>
+    <string name="doddok_summary">Following document number of supplier invoice.</string>
+	<string name="odbuce_title">Account of customer.</string>
+    <string name="odbuce_summary">Default account of customer invoice 31100,31101 etc.</string>
+    <string name="odbdok_title">Customer document.</string>
+    <string name="odbdok_summary">Following document number of customer invoice.</string>
+    <string name="upomkto_title">Who is remindering.</string>
+    <string name="upomkto_summary">Set Sign that who is remindering.</string>
+    <string name="popisdodavatelska">Supplied</string>
+    <string name="popisodberatelska">Customer</string>
+    
+    <string name="popispdf">PDF</string>
+    <string name="popisvybranedopdf">The selected item into a PDF</string>
+    <string name="kontupom">Reminder</string>
+    <string name="kontupompdf">Reminder PDF</string>
+    <string name="kontupomsms">Reminder SMS</string>
+    <string name="kontupomemail">Reminder by email</string>
+    <string name="upomsmstext1">REMINDER UNPAID INVOICES.</string>
+    <string name="upomneuhradene">unpaid</string>
+    <string name="upomodoslana">SMS reminder was sent to the customer number </string>
+    <string name="popisprizdphpdf">VAT acknowledgement in PDF</string>
+    <string name="popispotvrddphpdf">Acknowledgment of provision of VAT</string>
+    <string name="popiszozndphpdf">VAT document list</string>
+    <string name="popisprizdphpdfarch">Archiving of VAT returns</string>
+    <string name="popisprizdphxml">electronic VAT XML</string>
+    <string name="popisZamkni">Lock my business</string>
+    <string name="popisKluc">Keys from my company</string>
+    <string name="popiszamknut">Lock</string>
+    <string name="popisodomknut">Unlock</string>
+    <string name="okzamkni">Lock up company?</string>
+    <string name="okzamknimes">To lock your company, press Yes.</string>
+    <string name="okodomkni">Unlock your company?</string>
+    <string name="okodomknimes">To unlock your company, press Yes.</string>
+    <string name="overenieIcd">Verification of VAT ID</string>
+    
+    <string name="popiskvdphpdf">control VAT PDF</string>
+    <string name="popiskvdphxml">control VAT XML</string>
+    <string name="popisbtndomena">Domain</string>
+    
+    <string name="setdefaultxml">Default XML is set.</string>
+    <string name="icosynchro">Synchronize company ID</string>
+    
+    <string name="myadd">My Add</string>
+	<string name="myinfo">My Info</string>
+	<string name="addtext">Add text</string>
+	<string name="addtext1">Add text1</string>
+	<string name="addtext2">Add text2</string>
+	<string name="addtext3">Add text3</string>
+	<string name="infotext">Add text</string>
+	<string name="infotext1">Info text1</string>
+	<string name="infotext2">Info text2</string>
+	<string name="infotext3">Info text3</string>
+	<string name="infourl1">http://www.edcom.sk/android</string>
+	<string name="infourl2">http://www.edcom.sk/android</string>
+	<string name="infourl3">http://www.edcom.sk/android</string>
+	<string name="buyproduct">Buy</string>
+	<string name="moreinfo">More Info</string>
+	<string name="changeinfopage">Page </string>
+	
+	<string-array name="Planets">
+	<item>2016</item>
+	</string-array>
+	<string name="planet_prompt">Select a year</string>
+	
+	<string name="udajefir">Settings my company</string>
+	
+	<string name="pdprie">Owner last name</string>
+	<string name="pdmeno">Owner first name</string>
+	<string name="pdtitl">Owner title</string>
+	
+	<string name="inappbill">In App Billing</string>
+         
+        
+</resources>

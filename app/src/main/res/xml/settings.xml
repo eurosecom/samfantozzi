@@ -1,0 +1,199 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
+    android:title="@string/settings" >
+
+
+    <ListPreference
+            android:defaultValue="0"
+            android:entries="@array/sdkarta_names"
+            android:entryValues="@array/sdkarta_values"
+            android:key="sdkarta"
+            android:title="@string/sdkarta_title" />
+
+    <EditTextPreference
+        android:key="servername"
+        android:defaultValue="www.eshoptest.sk/androiducto"
+        android:summary="@string/servername_summary"
+        android:title="@string/servername_title" />
+ 
+    <EditTextPreference
+        android:key="nickname"
+        android:defaultValue="test2345"
+        android:summary="@string/nickname_summary"
+        android:title="@string/nickname_title" /> 
+
+    <EditTextPreference
+        android:key="mojmail"
+        android:defaultValue="andrejd@edcom.sk"
+        android:summary="@string/mojmail_summary"
+        android:title="@string/mojmail_title" />      
+    
+    <EditTextPreference
+        android:key="userid"
+        android:defaultValue="1001"
+        android:summary="@string/userid_summary"
+        android:title="@string/userid_title" />  
+ 
+     <EditTextPreference
+        android:key="username"
+        android:defaultValue="epxeas"
+        android:summary="@string/username_summary"
+        android:title="@string/username_title" /> 
+    
+    <EditTextPreference
+        android:key="userpsw"
+        android:defaultValue="cp41cs"
+        android:summary="@string/userpsw_summary"
+        android:title="@string/userpsw_title" />  
+    
+    <EditTextPreference
+        android:key="druhid"
+        android:defaultValue="0"
+        android:enabled="false"
+        android:summary="@string/druhid_summary"
+        android:title="@string/druhid_title" /> 
+        
+    <EditTextPreference
+        android:key="ume"
+        android:defaultValue="1.2014"
+        android:enabled="false"
+        android:summary="@string/ume_summary"
+        android:title="@string/ume_title" />
+    
+    <EditTextPreference
+        android:key="fir"
+        android:defaultValue="144"
+        android:enabled="false"
+        android:summary="@string/fir_summary"
+        android:title="@string/fir_title" />
+    
+    <EditTextPreference
+        android:key="firnaz"
+        android:enabled="false"
+        android:summary="@string/firnaz_summary"
+        android:title="@string/firnaz_title" />
+    
+    <EditTextPreference
+        android:key="firduct"
+        android:defaultValue="0"
+        android:summary="@string/firduct_summary"
+        android:title="@string/firduct_title" />
+    
+    <EditTextPreference
+        android:key="firrok"
+        android:defaultValue="2014"
+        android:summary="@string/firrok_summary"
+        android:title="@string/firrok_title" />
+    
+    <EditTextPreference
+        android:key="firdph"
+        android:defaultValue="1"
+        android:summary="@string/firdph_summary"
+        android:title="@string/firdph_title" />
+    
+    <EditTextPreference
+        android:key="firdph1"
+        android:defaultValue="10"
+        android:summary="@string/firdph1_summary"
+        android:title="@string/firdph1_title" />
+    
+    <EditTextPreference
+        android:key="firdph2"
+        android:defaultValue="20"
+        android:summary="@string/firdph2_summary"
+        android:title="@string/firdph2_title" />
+    
+    <EditTextPreference
+        android:key="cisloico"
+        android:summary="@string/cisloico_summary"
+        android:title="@string/cisloico_title" />
+
+    <EditTextPreference
+        android:key="cisloodbm"
+        android:defaultValue="0"
+        android:summary="@string/cisloodbm_summary"
+        android:title="@string/cisloodbm_title" />
+    
+    <EditTextPreference
+        android:key="pokluce"
+        android:defaultValue="21100"
+        android:summary="@string/pokluce_summary"
+        android:title="@string/pokluce_title" />
+    
+    <EditTextPreference
+        android:key="pokldok"
+        android:defaultValue="1"
+        android:summary="@string/pokldok_summary"
+        android:title="@string/pokldok_title" />
+    
+    <EditTextPreference
+        android:key="pokldov"
+        android:defaultValue="1"
+        android:summary="@string/pokldov_summary"
+        android:title="@string/pokldov_title" />
+    
+    <EditTextPreference
+        android:key="bankuce"
+        android:defaultValue="22100"
+        android:summary="@string/bankuce_summary"
+        android:title="@string/bankuce_title" />
+    
+    <EditTextPreference
+        android:key="bankdok"
+        android:defaultValue="1"
+        android:summary="@string/bankdok_summary"
+        android:title="@string/bankdok_title" />
+    
+    <EditTextPreference
+        android:key="doduce"
+        android:defaultValue="32100"
+        android:summary="@string/doduce_summary"
+        android:title="@string/doduce_title" />
+    
+    <EditTextPreference
+        android:key="doddok"
+        android:defaultValue="1"
+        android:summary="@string/doddok_summary"
+        android:title="@string/doddok_title" />
+    
+    <EditTextPreference
+        android:key="odbuce"
+        android:defaultValue="31100"
+        android:summary="@string/odbuce_summary"
+        android:title="@string/odbuce_title" />
+    
+    <EditTextPreference
+        android:key="odbdok"
+        android:defaultValue="1"
+        android:summary="@string/odbdok_summary"
+        android:title="@string/odbdok_title" />
+    
+    <EditTextPreference
+        android:key="doklad"
+        android:defaultValue="0"
+        android:enabled="false"
+        android:summary="@string/doklad_summary"
+        android:title="@string/doklad_title" />
+    
+    <EditTextPreference
+        android:key="mydemo"
+        android:defaultValue="0"
+        android:enabled="true"
+        android:summary="@string/mydemo_summary"
+        android:title="@string/mydemo_title" />
+
+    <EditTextPreference
+        android:key="mydemo16"
+        android:defaultValue="0"
+        android:enabled="true"
+        android:summary="@string/mydemo16_summary"
+        android:title="@string/mydemo16_title" />
+
+    <EditTextPreference
+        android:key="upomkto"
+        android:defaultValue="Sign"
+        android:maxLength="10"
+        android:summary="@string/upomkto_summary"
+        android:title="@string/upomkto_title" />
+        
+</PreferenceScreen>

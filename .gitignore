@@ -1,31 +1,8 @@
-*target*
-*.jar
-*.war
-*.ear
-*.class
-
-# eclipse specific git ignore
-*.pydevproject
-.project
-.metadata
-gen/**
-gen/com/eusecom/samfantozzi/
-gen/com/eusecom/samfantozzi/R.java
-bin/**
-tmp/**
-tmp/**/*
-src/com/eusecom/samfantozzi/MCrypt.java
-*.tmp
-*.bak
-*.swp
-*~.nib
-local.properties
-.classpath
-.settings/
-.loadpath
-
-# External tool builders
-.externalToolBuilders/
-
-# Locally stored "Eclipse launch configurations"
-*.launch
+*.iml
+.gradle
+/local.properties
+/.idea/workspace.xml
+/.idea/libraries
+.DS_Store
+/build
+/captures
