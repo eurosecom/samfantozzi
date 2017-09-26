@@ -4,17 +4,16 @@ import android.app.Application;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
-
 import javax.inject.Singleton;
 import dagger.Module;
 import dagger.Provides;
 
 
 /**
- * Created by mertsimsek on 25/05/2017.
+ * SamFantozzi AppModule
  */
 @Module(subcomponents = {
-        MainActivityComponent.class,
+        MainFantozziActivityComponent.class,
         DetailActivityComponent.class,
         Detail2ActivityComponent.class})
 public class AppModule {
