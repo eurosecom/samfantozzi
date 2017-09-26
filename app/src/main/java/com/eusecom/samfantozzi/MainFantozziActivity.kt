@@ -12,10 +12,18 @@ import kotlinx.android.synthetic.main.activity_main.*
 import android.content.SharedPreferences
 import android.support.v4.widget.DrawerLayout
 import android.widget.Toast
+import co.zsmb.materialdrawerkt.builders.accountHeader
 import co.zsmb.materialdrawerkt.builders.drawer
 import co.zsmb.materialdrawerkt.draweritems.badgeable.primaryItem
 import co.zsmb.materialdrawerkt.draweritems.badgeable.secondaryItem
 import co.zsmb.materialdrawerkt.draweritems.divider
+import co.zsmb.materialdrawerkt.draweritems.profile.profile
+import co.zsmb.materialdrawerkt.draweritems.profile.profileSetting
+import co.zsmb.materialdrawerkt.draweritems.sectionHeader
+import co.zsmb.materialdrawerkt.draweritems.toggleable.toggleItem
+import com.mikepenz.materialdrawer.AccountHeader
+import com.mikepenz.materialdrawer.Drawer
+import com.mikepenz.materialdrawer.model.ProfileDrawerItem
 import javax.inject.Inject
 
 /**
@@ -25,6 +33,9 @@ import javax.inject.Inject
 
 class MainFantozziActivity : AppCompatActivity() {
 
+    private lateinit var result: Drawer
+    private lateinit var headerResult: AccountHeader
+
     @Inject
     lateinit var prefs: SharedPreferences
 
@@ -33,6 +44,8 @@ class MainFantozziActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
         setSupportActionBar(toolbar)
+        supportActionBar?.setDisplayHomeAsUpEnabled(true)
+        supportActionBar?.setHomeButtonEnabled(false)
 
         val serverx = prefs.getString("servername", "")
         Toast.makeText(this, serverx, Toast.LENGTH_SHORT).show()
@@ -45,11 +58,49 @@ class MainFantozziActivity : AppCompatActivity() {
         }
 
         //kotlin drawer by https://github.com/zsmb13/MaterialDrawerKt
-        drawer {
+        result = drawer {
 
+            toolbar = this@MainFantozziActivity.toolbar
+            hasStableIds = true
+            savedInstance = savedInstanceState
+            showOnFirstLaunch = false
+
+
+            headerResult = accountHeader {
+                background = R.drawable.pozadie
+                savedInstance = savedInstanceState
+                translucentStatusBar = true
+
+                profile("EuroSecom", "edcom@edcom.sk") {
+                    iconUrl = "http://www.edcom.sk"
+                    identifier = 100
+                }
+                profile("EDcom", "andrejd@edcom.sk") {
+                    iconUrl = "http://www.edcom.sk"
+                    identifier = 101
+                }
+
+                profileSetting("Add account", "Add new GitHub Account") {
+                    //iicon = GoogleMaterial.Icon.gmd_plus
+                    identifier = 100_000
+                }
+                profileSetting("Manage Account", "Manage existing GitHub Account") {
+                    //iicon = GoogleMaterial.Icon.gmd_settings
+                    identifier = 100_001
+                }
+
+                
+            }
+
+            sectionHeader("MaterialDrawerKt demo") {
+                divider = false
+            }
+
+            divider {}
             primaryItem("Home") {}
             divider {}
             primaryItem("Users") {}
+            divider {}
             secondaryItem("Settings") {
 
                 onClick { _ ->
@@ -60,6 +111,20 @@ class MainFantozziActivity : AppCompatActivity() {
             }
         }
     }
+
+    override fun onSaveInstanceState(outState: Bundle?) {
+        result.saveInstanceState(outState)
+        headerResult.saveInstanceState(outState)
+        super.onSaveInstanceState(outState)
+    }
+
+    override fun onBackPressed() {
+        if (result.isDrawerOpen)
+            result.closeDrawer()
+        else
+            super.onBackPressed()
+    }
+
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
         // Inflate the menu; this adds items to the action bar if it is present.
