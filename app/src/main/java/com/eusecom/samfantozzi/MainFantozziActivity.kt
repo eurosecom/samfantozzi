@@ -89,7 +89,7 @@ class MainFantozziActivity : AppCompatActivity() {
                     identifier = 100_001
                 }
 
-                
+
             }
 
             sectionHeader("MaterialDrawerKt demo") {

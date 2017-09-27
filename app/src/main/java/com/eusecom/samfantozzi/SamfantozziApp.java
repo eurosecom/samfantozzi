@@ -3,6 +3,8 @@ package com.eusecom.samfantozzi;
 import android.app.Activity;
 import android.app.Application;
 import com.eusecom.samfantozzi.di.DaggerAppComponent;
+import com.squareup.leakcanary.LeakCanary;
+
 import javax.inject.Inject;
 import dagger.android.DispatchingAndroidInjector;
 import dagger.android.HasActivityInjector;
@@ -16,6 +18,14 @@ public class SamfantozziApp extends Application implements HasActivityInjector {
     @Override
     public void onCreate() {
         super.onCreate();
+
+        if (LeakCanary.isInAnalyzerProcess(this)) {
+            // This process is dedicated to LeakCanary for heap analysis.
+            // You should not init your app in this process.
+            return;
+        }
+        LeakCanary.install(this);
+
         DaggerAppComponent
                 .builder()
                 .application(this)
