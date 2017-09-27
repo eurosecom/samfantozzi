@@ -1,0 +1,115 @@
+{
+  "project_info": {
+    "project_number": "1032101777118",
+    "firebase_url": "https://fbproject-4e66c.firebaseio.com",
+    "project_id": "fbproject-4e66c",
+    "storage_bucket": "fbproject-4e66c.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1032101777118:android:db7c3d866e82d3e8",
+        "android_client_info": {
+          "package_name": "com.eusecom.attendance"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1032101777118-euhgarehcffdss9ute9b2t5kuk2phpeg.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.eusecom.attendance",
+            "certificate_hash": "5c4971e85ea5e00d5ecb23ac49edbad981935d51"
+          }
+        },
+        {
+          "client_id": "1032101777118-oj5kh36bove2h8lrrm8uieodal8jq5em.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.eusecom.attendance",
+            "certificate_hash": "0aea2ed9989ee68bb672318a670fc45ddfb113ae"
+          }
+        },
+        {
+          "client_id": "1032101777118-ejtgqek7b7q21bbd4pc5hj84n25ehdhi.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDkowOe0FLhFvqh5rSxq34oDzdk7UjPM3A"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1032101777118-ejtgqek7b7q21bbd4pc5hj84n25ehdhi.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1032101777118:android:0a2d18e254178d8d",
+        "android_client_info": {
+          "package_name": "com.eusecom.samfantozzi"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1032101777118-0ipdbmj3c5jn4ksg5jpm5a0r9f8g4qok.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.eusecom.samfantozzi",
+            "certificate_hash": "5c4971e85ea5e00d5ecb23ac49edbad981935d51"
+          }
+        },
+        {
+          "client_id": "1032101777118-c17tfochjh0hgvqlnbco6i25ic0gpvpp.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.eusecom.samfantozzi",
+            "certificate_hash": "0aea2ed9989ee68bb672318a670fc45ddfb113ae"
+          }
+        },
+        {
+          "client_id": "1032101777118-ejtgqek7b7q21bbd4pc5hj84n25ehdhi.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDkowOe0FLhFvqh5rSxq34oDzdk7UjPM3A"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1032101777118-ejtgqek7b7q21bbd4pc5hj84n25ehdhi.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
