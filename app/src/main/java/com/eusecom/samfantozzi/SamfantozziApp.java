@@ -2,7 +2,12 @@ package com.eusecom.samfantozzi;
 
 import android.app.Activity;
 import android.app.Application;
+import android.support.annotation.NonNull;
+
 import com.eusecom.samfantozzi.di.DaggerAppComponent;
+import com.google.firebase.FirebaseApp;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 import com.squareup.leakcanary.LeakCanary;
 
 import javax.inject.Inject;
@@ -14,6 +19,7 @@ public class SamfantozziApp extends Application implements HasActivityInjector {
 
     @Inject
     DispatchingAndroidInjector<Activity> activityDispatchingAndroidInjector;
+
 
     @Override
     public void onCreate() {

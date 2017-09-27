@@ -21,6 +21,7 @@ import co.zsmb.materialdrawerkt.draweritems.profile.profile
 import co.zsmb.materialdrawerkt.draweritems.profile.profileSetting
 import co.zsmb.materialdrawerkt.draweritems.sectionHeader
 import co.zsmb.materialdrawerkt.draweritems.toggleable.toggleItem
+import com.google.firebase.FirebaseApp
 import com.mikepenz.materialdrawer.AccountHeader
 import com.mikepenz.materialdrawer.Drawer
 import com.mikepenz.materialdrawer.model.ProfileDrawerItem
@@ -56,6 +57,7 @@ class MainFantozziActivity : AppCompatActivity() {
             val intent = Intent(this, Detail2Activity::class.java)
             startActivity(intent)
         }
+
 
         //kotlin drawer by https://github.com/zsmb13/MaterialDrawerKt
         result = drawer {
@@ -97,7 +99,15 @@ class MainFantozziActivity : AppCompatActivity() {
             }
 
             divider {}
-            primaryItem("Home") {}
+            primaryItem("Login") {
+
+                onClick { _ ->
+                    //Log.d("DRAWER", "Click.")
+                    navigateToLogin()
+                    false
+                }
+
+            }
             divider {}
             primaryItem("Users") {}
             divider {}
@@ -140,6 +150,11 @@ class MainFantozziActivity : AppCompatActivity() {
 
     fun navigateToSettings(){
         val intent = Intent(this, SettingsActivity::class.java)
+        startActivity(intent)
+    }
+
+    fun navigateToLogin(){
+        val intent = Intent(this, EmailPasswordActivity::class.java)
         startActivity(intent)
     }
 
