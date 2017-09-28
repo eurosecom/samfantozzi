@@ -1,6 +1,22 @@
 <resources>
+
+    //mainactivity
     <string name="app_name">Samfantozzi</string>
+    <string name="helloworld">Hello World!</string>
+    <string name="app_desc">Samfantozzi accounting system</string>
     <string name="action_settings">Settings</string>
+    <string name="action_loginout">Login / Logout</string>
+    <string name="action_accountreports">Accounting reports</string>
+    <string name="action_vatreports">VAT reports</string>
+    <string name="action_incometaxreports">Income tax reports</string>
+    <string name="popisbtnpokl">Cash</string>
+    <string name="popisbtnpoklsd">Cash SD</string>
+    <string name="popisbtnbanka">Bank</string>
+    <string name="popisbtndod1">Suppliers</string>
+    <string name="popisbtnodb1">Customers</string>
+    <string name="popisbtndod1k">Suppl.</string>
+    <string name="popisbtnodb1k">Custom.</string>
+
 
     //firebase auth
     <string name="emailpassword_title_text">Email and Password</string>

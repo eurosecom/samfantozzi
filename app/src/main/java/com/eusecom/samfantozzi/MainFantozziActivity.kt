@@ -94,12 +94,12 @@ class MainFantozziActivity : AppCompatActivity() {
 
             }
 
-            sectionHeader("MaterialDrawerKt demo") {
+            sectionHeader(getString(R.string.app_desc)) {
                 divider = false
             }
 
             divider {}
-            primaryItem("Login") {
+            primaryItem(getString(R.string.action_loginout)) {
 
                 onClick { _ ->
                     //Log.d("DRAWER", "Click.")
@@ -109,9 +109,13 @@ class MainFantozziActivity : AppCompatActivity() {
 
             }
             divider {}
-            primaryItem("Users") {}
+            primaryItem(getString(R.string.action_accountreports)) {}
             divider {}
-            secondaryItem("Settings") {
+            primaryItem(getString(R.string.action_vatreports)) {}
+            divider {}
+            primaryItem(getString(R.string.action_incometaxreports)) {}
+            divider {}
+            secondaryItem(getString(R.string.action_settings)) {
 
                 onClick { _ ->
                     //Log.d("DRAWER", "Click.")
