@@ -109,7 +109,15 @@ class MainFantozziActivity : AppCompatActivity() {
 
             }
             divider {}
-            primaryItem(getString(R.string.action_accountreports)) {}
+            primaryItem(getString(R.string.action_accountreports)) {
+
+                onClick { _ ->
+                    //Log.d("DRAWER", "Click.")
+                    navigateToCashList()
+                    false
+                }
+
+            }
             divider {}
             primaryItem(getString(R.string.action_vatreports)) {}
             divider {}
@@ -159,6 +167,11 @@ class MainFantozziActivity : AppCompatActivity() {
 
     fun navigateToLogin(){
         val intent = Intent(this, EmailPasswordActivity::class.java)
+        startActivity(intent)
+    }
+
+    fun navigateToCashList(){
+        val intent = Intent(this, DgAeaActivity::class.java)
         startActivity(intent)
     }
 

@@ -67,4 +67,23 @@
     <string name="usname_title">Name of user.</string>
     <string name="usname_summary">Name of logged user.</string>
 
+
+    //dgaeaactivity
+    <string name="action_myemployee">My employees</string>
+    <string name="dateod">from date</string>
+    <string name="datedo">to date</string>
+    <string name="hodiny">hours for 1.day, 0,nothing = all day</string>
+    <string name="from">from</string>
+    <string name="to">to</string>
+    <string name="hodxb">hours</string>
+    <string name="datm">posted</string>
+    <string name="postedby">posted by</string>
+    <string name="osc">empId</string>
+    <string name="firma">compId</string>
+    <string name="fullosc">employee Id</string>
+    <string name="fullfirma">company Id</string>
+    <string name="name">Name</string>
+    <string name="type">type</string>
+    <string name="email">email</string>
+
 </resources>
