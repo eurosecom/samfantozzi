@@ -4,6 +4,9 @@ import android.app.Activity;
 import android.app.Application;
 import android.support.annotation.NonNull;
 
+import com.eusecom.samfantozzi.dagger.components.DaggerDemoComponent;
+import com.eusecom.samfantozzi.dagger.components.DemoComponent;
+import com.eusecom.samfantozzi.dagger.modules.ApplicationModule;
 import com.eusecom.samfantozzi.di.DaggerAppComponent;
 import com.google.firebase.FirebaseApp;
 import com.google.firebase.database.DatabaseReference;
@@ -44,4 +47,18 @@ public class SamfantozziApp extends Application implements HasActivityInjector {
     public DispatchingAndroidInjector<Activity> activityInjector() {
         return activityDispatchingAndroidInjector;
     }
+
+
+    private final DemoComponent dgaeacomponent = createDgAeaComponent();
+
+    protected DemoComponent createDgAeaComponent() {
+        return DaggerDemoComponent.builder()
+                .applicationModule(new ApplicationModule(this))
+                .build();
+    }
+
+    public DemoComponent dgaeacomponent() {
+        return dgaeacomponent;
+    }
+
 }
