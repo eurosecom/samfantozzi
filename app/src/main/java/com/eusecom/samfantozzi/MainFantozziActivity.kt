@@ -11,6 +11,7 @@ import dagger.android.AndroidInjection
 import kotlinx.android.synthetic.main.activity_main.*
 import android.content.SharedPreferences
 import android.support.v4.widget.DrawerLayout
+import android.widget.Button
 import android.widget.Toast
 import co.zsmb.materialdrawerkt.builders.accountHeader
 import co.zsmb.materialdrawerkt.builders.drawer
@@ -25,6 +26,7 @@ import com.google.firebase.FirebaseApp
 import com.mikepenz.materialdrawer.AccountHeader
 import com.mikepenz.materialdrawer.Drawer
 import com.mikepenz.materialdrawer.model.ProfileDrawerItem
+import kotlinx.android.synthetic.main.content_main.*
 import javax.inject.Inject
 
 /**
@@ -56,6 +58,10 @@ class MainFantozziActivity : AppCompatActivity() {
                     .setAction("Action", null).show()
             val intent = Intent(this, Detail2Activity::class.java)
             startActivity(intent)
+        }
+
+        button1.setOnClickListener {
+            view -> navigateToCashList()
         }
 
 
@@ -113,7 +119,7 @@ class MainFantozziActivity : AppCompatActivity() {
 
                 onClick { _ ->
                     //Log.d("DRAWER", "Click.")
-                    navigateToCashList()
+                    //navigateToCashList()
                     false
                 }
 

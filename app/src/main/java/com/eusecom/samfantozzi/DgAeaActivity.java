@@ -72,7 +72,7 @@ public class  DgAeaActivity extends BaseDatabaseActivity {
 
         //mActionBarToolbar = (Toolbar) findViewById(R.id.tool_bar);
         //setSupportActionBar(mActionBarToolbar);
-        //getSupportActionBar().setTitle(mSharedPreferences.getString("ume", ""));
+        getSupportActionBar().setTitle(mSharedPreferences.getString("ume", "") + " " + getString(R.string.action_myemployee));
 
             // Create the adapter that will return a fragment for each section
             mPagerAdapter = new FragmentPagerAdapter(getSupportFragmentManager()) {
