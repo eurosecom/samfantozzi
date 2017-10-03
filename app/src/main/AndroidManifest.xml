@@ -23,9 +23,9 @@
         <activity android:name=".SettingsActivity"/>
         <activity android:name=".EmailPasswordActivity"/>
 
+        <activity android:name=".AbsServerAsActivity"/>
         <activity android:name=".DgAeaActivity"/>
         <activity android:name=".Detail2Activity"/>
-        <activity android:name=".DetailActivity"/>
     </application>
 
 </manifest>

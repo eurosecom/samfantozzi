@@ -86,4 +86,10 @@
     <string name="type">type</string>
     <string name="email">email</string>
 
+    //absserver
+    <string name="nothing_found">No items found</string>
+    <string name="search">search</string>
+    <string name="searchstring">Search string</string>
+    <string name="action_absmysql">Get Server Absences</string>
+
 </resources>

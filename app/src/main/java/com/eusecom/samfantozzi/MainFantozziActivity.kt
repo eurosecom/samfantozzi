@@ -7,11 +7,8 @@ import android.support.v7.app.AppCompatActivity
 import android.view.Menu
 import android.view.MenuItem
 import dagger.android.AndroidInjection
-
-import kotlinx.android.synthetic.main.activity_main.*
+import kotlinx.android.synthetic.main.activity_mainfantozzi.*
 import android.content.SharedPreferences
-import android.support.v4.widget.DrawerLayout
-import android.widget.Button
 import android.widget.Toast
 import co.zsmb.materialdrawerkt.builders.accountHeader
 import co.zsmb.materialdrawerkt.builders.drawer
@@ -21,12 +18,9 @@ import co.zsmb.materialdrawerkt.draweritems.divider
 import co.zsmb.materialdrawerkt.draweritems.profile.profile
 import co.zsmb.materialdrawerkt.draweritems.profile.profileSetting
 import co.zsmb.materialdrawerkt.draweritems.sectionHeader
-import co.zsmb.materialdrawerkt.draweritems.toggleable.toggleItem
-import com.google.firebase.FirebaseApp
 import com.mikepenz.materialdrawer.AccountHeader
 import com.mikepenz.materialdrawer.Drawer
-import com.mikepenz.materialdrawer.model.ProfileDrawerItem
-import kotlinx.android.synthetic.main.content_main.*
+import kotlinx.android.synthetic.main.content_mainfantozzi.*
 import javax.inject.Inject
 
 /**
@@ -45,7 +39,7 @@ class MainFantozziActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         AndroidInjection.inject(this);
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main)
+        setContentView(R.layout.activity_mainfantozzi)
         setSupportActionBar(toolbar)
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
         supportActionBar?.setHomeButtonEnabled(false)
@@ -53,15 +47,19 @@ class MainFantozziActivity : AppCompatActivity() {
         val serverx = prefs.getString("servername", "")
         Toast.makeText(this, serverx, Toast.LENGTH_SHORT).show()
 
-        fab.setOnClickListener { view ->
-            Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                    .setAction("Action", null).show()
-            val intent = Intent(this, Detail2Activity::class.java)
-            startActivity(intent)
+        fab.setOnClickListener {
+
+            //view ->
+            //Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG).setAction("Action", null).show()
+            _ -> navigateToCashList()
         }
 
         button1.setOnClickListener {
-            view -> navigateToCashList()
+            _ -> navigateToCashList()
+        }
+
+        button2.setOnClickListener {
+            _ -> navigateToAbsServer()
         }
 
 
@@ -178,6 +176,11 @@ class MainFantozziActivity : AppCompatActivity() {
 
     fun navigateToCashList(){
         val intent = Intent(this, DgAeaActivity::class.java)
+        startActivity(intent)
+    }
+
+    fun navigateToAbsServer(){
+        val intent = Intent(this, AbsServerAsActivity::class.java)
         startActivity(intent)
     }
 
