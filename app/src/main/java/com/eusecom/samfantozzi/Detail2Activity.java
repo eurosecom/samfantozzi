@@ -18,7 +18,7 @@ public class Detail2Activity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         AndroidInjection.inject(this);
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.activity_mainfantozzi);
 
         String serverx = prefs.getString("servername", "");
         Toast.makeText(Detail2Activity.this, serverx, Toast.LENGTH_SHORT).show();

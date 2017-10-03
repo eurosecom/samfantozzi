@@ -14,7 +14,6 @@ import dagger.Provides;
  */
 @Module(subcomponents = {
         MainFantozziActivityComponent.class,
-        DetailActivityComponent.class,
         Detail2ActivityComponent.class})
 public class AppModule {
 

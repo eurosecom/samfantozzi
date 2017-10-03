@@ -2,7 +2,6 @@ package com.eusecom.samfantozzi.di;
 
 import android.app.Activity;
 import com.eusecom.samfantozzi.Detail2Activity;
-import com.eusecom.samfantozzi.DetailActivity;
 import com.eusecom.samfantozzi.MainFantozziActivity;
 import dagger.Binds;
 import dagger.Module;
@@ -18,10 +17,6 @@ public abstract class ActivityBuilder {
     @ActivityKey(MainFantozziActivity.class)
     abstract AndroidInjector.Factory<? extends Activity> bindMainActivity(MainFantozziActivityComponent.Builder builder);
 
-    @Binds
-    @IntoMap
-    @ActivityKey(DetailActivity.class)
-    abstract AndroidInjector.Factory<? extends Activity> bindDetailActivity(DetailActivityComponent.Builder builder);
 
     @Binds
     @IntoMap

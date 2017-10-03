@@ -1,7 +1,6 @@
 package com.eusecom.samfantozzi.di;
 
 import com.eusecom.samfantozzi.Detail2Activity;
-import com.eusecom.samfantozzi.DetailActivity;
 import dagger.Subcomponent;
 import dagger.android.AndroidInjector;
 
