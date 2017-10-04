@@ -118,7 +118,7 @@ public class AbsServerAsActivity extends AbsServerAsBaseSearchActivity {
        mSearchButton.setOnClickListener(null);
        //watcher = null;
        mQueryEditText.removeTextChangedListener(watcher);
-       //mDisposable.dispose();
+       mDisposable.dispose();
        if (mSubscription != null && !mSubscription.isUnsubscribed()) {
            mSubscription.unsubscribe();
        }

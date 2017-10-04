@@ -83,6 +83,7 @@ public class AbsServerAsAdapter extends RecyclerView.Adapter<AbsServerAsAdapter.
                   Log.d("onLongClickListener", mListabsserver.get(pos).dmna);
                   //getDialog(mListabsserver.get(position).longi, mListabsserver.get(position), holder.mContext);
 
+
               } else {
 
                   Log.d("onShortClickListener", mListabsserver.get(pos).dmna);
