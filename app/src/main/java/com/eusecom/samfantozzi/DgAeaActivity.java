@@ -70,17 +70,17 @@ public class  DgAeaActivity extends BaseDatabaseActivity {
 
         _rxBus = ((SamfantozziApp) getApplication()).getRxBusSingleton();
 
-        //mActionBarToolbar = (Toolbar) findViewById(R.id.tool_bar);
-        //setSupportActionBar(mActionBarToolbar);
         getSupportActionBar().setTitle(mSharedPreferences.getString("ume", "") + " " + getString(R.string.action_myemployee));
 
             // Create the adapter that will return a fragment for each section
             mPagerAdapter = new FragmentPagerAdapter(getSupportFragmentManager()) {
                 private final Fragment[] mFragments = new Fragment[]{
-                        new DgAeaListFragment()
+                        new DgAeaListFragment(),
+                        new DgAbsServerListFragment()
                 };
                 private final String[] mFragmentNames = new String[]{
-                        getString(R.string.action_myemployee)
+                        getString(R.string.action_myemployee),
+                        getString(R.string.action_absmysql)
                 };
 
                 @Override
@@ -116,12 +116,14 @@ public class  DgAeaActivity extends BaseDatabaseActivity {
                     FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
                     fab.setVisibility(View.VISIBLE);
                     whatispage=0;
+                    getSupportActionBar().setTitle(mSharedPreferences.getString("ume", "") + " " + getString(R.string.action_myemployee));
                 }
                 if(position == 1){
                     FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
                     //fab.setVisibility(View.GONE);
                     fab.setVisibility(View.VISIBLE);
                     whatispage=1;
+                    getSupportActionBar().setTitle(getString(R.string.action_absmysql));
                 }
 
             }
