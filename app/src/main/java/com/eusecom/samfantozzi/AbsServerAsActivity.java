@@ -22,17 +22,22 @@
 
 package com.eusecom.samfantozzi;
 
+import android.content.SharedPreferences;
 import android.support.v4.view.ViewCompat;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
 import android.view.View;
+import android.widget.Toast;
 
 import com.eusecom.samfantozzi.models.Attendance;
 import com.eusecom.samfantozzi.retrofit.AbsServerClient;
 
 import java.util.List;
 import java.util.concurrent.TimeUnit;
+
+import javax.inject.Inject;
+
 import io.reactivex.Observable;
 import io.reactivex.ObservableEmitter;
 import io.reactivex.ObservableOnSubscribe;
@@ -60,12 +65,20 @@ public class AbsServerAsActivity extends AbsServerAsBaseSearchActivity {
   Consumer<List<Attendance>> consumerListAttendance = null;
   Consumer<String> consumerstring = null;
 
+   @Inject
+   SharedPreferences mSharedPreferences;
+
   @Override
   protected void onStart() {
     super.onStart();
 
+      ((SamfantozziApp) getApplication()).dgaeacomponent().inject(this);
+
       String getfromfir =  SettingsActivity.getFir(AbsServerAsActivity.this);
+      //String getfromfir =  mSharedPreferences.getString("fir", "0");
+
       String usicox = SettingsActivity.getUsIco(AbsServerAsActivity.this);
+      //String usicox =  mSharedPreferences.getString("usico", "0");
       if( usicox.equals("44551142")) {
           getfromfir  = Constants.EDCOM_fir;
 
@@ -74,7 +87,8 @@ public class AbsServerAsActivity extends AbsServerAsBaseSearchActivity {
       getAbsServer(getfromfir);
       getObservableSearchText();
 
-
+      String serverx =  mSharedPreferences.getString("fir", "0");
+      Toast.makeText(this, serverx, Toast.LENGTH_SHORT).show();
 
   }//end onstart
 

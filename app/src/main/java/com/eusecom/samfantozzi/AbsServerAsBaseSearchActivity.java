@@ -22,7 +22,7 @@
 
 package com.eusecom.samfantozzi;
 
-
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
@@ -39,6 +39,9 @@ import com.eusecom.samfantozzi.rxbus.RxBus;
 import java.util.Collections;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
+
+import javax.inject.Inject;
+
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.CompositeDisposable;
 import io.reactivex.flowables.ConnectableFlowable;
@@ -55,6 +58,7 @@ public abstract class AbsServerAsBaseSearchActivity extends AppCompatActivity {
 
   private View.OnClickListener onclicklistapprove = null;
   private View.OnClickListener onclicklistrefuse = null;
+
 
   @Override
   protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -96,6 +100,8 @@ public abstract class AbsServerAsBaseSearchActivity extends AppCompatActivity {
                     }));
 
     _disposables.add(tapEventEmitter.connect());
+
+
   }
 
   protected void showProgressBar() {
