@@ -23,21 +23,16 @@
 package com.eusecom.samfantozzi;
 
 import android.content.SharedPreferences;
-import android.support.v4.view.ViewCompat;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
 import android.view.View;
 import android.widget.Toast;
-
 import com.eusecom.samfantozzi.models.Attendance;
-import com.eusecom.samfantozzi.retrofit.AbsServerClient;
-
+import com.eusecom.samfantozzi.retrofit.AbsServerService;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
-
 import javax.inject.Inject;
-
 import io.reactivex.Observable;
 import io.reactivex.ObservableEmitter;
 import io.reactivex.ObservableOnSubscribe;
@@ -67,6 +62,9 @@ public class AbsServerAsActivity extends AbsServerAsBaseSearchActivity {
 
    @Inject
    SharedPreferences mSharedPreferences;
+
+   @Inject
+   AbsServerService mAbsServerService;
 
   @Override
   protected void onStart() {
@@ -253,7 +251,7 @@ public class AbsServerAsActivity extends AbsServerAsBaseSearchActivity {
           urlx = "http:\\" + Constants.EDCOM_url;
       }
       Log.d("getfromurl ", urlx);
-    mSubscription = AbsServerClient.getInstance(urlx)
+    mSubscription = mAbsServerService
             .getAbsServer(fromfir)
             .subscribeOn(rx.schedulers.Schedulers.io())
             .observeOn(rx.android.schedulers.AndroidSchedulers.mainThread())
