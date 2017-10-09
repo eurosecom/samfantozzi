@@ -4,7 +4,10 @@ import android.support.annotation.NonNull;
 import java.util.ArrayList;
 import java.util.List;
 import rx.Observable;
+
+import com.eusecom.samfantozzi.models.Attendance;
 import com.eusecom.samfantozzi.models.Employee;
+import com.eusecom.samfantozzi.retrofit.AbsServerService;
 import com.eusecom.samfantozzi.rxfirebase2.database.RxFirebaseDatabase;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseReference;
@@ -13,13 +16,25 @@ import com.google.firebase.database.Query;
 public class DgAllEmpsAbsDataModel implements DgAllEmpsAbsIDataModel {
 
     DatabaseReference mFirebaseDatabase;
+    AbsServerService mAbsServerService;
 
-    public DgAllEmpsAbsDataModel(@NonNull final DatabaseReference databaseReference) {
+    public DgAllEmpsAbsDataModel(@NonNull final DatabaseReference databaseReference,
+                                 @NonNull final AbsServerService absServerService) {
         mFirebaseDatabase = databaseReference;
+        mAbsServerService = absServerService;
     }
 
 
     //recyclerview datamodel for DgAeaActivity
+
+    @NonNull
+    @Override
+    public Observable<List<Attendance>> getAbsencesFromMysqlServer(String fromfir) {
+
+        return Observable.just(getMockAttendance());
+
+    }
+
 
     @NonNull
     @Override
@@ -42,6 +57,21 @@ public class DgAllEmpsAbsDataModel implements DgAllEmpsAbsIDataModel {
 
     }
 
+
+    public List<Attendance> getMockAttendance() {
+
+
+        List<Attendance> mockAttendance = new ArrayList<>();
+
+        Attendance newAttendance = new Attendance("44551142", "usid", "10.2017", "506",
+                "Dovolena", "1506549600", "1506549600", "2",
+                "4", "0", "0", "1506549600", "1", "andrejd" );
+
+        mockAttendance.add(newAttendance);
+
+        return mockAttendance;
+
+    }
 
 
 

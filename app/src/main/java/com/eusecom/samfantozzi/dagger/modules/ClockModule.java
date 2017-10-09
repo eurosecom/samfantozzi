@@ -97,8 +97,9 @@ public class ClockModule {
 
     @Provides
     @Singleton
-    public DgAllEmpsAbsIDataModel providesDgAllEmpsAbsIDataModel(DatabaseReference databasereference) {
-        return new DgAllEmpsAbsDataModel(databasereference);
+    public DgAllEmpsAbsIDataModel providesDgAllEmpsAbsIDataModel(DatabaseReference databasereference,
+                                                                 AbsServerService absServerService) {
+        return new DgAllEmpsAbsDataModel(databasereference, absServerService);
     }
 
 
