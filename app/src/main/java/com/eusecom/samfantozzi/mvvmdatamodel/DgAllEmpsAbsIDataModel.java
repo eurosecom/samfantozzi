@@ -17,5 +17,8 @@ public interface DgAllEmpsAbsIDataModel {
     @NonNull
     public Observable<List<Attendance>> getAbsencesFromMysqlServer(String fromfir);
 
+    @NonNull
+    public Observable<List<Attendance>> getAbsencesFromMock(String fromfir);
+
 
 }

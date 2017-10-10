@@ -2,6 +2,8 @@ package com.eusecom.samfantozzi;
 
 import android.content.SharedPreferences;
 import android.support.annotation.NonNull;
+
+import com.eusecom.samfantozzi.models.Attendance;
 import com.eusecom.samfantozzi.models.Employee;
 import com.eusecom.samfantozzi.mvvmdatamodel.DgAllEmpsAbsIDataModel;
 import com.eusecom.samfantozzi.mvvmschedulers.ISchedulerProvider;
@@ -58,6 +60,24 @@ public class DgAllEmpsAbsMvvmViewModel {
         return mDataModel.getObservableFBusersRealmEmployee(usicox, usuid, lenmoje);
     }
     //end get realmemployees list from FB
+
+    //get absences from mock
+    public Observable<List<Attendance>> getMyAbsencesFromMock() {
+
+        String firx = mSharedPreferences.getString("fir", "0");
+
+        return mDataModel.getAbsencesFromMock(firx);
+    }
+    //end get absences from mock
+
+    //get absences from server
+    public Observable<List<Attendance>> getMyAbsencesFromServer() {
+
+        String firx = "37";
+
+        return mDataModel.getAbsencesFromMysqlServer(firx);
+    }
+    //end get absences from server
 
 
 

@@ -1,6 +1,8 @@
 package com.eusecom.samfantozzi.mvvmdatamodel;
 
 import android.support.annotation.NonNull;
+import android.util.Log;
+
 import java.util.ArrayList;
 import java.util.List;
 import rx.Observable;
@@ -27,9 +29,19 @@ public class DgAllEmpsAbsDataModel implements DgAllEmpsAbsIDataModel {
 
     //recyclerview datamodel for DgAeaActivity
 
+
     @NonNull
     @Override
     public Observable<List<Attendance>> getAbsencesFromMysqlServer(String fromfir) {
+
+        return mAbsServerService.getAbsServer(fromfir);
+
+
+    }
+
+    @NonNull
+    @Override
+    public Observable<List<Attendance>> getAbsencesFromMock(String fromfir) {
 
         return Observable.just(getMockAttendance());
 
@@ -64,7 +76,7 @@ public class DgAllEmpsAbsDataModel implements DgAllEmpsAbsIDataModel {
         List<Attendance> mockAttendance = new ArrayList<>();
 
         Attendance newAttendance = new Attendance("44551142", "usid", "10.2017", "506",
-                "Dovolena", "1506549600", "1506549600", "2",
+                "Mock Dovolena", "1506549600", "1506549600", "2",
                 "4", "0", "0", "1506549600", "1", "andrejd" );
 
         mockAttendance.add(newAttendance);

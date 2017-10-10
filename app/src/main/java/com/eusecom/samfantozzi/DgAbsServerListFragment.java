@@ -12,6 +12,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
+
+import com.eusecom.samfantozzi.models.Attendance;
 import com.eusecom.samfantozzi.models.Employee;
 import com.eusecom.samfantozzi.rxbus.RxBus;
 import java.util.Collections;
@@ -151,10 +153,10 @@ public class DgAbsServerListFragment extends Fragment {
         mSubscription = new CompositeSubscription();
 
 
-        mSubscription.add(mViewModel.getObservableFBusersRealmEmployee()
+        mSubscription.add(mViewModel.getMyAbsencesFromServer()
                 .subscribeOn(Schedulers.computation())
                 .observeOn(rx.android.schedulers.AndroidSchedulers.mainThread())
-                .subscribe(this::setRealmEmployees));
+                .subscribe(this::setServerAbsences));
 
 
 
@@ -182,10 +184,10 @@ public class DgAbsServerListFragment extends Fragment {
 
 
 
-    private void setRealmEmployees(@NonNull final List<Employee> realmemployees) {
+    private void setServerAbsences(@NonNull final List<Attendance> attendances) {
 
-            assert mRecycler != null;
-            mAdapter.setRealmData(realmemployees);
+        String serverx = attendances.get(0).getDmna();
+        Toast.makeText(getActivity(), serverx, Toast.LENGTH_SHORT).show();
 
     }
 
