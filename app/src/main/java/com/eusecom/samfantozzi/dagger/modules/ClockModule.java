@@ -2,7 +2,6 @@ package com.eusecom.samfantozzi.dagger.modules;
 
 import android.app.Application;
 import android.content.SharedPreferences;
-import android.preference.PreferenceManager;
 import com.eusecom.samfantozzi.DgAllEmpsAbsMvvmViewModel;
 import com.eusecom.samfantozzi.SamfantozziApp;
 import com.eusecom.samfantozzi.mvvmdatamodel.DgAllEmpsAbsDataModel;
@@ -29,12 +28,6 @@ import retrofit2.converter.gson.GsonConverterFactory;
 public class ClockModule {
 
     String mBaseUrl = "http:\\www.edcom.sk";
-
-    @Provides
-    @Singleton
-    SharedPreferences providesSharedPreferences(Application application) {
-        return PreferenceManager.getDefaultSharedPreferences(application);
-    }
 
     @Provides
     @Singleton

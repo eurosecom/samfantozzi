@@ -73,7 +73,12 @@ public class DgAllEmpsAbsMvvmViewModel {
     //get absences from server
     public Observable<List<Attendance>> getMyAbsencesFromServer() {
 
-        String firx = "37";
+        String usicox = mSharedPreferences.getString("usico", "");
+        String firx = mSharedPreferences.getString("fir", "0");
+        if (usicox.equals("44551142")) {
+            firx = "37";
+        }
+
 
         return mDataModel.getAbsencesFromMysqlServer(firx);
     }
