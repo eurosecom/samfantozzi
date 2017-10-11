@@ -1,6 +1,7 @@
 package com.eusecom.samfantozzi;
 
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -39,14 +40,15 @@ class AllEmpsAbsRxRealmAdapter extends RecyclerView.Adapter<AllEmpsAbsRxRealmVie
         String keys = blogPostEntity.getKeyf();
         if (isLongClick) {
 
-          //if (_rxBus.hasObservers()) {
-          //  _rxBus.send(blogPostEntity);
-          //}
+          if (_rxBus.hasObservers()) {
+            _rxBus.send(blogPostEntity);
+          }
 
         } else {
 
           if (_rxBus.hasObservers()) {
             _rxBus.send(blogPostEntity);
+            Log.d("short click ", blogPostEntity.getUsername() + "");
           }
 
         }

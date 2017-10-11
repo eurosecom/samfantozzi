@@ -21,7 +21,6 @@ import javax.inject.Inject;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.CompositeDisposable;
 import io.reactivex.flowables.ConnectableFlowable;
-import rx.Observable;
 import rx.schedulers.Schedulers;
 import rx.subscriptions.CompositeSubscription;
 
@@ -35,7 +34,6 @@ public class DgAeaListFragment extends Fragment {
     private AllEmpsAbsRxRealmAdapter mAdapter;
     private RecyclerView mRecycler;
     private LinearLayoutManager mManager;
-    private RxBus _rxBus = null;
 
     @NonNull
     private CompositeSubscription mSubscription;
@@ -46,6 +44,8 @@ public class DgAeaListFragment extends Fragment {
     @Inject
     DgAllEmpsAbsMvvmViewModel mViewModel;
 
+    @Inject
+    RxBus _rxBus;
 
     AlertDialog dialog = null;
 
@@ -53,9 +53,9 @@ public class DgAeaListFragment extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        _disposables = new CompositeDisposable();
+        ((SamfantozziApp) getActivity().getApplication()).dgaeacomponent().inject(this);
 
-        _rxBus = ((SamfantozziApp) getActivity().getApplication()).getRxBusSingleton();
+        _disposables = new CompositeDisposable();
 
         ConnectableFlowable<Object> tapEventEmitter = _rxBus.asFlowable().publish();
 
@@ -64,6 +64,16 @@ public class DgAeaListFragment extends Fragment {
                     if (event instanceof DgAeaListFragment.ClickFobEvent) {
                         Log.d("DgAeaActivity  ", " fobClick ");
                         String serverx = "DgAeaListFragment fobclick";
+                        Toast.makeText(getActivity(), serverx, Toast.LENGTH_SHORT).show();
+
+                    }
+                    if (event instanceof Employee) {
+
+                        String usnamex = ((Employee) event).getUsername();
+
+
+                        Log.d("DgAeaListFragment ",  usnamex);
+                        String serverx = "DgAeaListFragment " + usnamex;
                         Toast.makeText(getActivity(), serverx, Toast.LENGTH_SHORT).show();
 
 
@@ -97,8 +107,6 @@ public class DgAeaListFragment extends Fragment {
     @Override
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-
-        ((SamfantozziApp) getActivity().getApplication()).dgaeacomponent().inject(this);
 
         String umex = mSharedPreferences.getString("ume", "");
         mAdapter = new AllEmpsAbsRxRealmAdapter(Collections.<Employee>emptyList(), _rxBus, umex);

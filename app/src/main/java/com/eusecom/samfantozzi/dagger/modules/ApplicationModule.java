@@ -4,6 +4,9 @@ import android.app.Application;
 import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
 
+import com.eusecom.samfantozzi.SamfantozziApp;
+import com.eusecom.samfantozzi.rxbus.RxBus;
+
 import javax.inject.Singleton;
 import dagger.Module;
 import dagger.Provides;
@@ -28,6 +31,12 @@ public class ApplicationModule {
     @Singleton
     SharedPreferences providesSharedPreferences(Application application) {
         return PreferenceManager.getDefaultSharedPreferences(application);
+    }
+
+    @Provides
+    @Singleton
+    RxBus providesRxBus(Application application) {
+        return ((SamfantozziApp) application).getRxBusSingleton();
     }
 
 }
