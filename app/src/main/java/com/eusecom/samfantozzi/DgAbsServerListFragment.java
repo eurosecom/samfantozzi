@@ -34,7 +34,7 @@ public class DgAbsServerListFragment extends Fragment {
 
     }
     private CompositeDisposable _disposables;
-    private AllEmpsAbsRxRealmAdapter mAdapter;
+    private AbsServerAsAdapter mAdapter;
     private RecyclerView mRecycler;
     private LinearLayoutManager mManager;
     private RxBus _rxBus = null;
@@ -88,9 +88,9 @@ public class DgAbsServerListFragment extends Fragment {
     public View onCreateView (LayoutInflater inflater, ViewGroup container,
                               Bundle savedInstanceState) {
         super.onCreateView(inflater, container, savedInstanceState);
-        View rootView = inflater.inflate(R.layout.fragment_allempsabs, container, false);
+        View rootView = inflater.inflate(R.layout.activity_absserver, container, false);
 
-        mRecycler = (RecyclerView) rootView.findViewById(R.id.allempsabs_list);
+        mRecycler = (RecyclerView) rootView.findViewById(R.id.list);
         mRecycler.setHasFixedSize(true);
 
         return rootView;
@@ -103,7 +103,7 @@ public class DgAbsServerListFragment extends Fragment {
         ((SamfantozziApp) getActivity().getApplication()).dgaeacomponent().inject(this);
 
         String umex = mSharedPreferences.getString("ume", "");
-        mAdapter = new AllEmpsAbsRxRealmAdapter(Collections.<Employee>emptyList(), _rxBus, umex);
+        mAdapter = new AbsServerAsAdapter(_rxBus);
         // Set up Layout Manager, reverse layout
         mManager = new LinearLayoutManager(getActivity());
         mManager.setReverseLayout(true);
@@ -121,7 +121,7 @@ public class DgAbsServerListFragment extends Fragment {
     public void onDestroy() {
         super.onDestroy();
         _disposables.dispose();
-        mAdapter = new AllEmpsAbsRxRealmAdapter(Collections.<Employee>emptyList(), null, "01.2017");
+        mAdapter = new AbsServerAsAdapter(_rxBus);
         try {
             if (dialog != null && dialog.isShowing()) {
                 dialog.dismiss();
@@ -166,8 +166,6 @@ public class DgAbsServerListFragment extends Fragment {
 
 
     private void unBind() {
-        mAdapter.setRealmData(Collections.<Employee>emptyList());
-        //is better to use mSubscription.clear(); by https://medium.com/@scanarch/how-to-leak-memory-with-subscriptions-in-rxjava-ae0ef01ad361
         mSubscription.unsubscribe();
         mSubscription.clear();
         try {
@@ -188,6 +186,13 @@ public class DgAbsServerListFragment extends Fragment {
 
         String serverx = attendances.get(0).getDmna();
         Toast.makeText(getActivity(), serverx, Toast.LENGTH_SHORT).show();
+        if (attendances.isEmpty()) {
+            Toast.makeText(getActivity(), R.string.nothing_found, Toast.LENGTH_SHORT).show();
+            mAdapter.setAbsserver(Collections.<Attendance>emptyList());
+        } else {
+            //Log.d("showResultAs ", resultAs.get(0).dmna);
+            mAdapter.setAbsserver(attendances);
+        }
 
     }
 
