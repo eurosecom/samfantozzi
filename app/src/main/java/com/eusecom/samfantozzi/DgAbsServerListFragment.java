@@ -288,7 +288,6 @@ public class DgAbsServerListFragment extends Fragment {
                     @Override
                     public void afterTextChanged(Editable s) {}
 
-                    //4
                     @Override
                     public void onTextChanged(CharSequence s, int start, int before, int count) {
                         emitter.onNext(s.toString());

@@ -44,8 +44,9 @@ class MainFantozziActivity : AppCompatActivity() {
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
         supportActionBar?.setHomeButtonEnabled(false)
 
-        val serverx = prefs.getString("servername", "")
-        Toast.makeText(this, serverx, Toast.LENGTH_SHORT).show()
+        //val serverx = prefs.getString("servername", "")
+        //Toast.makeText(this, serverx, Toast.LENGTH_SHORT).show()
+        val usermailx = prefs.getString("username", "")
 
         fab.setOnClickListener {
 
@@ -77,21 +78,28 @@ class MainFantozziActivity : AppCompatActivity() {
                 savedInstance = savedInstanceState
                 translucentStatusBar = true
 
-                profile("EuroSecom", "edcom@edcom.sk") {
+                profile("EuroSecom", usermailx) {
                     iconUrl = "http://www.edcom.sk"
                     identifier = 100
                 }
-                profile("EDcom", "andrejd@edcom.sk") {
-                    iconUrl = "http://www.edcom.sk"
-                    identifier = 101
-                }
+                //profile("EDcom", "andrejd@edcom.sk") {
+                //    iconUrl = "http://www.edcom.sk"
+                //    identifier = 101
+                //}
 
-                profileSetting("Add account", "Add new GitHub Account") {
-                    //iicon = GoogleMaterial.Icon.gmd_plus
+                profileSetting("Add account", "Add new Firebase Account") {
+                    icon = R.drawable.ic_history_black_24dp
                     identifier = 100_000
+
+                    onClick { _ ->
+                        navigateToLogin()
+                        false
+                    }
+
                 }
-                profileSetting("Manage Account", "Manage existing GitHub Account") {
+                profileSetting("Reset password", "Reset password of FB Account") {
                     //iicon = GoogleMaterial.Icon.gmd_settings
+                    icon = R.drawable.ic_check_circle_black_24dp
                     identifier = 100_001
                 }
 
