@@ -87,7 +87,7 @@ class MainFantozziActivity : AppCompatActivity() {
                 //    identifier = 101
                 //}
 
-                profileSetting("Add account", "Add new Firebase Account") {
+                profileSetting(getString(R.string.addacount_title), getString(R.string.addacount_summary)) {
                     icon = R.drawable.ic_history_black_24dp
                     identifier = 100_000
 
@@ -97,7 +97,7 @@ class MainFantozziActivity : AppCompatActivity() {
                     }
 
                 }
-                profileSetting("Reset password", "Reset password of FB Account") {
+                profileSetting(getString(R.string.resetpass_title), getString(R.string.resetpass_summary)) {
                     //iicon = GoogleMaterial.Icon.gmd_settings
                     icon = R.drawable.ic_check_circle_black_24dp
                     identifier = 100_001

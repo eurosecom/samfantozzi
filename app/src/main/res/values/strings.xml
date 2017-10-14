@@ -16,6 +16,10 @@
     <string name="popisbtnodb1">Customers</string>
     <string name="popisbtndod1k">Suppl.</string>
     <string name="popisbtnodb1k">Custom.</string>
+    <string name="addacount_title">Add account</string>
+    <string name="addacount_summary">Add new Firebase Account</string>
+    <string name="resetpass_title">Reset password</string>
+    <string name="resetpass_summary">Reset password of FB Account</string>
 
 
     //firebase auth
