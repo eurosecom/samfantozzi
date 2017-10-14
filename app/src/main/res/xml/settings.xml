@@ -68,6 +68,13 @@
         android:title="@string/fir_title" />
 
     <EditTextPreference
+        android:key="firnaz"
+        android:defaultValue=" "
+        android:enabled="true"
+        android:summary="@string/firnaz_summary"
+        android:title="@string/firnaz_title" />
+
+    <EditTextPreference
         android:key="rok"
         android:defaultValue="2017"
         android:enabled="true"

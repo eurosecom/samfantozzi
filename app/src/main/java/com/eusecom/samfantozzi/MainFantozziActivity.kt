@@ -63,6 +63,12 @@ class MainFantozziActivity : AppCompatActivity() {
             _ -> navigateToAbsServer()
         }
 
+        buttonFir.setText(getString(R.string.company) + " " + prefs.getString("fir", "") +
+                " " + prefs.getString("firnaz", ""))
+        buttonFir.setOnClickListener {
+            _ -> navigateToAbsServer()
+        }
+
 
         //kotlin drawer by https://github.com/zsmb13/MaterialDrawerKt
         result = drawer {

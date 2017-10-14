@@ -15,6 +15,7 @@ public class SettingsActivity extends android.preference.PreferenceActivity {
 	public static final String USER_NAME = "username";
 	public static final String USER_UID = "usuid";
 	public static final String FIR = "fir";
+	public static final String FIRNAZ = "firnaz";
 	public static final String USER_TYPE = "ustype";
 	public static final String USER_ICO = "usico";
 	public static final String USER_OSC = "usosc";
@@ -53,6 +54,10 @@ public class SettingsActivity extends android.preference.PreferenceActivity {
 
 	public static String getFir(Context ctx){
 		return PreferenceManager.getDefaultSharedPreferences(ctx).getString(FIR, "0");
+	}
+
+	public static String getFirnaz(Context ctx){
+		return PreferenceManager.getDefaultSharedPreferences(ctx).getString(FIRNAZ, "");
 	}
 
 	public static String getUme(Context ctx){

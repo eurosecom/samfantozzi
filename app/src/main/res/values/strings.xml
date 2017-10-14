@@ -20,6 +20,7 @@
     <string name="addacount_summary">Add new Firebase Account</string>
     <string name="resetpass_title">Reset password</string>
     <string name="resetpass_summary">Reset password of FB Account</string>
+    <string name="company">Company</string>
 
 
     //firebase auth
@@ -50,8 +51,10 @@
     <string name="username_summary">Mail - username for login to Firebase.</string>
     <string name="userpsw_title">User password.</string>
     <string name="userpsw_summary">Password for login to Firebase.</string>
-    <string name="fir_title">Number of company.</string>
-    <string name="fir_summary">Number of company to which you want to connect.</string>
+    <string name="fir_title">Number of connected company.</string>
+    <string name="fir_summary">Number of connected company.</string>
+    <string name="firnaz_title">Name of connected company.</string>
+    <string name="firnaz_summary">Name of connected company.</string>
     <string name="rok_title">Accounting year.</string>
     <string name="rok_summary">Accounting year for attendance.</string>
     <string name="ume_title">Accounting month.</string>
