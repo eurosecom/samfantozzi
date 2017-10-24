@@ -43,6 +43,7 @@ public class SettingsActivity extends android.preference.PreferenceActivity {
 			findPreference("usosc").setEnabled(true);
 			findPreference("usico").setEnabled(true);
 			findPreference("usuid").setEnabled(true);
+			findPreference("ume").setEnabled(true);
 		}
 	}
 

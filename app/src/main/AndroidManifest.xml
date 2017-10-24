@@ -22,6 +22,8 @@
         </activity>
         <activity android:name=".SettingsActivity"/>
         <activity android:name=".EmailPasswordActivity"/>
+        <activity android:name=".ChooseCompanyActivity"/>
+        <activity android:name=".ChooseMonthActivity"/>
 
         <activity android:name=".AbsServerAsActivity"/>
         <activity android:name=".DgAeaActivity"/>

@@ -21,6 +21,7 @@ import co.zsmb.materialdrawerkt.draweritems.sectionHeader
 import com.mikepenz.materialdrawer.AccountHeader
 import com.mikepenz.materialdrawer.Drawer
 import kotlinx.android.synthetic.main.content_mainfantozzi.*
+import org.jetbrains.anko.startActivity
 import javax.inject.Inject
 
 /**
@@ -66,7 +67,7 @@ class MainFantozziActivity : AppCompatActivity() {
         buttonFir.setText(getString(R.string.company) + " " + prefs.getString("fir", "") +
                 " " + prefs.getString("firnaz", ""))
         buttonFir.setOnClickListener {
-            _ -> navigateToAbsServer()
+            _ -> navigateToGetCompany()
         }
 
 
@@ -174,8 +175,17 @@ class MainFantozziActivity : AppCompatActivity() {
 
     override fun onOptionsItemSelected(item: MenuItem) = when (item.itemId) {
         R.id.action_settings -> consume { navigateToSettings() }
+        R.id.action_setmonth -> consume { navigateToSetMonth() }
 
         else -> super.onOptionsItemSelected(item)
+    }
+
+    fun navigateToGetCompany(){
+        startActivity<ChooseCompanyActivity>()
+    }
+
+    fun navigateToSetMonth(){
+        startActivity<ChooseMonthActivity>()
     }
 
     fun navigateToSettings(){
