@@ -75,6 +75,35 @@
     <string name="usname_title">Name of user.</string>
     <string name="usname_summary">Name of logged user.</string>
 
+    <string name="firduct_title">Sort of Accounting 0=double-entry accounting, 9=single-entry accounting.</string>
+    <string name="firduct_summary">Set the program to connect to Fantozzi.</string>
+    <string name="firdph_title">VAT payment 0=No, 1=monthly, 2=quarterly.</string>
+    <string name="firdph_summary">Set the program to connect to Fantozzi.</string>
+    <string name="firdph1_title">The reduced rate of VAT No.1 ( 10 % ).</string>
+    <string name="firdph1_summary">Set the program to connect to Fantozzi.</string>
+    <string name="firdph2_title">Basic, higher VAT rate No.2 ( 20 % ).</string>
+    <string name="firdph2_summary">Set the program to connect to Fantozzi.</string>
+    <string name="firrok_title">Year accounting period.</string>
+    <string name="firrok_summary">Set the program to connect to Fantozzi.</string>
+    <string name="doduce_title">Account of supplier.</string>
+    <string name="doduce_summary">Default account of supplier invoice 32100,32101 etc.</string>
+    <string name="doddok_title">Supplier document.</string>
+    <string name="doddok_summary">Following document number of supplier invoice.</string>
+    <string name="odbuce_title">Account of customer.</string>
+    <string name="odbuce_summary">Default account of customer invoice 31100,31101 etc.</string>
+    <string name="odbdok_title">Customer document.</string>
+    <string name="odbdok_summary">Following document number of customer invoice.</string>
+    <string name="pokluce_title">Cash register account.</string>
+    <string name="pokluce_summary">Default account for cash register 21100,21101 etc.</string>
+    <string name="pokldok_title">Receipt cash document.</string>
+    <string name="pokldok_summary">The following number of receipt cash document.</string>
+    <string name="pokldov_title">Expense cash dokument.</string>
+    <string name="pokldov_summary">The following number of expense cash document.</string>
+    <string name="bankuce_title">Bank account.</string>
+    <string name="bankuce_summary">Default account for the bank 22100,22101 etc.</string>
+    <string name="bankdok_title">Bank document.</string>
+    <string name="bankdok_summary">The following number of bank document.</string>
+
 
     //dgaeaactivity
     <string name="action_myemployee">My employees</string>

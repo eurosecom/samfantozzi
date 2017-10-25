@@ -1,6 +1,7 @@
 package com.eusecom.samfantozzi
 
 import android.content.Intent
+import android.content.SharedPreferences
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import android.support.v7.widget.LinearLayoutManager
@@ -9,6 +10,7 @@ import android.view.Menu
 import android.view.MenuItem
 import android.widget.LinearLayout
 import org.jetbrains.anko.toast
+import javax.inject.Inject
 
 /**
  * Kotlin activity Recyclerview with classic XML itemlayout without Anko DSL
@@ -18,8 +20,13 @@ import org.jetbrains.anko.toast
 
 class ChooseCompanyActivity : AppCompatActivity() {
 
+    @Inject
+    lateinit var prefs: SharedPreferences
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        (application as SamfantozziApp).dgaeacomponent().inject(this)
+
         setContentView(R.layout.activity_choosecompany)
 
         //Bind the recyclerview
@@ -48,8 +55,14 @@ class ChooseCompanyActivity : AppCompatActivity() {
 
         // adding the adapter to recyclerView
         recyclerView.adapter = ChooseCompanyAdapter(alChooseCompanyData){
-            //Anko library has its own definition of toast which we have addded in build.gradle
-            toast("${it.name + " " + it.version } Clicked")//A toast that displays the name of OS which you clicked on
+            toast("${it.name + " " + it.version } Clicked")
+            val editor = prefs.edit()
+            editor.putString("fir", it.name).apply();
+            editor.putString("firnaz", it.version).apply();
+            editor.commit();
+            val i = intent
+            setResult(101, i)
+            finish()
         }
 
     }

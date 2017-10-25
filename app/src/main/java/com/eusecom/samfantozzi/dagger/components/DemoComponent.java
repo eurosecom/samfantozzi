@@ -1,6 +1,7 @@
 package com.eusecom.samfantozzi.dagger.components;
 
 import com.eusecom.samfantozzi.AbsServerAsActivity;
+import com.eusecom.samfantozzi.ChooseCompanyActivity;
 import com.eusecom.samfantozzi.ChooseMonthActivity;
 import com.eusecom.samfantozzi.DgAbsServerListFragment;
 import com.eusecom.samfantozzi.DgAeaActivity;
@@ -18,5 +19,6 @@ public interface DemoComponent {
   void inject(DgAeaListFragment dgaeafragment);
   void inject(DgAbsServerListFragment absserverfragment);
   void inject(ChooseMonthActivity chooseMonthActivity);
+  void inject(ChooseCompanyActivity chooseCompanyActivity);
 
 }

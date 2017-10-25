@@ -1,5 +1,6 @@
 package com.eusecom.samfantozzi
 
+import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
 import android.support.design.widget.Snackbar
@@ -21,7 +22,7 @@ import co.zsmb.materialdrawerkt.draweritems.sectionHeader
 import com.mikepenz.materialdrawer.AccountHeader
 import com.mikepenz.materialdrawer.Drawer
 import kotlinx.android.synthetic.main.content_mainfantozzi.*
-import org.jetbrains.anko.startActivity
+import org.jetbrains.anko.*
 import javax.inject.Inject
 
 /**
@@ -64,8 +65,6 @@ class MainFantozziActivity : AppCompatActivity() {
             _ -> navigateToAbsServer()
         }
 
-        buttonFir.setText(getString(R.string.company) + " " + prefs.getString("fir", "") +
-                " " + prefs.getString("firnaz", ""))
         buttonFir.setOnClickListener {
             _ -> navigateToGetCompany()
         }
@@ -151,6 +150,8 @@ class MainFantozziActivity : AppCompatActivity() {
                 }
             }
         }
+
+        updateUI()
     }
 
     override fun onSaveInstanceState(outState: Bundle?) {
@@ -181,11 +182,23 @@ class MainFantozziActivity : AppCompatActivity() {
     }
 
     fun navigateToGetCompany(){
-        startActivity<ChooseCompanyActivity>()
+
+        startActivityForResult(intentFor<ChooseCompanyActivity>(), 101)
+
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+
+        if (requestCode == 101) {
+
+            //toast("Returned 101")
+            updateUI()
+        }
     }
 
     fun navigateToSetMonth(){
         startActivity<ChooseMonthActivity>()
+
     }
 
     fun navigateToSettings(){
@@ -206,6 +219,11 @@ class MainFantozziActivity : AppCompatActivity() {
     fun navigateToAbsServer(){
         val intent = Intent(this, AbsServerAsActivity::class.java)
         startActivity(intent)
+    }
+
+    fun updateUI(){
+        buttonFir.setText(getString(R.string.company) + " " + prefs.getString("fir", "") +
+                " " + prefs.getString("firnaz", ""))
     }
 
 

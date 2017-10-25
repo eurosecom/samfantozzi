@@ -25,6 +25,21 @@ public class SettingsActivity extends android.preference.PreferenceActivity {
 	public static final String UME = "ume";
 	public static final String USER_ADMIN = "usadmin";
 
+	//settings mysql parameters of accounting
+	public static final String FIRDUCT = "firduct";
+	public static final String FIRDPH = "firdph";
+	public static final String FIRDPH1 = "firdph1";
+	public static final String FIRDPH2 = "firdph2";
+	public static final String POKLUCE = "pokluce";
+	public static final String POKLDOK = "pokldok";
+	public static final String POKLDOV = "pokldov";
+	public static final String BANKUCE = "bankuce";
+	public static final String BANKDOK = "bankdok";
+	public static final String DODUCE = "doduce";
+	public static final String DODDOK = "doddok";
+	public static final String ODBUCE = "odbuce";
+	public static final String ODBDOK = "odbdok";
+
 
 	@Override
 	protected void onCreate(Bundle icicle) {
@@ -104,6 +119,60 @@ public class SettingsActivity extends android.preference.PreferenceActivity {
 
 	public static String getRok(Context ctx){
 		return PreferenceManager.getDefaultSharedPreferences(ctx).getString(ROK,"2017");
+	}
+
+	//settings mysql parameters of accounting
+
+	public static String getFirduct(Context ctx){
+		return PreferenceManager.getDefaultSharedPreferences(ctx).getString(FIRDUCT, "0");
+	}
+
+	public static String getFirdph(Context ctx){
+		return PreferenceManager.getDefaultSharedPreferences(ctx).getString(FIRDPH, "0");
+	}
+
+	public static String getFirdph1(Context ctx){
+		return PreferenceManager.getDefaultSharedPreferences(ctx).getString(FIRDPH1, "10");
+	}
+
+	public static String getFirdph2(Context ctx){
+		return PreferenceManager.getDefaultSharedPreferences(ctx).getString(FIRDPH2, "20");
+	}
+
+	public static String getPokldov(Context ctx){
+		return PreferenceManager.getDefaultSharedPreferences(ctx).getString(POKLDOV, "0");
+	}
+
+	public static String getPokldok(Context ctx){
+		return PreferenceManager.getDefaultSharedPreferences(ctx).getString(POKLDOK, "0");
+	}
+
+	public static String getPokluce(Context ctx){
+		return PreferenceManager.getDefaultSharedPreferences(ctx).getString(POKLUCE, "0");
+	}
+
+	public static String getBankdok(Context ctx){
+		return PreferenceManager.getDefaultSharedPreferences(ctx).getString(BANKDOK, "0");
+	}
+
+	public static String getBankuce(Context ctx){
+		return PreferenceManager.getDefaultSharedPreferences(ctx).getString(BANKUCE, "0");
+	}
+
+	public static String getOdbdok(Context ctx){
+		return PreferenceManager.getDefaultSharedPreferences(ctx).getString(ODBDOK, "0");
+	}
+
+	public static String getOdbuce(Context ctx){
+		return PreferenceManager.getDefaultSharedPreferences(ctx).getString(ODBUCE, "0");
+	}
+
+	public static String getDoddok(Context ctx){
+		return PreferenceManager.getDefaultSharedPreferences(ctx).getString(DODDOK, "0");
+	}
+
+	public static String getDoduce(Context ctx){
+		return PreferenceManager.getDefaultSharedPreferences(ctx).getString(DODUCE, "0");
 	}
 
 } 
