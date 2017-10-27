@@ -1,12 +1,12 @@
 package com.eusecom.samfantozzi.mvvmdatamodel;
 
+import android.content.res.Resources;
 import android.support.annotation.NonNull;
-import android.util.Log;
-
 import java.util.ArrayList;
 import java.util.List;
 import rx.Observable;
-
+import com.eusecom.samfantozzi.Month;
+import com.eusecom.samfantozzi.R;
 import com.eusecom.samfantozzi.models.Attendance;
 import com.eusecom.samfantozzi.models.Employee;
 import com.eusecom.samfantozzi.retrofit.AbsServerService;
@@ -19,11 +19,14 @@ public class DgAllEmpsAbsDataModel implements DgAllEmpsAbsIDataModel {
 
     DatabaseReference mFirebaseDatabase;
     AbsServerService mAbsServerService;
+    Resources mResources;
 
     public DgAllEmpsAbsDataModel(@NonNull final DatabaseReference databaseReference,
-                                 @NonNull final AbsServerService absServerService) {
+                                 @NonNull final AbsServerService absServerService,
+                                 @NonNull final Resources resources) {
         mFirebaseDatabase = databaseReference;
         mAbsServerService = absServerService;
+        mResources = resources;
     }
 
 
@@ -83,6 +86,40 @@ public class DgAllEmpsAbsDataModel implements DgAllEmpsAbsIDataModel {
 
         return mockAttendance;
 
+    }
+
+
+    //recyclerview method for ChooseMonthActivity
+
+    public Observable<List<Month>> getMonthForYear(String rokx) {
+
+        List<Month> mymonths = new ArrayList<>();
+        Month newmonth = new Month(mResources.getString(R.string.january), "01." + rokx, "1");
+        mymonths.add(newmonth);
+        newmonth = new Month(mResources.getString(R.string.february), "02." + rokx, "2");
+        mymonths.add(newmonth);
+        newmonth = new Month(mResources.getString(R.string.march), "03." + rokx, "3");
+        mymonths.add(newmonth);
+        newmonth = new Month(mResources.getString(R.string.april), "04." + rokx, "4");
+        mymonths.add(newmonth);
+        newmonth = new Month(mResources.getString(R.string.may), "05." + rokx, "5");
+        mymonths.add(newmonth);
+        newmonth = new Month(mResources.getString(R.string.june), "06." + rokx, "6");
+        mymonths.add(newmonth);
+        newmonth = new Month(mResources.getString(R.string.july), "07." + rokx, "7");
+        mymonths.add(newmonth);
+        newmonth = new Month(mResources.getString(R.string.august), "08." + rokx, "8");
+        mymonths.add(newmonth);
+        newmonth = new Month(mResources.getString(R.string.september), "09." + rokx, "9");
+        mymonths.add(newmonth);
+        newmonth = new Month(mResources.getString(R.string.october), "10." + rokx, "10");
+        mymonths.add(newmonth);
+        newmonth = new Month(mResources.getString(R.string.november), "11." + rokx, "11");
+        mymonths.add(newmonth);
+        newmonth = new Month(mResources.getString(R.string.december), "12." + rokx, "12");
+        mymonths.add(newmonth);
+
+        return Observable.just(mymonths);
     }
 
 

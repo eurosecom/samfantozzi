@@ -8,7 +8,10 @@ import org.jetbrains.anko.setContentView
 import org.jetbrains.anko.toast
 import javax.inject.Inject
 import android.R.id.edit
-
+import com.eusecom.samfantozzi.models.Employee
+import rx.functions.Action1
+import rx.schedulers.Schedulers
+import rx.subscriptions.CompositeSubscription
 
 
 /**
@@ -23,6 +26,11 @@ class ChooseMonthActivity : AppCompatActivity() {
     @Inject
     lateinit var prefs: SharedPreferences
 
+    @Inject
+    lateinit var mViewModel: DgAllEmpsAbsMvvmViewModel
+
+    var mSubscription: CompositeSubscription = CompositeSubscription()
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         (application as SamfantozziApp).dgaeacomponent().inject(this)
@@ -34,8 +42,30 @@ class ChooseMonthActivity : AppCompatActivity() {
             editor.commit();
         }
         ChooseMonthActivityUI(adapter).setContentView(this)
-        setData(adapter)
+        //setData(adapter)
+        bind(adapter)
 
+    }
+
+    private fun bind(adapter: ChooseMonthAdapter) {
+
+            mSubscription.add(mViewModel.month
+                    .subscribeOn(Schedulers.computation())
+                    .observeOn(rx.android.schedulers.AndroidSchedulers.mainThread())
+                    .subscribe({ it -> setMonths(it, adapter) }))
+
+    }
+
+    private fun setMonths(months: List<Month>, adapter: ChooseMonthAdapter) {
+
+        //toast("${months.get(0).monthsname } month0")
+        adapter.setdata(months)
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        mSubscription?.unsubscribe()
+        mSubscription?.clear()
     }
 
     fun setData(adapter:ChooseMonthAdapter) {

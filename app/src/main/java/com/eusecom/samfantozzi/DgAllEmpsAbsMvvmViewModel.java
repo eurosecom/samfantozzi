@@ -85,5 +85,17 @@ public class DgAllEmpsAbsMvvmViewModel {
     //end get absences from server
 
 
+    //recyclerview method for ChooseMonthActivity
+
+    //get absences from mock
+    public Observable<List<Month>> getMonth() {
+
+        String rokx = mSharedPreferences.getString("rok", "0");
+
+        return mDataModel.getMonthForYear(rokx);
+    }
+    //end get absences from mock
+
+
 
 }

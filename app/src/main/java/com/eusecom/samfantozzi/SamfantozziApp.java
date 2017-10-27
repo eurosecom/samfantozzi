@@ -3,8 +3,9 @@ package com.eusecom.samfantozzi;
 import android.app.Activity;
 import android.support.annotation.NonNull;
 import android.support.multidex.MultiDexApplication;
-import com.eusecom.samfantozzi.dagger.components.DaggerDemoComponent;
-import com.eusecom.samfantozzi.dagger.components.DemoComponent;
+
+import com.eusecom.samfantozzi.dagger.components.DaggerDgAeaComponent;
+import com.eusecom.samfantozzi.dagger.components.DgAeaComponent;
 import com.eusecom.samfantozzi.dagger.modules.ApplicationModule;
 import com.eusecom.samfantozzi.di.DaggerAppComponent;
 import com.eusecom.samfantozzi.mvvmschedulers.ISchedulerProvider;
@@ -75,15 +76,15 @@ public class SamfantozziApp extends MultiDexApplication implements HasActivityIn
         return _rxBus;
     }
 
-    private final DemoComponent dgaeacomponent = createDgAeaComponent();
+    private final DgAeaComponent dgaeacomponent = createDgAeaComponent();
 
-    protected DemoComponent createDgAeaComponent() {
-        return DaggerDemoComponent.builder()
+    protected DgAeaComponent createDgAeaComponent() {
+        return DaggerDgAeaComponent.builder()
                 .applicationModule(new ApplicationModule(this))
                 .build();
     }
 
-    public DemoComponent dgaeacomponent() {
+    public DgAeaComponent dgaeacomponent() {
         return dgaeacomponent;
     }
 

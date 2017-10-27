@@ -2,6 +2,7 @@ package com.eusecom.samfantozzi.mvvmdatamodel;
 
 import android.support.annotation.NonNull;
 
+import com.eusecom.samfantozzi.Month;
 import com.eusecom.samfantozzi.models.Attendance;
 import com.eusecom.samfantozzi.models.Employee;
 import java.util.List;
@@ -20,5 +21,8 @@ public interface DgAllEmpsAbsIDataModel {
     @NonNull
     public Observable<List<Attendance>> getAbsencesFromMock(String fromfir);
 
+    //recyclerview method for ChooseMonthActivity
+    @NonNull
+    public Observable<List<Month>> getMonthForYear(String rokx);
 
 }
