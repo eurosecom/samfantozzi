@@ -75,7 +75,7 @@ public class DgAllEmpsAbsMvvmViewModel {
 
         String usicox = mSharedPreferences.getString("usico", "");
         String firx = mSharedPreferences.getString("fir", "0");
-        if (usicox.equals("44551142")) {
+        if (usicox.equals("44551142999")) {
             firx = "37";
         }
 

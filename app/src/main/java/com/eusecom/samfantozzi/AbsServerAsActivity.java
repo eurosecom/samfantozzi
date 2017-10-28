@@ -77,7 +77,7 @@ public class AbsServerAsActivity extends AbsServerAsBaseSearchActivity {
 
       String usicox = SettingsActivity.getUsIco(AbsServerAsActivity.this);
       //String usicox =  mSharedPreferences.getString("usico", "0");
-      if( usicox.equals("44551142")) {
+      if( usicox.equals("44551142999")) {
           getfromfir  = Constants.EDCOM_fir;
 
       }
@@ -247,7 +247,7 @@ public class AbsServerAsActivity extends AbsServerAsBaseSearchActivity {
     showProgressBar();
       String urlx = "http:\\" + SettingsActivity.getServerName(AbsServerAsActivity.this);
       String usicox = SettingsActivity.getUsIco(AbsServerAsActivity.this);
-      if( usicox.equals("44551142")) {
+      if( usicox.equals("44551142999")) {
           urlx = "http:\\" + Constants.EDCOM_url;
       }
       Log.d("getfromurl ", urlx);
