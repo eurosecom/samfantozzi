@@ -37,6 +37,9 @@ import io.reactivex.functions.Predicate;
 import rx.schedulers.Schedulers;
 import rx.subscriptions.CompositeSubscription;
 
+import static android.content.ContentValues.TAG;
+import static rx.Observable.empty;
+
 
 public class DgAbsServerListFragment extends Fragment {
 
@@ -172,6 +175,8 @@ public class DgAbsServerListFragment extends Fragment {
         mSubscription.add(mViewModel.getMyAbsencesFromServer()
                 .subscribeOn(Schedulers.computation())
                 .observeOn(rx.android.schedulers.AndroidSchedulers.mainThread())
+                .doOnError(throwable -> Log.e(TAG, "Error Throwable " + throwable.getMessage()))
+                .onErrorResumeNext(throwable -> empty())
                 .subscribe(this::setServerAbsences));
 
     }
