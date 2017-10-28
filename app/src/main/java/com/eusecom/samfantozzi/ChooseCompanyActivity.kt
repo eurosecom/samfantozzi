@@ -9,7 +9,10 @@ import android.support.v7.widget.RecyclerView
 import android.view.Menu
 import android.view.MenuItem
 import android.widget.LinearLayout
+import com.eusecom.samfantozzi.models.Employee
 import org.jetbrains.anko.toast
+import rx.schedulers.Schedulers
+import rx.subscriptions.CompositeSubscription
 import javax.inject.Inject
 
 /**
@@ -22,6 +25,11 @@ class ChooseCompanyActivity : AppCompatActivity() {
 
     @Inject
     lateinit var prefs: SharedPreferences
+
+    @Inject
+    lateinit var mViewModel: DgAllEmpsAbsMvvmViewModel
+
+    var mSubscription: CompositeSubscription = CompositeSubscription()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -65,6 +73,29 @@ class ChooseCompanyActivity : AppCompatActivity() {
             finish()
         }
 
+        bind();
+
+    }
+
+    private fun bind() {
+
+        mSubscription.add(mViewModel.observableFBusersRealmEmployee
+                .subscribeOn(Schedulers.computation())
+                .observeOn(rx.android.schedulers.AndroidSchedulers.mainThread())
+                .subscribe({ it -> setEmployees(it) }))
+
+    }
+
+    private fun setEmployees(employees: List<Employee>) {
+
+        toast("${employees.get(0).username } month0")
+
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        mSubscription?.unsubscribe()
+        mSubscription?.clear()
     }
 
 
