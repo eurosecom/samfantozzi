@@ -5,6 +5,7 @@ import android.support.annotation.NonNull;
 import java.util.ArrayList;
 import java.util.List;
 import rx.Observable;
+import com.eusecom.samfantozzi.CompanyKt;
 import com.eusecom.samfantozzi.Month;
 import com.eusecom.samfantozzi.R;
 import com.eusecom.samfantozzi.models.Attendance;
@@ -122,6 +123,16 @@ public class DgAllEmpsAbsDataModel implements DgAllEmpsAbsIDataModel {
         return Observable.just(mymonths);
     }
 
+
+    //recyclerview method for ChooseCompanyuActivity
+
+    @Override
+    public Observable<List<CompanyKt>> getCompaniesFromMysqlServer(String fromfir) {
+
+        return mAbsServerService.getCompaniesFromServer(fromfir);
+
+
+    }
 
 
 }

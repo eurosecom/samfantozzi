@@ -2,15 +2,12 @@ package com.eusecom.samfantozzi;
 
 import android.content.SharedPreferences;
 import android.support.annotation.NonNull;
-
 import com.eusecom.samfantozzi.models.Attendance;
 import com.eusecom.samfantozzi.models.Employee;
 import com.eusecom.samfantozzi.mvvmdatamodel.DgAllEmpsAbsIDataModel;
 import com.eusecom.samfantozzi.mvvmschedulers.ISchedulerProvider;
 import java.util.List;
 import rx.Observable;
-import rx.subjects.BehaviorSubject;
-import javax.inject.Inject;
 
 /**
  * View model for the CompaniesMvvmActivity.
@@ -85,6 +82,7 @@ public class DgAllEmpsAbsMvvmViewModel {
     //end get absences from server
 
 
+
     //recyclerview method for ChooseMonthActivity
 
     //get absences from mock
@@ -96,6 +94,17 @@ public class DgAllEmpsAbsMvvmViewModel {
     }
     //end get absences from mock
 
+
+    //recyclerview method for ChooseCompanyActivity
+
+    //get companies from MySql server
+    public Observable<List<CompanyKt>> getMyCompaniesFromServer() {
+
+        String firx = mSharedPreferences.getString("fir", "0");
+
+        return mDataModel.getCompaniesFromMysqlServer(firx);
+    }
+    //end get companies from MySql server
 
 
 }

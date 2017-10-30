@@ -6,11 +6,14 @@ import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
+import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
 import android.widget.LinearLayout
+import com.eusecom.samfantozzi.models.Attendance
 import com.eusecom.samfantozzi.models.Employee
 import org.jetbrains.anko.toast
+import rx.Observable
 import rx.schedulers.Schedulers
 import rx.subscriptions.CompositeSubscription
 import javax.inject.Inject
@@ -42,31 +45,33 @@ class ChooseCompanyActivity : AppCompatActivity() {
 
         //Add a LayoutManager
         recyclerView.layoutManager = LinearLayoutManager(this, LinearLayout.VERTICAL, false)
-        recyclerView.addItemDecoration(LinearLayoutSpaceItemDecoration(16))
+        recyclerView.addItemDecoration(LinearLayoutSpaceItemDecoration(10))
 
         //Here we create an arraylist to store alChooseCompanyData using the data class ChooseCompanyData
-        val alChooseCompanyData = ArrayList<ChooseCompanyData>()
+        val alChooseCompanyData = ArrayList<CompanyKt>()
 
         //Adding some data to the arraylist
-        alChooseCompanyData.add(ChooseCompanyData(R.drawable.cupcake,"Cupcake", "v1.5"))
-        alChooseCompanyData.add(ChooseCompanyData(R.drawable.donut1,"Donut", "v1.6"))
-        alChooseCompanyData.add(ChooseCompanyData(R.drawable.eclair,"Eclair", "v2.1"))
-        alChooseCompanyData.add(ChooseCompanyData(R.drawable.froyo,"Froyo", "v2.2.x"))
-        alChooseCompanyData.add(ChooseCompanyData(R.drawable.gingerbread,"Gingerbread", "v2.3.x"))
-        alChooseCompanyData.add(ChooseCompanyData(R.drawable.honeycomb,"Honeycomb", "v3.x"))
-        alChooseCompanyData.add(ChooseCompanyData(R.drawable.icecreamsandwich,"Ice Cream Sandwich", "v4.0.x"))
-        alChooseCompanyData.add(ChooseCompanyData(R.drawable.jellybean,"Jelly Bean", "v4.1.x"))
-        alChooseCompanyData.add(ChooseCompanyData(R.drawable.kitkat,"KitKat", "v4.4.x"))
-        alChooseCompanyData.add(ChooseCompanyData(R.drawable.lollipop,"Lollipop", "v5.0"))
-        alChooseCompanyData.add(ChooseCompanyData(R.drawable.marshmallow1,"Marshmallow", "v6.0"))
-        alChooseCompanyData.add(ChooseCompanyData(R.drawable.nougat,"Nougat", "v7.0"))
+        alChooseCompanyData.add(CompanyKt("301","JUCTO 2017", "2017", R.drawable.donut1))
+        alChooseCompanyData.add(CompanyKt("302","PUCTO 2017", "2017", R.drawable.kitkat))
+        //alChooseCompanyData.add(ChooseCompanyData(R.drawable.donut1,"Donut", "v1.6"))
+        //alChooseCompanyData.add(ChooseCompanyData(R.drawable.eclair,"Eclair", "v2.1"))
+        //alChooseCompanyData.add(ChooseCompanyData(R.drawable.froyo,"Froyo", "v2.2.x"))
+        //alChooseCompanyData.add(ChooseCompanyData(R.drawable.gingerbread,"Gingerbread", "v2.3.x"))
+        //alChooseCompanyData.add(ChooseCompanyData(R.drawable.honeycomb,"Honeycomb", "v3.x"))
+        //alChooseCompanyData.add(ChooseCompanyData(R.drawable.icecreamsandwich,"Ice Cream Sandwich", "v4.0.x"))
+        //alChooseCompanyData.add(ChooseCompanyData(R.drawable.jellybean,"Jelly Bean", "v4.1.x"))
+        //alChooseCompanyData.add(ChooseCompanyData(R.drawable.kitkat,"KitKat", "v4.4.x"))
+        //alChooseCompanyData.add(ChooseCompanyData(R.drawable.lollipop,"Lollipop", "v5.0"))
+        //alChooseCompanyData.add(ChooseCompanyData(R.drawable.marshmallow1,"Marshmallow", "v6.0"))
+        //alChooseCompanyData.add(ChooseCompanyData(R.drawable.nougat,"Nougat", "v7.0"))
 
         // adding the adapter to recyclerView
         recyclerView.adapter = ChooseCompanyAdapter(alChooseCompanyData){
-            toast("${it.name + " " + it.version } Clicked")
+            toast("${it.naz + " " + it.rok } Clicked")
             val editor = prefs.edit()
-            editor.putString("fir", it.name).apply();
-            editor.putString("firnaz", it.version).apply();
+            editor.putString("fir", it.xcf).apply();
+            editor.putString("firnaz", it.naz).apply();
+            editor.putString("rok", it.rok).apply();
             editor.commit();
             val i = intent
             setResult(101, i)
@@ -79,16 +84,20 @@ class ChooseCompanyActivity : AppCompatActivity() {
 
     private fun bind() {
 
-        mSubscription.add(mViewModel.observableFBusersRealmEmployee
+        mSubscription.add(mViewModel.myCompaniesFromServer
                 .subscribeOn(Schedulers.computation())
                 .observeOn(rx.android.schedulers.AndroidSchedulers.mainThread())
-                .subscribe({ it -> setEmployees(it) }))
+                .doOnError { throwable -> Log.e("ChooseCompanyAktivity ", "Error Throwable " + throwable.message) }
+                .onErrorResumeNext({ throwable -> Observable.empty() })
+                .subscribe({ it -> setCompanies(it) }))
+
 
     }
 
-    private fun setEmployees(employees: List<Employee>) {
 
-        toast("${employees.get(0).username } month0")
+    private fun setCompanies(companies: List<CompanyKt>) {
+
+        //toast("${companies.get(0).naz } company0")
 
     }
 
