@@ -6,7 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import kotlinx.android.synthetic.main.item_android_version.view.*
 
-class ChooseCompanyAdapter(var myAndroidOSList: ArrayList<CompanyKt>, val listener: (CompanyKt) -> Unit) : RecyclerView.Adapter<ChooseCompanyAdapter.ViewHolder>() {
+class ChooseCompanyAdapter(var myAndroidOSList: List<CompanyKt>, val listener: (CompanyKt) -> Unit) : RecyclerView.Adapter<ChooseCompanyAdapter.ViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ChooseCompanyAdapter.ViewHolder {
         val v = LayoutInflater.from(parent.context).inflate(R.layout.item_android_version, parent, false)
@@ -22,8 +22,7 @@ class ChooseCompanyAdapter(var myAndroidOSList: ArrayList<CompanyKt>, val listen
     }
 
     fun setAbsserver(listabsserver: List<CompanyKt>) {
-        //myAndroidOSList = listabsserver
-        //Log.d("setAbsserver ", mListabsserver.get(0).dmna);
+        myAndroidOSList = listabsserver
         notifyDataSetChanged()
     }
 

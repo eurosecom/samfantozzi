@@ -10,8 +10,6 @@ import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
 import android.widget.LinearLayout
-import com.eusecom.samfantozzi.models.Attendance
-import com.eusecom.samfantozzi.models.Employee
 import org.jetbrains.anko.toast
 import rx.Observable
 import rx.schedulers.Schedulers
@@ -32,6 +30,8 @@ class ChooseCompanyActivity : AppCompatActivity() {
     @Inject
     lateinit var mViewModel: DgAllEmpsAbsMvvmViewModel
 
+    private lateinit var recyclerView: RecyclerView
+
     var mSubscription: CompositeSubscription = CompositeSubscription()
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -40,43 +40,14 @@ class ChooseCompanyActivity : AppCompatActivity() {
 
         setContentView(R.layout.activity_choosecompany)
 
+        supportActionBar!!.setTitle(getString(R.string.choosecompany))
+
         //Bind the recyclerview
-        val recyclerView = findViewById<RecyclerView>(R.id.rvAndroidVersions)
+        recyclerView = findViewById<RecyclerView>(R.id.rvAndroidVersions)
 
         //Add a LayoutManager
         recyclerView.layoutManager = LinearLayoutManager(this, LinearLayout.VERTICAL, false)
         recyclerView.addItemDecoration(LinearLayoutSpaceItemDecoration(10))
-
-        //Here we create an arraylist to store alChooseCompanyData using the data class ChooseCompanyData
-        val alChooseCompanyData = ArrayList<CompanyKt>()
-
-        //Adding some data to the arraylist
-        alChooseCompanyData.add(CompanyKt("301","JUCTO 2017", "2017", R.drawable.donut1))
-        alChooseCompanyData.add(CompanyKt("302","PUCTO 2017", "2017", R.drawable.kitkat))
-        //alChooseCompanyData.add(ChooseCompanyData(R.drawable.donut1,"Donut", "v1.6"))
-        //alChooseCompanyData.add(ChooseCompanyData(R.drawable.eclair,"Eclair", "v2.1"))
-        //alChooseCompanyData.add(ChooseCompanyData(R.drawable.froyo,"Froyo", "v2.2.x"))
-        //alChooseCompanyData.add(ChooseCompanyData(R.drawable.gingerbread,"Gingerbread", "v2.3.x"))
-        //alChooseCompanyData.add(ChooseCompanyData(R.drawable.honeycomb,"Honeycomb", "v3.x"))
-        //alChooseCompanyData.add(ChooseCompanyData(R.drawable.icecreamsandwich,"Ice Cream Sandwich", "v4.0.x"))
-        //alChooseCompanyData.add(ChooseCompanyData(R.drawable.jellybean,"Jelly Bean", "v4.1.x"))
-        //alChooseCompanyData.add(ChooseCompanyData(R.drawable.kitkat,"KitKat", "v4.4.x"))
-        //alChooseCompanyData.add(ChooseCompanyData(R.drawable.lollipop,"Lollipop", "v5.0"))
-        //alChooseCompanyData.add(ChooseCompanyData(R.drawable.marshmallow1,"Marshmallow", "v6.0"))
-        //alChooseCompanyData.add(ChooseCompanyData(R.drawable.nougat,"Nougat", "v7.0"))
-
-        // adding the adapter to recyclerView
-        recyclerView.adapter = ChooseCompanyAdapter(alChooseCompanyData){
-            toast("${it.naz + " " + it.rok } Clicked")
-            val editor = prefs.edit()
-            editor.putString("fir", it.xcf).apply();
-            editor.putString("firnaz", it.naz).apply();
-            editor.putString("rok", it.rok).apply();
-            editor.commit();
-            val i = intent
-            setResult(101, i)
-            finish()
-        }
 
         bind();
 
@@ -98,6 +69,22 @@ class ChooseCompanyActivity : AppCompatActivity() {
     private fun setCompanies(companies: List<CompanyKt>) {
 
         //toast("${companies.get(0).naz } company0")
+
+        //val myCompanies : MutableList<CompanyKt> = arrayListOf()
+        //myCompanies.add(CompanyKt("301","JUCTO 2017", "2017", R.drawable.donut1))
+        //myCompanies.add(CompanyKt("302","PUCTO 2017", "2017", R.drawable.kitkat))
+
+        recyclerView.adapter = ChooseCompanyAdapter(companies){
+            toast("${it.naz + " " + it.rok } Clicked")
+            val editor = prefs.edit()
+            editor.putString("fir", it.xcf).apply();
+            editor.putString("firnaz", it.naz).apply();
+            editor.putString("rok", it.rok).apply();
+            editor.commit();
+            val i = intent
+            setResult(101, i)
+            finish()
+        }
 
     }
 

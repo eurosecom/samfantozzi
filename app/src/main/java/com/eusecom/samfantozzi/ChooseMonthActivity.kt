@@ -42,7 +42,9 @@ class ChooseMonthActivity : AppCompatActivity() {
             editor.commit();
         }
         ChooseMonthActivityUI(adapter).setContentView(this)
-        //setData(adapter)
+
+        supportActionBar!!.setTitle(getString(R.string.choosemonth))
+
         bind(adapter)
 
     }
