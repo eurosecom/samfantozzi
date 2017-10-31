@@ -80,6 +80,24 @@ class ChooseCompanyActivity : AppCompatActivity() {
             editor.putString("fir", it.xcf).apply();
             editor.putString("firnaz", it.naz).apply();
             editor.putString("rok", it.rok).apply();
+            editor.putString("ume", "01." + it.rok).apply();
+            editor.putString("firduct", it.duj).apply();
+
+            editor.putString("firdph", it.firdph).apply();
+            editor.putString("firdph+", it.firdph1).apply();
+            editor.putString("firdphľ", it.firdph2).apply();
+
+            editor.putString("pokluce", it.pokluce).apply();
+            editor.putString("pokldok", it.pokldok).apply();
+            editor.putString("pokldov", it.pokldov).apply();
+
+            editor.putString("bankuce", it.bankuce).apply();
+            editor.putString("bankdok", it.bankdok).apply();
+            editor.putString("odbuce", it.odbuce).apply();
+            editor.putString("odbdok", it.odbdok).apply();
+            editor.putString("doduce", it.doduce).apply();
+            editor.putString("doddok", it.doddok).apply();
+
             editor.commit();
             val i = intent
             setResult(101, i)
