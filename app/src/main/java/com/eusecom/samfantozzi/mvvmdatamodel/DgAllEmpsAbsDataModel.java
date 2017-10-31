@@ -127,9 +127,9 @@ public class DgAllEmpsAbsDataModel implements DgAllEmpsAbsIDataModel {
     //recyclerview method for ChooseCompanyuActivity
 
     @Override
-    public Observable<List<CompanyKt>> getCompaniesFromMysqlServer(String fromfir) {
+    public Observable<List<CompanyKt>> getCompaniesFromMysqlServer(String userhash) {
 
-        return mAbsServerService.getCompaniesFromServer(fromfir);
+        return mAbsServerService.getCompaniesFromServer(userhash);
 
 
     }

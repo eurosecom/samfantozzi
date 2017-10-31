@@ -100,9 +100,23 @@ public class DgAllEmpsAbsMvvmViewModel {
     //get companies from MySql server
     public Observable<List<CompanyKt>> getMyCompaniesFromServer() {
 
-        String firx = mSharedPreferences.getString("fir", "0");
+        String usuidx = mSharedPreferences.getString("usuid", "");
+        String userxplus = usuidx + "/" + "abrakadabra";
+        String encrypted = "";
 
-        return mDataModel.getCompaniesFromMysqlServer(firx);
+        //String userhash = sha1Hash( userx );
+        MCrypt mcrypt = new MCrypt();
+        	/* Encrypt */
+        try {
+            encrypted = MCrypt.bytesToHex( mcrypt.encrypt(userxplus) );
+        } catch (Exception e1) {
+            // TODO Auto-generated catch block
+            e1.printStackTrace();
+        }
+        	/* Decrypt */
+        //String decrypted = new String( mcrypt.decrypt( encrypted ) );
+
+        return mDataModel.getCompaniesFromMysqlServer(encrypted);
     }
     //end get companies from MySql server
 
