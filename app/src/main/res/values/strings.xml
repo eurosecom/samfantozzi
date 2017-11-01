@@ -6,6 +6,7 @@
     <string name="app_desc">Samfantozzi accounting system</string>
     <string name="action_settings">Settings</string>
     <string name="action_loginout">Login / Logout</string>
+    <string name="action_login">Login</string>
     <string name="action_accountreports">Accounting reports</string>
     <string name="action_vatreports">VAT reports</string>
     <string name="action_incometaxreports">Income tax reports</string>
@@ -22,6 +23,9 @@
     <string name="resetpass_title">Reset password</string>
     <string name="resetpass_summary">Reset password of FB Account</string>
     <string name="company">Company</string>
+    <string name="textok">Ok</string>
+    <string name="donotlogin">You have to create email account and login</string>
+    <string name="didnotlogin">You did not login</string>
 
 
     //firebase auth

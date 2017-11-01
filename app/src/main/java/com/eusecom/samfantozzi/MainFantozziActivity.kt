@@ -1,9 +1,7 @@
 package com.eusecom.samfantozzi
 
-import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
-import android.support.design.widget.Snackbar
 import android.support.v7.app.AppCompatActivity
 import android.view.Menu
 import android.view.MenuItem
@@ -11,14 +9,11 @@ import dagger.android.AndroidInjection
 import kotlinx.android.synthetic.main.activity_mainfantozzi.*
 import android.content.SharedPreferences
 import android.util.Log
-import android.view.View
-import android.widget.Toast
 import co.zsmb.materialdrawerkt.builders.accountHeader
 import co.zsmb.materialdrawerkt.builders.drawer
 import co.zsmb.materialdrawerkt.draweritems.badgeable.primaryItem
 import co.zsmb.materialdrawerkt.draweritems.badgeable.secondaryItem
 import co.zsmb.materialdrawerkt.draweritems.divider
-import co.zsmb.materialdrawerkt.draweritems.profile.ProfileDrawerItemKt
 import co.zsmb.materialdrawerkt.draweritems.profile.profile
 import co.zsmb.materialdrawerkt.draweritems.profile.profileSetting
 import co.zsmb.materialdrawerkt.draweritems.sectionHeader
@@ -39,6 +34,7 @@ class MainFantozziActivity : AppCompatActivity() {
     private lateinit var result: Drawer
     private lateinit var headerResult: AccountHeader
     private lateinit var headerProfil: ProfileDrawerItem
+    private lateinit var alert: AlertDialogBuilder
 
     @Inject
     lateinit var prefs: SharedPreferences
@@ -196,8 +192,12 @@ class MainFantozziActivity : AppCompatActivity() {
     }
 
     fun navigateToGetCompany(){
-
-        startActivityForResult(intentFor<ChooseCompanyActivity>(), 101)
+        val usuid = prefs.getString("usuid", "")
+        if (usuid == "0") {
+            donotloginAlert().show()
+        }else {
+            startActivityForResult(intentFor<ChooseCompanyActivity>(), 101)
+        }
 
     }
 
@@ -232,6 +232,21 @@ class MainFantozziActivity : AppCompatActivity() {
     fun navigateToAbsServer(){
         val intent = Intent(this, AbsServerAsActivity::class.java)
         startActivity(intent)
+    }
+
+    fun donotloginAlert(): AlertDialogBuilder {
+
+        alert = alert(R.string.donotlogin) {
+            //title = getString(R.string.donotlogin).toString()
+            //title = "jhdsh"
+            positiveButton(R.string.action_login) { navigateToLogin() }
+            //negativeButton("Never Ever") { }
+            neutralButton(R.string.textok)
+        }
+        alert.title(R.string.didnotlogin)
+
+        return alert
+
     }
 
     fun updateUI(){
