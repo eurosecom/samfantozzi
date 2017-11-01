@@ -4,6 +4,7 @@ import android.app.Application;
 import android.content.SharedPreferences;
 import android.content.res.Resources;
 import com.eusecom.samfantozzi.DgAllEmpsAbsMvvmViewModel;
+import com.eusecom.samfantozzi.MCrypt;
 import com.eusecom.samfantozzi.SamfantozziApp;
 import com.eusecom.samfantozzi.mvvmdatamodel.DgAllEmpsAbsDataModel;
 import com.eusecom.samfantozzi.mvvmdatamodel.DgAllEmpsAbsIDataModel;
@@ -97,6 +98,13 @@ public class DgAeaModule {
 
     @Provides
     @Singleton
+    public MCrypt providesMCrypt() {
+
+        return new MCrypt();
+    }
+
+    @Provides
+    @Singleton
     public DgAllEmpsAbsIDataModel providesDgAllEmpsAbsIDataModel(DatabaseReference databasereference,
                                                                  AbsServerService absServerService,
                                                                  Resources resources) {
@@ -116,8 +124,9 @@ public class DgAeaModule {
     @Singleton
     public DgAllEmpsAbsMvvmViewModel providesDgAllEmpsAbsMvvmViewModel(DgAllEmpsAbsIDataModel dataModel,
                                                                        ISchedulerProvider schedulerProvider,
-                                                                       SharedPreferences sharedPreferences) {
-        return new DgAllEmpsAbsMvvmViewModel(dataModel, schedulerProvider, sharedPreferences);
+                                                                       SharedPreferences sharedPreferences,
+                                                                       MCrypt mcrypt) {
+        return new DgAllEmpsAbsMvvmViewModel(dataModel, schedulerProvider, sharedPreferences, mcrypt);
     }
 
 

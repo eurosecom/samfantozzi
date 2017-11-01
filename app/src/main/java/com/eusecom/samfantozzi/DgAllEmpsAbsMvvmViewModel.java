@@ -2,6 +2,8 @@ package com.eusecom.samfantozzi;
 
 import android.content.SharedPreferences;
 import android.support.annotation.NonNull;
+import android.util.Log;
+
 import com.eusecom.samfantozzi.models.Attendance;
 import com.eusecom.samfantozzi.models.Employee;
 import com.eusecom.samfantozzi.mvvmdatamodel.DgAllEmpsAbsIDataModel;
@@ -25,13 +27,17 @@ public class DgAllEmpsAbsMvvmViewModel {
     //@Inject only by Base constructor injection
     SharedPreferences mSharedPreferences;
 
+    MCrypt mMcrypt;
+
     //@Inject only by Base constructor injection
     public DgAllEmpsAbsMvvmViewModel(@NonNull final DgAllEmpsAbsIDataModel dataModel,
                                      @NonNull final ISchedulerProvider schedulerProvider,
-                                     @NonNull final SharedPreferences sharedPreferences) {
+                                     @NonNull final SharedPreferences sharedPreferences,
+                                     @NonNull final MCrypt mcrypt) {
         mDataModel = dataModel;
         mSchedulerProvider = schedulerProvider;
         mSharedPreferences = sharedPreferences;
+        mMcrypt = mcrypt;
     }
 
 
@@ -104,17 +110,16 @@ public class DgAllEmpsAbsMvvmViewModel {
         String userxplus = usuidx + "/" + "abrakadabra";
         String encrypted = "";
 
-        //String userhash = sha1Hash( userx );
-        MCrypt mcrypt = new MCrypt();
-        	/* Encrypt */
+
         try {
-            encrypted = MCrypt.bytesToHex( mcrypt.encrypt(userxplus) );
+            encrypted = mMcrypt.bytesToHex( mMcrypt.encrypt(userxplus) );
         } catch (Exception e1) {
             // TODO Auto-generated catch block
             e1.printStackTrace();
         }
+        Log.d("userxplus ", encrypted);
         	/* Decrypt */
-        //String decrypted = new String( mcrypt.decrypt( encrypted ) );
+        //String decrypted = new String( mMcrypt.decrypt( encrypted ) );
 
         return mDataModel.getCompaniesFromMysqlServer(encrypted);
     }
