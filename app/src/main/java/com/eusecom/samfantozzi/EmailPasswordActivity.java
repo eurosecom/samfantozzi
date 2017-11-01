@@ -242,6 +242,8 @@ public class EmailPasswordActivity extends AppCompatActivity implements
                         editor.putString("usosc", "0").apply();
                         editor.putString("usatw", "0").apply();
                         editor.putString("usuid", "0").apply();
+                        editor.putString("fir", "").apply();
+                        editor.putString("firnaz", "").apply();
 
                         editor.commit();
                     }
@@ -260,6 +262,8 @@ public class EmailPasswordActivity extends AppCompatActivity implements
         editor.putString("usosc", "0").apply();
         editor.putString("usatw", "0").apply();
         editor.putString("usuid", "0").apply();
+        editor.putString("fir", "").apply();
+        editor.putString("firnaz", "").apply();
 
         editor.commit();
 
@@ -301,6 +305,8 @@ public class EmailPasswordActivity extends AppCompatActivity implements
         editor.putString("usosc", "0").apply();
         editor.putString("usatw", "0").apply();
         editor.putString("usuid", "0").apply();
+        editor.putString("fir", "").apply();
+        editor.putString("firnaz", "").apply();
         editor.commit();
 
         String approvetopic = "approve" + userico;

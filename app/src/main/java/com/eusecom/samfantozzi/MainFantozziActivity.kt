@@ -10,6 +10,8 @@ import android.view.MenuItem
 import dagger.android.AndroidInjection
 import kotlinx.android.synthetic.main.activity_mainfantozzi.*
 import android.content.SharedPreferences
+import android.util.Log
+import android.view.View
 import android.widget.Toast
 import co.zsmb.materialdrawerkt.builders.accountHeader
 import co.zsmb.materialdrawerkt.builders.drawer
@@ -48,7 +50,7 @@ class MainFantozziActivity : AppCompatActivity() {
 
         //val serverx = prefs.getString("servername", "")
         //Toast.makeText(this, serverx, Toast.LENGTH_SHORT).show()
-        val usermailx = prefs.getString("username", "")
+
 
         fab.setOnClickListener {
 
@@ -84,6 +86,7 @@ class MainFantozziActivity : AppCompatActivity() {
                 savedInstance = savedInstanceState
                 translucentStatusBar = true
 
+                val usermailx = prefs.getString("username", "")
                 profile("EuroSecom", usermailx) {
                     iconUrl = "http://www.edcom.sk"
                     identifier = 100
@@ -151,7 +154,12 @@ class MainFantozziActivity : AppCompatActivity() {
             }
         }
 
+    }
+
+    public override fun onResume() {
+        super.onResume()
         updateUI()
+
     }
 
     override fun onSaveInstanceState(outState: Bundle?) {
@@ -192,7 +200,7 @@ class MainFantozziActivity : AppCompatActivity() {
         if (requestCode == 101) {
 
             //toast("Returned 101")
-            updateUI()
+            //updateUI()
         }
     }
 
@@ -222,8 +230,20 @@ class MainFantozziActivity : AppCompatActivity() {
     }
 
     fun updateUI(){
+
+        Log.d("updateUI ", "is going.")
         buttonFir.setText(getString(R.string.company) + " " + prefs.getString("fir", "") +
                 " " + prefs.getString("firnaz", ""))
+
+        val usermailx = prefs.getString("username", "")
+        val usuid = prefs.getString("usuid", "")
+
+        if (usuid == "0") {
+            textView.setText(R.string.signed_out)
+        } else {
+            textView.setText(getString(R.string.emailpassword_status_fmt, usermailx))
+        }
+
     }
 
 
