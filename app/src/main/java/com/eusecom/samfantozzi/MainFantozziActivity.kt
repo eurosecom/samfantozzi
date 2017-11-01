@@ -18,11 +18,13 @@ import co.zsmb.materialdrawerkt.builders.drawer
 import co.zsmb.materialdrawerkt.draweritems.badgeable.primaryItem
 import co.zsmb.materialdrawerkt.draweritems.badgeable.secondaryItem
 import co.zsmb.materialdrawerkt.draweritems.divider
+import co.zsmb.materialdrawerkt.draweritems.profile.ProfileDrawerItemKt
 import co.zsmb.materialdrawerkt.draweritems.profile.profile
 import co.zsmb.materialdrawerkt.draweritems.profile.profileSetting
 import co.zsmb.materialdrawerkt.draweritems.sectionHeader
 import com.mikepenz.materialdrawer.AccountHeader
 import com.mikepenz.materialdrawer.Drawer
+import com.mikepenz.materialdrawer.model.ProfileDrawerItem
 import kotlinx.android.synthetic.main.content_mainfantozzi.*
 import org.jetbrains.anko.*
 import javax.inject.Inject
@@ -36,6 +38,7 @@ class MainFantozziActivity : AppCompatActivity() {
 
     private lateinit var result: Drawer
     private lateinit var headerResult: AccountHeader
+    private lateinit var headerProfil: ProfileDrawerItem
 
     @Inject
     lateinit var prefs: SharedPreferences
@@ -87,7 +90,7 @@ class MainFantozziActivity : AppCompatActivity() {
                 translucentStatusBar = true
 
                 val usermailx = prefs.getString("username", "")
-                profile("EuroSecom", usermailx) {
+                headerProfil = profile("EuroSecom", usermailx) {
                     iconUrl = "http://www.edcom.sk"
                     identifier = 100
                 }
@@ -154,6 +157,9 @@ class MainFantozziActivity : AppCompatActivity() {
             }
         }
 
+        //headerResult.setBackground(getResources().getDrawable(R.drawable.cupcake))
+        //headerProfil.withName(R.string.october)
+        //headerProfil.withEmail(R.string.october)
     }
 
     public override fun onResume() {
@@ -200,7 +206,6 @@ class MainFantozziActivity : AppCompatActivity() {
         if (requestCode == 101) {
 
             //toast("Returned 101")
-            //updateUI()
         }
     }
 
@@ -240,8 +245,10 @@ class MainFantozziActivity : AppCompatActivity() {
 
         if (usuid == "0") {
             textView.setText(R.string.signed_out)
+            headerProfil.withEmail(R.string.signed_out)
         } else {
             textView.setText(getString(R.string.emailpassword_status_fmt, usermailx))
+            headerProfil.withEmail(usermailx)
         }
 
     }
