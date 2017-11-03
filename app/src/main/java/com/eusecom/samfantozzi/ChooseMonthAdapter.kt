@@ -3,8 +3,9 @@ package com.eusecom.samfantozzi
 import android.support.v7.widget.RecyclerView
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageView
 import android.widget.TextView
-import com.eusecom.samfantozzi.Month
+import com.squareup.picasso.Picasso
 import org.jetbrains.anko.AnkoContext
 
 
@@ -26,11 +27,13 @@ class ChooseMonthAdapter(var mList: MutableList<Month>, val listener: (Month) ->
 
         val txtName = itemView?.findViewById<TextView>(R.id.mnname)
         val txtNumber = itemView?.findViewById<TextView>(R.id.mnnumber)
+        val mnImage = itemView?.findViewById<ImageView>(R.id.mnimg)
 
         fun bindItem(month: Month, listener: (Month) -> Unit) = with(itemView) {
 
             txtName?.setText(month.monthsname)
             txtNumber?.setText(month.monthsnumber)
+            Picasso.with(itemView.context).load(R.drawable.ic_history_black_24dp).resize(120, 120).into(mnImage)
             itemView.setOnClickListener{listener(month)}
 
         }
