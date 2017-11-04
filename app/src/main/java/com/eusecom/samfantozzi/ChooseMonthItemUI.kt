@@ -1,6 +1,7 @@
 package com.eusecom.samfantozzi
 
 import android.content.Context
+import android.support.v4.content.res.ResourcesCompat
 import android.view.View
 import org.jetbrains.anko.*
 
@@ -10,9 +11,10 @@ class ChooseMonthItemUI : AnkoComponent<Context> {
     override fun createView(ui: AnkoContext<Context>): View = with(ui){
 
         return relativeLayout {
-            padding = dip(15)
+            padding = dip(5)
             isClickable = true
-            background = context.obtainStyledAttributes(arrayOf(R.attr.selectableItemBackground).toIntArray()).getDrawable(0)
+            //background = context.obtainStyledAttributes(arrayOf(R.attr.selectableItemBackground).toIntArray()).getDrawable(0)
+            background = ResourcesCompat.getDrawable(resources, R.drawable.selector_medium_high, null)
 
             // i do not use onclick from AnkoComponent, i use Adapter listener
             //onClick{

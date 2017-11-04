@@ -4,6 +4,9 @@ import android.support.v7.widget.LinearLayoutManager
 import android.view.View
 import org.jetbrains.anko.*
 import org.jetbrains.anko.recyclerview.v7.recyclerView
+import com.mikepenz.materialdrawer.model.DividerDrawerItem
+
+
 
 
 class ChooseMonthActivityUI (val mAdapter: ChooseMonthAdapter): AnkoComponent<ChooseMonthActivity>{
@@ -11,7 +14,7 @@ class ChooseMonthActivityUI (val mAdapter: ChooseMonthAdapter): AnkoComponent<Ch
     override fun createView(ui: AnkoContext<ChooseMonthActivity>): View = with(ui){
 
         return relativeLayout{
-            padding = dip(15)
+            padding = dip(5)
             lparams (width = matchParent, height = wrapContent)
 
             recyclerView{
