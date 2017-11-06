@@ -15,7 +15,7 @@ public interface AbsServerService {
     Observable<List<Attendance>> getAbsServer(@Query("fromfir") String fromfir);
 
     @GET("/androidfantozzi/get_all_firmy.php")
-    Observable<List<CompanyKt>> getCompaniesFromServer(@Query("userhash") String userhash);
+    Observable<List<CompanyKt>> getCompaniesFromServer(@Query("userhash") String userhash, @Query("userid") String userid);
 
     @GET("/attendance/absserver.php")
     Observable<List<Attendance>> setKeyAndgetAbsServer(@Query("fromfir") String fromfir, @Query("keyf") String keyf, @Query("cplxb") String cplxb);

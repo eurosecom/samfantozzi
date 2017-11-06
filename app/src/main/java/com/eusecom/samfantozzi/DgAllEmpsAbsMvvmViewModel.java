@@ -9,6 +9,8 @@ import com.eusecom.samfantozzi.models.Employee;
 import com.eusecom.samfantozzi.mvvmdatamodel.DgAllEmpsAbsIDataModel;
 import com.eusecom.samfantozzi.mvvmschedulers.ISchedulerProvider;
 import java.util.List;
+import java.util.Random;
+
 import rx.Observable;
 
 /**
@@ -106,8 +108,12 @@ public class DgAllEmpsAbsMvvmViewModel {
     //get companies from MySql server
     public Observable<List<CompanyKt>> getMyCompaniesFromServer() {
 
+        Random r = new Random();
+        double d = -10.0 + r.nextDouble() * 20.0;
+        String ds = String.valueOf(d);
+
         String usuidx = mSharedPreferences.getString("usuid", "");
-        String userxplus = usuidx + "/" + "abrakadabra";
+        String userxplus =  ds + "/" + usuidx + "/" + ds;
         String encrypted = "";
 
 
@@ -117,11 +123,11 @@ public class DgAllEmpsAbsMvvmViewModel {
             // TODO Auto-generated catch block
             e1.printStackTrace();
         }
-        Log.d("userxplus ", encrypted);
+        Log.d("userxplus ", encrypted + " " + ds);
         	/* Decrypt */
         //String decrypted = new String( mMcrypt.decrypt( encrypted ) );
 
-        return mDataModel.getCompaniesFromMysqlServer(encrypted);
+        return mDataModel.getCompaniesFromMysqlServer(encrypted, ds);
     }
     //end get companies from MySql server
 

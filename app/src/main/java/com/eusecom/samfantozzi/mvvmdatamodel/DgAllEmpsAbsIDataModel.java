@@ -27,6 +27,6 @@ public interface DgAllEmpsAbsIDataModel {
 
     //recyclerview method for ChooseCompanyhActivity
     @NonNull
-    public Observable<List<CompanyKt>> getCompaniesFromMysqlServer(String userhash);
+    public Observable<List<CompanyKt>> getCompaniesFromMysqlServer(String userhash, String userid);
 
 }
