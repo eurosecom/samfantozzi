@@ -225,12 +225,14 @@ class MainFantozziActivity : AppCompatActivity() {
     }
 
     fun navigateToCashList(){
-        val intent = Intent(this, DgAeaActivity::class.java)
+        //val intent = Intent(this, DgAeaActivity::class.java)
+        val intent = Intent(this, CashListActivity::class.java)
         startActivity(intent)
     }
 
     fun navigateToAbsServer(){
-        val intent = Intent(this, AbsServerAsActivity::class.java)
+        //val intent = Intent(this, AbsServerAsActivity::class.java)
+        val intent = Intent(this, DgAeaActivity::class.java)
         startActivity(intent)
     }
 
