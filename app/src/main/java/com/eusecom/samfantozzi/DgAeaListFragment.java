@@ -11,7 +11,6 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Toast;
 import com.eusecom.samfantozzi.models.Employee;
 import com.eusecom.samfantozzi.rxbus.RxBus;
 import java.util.Collections;
@@ -63,8 +62,8 @@ public class DgAeaListFragment extends Fragment {
                 .add(tapEventEmitter.subscribe(event -> {
                     if (event instanceof DgAeaListFragment.ClickFobEvent) {
                         Log.d("DgAeaActivity  ", " fobClick ");
-                        String serverx = "DgAeaListFragment fobclick";
-                        Toast.makeText(getActivity(), serverx, Toast.LENGTH_SHORT).show();
+                        //String serverx = "DgAeaListFragment fobclick";
+                        //Toast.makeText(getActivity(), serverx, Toast.LENGTH_SHORT).show();
 
                     }
                     if (event instanceof Employee) {
@@ -73,8 +72,8 @@ public class DgAeaListFragment extends Fragment {
 
 
                         Log.d("DgAeaListFragment ",  usnamex);
-                        String serverx = "DgAeaListFragment " + usnamex;
-                        Toast.makeText(getActivity(), serverx, Toast.LENGTH_SHORT).show();
+                        //String serverx = "DgAeaListFragment " + usnamex;
+                        //Toast.makeText(getActivity(), serverx, Toast.LENGTH_SHORT).show();
 
 
                     }

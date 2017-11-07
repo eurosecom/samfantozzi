@@ -87,6 +87,7 @@ public class AbsServerAsAdapter extends RecyclerView.Adapter<AbsServerAsAdapter.
               } else {
 
                   Log.d("onShortClickListener", mListabsserver.get(pos).dmna);
+                  _rxBus.send(mListabsserver.get(pos));
               }
           }
       });

@@ -16,8 +16,8 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ProgressBar;
-import android.widget.Toast;
 import com.eusecom.samfantozzi.models.Attendance;
+import com.eusecom.samfantozzi.models.Employee;
 import com.eusecom.samfantozzi.rxbus.RxBus;
 import java.util.Collections;
 import java.util.List;
@@ -86,12 +86,22 @@ public class DgAbsServerListFragment extends Fragment {
                 .add(tapEventEmitter.subscribe(event -> {
                     if (event instanceof DgAeaListFragment.ClickFobEvent) {
                         Log.d("DgAeaActivity  ", " fobClick ");
-                        String serverx = "AbsServerListFragment fobclick";
-                        Toast.makeText(getActivity(), serverx, Toast.LENGTH_SHORT).show();
+                        //String serverx = "AbsServerListFragment fobclick";
+                        //Toast.makeText(getActivity(), serverx, Toast.LENGTH_SHORT).show();
 
 
                     }
+                    if (event instanceof Attendance) {
 
+                        String usnamex = ((Attendance) event).getUsname();
+
+
+                        Log.d("DgAeaListFragment ",  usnamex);
+                        //String serverx = "DgAeaListFragment " + usnamex;
+                        //Toast.makeText(getActivity(), serverx, Toast.LENGTH_SHORT).show();
+
+
+                    }
 
                 }));
 
@@ -189,10 +199,10 @@ public class DgAbsServerListFragment extends Fragment {
 
 
     private void setServerAbsences(@NonNull final List<Attendance> attendances) {
-        String serverx = attendances.get(0).getDmna();
-        Toast.makeText(getActivity(), serverx, Toast.LENGTH_SHORT).show();
+        //String serverx = attendances.get(0).getDmna();
+        //Toast.makeText(getActivity(), serverx, Toast.LENGTH_SHORT).show();
         if (attendances.isEmpty()) {
-            Toast.makeText(getActivity(), R.string.nothing_found, Toast.LENGTH_SHORT).show();
+            //Toast.makeText(getActivity(), R.string.nothing_found, Toast.LENGTH_SHORT).show();
             mAdapter.setAbsserver(Collections.<Attendance>emptyList());
         } else {
             //Log.d("showResultAs ", resultAs.get(0).dmna);
@@ -204,7 +214,7 @@ public class DgAbsServerListFragment extends Fragment {
     protected void showResultAs(List<Attendance> resultAs) {
 
         if (resultAs.isEmpty()) {
-            Toast.makeText(getActivity(), R.string.nothing_found, Toast.LENGTH_SHORT).show();
+            //Toast.makeText(getActivity(), R.string.nothing_found, Toast.LENGTH_SHORT).show();
             mAdapter.setAbsserver(Collections.<Attendance>emptyList());
         } else {
             //Log.d("showResultAs ", resultAs.get(0).dmna);
