@@ -45,11 +45,12 @@ class CashListKtActivity : AppCompatActivity() {
 
         setContentView(R.layout.activity_cashlist)
 
-        supportActionBar!!.setTitle(getString(R.string.cashdocuments))
+        supportActionBar!!.setTitle(prefs.getString("ume", "") + " " + getString(R.string.cashdocuments))
 
         // Create the adapter that will return a fragment for each section
         mPagerAdapter = object : FragmentPagerAdapter(supportFragmentManager) {
-            private val mFragments = arrayOf(DgAeaListFragment(), DgAbsServerListFragment())
+            //private val mFragments = arrayOf(DgAeaListFragment(), DgAbsServerListFragment())
+            private val mFragments = arrayOf(CashListKtFragment(), DgAbsServerListFragment())
             private val mFragmentNames = arrayOf(getString(R.string.cashdocuments), getString(R.string.action_absmysql))
 
             override fun getItem(position: Int): Fragment {
@@ -69,11 +70,9 @@ class CashListKtActivity : AppCompatActivity() {
         // Set up the ViewPager with the sections adapter.
         mViewPager = findViewById<View>(R.id.container) as ViewPager
         //mViewPager.setAdapter(mPagerAdapter) kotlin smart cast to ViewPager is impossible mPagerAdapter = null from other thread
-        val mxViewPager = mViewPager
-        if (mxViewPager != null) {
-            mxViewPager.setAdapter(mPagerAdapter)
+        mViewPager?.setAdapter(mPagerAdapter)
 
-            mxViewPager.setOnPageChangeListener(object : ViewPager.OnPageChangeListener {
+            mViewPager?.setOnPageChangeListener(object : ViewPager.OnPageChangeListener {
                 override fun onPageScrollStateChanged(state: Int) {}
                 override fun onPageScrolled(position: Int, positionOffset: Float, positionOffsetPixels: Int) {}
 
@@ -93,10 +92,6 @@ class CashListKtActivity : AppCompatActivity() {
 
                 }
             })
-
-
-        }
-
 
         val tabLayout = findViewById<View>(R.id.tabs) as TabLayout
         tabLayout.setupWithViewPager(mViewPager)
