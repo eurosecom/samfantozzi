@@ -66,6 +66,10 @@ class MainFantozziActivity : AppCompatActivity() {
             _ -> navigateToAbsServer()
         }
 
+        button3.setOnClickListener {
+            _ -> navigateToCashListKt()
+        }
+
         buttonFir.setOnClickListener {
             _ -> navigateToGetCompany()
         }
@@ -228,6 +232,10 @@ class MainFantozziActivity : AppCompatActivity() {
         //val intent = Intent(this, DgAeaActivity::class.java)
         val intent = Intent(this, CashListActivity::class.java)
         startActivity(intent)
+    }
+
+    fun navigateToCashListKt(){
+        startActivity<CashListKtActivity>()
     }
 
     fun navigateToAbsServer(){

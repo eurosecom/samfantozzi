@@ -151,4 +151,7 @@
     //choosecompanyactivity
     <string name="choosecompany">Choose company</string>
 
+    //cashlistactivity
+    <string name="cashdocuments">Cash documents</string>
+
 </resources>
