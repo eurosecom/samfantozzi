@@ -66,8 +66,8 @@ class ChooseMonthActivity : AppCompatActivity() {
 
     override fun onDestroy() {
         super.onDestroy()
-        mSubscription?.unsubscribe()
-        mSubscription?.clear()
+        mSubscription.unsubscribe()
+        mSubscription.clear()
     }
 
     fun setData(adapter:ChooseMonthAdapter) {
