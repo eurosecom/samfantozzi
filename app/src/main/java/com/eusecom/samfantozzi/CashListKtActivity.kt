@@ -50,8 +50,8 @@ class CashListKtActivity : AppCompatActivity() {
         // Create the adapter that will return a fragment for each section
         mPagerAdapter = object : FragmentPagerAdapter(supportFragmentManager) {
             //private val mFragments = arrayOf(DgAeaListFragment(), DgAbsServerListFragment())
-            private val mFragments = arrayOf(CashListKtFragment(), DgAbsServerListFragment())
-            private val mFragmentNames = arrayOf(getString(R.string.cashdocuments), getString(R.string.action_absmysql))
+            private val mFragments = arrayOf(CashListKtFragment(), EmptyKtFragment())
+            private val mFragmentNames = arrayOf(getString(R.string.cashdocuments), getString(R.string.empty))
 
             override fun getItem(position: Int): Fragment {
                 return mFragments[position]

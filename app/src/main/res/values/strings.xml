@@ -153,5 +153,6 @@
 
     //cashlistactivity
     <string name="cashdocuments">Cash documents</string>
+    <string name="empty">Empty</string>
 
 </resources>

@@ -89,7 +89,7 @@ class CashListKtFragment : Fragment() {
     override fun onCreateView(inflater: LayoutInflater?, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
         super.onCreateView(inflater, container, savedInstanceState)
-        val rootView = inflater!!.inflate(R.layout.activity_absserver, container, false)
+        val rootView = inflater!!.inflate(R.layout.fragment_cashlistkt, container, false)
 
         mRecycler = rootView.findViewById<View>(R.id.list) as RecyclerView
         mRecycler?.setHasFixedSize(true)
@@ -144,6 +144,7 @@ class CashListKtFragment : Fragment() {
     private fun unBind() {
         mSubscription?.unsubscribe()
         mSubscription?.clear()
+        _disposables.dispose()
 
     }
 
@@ -153,11 +154,7 @@ class CashListKtFragment : Fragment() {
 
     override fun onDestroy() {
         super.onDestroy()
-        //_disposables.dispose()
-        //if (mDisposable != null) {
-        //    mDisposable.dispose()
-        //}
-        mAdapter = AbsServerAsAdapter(_rxBus)
+        _disposables.dispose()
         mSubscription?.unsubscribe()
         mSubscription?.clear()
 
