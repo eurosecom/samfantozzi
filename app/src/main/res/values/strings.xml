@@ -155,4 +155,11 @@
     <string name="cashdocuments">Cash documents</string>
     <string name="empty">Empty</string>
 
+    //supplieractivity
+    <string name="suppliers">Suppliers</string>
+
+
+    //lunchemptymenu
+    <string name="lunch_empty_menu">No menu loaded</string>
+
 </resources>

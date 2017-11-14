@@ -24,7 +24,7 @@
         <activity android:name=".EmailPasswordActivity"/>
         <activity android:name=".ChooseCompanyActivity"/>
         <activity android:name=".ChooseMonthActivity"/>
-        <activity android:name=".CashListActivity"/>
+        <activity android:name=".SupplierListActivity"/>
         <activity android:name=".CashListKtActivity"/>
 
         <activity android:name=".AbsServerAsActivity"/>

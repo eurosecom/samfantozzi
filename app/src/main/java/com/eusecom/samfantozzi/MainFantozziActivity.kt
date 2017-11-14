@@ -55,11 +55,11 @@ class MainFantozziActivity : AppCompatActivity() {
 
             //view ->
             //Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG).setAction("Action", null).show()
-            _ -> navigateToCashList()
+            _ -> navigateToCashListKt()
         }
 
         button1.setOnClickListener {
-            _ -> navigateToCashList()
+            _ -> navigateToCashListKt()
         }
 
         button2.setOnClickListener {
@@ -67,7 +67,11 @@ class MainFantozziActivity : AppCompatActivity() {
         }
 
         button3.setOnClickListener {
-            _ -> navigateToCashListKt()
+            _ -> navigateToDgAeaActivity()
+        }
+
+        button4.setOnClickListener {
+            _ -> navigateToSupplierList()
         }
 
         buttonFir.setOnClickListener {
@@ -228,9 +232,9 @@ class MainFantozziActivity : AppCompatActivity() {
         startActivity(intent)
     }
 
-    fun navigateToCashList(){
+    fun navigateToSupplierList(){
         //val intent = Intent(this, DgAeaActivity::class.java)
-        val intent = Intent(this, CashListActivity::class.java)
+        val intent = Intent(this, SupplierListActivity::class.java)
         startActivity(intent)
     }
 
@@ -239,7 +243,11 @@ class MainFantozziActivity : AppCompatActivity() {
     }
 
     fun navigateToAbsServer(){
-        //val intent = Intent(this, AbsServerAsActivity::class.java)
+        val intent = Intent(this, AbsServerAsActivity::class.java)
+        startActivity(intent)
+    }
+
+    fun navigateToDgAeaActivity(){
         val intent = Intent(this, DgAeaActivity::class.java)
         startActivity(intent)
     }

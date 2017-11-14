@@ -23,64 +23,45 @@ import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
-import android.support.v7.widget.Toolbar;
 import android.view.View;
-import com.eusecom.samfantozzi.rxbus.RxBus;
 import javax.inject.Inject;
 
 
 /**
- * Show calendar and list of all employees absences
+ * Show List of all suppliers documents
  *
- *
- * github https://github.com/florina-muntenescu/DroidconMVVM
- * by https://medium.com/upday-devs/android-architecture-patterns-part-3-model-view-viewmodel-e7eeee76b73b
+ * template from DgAeaActivity.java
  *
  */
 
-public class  DgAeaActivity extends BaseListActivity {
+public class  SupplierListActivity extends BaseListActivity {
 
     private FragmentPagerAdapter mPagerAdapter;
     private ViewPager mViewPager;
     private FloatingActionButton fab;
-    int whatispage=0;
-    Toolbar mActionBarToolbar;
-    private RxBus _rxBus;
 
     @Inject
     SharedPreferences mSharedPreferences;
 
-
-    int lenmoje=1;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_allempsabs);
+        setContentView(R.layout.activity_suppliers);
 
 
         ((SamfantozziApp) getApplication()).dgaeacomponent().inject(this);
 
-        String ustype = SettingsActivity.getUsType(this);
-        if (ustype.equals("99")) {
-            lenmoje=0;
-        }else{
-
-        }
-
-        _rxBus = ((SamfantozziApp) getApplication()).getRxBusSingleton();
-
-        getSupportActionBar().setTitle(mSharedPreferences.getString("ume", "") + " " + getString(R.string.action_myemployee));
+        getSupportActionBar().setTitle(mSharedPreferences.getString("ume", "") + " " + getString(R.string.suppliers));
 
             // Create the adapter that will return a fragment for each section
             mPagerAdapter = new FragmentPagerAdapter(getSupportFragmentManager()) {
                 private final Fragment[] mFragments = new Fragment[]{
-                        new DgAeaListFragment(),
-                        new DgAbsServerListFragment()
+                        new SupplierListFragment(),
+                        new EmptyKtFragment()
                 };
                 private final String[] mFragmentNames = new String[]{
-                        getString(R.string.action_myemployee),
-                        getString(R.string.action_absmysql)
+                        getString(R.string.suppliers),
+                        getString(R.string.empty)
                 };
 
                 @Override
@@ -115,15 +96,13 @@ public class  DgAeaActivity extends BaseListActivity {
                 if(position == 0){
                     FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
                     fab.setVisibility(View.VISIBLE);
-                    whatispage=0;
-                    getSupportActionBar().setTitle(mSharedPreferences.getString("ume", "") + " " + getString(R.string.action_myemployee));
+                    getSupportActionBar().setTitle(mSharedPreferences.getString("ume", "") + " " + getString(R.string.suppliers));
                 }
                 if(position == 1){
                     FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
                     //fab.setVisibility(View.GONE);
                     fab.setVisibility(View.VISIBLE);
-                    whatispage=1;
-                    getSupportActionBar().setTitle(getString(R.string.action_absmysql));
+                    getSupportActionBar().setTitle(getString(R.string.empty));
                 }
 
             }
@@ -141,11 +120,6 @@ public class  DgAeaActivity extends BaseListActivity {
             }
         );
 
-
-        //String serverx = mSharedPreferences.getString("servername", "");
-        //Toast.makeText(DgAeaActivity.this, serverx, Toast.LENGTH_SHORT).show();
-
-
     }
 
     @Override
@@ -153,7 +127,6 @@ public class  DgAeaActivity extends BaseListActivity {
         super.onDestroy();
         mViewPager=null;
         mPagerAdapter=null;
-        _rxBus = null;
 
     }
 

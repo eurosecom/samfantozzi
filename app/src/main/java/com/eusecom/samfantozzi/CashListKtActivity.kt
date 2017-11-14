@@ -16,6 +16,7 @@ import android.view.Menu
 import android.view.MenuItem
 import android.view.View
 import android.widget.LinearLayout
+import org.jetbrains.anko.setContentView
 import org.jetbrains.anko.toast
 import rx.Observable
 import rx.schedulers.Schedulers
@@ -43,13 +44,15 @@ class CashListKtActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         (application as SamfantozziApp).dgaeacomponent().inject(this)
 
-        setContentView(R.layout.activity_cashlist)
+        //setContentView(R.layout.activity_cashlist)
+        CashListKtActivityUI().setContentView(this)
 
         supportActionBar!!.setTitle(prefs.getString("ume", "") + " " + getString(R.string.cashdocuments))
 
         // Create the adapter that will return a fragment for each section
         mPagerAdapter = object : FragmentPagerAdapter(supportFragmentManager) {
             //private val mFragments = arrayOf(DgAeaListFragment(), DgAbsServerListFragment())
+            //private val mFragments = arrayOf(CashListKtFragment(), EmptyKtFragment())
             private val mFragments = arrayOf(CashListKtFragment(), EmptyKtFragment())
             private val mFragmentNames = arrayOf(getString(R.string.cashdocuments), getString(R.string.empty))
 

@@ -4,4 +4,7 @@
     <item name="mnname" type="id">2</item>
     <item name="mnnumber" type="id">3</item>
     <item name="mntype" type="id">4</item>
+
+    <item name="query_edit_text" type="id">5</item>
+    <item name="list" type="id">6</item>
 </resources>
