@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import java.util.List;
 import rx.Observable;
 import com.eusecom.samfantozzi.CompanyKt;
+import com.eusecom.samfantozzi.Invoice;
 import com.eusecom.samfantozzi.Month;
 import com.eusecom.samfantozzi.R;
 import com.eusecom.samfantozzi.models.Attendance;
@@ -131,6 +132,22 @@ public class DgAllEmpsAbsDataModel implements DgAllEmpsAbsIDataModel {
 
         return mAbsServerService.getCompaniesFromServer(userhash, userid);
 
+    }
+
+    //recyclerview datamodel for SupplierListActivity
+
+    @NonNull
+    @Override
+    public Observable<List<Attendance>> getInvoicesFromServer(String fromfir) {
+
+        return mAbsServerService.getInvoicesFromServer(fromfir);
+
+    }
+
+    @Override
+    public Observable<List<Invoice>> getInvoicesFromMysqlServer(String userhash, String userid, String fromfir, String vyb_rok) {
+
+        return mAbsServerService.getInvoicesFromSqlServer(userhash, userid, fromfir, vyb_rok);
 
     }
 

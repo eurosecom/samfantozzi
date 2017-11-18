@@ -1,6 +1,7 @@
 package com.eusecom.samfantozzi.retrofit;
 
 import com.eusecom.samfantozzi.CompanyKt;
+import com.eusecom.samfantozzi.Invoice;
 import com.eusecom.samfantozzi.models.Attendance;
 import java.util.List;
 import retrofit2.http.GET;
@@ -17,14 +18,12 @@ public interface AbsServerService {
     @GET("/androidfantozzi/get_all_firmy.php")
     Observable<List<CompanyKt>> getCompaniesFromServer(@Query("userhash") String userhash, @Query("userid") String userid);
 
+    @GET("/androidfantozzi/get_invoices.php")
+    Observable<List<Invoice>> getInvoicesFromSqlServer(@Query("userhash") String userhash
+            , @Query("userid") String userid, @Query("fromfir") String fromfir, @Query("vyb_rok") String vyb_rok);
+
     @GET("/attendance/absserver.php")
-    Observable<List<Attendance>> setKeyAndgetAbsServer(@Query("fromfir") String fromfir, @Query("keyf") String keyf, @Query("cplxb") String cplxb);
-
-    @GET("/attendance/absserver.json")
-    Observable<List<Attendance>> getAbsServerFromJson(@Query("user") String userName);
-
-    @GET("users/{user}/starred")
-    Observable<List<Attendance>> getAbsServerFromGitHub(@Path("user") String userName);
+    Observable<List<Attendance>> getInvoicesFromServer(@Query("fromfir") String fromfir);
 
 
 }

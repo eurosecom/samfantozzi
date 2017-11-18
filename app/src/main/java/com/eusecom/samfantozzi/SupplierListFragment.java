@@ -16,6 +16,8 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ProgressBar;
+import android.widget.Toast;
+
 import com.eusecom.samfantozzi.models.Attendance;
 import com.eusecom.samfantozzi.rxbus.RxBus;
 import java.util.Collections;
@@ -57,7 +59,7 @@ public class SupplierListFragment extends Fragment {
     protected Button mSearchButton;
     private ProgressBar mProgressBar;
     private Disposable mDisposable;
-    protected AbsServerSearchEngine mAbsServerSearchEngine;
+    protected SupplierSearchEngine mSupplierSearchEngine;
 
     @NonNull
     private CompositeSubscription mSubscription;
@@ -181,12 +183,19 @@ public class SupplierListFragment extends Fragment {
     private void bind() {
         mSubscription = new CompositeSubscription();
 
-        mSubscription.add(mViewModel.getMyAbsencesFromServer()
+        mSubscription.add(mViewModel.getMyInvoicesFromServer()
                 .subscribeOn(Schedulers.computation())
                 .observeOn(rx.android.schedulers.AndroidSchedulers.mainThread())
                 .doOnError(throwable -> Log.e(TAG, "Error Throwable " + throwable.getMessage()))
                 .onErrorResumeNext(throwable -> empty())
                 .subscribe(this::setServerAbsences));
+
+        mSubscription.add(mViewModel.getMyInvoicesFromSqlServer()
+                .subscribeOn(Schedulers.computation())
+                .observeOn(rx.android.schedulers.AndroidSchedulers.mainThread())
+                .doOnError(throwable -> Log.e(TAG, "Error Throwable " + throwable.getMessage()))
+                .onErrorResumeNext(throwable -> empty())
+                .subscribe(this::setServerInvoices));
 
     }
 
@@ -210,6 +219,19 @@ public class SupplierListFragment extends Fragment {
         nastavResultAs(attendances);
     }
 
+    private void setServerInvoices(@NonNull final List<Invoice> invoices) {
+        String serverx = invoices.get(0).getNai();
+        Toast.makeText(getActivity(), serverx, Toast.LENGTH_SHORT).show();
+        if (invoices.isEmpty()) {
+            //Toast.makeText(getActivity(), R.string.nothing_found, Toast.LENGTH_SHORT).show();
+            //mAdapter.setAbsserver(Collections.<Invoices>emptyList());
+        } else {
+            //Log.d("showResultAs ", resultAs.get(0).dmna);
+            //mAdapter.setInvoicesserver(invoices);
+        }
+        //nastavResultAs(invoices);
+    }
+
     protected void showResultAs(List<Attendance> resultAs) {
 
         if (resultAs.isEmpty()) {
@@ -222,7 +244,7 @@ public class SupplierListFragment extends Fragment {
     }
 
     protected void nastavResultAs(List<Attendance> resultAs) {
-        mAbsServerSearchEngine = new AbsServerSearchEngine(resultAs);
+        mSupplierSearchEngine = new SupplierSearchEngine(resultAs);
     }
 
     public static class ClickFobEvent {}
@@ -253,7 +275,7 @@ public class SupplierListFragment extends Fragment {
                 .map(new Function<String, List<Attendance>>() {
                     @Override
                     public List<Attendance> apply(String query) {
-                        return mAbsServerSearchEngine.searchModel(query);
+                        return mSupplierSearchEngine.searchModel(query);
                     }
                 })
                 .observeOn(AndroidSchedulers.mainThread())

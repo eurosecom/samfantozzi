@@ -58,12 +58,7 @@ public class SupplierAdapter extends RecyclerView.Adapter<SupplierAdapter.Suppli
   @Override
   public void onBindViewHolder(SupplierViewHolder holder, int position) {
 
-      holder.absence_name.setText(mListabsserver.get(position).dmxa + " " + mListabsserver.get(position).dmna);
-
-      holder.numStarsView.setText(mListabsserver.get(position).aprv);
-      if( mListabsserver.get(position).aprv.equals("1")) {
-          Picasso.with(holder.mContext).load(R.drawable.ic_check_circle_black_24dp).resize(120, 120).into(holder.starView);
-      }
+      holder.invoice_name.setText(mListabsserver.get(position).dmxa + " " + mListabsserver.get(position).dmna);
 
       holder.datefrom.setText(mListabsserver.get(position).daod);
 
@@ -109,10 +104,8 @@ public class SupplierAdapter extends RecyclerView.Adapter<SupplierAdapter.Suppli
 
   public static class SupplierViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener, View.OnLongClickListener{
 
-      public TextView absence_name;
-      public ImageView absence_photo;
-      public ImageView starView;
-      public TextView numStarsView;
+      public TextView invoice_name;
+      public ImageView invoice_photo;
       public TextView datefrom;
       public TextView dateto;
       public TextView hodxb;
@@ -123,10 +116,8 @@ public class SupplierAdapter extends RecyclerView.Adapter<SupplierAdapter.Suppli
     public SupplierViewHolder(View itemView) {
         super(itemView);
 
-        absence_name = (TextView) itemView.findViewById(R.id.absence_name);
-        absence_photo = (ImageView) itemView.findViewById(R.id.absence_photo);
-        starView = (ImageView) itemView.findViewById(R.id.star);
-        numStarsView = (TextView) itemView.findViewById(R.id.post_num_stars);
+        invoice_name = (TextView) itemView.findViewById(R.id.invoice_name);
+        invoice_photo = (ImageView) itemView.findViewById(R.id.invoice_photo);
         datefrom = (TextView) itemView.findViewById(R.id.datefrom);
         dateto = (TextView) itemView.findViewById(R.id.dateto);
         hodxb = (TextView) itemView.findViewById(R.id.hodxb);

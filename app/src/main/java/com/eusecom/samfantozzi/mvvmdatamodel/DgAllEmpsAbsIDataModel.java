@@ -2,6 +2,7 @@ package com.eusecom.samfantozzi.mvvmdatamodel;
 
 import android.support.annotation.NonNull;
 import com.eusecom.samfantozzi.CompanyKt;
+import com.eusecom.samfantozzi.Invoice;
 import com.eusecom.samfantozzi.Month;
 import com.eusecom.samfantozzi.models.Attendance;
 import com.eusecom.samfantozzi.models.Employee;
@@ -25,8 +26,15 @@ public interface DgAllEmpsAbsIDataModel {
     @NonNull
     public Observable<List<Month>> getMonthForYear(String rokx);
 
-    //recyclerview method for ChooseCompanyhActivity
+    //recyclerview method for ChooseCompanyActivity
     @NonNull
     public Observable<List<CompanyKt>> getCompaniesFromMysqlServer(String userhash, String userid);
+
+    //recyclerview method for SupplierListActivity
+    @NonNull
+    public Observable<List<Attendance>> getInvoicesFromServer(String fromfir);
+
+    @NonNull
+    public Observable<List<Invoice>> getInvoicesFromMysqlServer(String userhash, String userid, String fromfir, String vyb_rok);
 
 }

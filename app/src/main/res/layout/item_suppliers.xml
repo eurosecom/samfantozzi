@@ -12,48 +12,125 @@
         android:layout_height="wrap_content"
         android:padding="10dp">
 
-        <include
-            android:id="@+id/absence_type"
-            layout="@layout/include_absencetype_layout"
+     <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignParentLeft="true" />
-
-        <LinearLayout
-            android:id="@+id/star_layout"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignBottom="@+id/absence_type"
-            android:layout_alignParentRight="true"
-            android:layout_alignTop="@+id/absence_type"
             android:gravity="center_vertical"
+            android:id="@+id/invoice_type"
             android:orientation="horizontal">
 
-            <ImageView
-                android:id="@+id/star"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="10dp"
-                android:layout_marginRight="5dp"
-                android:background="?attr/selectableItemBackground"
-                android:src="@drawable/ic_help_black_24dp" />
+        <ImageView
+            android:id="@+id/invoice_photo"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/ic_action_account_circle_40" />
 
-            <TextView
-                android:id="@+id/post_num_stars"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:gravity="center"
-                tools:text="7" />
+        <TextView
+            android:id="@+id/invoice_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:gravity="center_vertical"
+            tools:text="someauthor@email.com" />
 
-        </LinearLayout>
+    </LinearLayout>
 
-        <include layout="@layout/include_absservervalues_layout"
+
+        <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_alignParentLeft="true"
-            android:layout_below="@+id/absence_type"
+            android:layout_below="@+id/invoice_type"
             android:layout_marginLeft="5dp"
-            android:layout_marginTop="10dp" />
+            android:layout_marginTop="10dp"
+            >
+
+
+            <TextView
+                android:id="@+id/datefromdesc"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentLeft="true"
+                android:layout_marginLeft="5dp"
+                android:layout_marginTop="5dp"
+                android:text="@string/from" />
+
+            <TextView
+                android:id="@+id/datefrom"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignBaseline="@+id/datefromdesc"
+                android:layout_toRightOf="@+id/datefromdesc"
+                android:layout_marginLeft="5dp"
+                android:layout_marginTop="5dp"
+                android:textStyle="bold"
+                />
+
+            <TextView
+                android:id="@+id/datetodesc"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignBaseline="@+id/datefromdesc"
+                android:layout_toRightOf="@+id/datefrom"
+                android:layout_marginLeft="5dp"
+                android:layout_marginTop="5dp"
+                android:text="@string/to" />
+
+            <TextView
+                android:id="@+id/dateto"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignBaseline="@+id/datefromdesc"
+                android:layout_toRightOf="@+id/datetodesc"
+                android:layout_marginLeft="5dp"
+                android:layout_marginTop="5dp"
+                android:textStyle="bold"
+                />
+
+            <TextView
+                android:id="@+id/hodxbdesc"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignBaseline="@+id/datefromdesc"
+                android:layout_toRightOf="@+id/dateto"
+                android:layout_marginLeft="5dp"
+                android:layout_marginTop="5dp"
+                android:text="@string/hodxb" />
+
+            <TextView
+                android:id="@+id/hodxb"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignBaseline="@+id/datefromdesc"
+                android:layout_toRightOf="@+id/hodxbdesc"
+                android:layout_marginLeft="5dp"
+                android:layout_marginTop="5dp"
+                android:textStyle="bold"
+                />
+
+            <TextView
+                android:id="@+id/datmdesc"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentLeft="true"
+                android:layout_below="@+id/datefromdesc"
+                android:layout_marginLeft="5dp"
+                android:layout_marginTop="5dp"
+                android:text="@string/postedby" />
+
+            <TextView
+                android:id="@+id/datm"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_toRightOf="@+id/datmdesc"
+                android:layout_below="@+id/datefromdesc"
+                android:layout_marginLeft="5dp"
+                android:layout_marginTop="5dp"
+                />
+
+
+        </RelativeLayout>
+
 
     </RelativeLayout>
 
