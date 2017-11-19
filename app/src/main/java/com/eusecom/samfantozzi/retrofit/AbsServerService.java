@@ -20,7 +20,9 @@ public interface AbsServerService {
 
     @GET("/androidfantozzi/get_invoices.php")
     Observable<List<Invoice>> getInvoicesFromSqlServer(@Query("userhash") String userhash
-            , @Query("userid") String userid, @Query("fromfir") String fromfir, @Query("vyb_rok") String vyb_rok);
+            , @Query("userid") String userid, @Query("fromfir") String fromfir
+            , @Query("vyb_rok") String vyb_rok, @Query("drh") String drh
+            , @Query("uce") String uce, @Query("ume") String ume);
 
     @GET("/attendance/absserver.php")
     Observable<List<Attendance>> getInvoicesFromServer(@Query("fromfir") String fromfir);

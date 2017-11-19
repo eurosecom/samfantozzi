@@ -59,6 +59,10 @@ public class SupplierAdapter extends RecyclerView.Adapter<SupplierAdapter.Suppli
   public void onBindViewHolder(SupplierViewHolder holder, int position) {
 
       holder.invoice_name.setText(mListabsserver.get(position).getNai());
+      Picasso.with(holder.mContext).load(R.drawable.ic_call_made_black_24dp).resize(120, 120).into(holder.invoice_photo);
+      if( mListabsserver.get(position).getDrh().equals("2")) {
+          Picasso.with(holder.mContext).load(R.drawable.ic_call_received_black_24dp).resize(120, 120).into(holder.invoice_photo);
+      }
 
       //holder.datefrom.setText(mListabsserver.get(position).daod);
 

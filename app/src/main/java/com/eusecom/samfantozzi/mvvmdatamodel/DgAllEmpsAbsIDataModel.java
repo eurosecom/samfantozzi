@@ -35,6 +35,7 @@ public interface DgAllEmpsAbsIDataModel {
     public Observable<List<Attendance>> getInvoicesFromServer(String fromfir);
 
     @NonNull
-    public Observable<List<Invoice>> getInvoicesFromMysqlServer(String userhash, String userid, String fromfir, String vyb_rok);
+    public Observable<List<Invoice>> getInvoicesFromMysqlServer(String userhash, String userid, String fromfir
+            , String vyb_rok, String drh, String ucex, String umex);
 
 }

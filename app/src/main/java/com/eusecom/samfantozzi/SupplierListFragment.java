@@ -184,7 +184,7 @@ public class SupplierListFragment extends Fragment {
         mSubscription = new CompositeSubscription();
 
 
-        mSubscription.add(mViewModel.getMyInvoicesFromSqlServer()
+        mSubscription.add(mViewModel.getMyInvoicesFromSqlServer("2")
                 .subscribeOn(Schedulers.computation())
                 .observeOn(rx.android.schedulers.AndroidSchedulers.mainThread())
                 .doOnError(throwable -> Log.e(TAG, "Error Throwable " + throwable.getMessage()))
@@ -201,8 +201,8 @@ public class SupplierListFragment extends Fragment {
 
 
     private void setServerInvoices(@NonNull final List<Invoice> invoices) {
-        String serverx = invoices.get(0).getNai();
-        Toast.makeText(getActivity(), serverx, Toast.LENGTH_SHORT).show();
+        //String serverx = invoices.get(0).getNai();
+        //Toast.makeText(getActivity(), serverx, Toast.LENGTH_SHORT).show();
         if (invoices.isEmpty()) {
             //Toast.makeText(getActivity(), R.string.nothing_found, Toast.LENGTH_SHORT).show();
             mAdapter.setAbsserver(Collections.<Invoice>emptyList());

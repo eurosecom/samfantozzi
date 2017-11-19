@@ -92,7 +92,7 @@ public class DgAllEmpsAbsMvvmViewModel {
     //recyclerview method for SupplierListActivity
 
     //get invoices from MySql server
-    public Observable<List<Invoice>> getMyInvoicesFromSqlServer() {
+    public Observable<List<Invoice>> getMyInvoicesFromSqlServer(String drh) {
 
         Random r = new Random();
         double d = -10.0 + r.nextDouble() * 20.0;
@@ -115,8 +115,13 @@ public class DgAllEmpsAbsMvvmViewModel {
 
         String firx = mSharedPreferences.getString("fir", "");
         String rokx = mSharedPreferences.getString("rok", "");
+        String dodx = mSharedPreferences.getString("doduce", "");
+        if (drh.equals("1")) {
+            dodx = mSharedPreferences.getString("odbuce", "");
+        }
+        String umex = mSharedPreferences.getString("ume", "");
 
-        return mDataModel.getInvoicesFromMysqlServer(encrypted, ds, firx, rokx);
+        return mDataModel.getInvoicesFromMysqlServer(encrypted, ds, firx, rokx, drh, dodx, umex);
     }
     //end get invoices from MySql server
 
