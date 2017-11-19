@@ -23,22 +23,21 @@
 package com.eusecom.samfantozzi;
 
 import android.util.Log;
-import com.eusecom.samfantozzi.models.Attendance;
 import java.util.ArrayList;
 import java.util.List;
 
 public class SupplierSearchEngine {
 
-  private final List<Attendance> mListabsserver;
+  private final List<Invoice> mListabsserver;
   private final int mListabsserverCount;
 
-  public SupplierSearchEngine(List<Attendance> listabsserver) {
+  public SupplierSearchEngine(List<Invoice> listabsserver) {
     mListabsserver = listabsserver;
     mListabsserverCount = mListabsserver.size();
   }
 
 
-  public List<Attendance> searchModel(String query) {
+  public List<Invoice> searchModel(String query) {
     query = query.toLowerCase();
     Log.d("searchModel", query);
 
@@ -48,12 +47,12 @@ public class SupplierSearchEngine {
       e.printStackTrace();
     }
 
-    List<Attendance> resultAs = new ArrayList<Attendance>();
+    List<Invoice> resultAs = new ArrayList<Invoice>();
 
     for (int i = 0; i < mListabsserverCount; i++) {
-      if (mListabsserver.get(i).dmna.toLowerCase().contains(query)) {
+      if (mListabsserver.get(i).getNai().toLowerCase().contains(query)) {
         resultAs.add(mListabsserver.get(i));
-        Log.d("mListabs.get(i).dmna", mListabsserver.get(i).dmna);
+        Log.d("mListabs.get(i).dmna", mListabsserver.get(i).getNai());
       }
     }
 

@@ -92,9 +92,9 @@ public class SupplierListFragment extends Fragment {
 
 
                     }
-                    if (event instanceof Attendance) {
+                    if (event instanceof Invoice) {
 
-                        String usnamex = ((Attendance) event).getUsname();
+                        String usnamex = ((Invoice) event).getNai();
 
 
                         Log.d("SupplierListFragment ",  usnamex);
@@ -183,12 +183,6 @@ public class SupplierListFragment extends Fragment {
     private void bind() {
         mSubscription = new CompositeSubscription();
 
-        mSubscription.add(mViewModel.getMyInvoicesFromServer()
-                .subscribeOn(Schedulers.computation())
-                .observeOn(rx.android.schedulers.AndroidSchedulers.mainThread())
-                .doOnError(throwable -> Log.e(TAG, "Error Throwable " + throwable.getMessage()))
-                .onErrorResumeNext(throwable -> empty())
-                .subscribe(this::setServerAbsences));
 
         mSubscription.add(mViewModel.getMyInvoicesFromSqlServer()
                 .subscribeOn(Schedulers.computation())
@@ -206,44 +200,31 @@ public class SupplierListFragment extends Fragment {
     }
 
 
-    private void setServerAbsences(@NonNull final List<Attendance> attendances) {
-        //String serverx = attendances.get(0).getDmna();
-        //Toast.makeText(getActivity(), serverx, Toast.LENGTH_SHORT).show();
-        if (attendances.isEmpty()) {
-            //Toast.makeText(getActivity(), R.string.nothing_found, Toast.LENGTH_SHORT).show();
-            mAdapter.setAbsserver(Collections.<Attendance>emptyList());
-        } else {
-            //Log.d("showResultAs ", resultAs.get(0).dmna);
-            mAdapter.setAbsserver(attendances);
-        }
-        nastavResultAs(attendances);
-    }
-
     private void setServerInvoices(@NonNull final List<Invoice> invoices) {
         String serverx = invoices.get(0).getNai();
         Toast.makeText(getActivity(), serverx, Toast.LENGTH_SHORT).show();
         if (invoices.isEmpty()) {
             //Toast.makeText(getActivity(), R.string.nothing_found, Toast.LENGTH_SHORT).show();
-            //mAdapter.setAbsserver(Collections.<Invoices>emptyList());
+            mAdapter.setAbsserver(Collections.<Invoice>emptyList());
         } else {
             //Log.d("showResultAs ", resultAs.get(0).dmna);
-            //mAdapter.setInvoicesserver(invoices);
+            mAdapter.setAbsserver(invoices);
         }
-        //nastavResultAs(invoices);
+        nastavResultAs(invoices);
     }
 
-    protected void showResultAs(List<Attendance> resultAs) {
+    protected void showResultAs(List<Invoice> resultAs) {
 
         if (resultAs.isEmpty()) {
             //Toast.makeText(getActivity(), R.string.nothing_found, Toast.LENGTH_SHORT).show();
-            mAdapter.setAbsserver(Collections.<Attendance>emptyList());
+            mAdapter.setAbsserver(Collections.<Invoice>emptyList());
         } else {
             //Log.d("showResultAs ", resultAs.get(0).dmna);
             mAdapter.setAbsserver(resultAs);
         }
     }
 
-    protected void nastavResultAs(List<Attendance> resultAs) {
+    protected void nastavResultAs(List<Invoice> resultAs) {
         mSupplierSearchEngine = new SupplierSearchEngine(resultAs);
     }
 
@@ -272,16 +253,16 @@ public class SupplierListFragment extends Fragment {
                     }
                 })
                 .observeOn(io.reactivex.schedulers.Schedulers.io())
-                .map(new Function<String, List<Attendance>>() {
+                .map(new Function<String, List<Invoice>>() {
                     @Override
-                    public List<Attendance> apply(String query) {
+                    public List<Invoice> apply(String query) {
                         return mSupplierSearchEngine.searchModel(query);
                     }
                 })
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new Consumer<List<Attendance>>() {
+                .subscribe(new Consumer<List<Invoice>>() {
                     @Override
-                    public void accept(List<Attendance> result) {
+                    public void accept(List<Invoice> result) {
                         hideProgressBar();
                         showResultAs(result);
                     }

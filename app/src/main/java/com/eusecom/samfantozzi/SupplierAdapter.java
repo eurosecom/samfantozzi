@@ -40,7 +40,7 @@ import java.util.List;
 
 public class SupplierAdapter extends RecyclerView.Adapter<SupplierAdapter.SupplierViewHolder> {
 
-    private List<Attendance> mListabsserver;
+    private List<Invoice> mListabsserver;
     private RxBus _rxBus;
 
     SupplierAdapter(RxBus bus){
@@ -58,15 +58,15 @@ public class SupplierAdapter extends RecyclerView.Adapter<SupplierAdapter.Suppli
   @Override
   public void onBindViewHolder(SupplierViewHolder holder, int position) {
 
-      holder.invoice_name.setText(mListabsserver.get(position).dmxa + " " + mListabsserver.get(position).dmna);
+      holder.invoice_name.setText(mListabsserver.get(position).getNai());
 
-      holder.datefrom.setText(mListabsserver.get(position).daod);
+      //holder.datefrom.setText(mListabsserver.get(position).daod);
 
-      holder.dateto.setText(mListabsserver.get(position).dado);
+      //holder.dateto.setText(mListabsserver.get(position).dado);
 
-      holder.hodxb.setText(mListabsserver.get(position).hodxb);
+      //holder.hodxb.setText(mListabsserver.get(position).hodxb);
 
-      holder.datm.setText(mListabsserver.get(position).usname + " " + mListabsserver.get(position).datm);
+      //holder.datm.setText(mListabsserver.get(position).usname + " " + mListabsserver.get(position).datm);
 
 
 
@@ -75,13 +75,13 @@ public class SupplierAdapter extends RecyclerView.Adapter<SupplierAdapter.Suppli
               if (isLongClick) {
 
                   // View v at position pos is long-clicked.
-                  Log.d("onLongClickListener", mListabsserver.get(pos).dmna);
+                  Log.d("onLongClickListener", mListabsserver.get(pos).getNai());
                   //getDialog(mListabsserver.get(position).longi, mListabsserver.get(position), holder.mContext);
 
 
               } else {
 
-                  Log.d("onShortClickListener", mListabsserver.get(pos).dmna);
+                  Log.d("onShortClickListener", mListabsserver.get(pos).getNai());
                   _rxBus.send(mListabsserver.get(pos));
               }
           }
@@ -95,7 +95,7 @@ public class SupplierAdapter extends RecyclerView.Adapter<SupplierAdapter.Suppli
     }
 
 
-    public void setAbsserver(List<Attendance> listabsserver) {
+    public void setAbsserver(List<Invoice> listabsserver) {
         mListabsserver = listabsserver;
         //Log.d("setAbsserver ", mListabsserver.get(0).dmna);
         notifyDataSetChanged();
