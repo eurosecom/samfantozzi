@@ -161,7 +161,10 @@
     <string name="suppidshort">ID</string>
     <string name="fakshort">Inv.</string>
     <string name="value">Value</string>
+    <string name="document">Document</string>
     <string name="docshort">Doc</string>
+    <string name="edit">Edit</string>
+    <string name="delete">Delete</string>
 
 
     //lunchemptymenu

@@ -1,5 +1,6 @@
 package com.eusecom.samfantozzi;
 
+import android.content.DialogInterface;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -118,11 +119,17 @@ public class SupplierListFragment extends Fragment {
         super.onDestroy();
         _disposables.dispose();
         if( mDisposable != null ) {mDisposable.dispose();}
-        mAdapter = new SupplierAdapter(_rxBus);
-        _rxBus = null;
         mSubscription.unsubscribe();
         mSubscription.clear();
 
+        try {
+            if (dialog != null && dialog.isShowing()) {
+                dialog.dismiss();
+                dialog=null;
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
 
     }
 
@@ -159,6 +166,7 @@ public class SupplierListFragment extends Fragment {
 
 
                         Log.d("SupplierListFragment ",  usnamex);
+                        getInvoiceDialog(((Invoice) event));
                         //String serverx = "DgAeaListFragment " + usnamex;
                         //Toast.makeText(getActivity(), serverx, Toast.LENGTH_SHORT).show();
 
@@ -194,6 +202,16 @@ public class SupplierListFragment extends Fragment {
         mSubscription.unsubscribe();
         mSubscription.clear();
         if( mDisposable != null ) {mDisposable.dispose();}
+        _disposables.dispose();
+
+        try {
+            if (dialog != null && dialog.isShowing()) {
+                dialog.dismiss();
+                dialog=null;
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
 
@@ -329,5 +347,35 @@ public class SupplierListFragment extends Fragment {
     }
 
 
+    private void getInvoiceDialog(@NonNull final Invoice invoice) {
+
+
+        LayoutInflater inflater = LayoutInflater.from(getActivity());
+        final View textenter = inflater.inflate(R.layout.invoice_edit_dialog, null);
+
+        final EditText valuex = (EditText) textenter.findViewById(R.id.valuex);
+        valuex.setText(invoice.getHod());
+
+        final AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+        builder.setView(textenter).setTitle(getString(R.string.document) + " " + invoice.getDok());
+        builder.setPositiveButton(getString(R.string.edit), new DialogInterface.OnClickListener() {
+
+            @Override
+            public void onClick(DialogInterface dialog, int id) {
+                dialog.cancel();
+
+
+            }
+        })
+                .setNegativeButton(getString(R.string.delete), new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int id) {
+                        dialog.cancel();
+
+                    }
+                });
+        AlertDialog dialog = builder.create();
+        builder.show();
+
+    }
 
 }
