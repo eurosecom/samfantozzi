@@ -16,9 +16,6 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ProgressBar;
-import android.widget.Toast;
-
-import com.eusecom.samfantozzi.models.Attendance;
 import com.eusecom.samfantozzi.rxbus.RxBus;
 import java.util.Collections;
 import java.util.List;
@@ -51,8 +48,6 @@ public class SupplierListFragment extends Fragment {
     private SupplierAdapter mAdapter;
     private RecyclerView mRecycler;
     private LinearLayoutManager mManager;
-    private RxBus _rxBus = null;
-
     private TextWatcher watcher = null;
     private View.OnClickListener onclicklist = null;
     protected EditText mQueryEditText;
@@ -70,6 +65,8 @@ public class SupplierListFragment extends Fragment {
     @Inject
     DgAllEmpsAbsMvvmViewModel mViewModel;
 
+    @Inject
+    RxBus _rxBus;
 
     AlertDialog dialog = null;
 
@@ -77,43 +74,8 @@ public class SupplierListFragment extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        _disposables = new CompositeDisposable();
+        ((SamfantozziApp) getActivity().getApplication()).dgaeacomponent().inject(this);
 
-        _rxBus = ((SamfantozziApp) getActivity().getApplication()).getRxBusSingleton();
-
-        ConnectableFlowable<Object> tapEventEmitter = _rxBus.asFlowable().publish();
-
-        _disposables
-                .add(tapEventEmitter.subscribe(event -> {
-                    if (event instanceof DgAeaListFragment.ClickFobEvent) {
-                        Log.d("SupplierActivity  ", " fobClick ");
-                        //String serverx = "AbsServerListFragment fobclick";
-                        //Toast.makeText(getActivity(), serverx, Toast.LENGTH_SHORT).show();
-
-
-                    }
-                    if (event instanceof Invoice) {
-
-                        String usnamex = ((Invoice) event).getNai();
-
-
-                        Log.d("SupplierListFragment ",  usnamex);
-                        //String serverx = "DgAeaListFragment " + usnamex;
-                        //Toast.makeText(getActivity(), serverx, Toast.LENGTH_SHORT).show();
-
-
-                    }
-
-                }));
-
-        _disposables
-                .add(tapEventEmitter.publish(stream ->
-                        stream.buffer(stream.debounce(1, TimeUnit.SECONDS)))
-                        .observeOn(AndroidSchedulers.mainThread()).subscribe(taps -> {
-                            ///_showTapCount(taps.size()); OK
-                        }));
-
-        _disposables.add(tapEventEmitter.connect());
     }
 
     @Override
@@ -136,8 +98,6 @@ public class SupplierListFragment extends Fragment {
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
 
-        ((SamfantozziApp) getActivity().getApplication()).dgaeacomponent().inject(this);
-
         String umex = mSharedPreferences.getString("ume", "");
         mAdapter = new SupplierAdapter(_rxBus);
         // Set up Layout Manager, reverse layout
@@ -149,8 +109,6 @@ public class SupplierListFragment extends Fragment {
 
         //String serverx = "From fragment " + mSharedPreferences.getString("servername", "");
         //Toast.makeText(getActivity(), serverx, Toast.LENGTH_SHORT).show();
-
-        getObservableSearchText();
 
 
     }//end of onActivityCreated
@@ -181,8 +139,45 @@ public class SupplierListFragment extends Fragment {
     }
 
     private void bind() {
-        mSubscription = new CompositeSubscription();
 
+        _disposables = new CompositeDisposable();
+
+        ConnectableFlowable<Object> tapEventEmitter = _rxBus.asFlowable().publish();
+
+        _disposables
+                .add(tapEventEmitter.subscribe(event -> {
+                    if (event instanceof DgAeaListFragment.ClickFobEvent) {
+                        Log.d("SupplierActivity  ", " fobClick ");
+                        //String serverx = "AbsServerListFragment fobclick";
+                        //Toast.makeText(getActivity(), serverx, Toast.LENGTH_SHORT).show();
+
+
+                    }
+                    if (event instanceof Invoice) {
+
+                        String usnamex = ((Invoice) event).getDok();
+
+
+                        Log.d("SupplierListFragment ",  usnamex);
+                        //String serverx = "DgAeaListFragment " + usnamex;
+                        //Toast.makeText(getActivity(), serverx, Toast.LENGTH_SHORT).show();
+
+
+                    }
+
+                }));
+
+        _disposables
+                .add(tapEventEmitter.publish(stream ->
+                        stream.buffer(stream.debounce(1, TimeUnit.SECONDS)))
+                        .observeOn(AndroidSchedulers.mainThread()).subscribe(taps -> {
+                            ///_showTapCount(taps.size()); OK
+                        }));
+
+        _disposables.add(tapEventEmitter.connect());
+
+
+        mSubscription = new CompositeSubscription();
 
         mSubscription.add(mViewModel.getMyInvoicesFromSqlServer("2")
                 .subscribeOn(Schedulers.computation())
@@ -190,6 +185,8 @@ public class SupplierListFragment extends Fragment {
                 .doOnError(throwable -> Log.e(TAG, "Error Throwable " + throwable.getMessage()))
                 .onErrorResumeNext(throwable -> empty())
                 .subscribe(this::setServerInvoices));
+
+        getObservableSearchText();
 
     }
 

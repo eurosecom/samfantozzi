@@ -50,7 +50,9 @@ public class SupplierSearchEngine {
     List<Invoice> resultAs = new ArrayList<Invoice>();
 
     for (int i = 0; i < mListabsserverCount; i++) {
-      if (mListabsserver.get(i).getNai().toLowerCase().contains(query)) {
+      if (mListabsserver.get(i).getNai().toLowerCase().contains(query) ||
+              mListabsserver.get(i).getDok().toLowerCase().contains(query) ||
+              mListabsserver.get(i).getFak().toLowerCase().contains(query) ) {
         resultAs.add(mListabsserver.get(i));
         Log.d("mListabs.get(i).dmna", mListabsserver.get(i).getNai());
       }

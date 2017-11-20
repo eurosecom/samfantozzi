@@ -64,15 +64,13 @@ public class SupplierAdapter extends RecyclerView.Adapter<SupplierAdapter.Suppli
           Picasso.with(holder.mContext).load(R.drawable.ic_call_received_black_24dp).resize(120, 120).into(holder.invoice_photo);
       }
 
-      //holder.datefrom.setText(mListabsserver.get(position).daod);
+      holder.docx.setText(mListabsserver.get(position).getDok());
 
-      //holder.dateto.setText(mListabsserver.get(position).dado);
+      holder.datex.setText(getDateString(mListabsserver.get(position).getDat()));
 
-      //holder.hodxb.setText(mListabsserver.get(position).hodxb);
+      holder.invoicex.setText(mListabsserver.get(position).getFak());
 
-      //holder.datm.setText(mListabsserver.get(position).usname + " " + mListabsserver.get(position).datm);
-
-
+      holder.valuex.setText(mListabsserver.get(position).getHod());
 
       holder.setClickListener(new SupplierAdapter.SupplierViewHolder.ClickListener() {
           public void onClick(View v, int pos, boolean isLongClick) {
@@ -110,10 +108,10 @@ public class SupplierAdapter extends RecyclerView.Adapter<SupplierAdapter.Suppli
 
       public TextView invoice_name;
       public ImageView invoice_photo;
-      public TextView datefrom;
-      public TextView dateto;
-      public TextView hodxb;
-      public TextView datm;
+      public TextView datex;
+      public TextView invoicex;
+      public TextView valuex;
+      public TextView docx;
       private ClickListener clickListener;
       Context mContext;
 
@@ -122,10 +120,10 @@ public class SupplierAdapter extends RecyclerView.Adapter<SupplierAdapter.Suppli
 
         invoice_name = (TextView) itemView.findViewById(R.id.invoice_name);
         invoice_photo = (ImageView) itemView.findViewById(R.id.invoice_photo);
-        datefrom = (TextView) itemView.findViewById(R.id.datefrom);
-        dateto = (TextView) itemView.findViewById(R.id.dateto);
-        hodxb = (TextView) itemView.findViewById(R.id.hodxb);
-        datm = (TextView) itemView.findViewById(R.id.datm);
+        datex = (TextView) itemView.findViewById(R.id.datex);
+        invoicex = (TextView) itemView.findViewById(R.id.invoicex);
+        valuex = (TextView) itemView.findViewById(R.id.valuex);
+        docx = (TextView) itemView.findViewById(R.id.docx);
         mContext = itemView.getContext();
         itemView.setOnClickListener(this);
         itemView.setOnLongClickListener(this);
@@ -169,29 +167,24 @@ public class SupplierAdapter extends RecyclerView.Adapter<SupplierAdapter.Suppli
 
   }//end class viewholder
 
-    private String getDate(long timeStamp){
+    private String getDateString(String date){
 
         try{
-            DateFormat sdf = new SimpleDateFormat("dd.MM.yyyy");
-            Date netDate = (new Date(timeStamp));
-            return sdf.format(netDate);
+            String strCurrentDate = date;
+            SimpleDateFormat format = new SimpleDateFormat("yyyy-mm-dd");
+            Date newDate = format.parse(strCurrentDate);
+
+            format = new SimpleDateFormat("dd.mm.yy");
+            String datenew = format.format(newDate);
+
+            return datenew;
         }
         catch(Exception ex){
             return "xx";
         }
     }
 
-    private String getDateTime(long timeStamp){
 
-        try{
-            DateFormat sdf = new SimpleDateFormat("dd.MM.yyyy HH:mm");
-            Date netDate = (new Date(timeStamp));
-            return sdf.format(netDate);
-        }
-        catch(Exception ex){
-            return "xx";
-        }
-    }
 
 
 

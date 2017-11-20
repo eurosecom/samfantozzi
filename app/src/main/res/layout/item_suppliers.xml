@@ -10,7 +10,7 @@
         android:background="@drawable/selector_medium_high"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:padding="10dp">
+        android:padding="5dp">
 
      <LinearLayout
             android:layout_width="wrap_content"
@@ -25,11 +25,28 @@
             android:layout_height="wrap_content"
             android:src="@drawable/ic_action_account_circle_40" />
 
+         <TextView
+             android:id="@+id/doc"
+             android:layout_width="wrap_content"
+             android:layout_height="wrap_content"
+             android:layout_marginLeft="5dp"
+             android:gravity="center_vertical"
+             android:text="@string/docshort"
+             />
+
+         <TextView
+             android:id="@+id/docx"
+             android:layout_width="wrap_content"
+             android:layout_height="wrap_content"
+             android:layout_marginLeft="5dp"
+             android:gravity="center_vertical"
+             android:textStyle="bold"/>
+
         <TextView
             android:id="@+id/invoice_name"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="10dp"
+            android:layout_marginLeft="5dp"
             android:gravity="center_vertical"
             tools:text="someauthor@email.com" />
 
@@ -42,90 +59,70 @@
             android:layout_alignParentLeft="true"
             android:layout_below="@+id/invoice_type"
             android:layout_marginLeft="5dp"
-            android:layout_marginTop="10dp"
+            android:layout_marginTop="5dp"
             >
 
 
             <TextView
-                android:id="@+id/datefromdesc"
+                android:id="@+id/date"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentLeft="true"
                 android:layout_marginLeft="5dp"
                 android:layout_marginTop="5dp"
-                android:text="@string/from" />
+                android:text="@string/date" />
 
             <TextView
-                android:id="@+id/datefrom"
+                android:id="@+id/datex"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_alignBaseline="@+id/datefromdesc"
-                android:layout_toRightOf="@+id/datefromdesc"
+                android:layout_alignBaseline="@+id/date"
+                android:layout_toRightOf="@+id/date"
                 android:layout_marginLeft="5dp"
                 android:layout_marginTop="5dp"
                 android:textStyle="bold"
                 />
 
             <TextView
-                android:id="@+id/datetodesc"
+                android:id="@+id/invoice"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_alignBaseline="@+id/datefromdesc"
-                android:layout_toRightOf="@+id/datefrom"
+                android:layout_alignBaseline="@+id/date"
+                android:layout_toRightOf="@+id/datex"
                 android:layout_marginLeft="5dp"
                 android:layout_marginTop="5dp"
-                android:text="@string/to" />
+                android:text="@string/fakshort" />
 
             <TextView
-                android:id="@+id/dateto"
+                android:id="@+id/invoicex"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_alignBaseline="@+id/datefromdesc"
-                android:layout_toRightOf="@+id/datetodesc"
+                android:layout_alignBaseline="@+id/date"
+                android:layout_toRightOf="@+id/invoice"
                 android:layout_marginLeft="5dp"
                 android:layout_marginTop="5dp"
                 android:textStyle="bold"
                 />
 
             <TextView
-                android:id="@+id/hodxbdesc"
+                android:id="@+id/value"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_alignBaseline="@+id/datefromdesc"
-                android:layout_toRightOf="@+id/dateto"
-                android:layout_marginLeft="5dp"
+                android:layout_alignBaseline="@+id/date"
+                android:layout_toLeftOf="@+id/valuex"
+                android:layout_marginRight="5dp"
                 android:layout_marginTop="5dp"
-                android:text="@string/hodxb" />
+                android:text="@string/value" />
 
             <TextView
-                android:id="@+id/hodxb"
+                android:id="@+id/valuex"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_alignBaseline="@+id/datefromdesc"
-                android:layout_toRightOf="@+id/hodxbdesc"
-                android:layout_marginLeft="5dp"
+                android:layout_alignBaseline="@+id/date"
+                android:layout_alignParentRight="true"
+                android:layout_marginRight="5dp"
                 android:layout_marginTop="5dp"
                 android:textStyle="bold"
-                />
-
-            <TextView
-                android:id="@+id/datmdesc"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentLeft="true"
-                android:layout_below="@+id/datefromdesc"
-                android:layout_marginLeft="5dp"
-                android:layout_marginTop="5dp"
-                android:text="@string/postedby" />
-
-            <TextView
-                android:id="@+id/datm"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_toRightOf="@+id/datmdesc"
-                android:layout_below="@+id/datefromdesc"
-                android:layout_marginLeft="5dp"
-                android:layout_marginTop="5dp"
                 />
 
 

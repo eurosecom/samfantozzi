@@ -157,6 +157,11 @@
 
     //supplieractivity
     <string name="suppliers">Suppliers</string>
+    <string name="date">Date</string>
+    <string name="suppidshort">ID</string>
+    <string name="fakshort">Inv.</string>
+    <string name="value">Value</string>
+    <string name="docshort">Doc</string>
 
 
     //lunchemptymenu
