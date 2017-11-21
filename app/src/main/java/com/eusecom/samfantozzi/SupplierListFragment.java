@@ -57,10 +57,6 @@ public class SupplierListFragment extends Fragment {
     private SupplierAdapter mAdapter;
     private RecyclerView mRecycler;
     private LinearLayoutManager mManager;
-    private TextWatcher watcher = null;
-    private View.OnClickListener onclicklist = null;
-    protected EditText mQueryEditText;
-    protected Button mSearchButton;
     private ProgressBar mProgressBar;
     private Disposable mDisposable;
     protected SupplierSearchEngine mSupplierSearchEngine;
@@ -101,8 +97,6 @@ public class SupplierListFragment extends Fragment {
         mRecycler = (RecyclerView) rootView.findViewById(R.id.list);
         mRecycler.setHasFixedSize(true);
 
-        mQueryEditText = (EditText) rootView.findViewById(R.id.query_edit_text);
-        mSearchButton = (Button) rootView.findViewById(R.id.search_button);
         mProgressBar = (ProgressBar) rootView.findViewById(R.id.progress_bar);
 
         return rootView;
@@ -207,7 +201,6 @@ public class SupplierListFragment extends Fragment {
                 .onErrorResumeNext(throwable -> empty())
                 .subscribe(this::setServerInvoices));
 
-        //getObservableSearchText();
         //getObservableSearchViewText();
 
     }
@@ -341,103 +334,19 @@ public class SupplierListFragment extends Fragment {
                 }).debounce(1000, TimeUnit.MILLISECONDS);  // add this line
     }
 
-    //watcher to edittext
-    private void getObservableSearchText() {
-        Observable<String> buttonClickStream = createButtonClickObservable();
-        Observable<String> textChangeStream = createTextChangeObservable();
-
-        Observable<String> searchTextObservable = Observable.merge(textChangeStream, buttonClickStream);
-
-        mDisposable = searchTextObservable
-                .observeOn(AndroidSchedulers.mainThread())
-                .doOnNext(new Consumer<String>() {
-                    @Override
-                    public void accept(String s) {
-                        showProgressBar();
-                    }
-                })
-                .observeOn(io.reactivex.schedulers.Schedulers.io())
-                .map(new Function<String, List<Invoice>>() {
-                    @Override
-                    public List<Invoice> apply(String query) {
-                        return mSupplierSearchEngine.searchModel(query);
-                    }
-                })
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new Consumer<List<Invoice>>() {
-                    @Override
-                    public void accept(List<Invoice> result) {
-                        hideProgressBar();
-                        showResultAs(result);
-                    }
-                });
-    }
-
-
     private Observable<String> createButtonClickObservable() {
         return Observable.create(new ObservableOnSubscribe<String>() {
 
             @Override
             public void subscribe(final ObservableEmitter<String> emitter) throws Exception {
-                onclicklist = new View.OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
-                        emitter.onNext(mQueryEditText.getText().toString());
-                    }
-                };
-                mSearchButton.setOnClickListener(onclicklist);
 
-                emitter.setCancellable(new Cancellable() {
-                    @Override
-                    public void cancel() throws Exception {
-                        onclicklist = null;
-                        mSearchButton.setOnClickListener(null);
-                    }
-                });
             }
         });
     }
 
-    private Observable<String> createTextChangeObservable() {
-        Observable<String> textChangeObservable = Observable.create(new ObservableOnSubscribe<String>() {
-            @Override
-            public void subscribe(final ObservableEmitter<String> emitter) throws Exception {
-                watcher = new TextWatcher() {
-                    @Override
-                    public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
-
-                    @Override
-                    public void afterTextChanged(Editable s) {}
-
-                    @Override
-                    public void onTextChanged(CharSequence s, int start, int before, int count) {
-                        emitter.onNext(s.toString());
-                    }
-                };
-
-                mQueryEditText.addTextChangedListener(watcher);
-
-                emitter.setCancellable(new Cancellable() {
-                    @Override
-                    public void cancel() throws Exception {
-                        mQueryEditText.removeTextChangedListener(watcher);
-                    }
-                });
-            }
-        });
-
-        return textChangeObservable
-                .filter(new Predicate<String>() {
-                    @Override
-                    public boolean test(String query) throws Exception {
-                        return query.length() >= 3;
-                    }
-                }).debounce(1000, TimeUnit.MILLISECONDS);  // add this line
-    }
 
 
     private void getInvoiceDialog(@NonNull final Invoice invoice) {
-
 
         LayoutInflater inflater = LayoutInflater.from(getActivity());
         final View textenter = inflater.inflate(R.layout.invoice_edit_dialog, null);
