@@ -25,7 +25,6 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ProgressBar;
 import android.widget.Toast;
-
 import com.eusecom.samfantozzi.rxbus.RxBus;
 import java.util.Collections;
 import java.util.List;
@@ -44,10 +43,8 @@ import io.reactivex.functions.Function;
 import io.reactivex.functions.Predicate;
 import rx.schedulers.Schedulers;
 import rx.subscriptions.CompositeSubscription;
-
 import static android.content.ContentValues.TAG;
 import static android.content.Context.SEARCH_SERVICE;
-import static java.lang.System.out;
 import static rx.Observable.empty;
 
 
@@ -81,6 +78,10 @@ public class SupplierListFragment extends Fragment {
     RxBus _rxBus;
 
     AlertDialog dialog = null;
+
+    //searchview
+    private SearchView searchView;
+    private SearchView.OnQueryTextListener onQueryTextListener = null;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -206,7 +207,8 @@ public class SupplierListFragment extends Fragment {
                 .onErrorResumeNext(throwable -> empty())
                 .subscribe(this::setServerInvoices));
 
-        getObservableSearchText();
+        //getObservableSearchText();
+        //getObservableSearchViewText();
 
     }
 
@@ -265,6 +267,81 @@ public class SupplierListFragment extends Fragment {
         mProgressBar.setVisibility(View.GONE);
     }
 
+    //listener to searchview
+    private void getObservableSearchViewText() {
+        Observable<String> buttonClickStream = createButtonClickObservable();
+        Observable<String> searchViewChangeStream = createSearchViewTextChangeObservable();
+
+        Observable<String> searchViewTextObservable = Observable.merge(searchViewChangeStream, buttonClickStream);
+
+        mDisposable = searchViewTextObservable
+                .observeOn(AndroidSchedulers.mainThread())
+                .doOnNext(new Consumer<String>() {
+                    @Override
+                    public void accept(String s) {
+                        showProgressBar();
+                    }
+                })
+                .observeOn(io.reactivex.schedulers.Schedulers.io())
+                .map(new Function<String, List<Invoice>>() {
+                    @Override
+                    public List<Invoice> apply(String query) {
+                        return mSupplierSearchEngine.searchModel(query);
+                    }
+                })
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new Consumer<List<Invoice>>() {
+                    @Override
+                    public void accept(List<Invoice> result) {
+                        hideProgressBar();
+                        showResultAs(result);
+                    }
+                });
+    }
+
+    private Observable<String> createSearchViewTextChangeObservable() {
+        Observable<String> searchViewTextChangeObservable = Observable.create(new ObservableOnSubscribe<String>() {
+            @Override
+            public void subscribe(final ObservableEmitter<String> emitter) throws Exception {
+
+                onQueryTextListener = new SearchView.OnQueryTextListener() {
+                    @Override
+                    public boolean onQueryTextSubmit(String query) {
+                        // use this method when query submitted
+                        Toast.makeText(getActivity(), query, Toast.LENGTH_SHORT).show();
+                        return false;
+                    }
+
+                    @Override
+                    public boolean onQueryTextChange(String newText) {
+                        // use this method for auto complete search process
+                        Toast.makeText(getActivity(), newText, Toast.LENGTH_SHORT).show();
+                        emitter.onNext(newText.toString());
+                        return false;
+                    }
+                };
+
+                searchView.setOnQueryTextListener(onQueryTextListener);
+
+                emitter.setCancellable(new Cancellable() {
+                    @Override
+                    public void cancel() throws Exception {
+                        searchView.setOnQueryTextListener(null);
+                    }
+                });
+            }
+        });
+
+        return searchViewTextChangeObservable
+                .filter(new Predicate<String>() {
+                    @Override
+                    public boolean test(String query) throws Exception {
+                        return query.length() >= 3;
+                    }
+                }).debounce(1000, TimeUnit.MILLISECONDS);  // add this line
+    }
+
+    //watcher to edittext
     private void getObservableSearchText() {
         Observable<String> buttonClickStream = createButtonClickObservable();
         Observable<String> textChangeStream = createTextChangeObservable();
@@ -395,26 +472,11 @@ public class SupplierListFragment extends Fragment {
 
         // Retrieve the SearchView and plug it into SearchManager
         inflater.inflate(R.menu.menu_listdoc, menu);
-        final SearchView searchView = (SearchView) MenuItemCompat.getActionView(menu.findItem(R.id.action_search));
+        searchView = (SearchView) MenuItemCompat.getActionView(menu.findItem(R.id.action_search));
         SearchManager searchManager = (SearchManager) getActivity().getSystemService(SEARCH_SERVICE);
-        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
-            @Override
-            public boolean onQueryTextSubmit(String query) {
-                // use this method when query submitted
-
-                return false;
-            }
-
-            @Override
-            public boolean onQueryTextChange(String newText) {
-                // use this method for auto complete search process
-                Toast.makeText(getActivity(), newText, Toast.LENGTH_SHORT).show();
-                return false;
-            }
-        });
         searchView.setSearchableInfo(searchManager.getSearchableInfo(getActivity().getComponentName()));
 
-
+        getObservableSearchViewText();
     }
 
 
