@@ -16,14 +16,22 @@
 
 package com.eusecom.samfantozzi;
 
+import android.app.SearchManager;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentPagerAdapter;
+import android.support.v4.view.MenuItemCompat;
 import android.support.v4.view.ViewPager;
+import android.support.v7.widget.SearchView;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
+import android.widget.Toast;
+
 import javax.inject.Inject;
 
 
@@ -132,6 +140,48 @@ public class  SupplierListActivity extends BaseListActivity {
 
 
 
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+
+        // Retrieve the SearchView and plug it into SearchManager
+        getMenuInflater().inflate(R.menu.menu_listdoc, menu);
+        final SearchView searchView = (SearchView) MenuItemCompat.getActionView(menu.findItem(R.id.action_search));
+        SearchManager searchManager = (SearchManager) getSystemService(SEARCH_SERVICE);
+        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String query) {
+                // use this method when query submitted
+
+                return false;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String newText) {
+                // use this method for auto complete search process
+                Toast.makeText(SupplierListActivity.this, newText, Toast.LENGTH_SHORT).show();
+                return false;
+            }
+        });
+        searchView.setSearchableInfo(searchManager.getSearchableInfo(getComponentName()));
+
+        return true;
+    }
+
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        int id = item.getItemId();
+
+        //noinspection SimplifiableIfStatement
+        if (id == R.id.action_settings) {
+
+            Intent is = new Intent(getApplicationContext(), SettingsActivity.class);
+            startActivity(is);
+            return true;
+        }
+
+        return super.onOptionsItemSelected(item);
+    }
 
 
 }

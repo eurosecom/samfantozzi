@@ -1,6 +1,7 @@
 package com.eusecom.samfantozzi;
 
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -12,11 +13,15 @@ import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ProgressBar;
+import android.widget.Toast;
+
 import com.eusecom.samfantozzi.rxbus.RxBus;
 import java.util.Collections;
 import java.util.List;
@@ -37,6 +42,7 @@ import rx.schedulers.Schedulers;
 import rx.subscriptions.CompositeSubscription;
 
 import static android.content.ContentValues.TAG;
+import static java.lang.System.out;
 import static rx.Observable.empty;
 
 
@@ -377,5 +383,6 @@ public class SupplierListFragment extends Fragment {
         builder.show();
 
     }
+
 
 }
