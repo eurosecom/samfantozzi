@@ -1,19 +1,23 @@
 package com.eusecom.samfantozzi;
 
+import android.app.SearchManager;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
+import android.support.v4.view.MenuItemCompat;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.SearchView;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
@@ -42,6 +46,7 @@ import rx.schedulers.Schedulers;
 import rx.subscriptions.CompositeSubscription;
 
 import static android.content.ContentValues.TAG;
+import static android.content.Context.SEARCH_SERVICE;
 import static java.lang.System.out;
 import static rx.Observable.empty;
 
@@ -82,6 +87,7 @@ public class SupplierListFragment extends Fragment {
         super.onCreate(savedInstanceState);
 
         ((SamfantozziApp) getActivity().getApplication()).dgaeacomponent().inject(this);
+        setHasOptionsMenu(true);
 
     }
 
@@ -382,6 +388,49 @@ public class SupplierListFragment extends Fragment {
         AlertDialog dialog = builder.create();
         builder.show();
 
+    }
+
+    @Override
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+
+        // Retrieve the SearchView and plug it into SearchManager
+        inflater.inflate(R.menu.menu_listdoc, menu);
+        final SearchView searchView = (SearchView) MenuItemCompat.getActionView(menu.findItem(R.id.action_search));
+        SearchManager searchManager = (SearchManager) getActivity().getSystemService(SEARCH_SERVICE);
+        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String query) {
+                // use this method when query submitted
+
+                return false;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String newText) {
+                // use this method for auto complete search process
+                Toast.makeText(getActivity(), newText, Toast.LENGTH_SHORT).show();
+                return false;
+            }
+        });
+        searchView.setSearchableInfo(searchManager.getSearchableInfo(getActivity().getComponentName()));
+
+
+    }
+
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        int id = item.getItemId();
+
+        //noinspection SimplifiableIfStatement
+        if (id == R.id.action_settings) {
+
+            Intent is = new Intent(getActivity(), SettingsActivity.class);
+            startActivity(is);
+            return true;
+        }
+
+        return super.onOptionsItemSelected(item);
     }
 
 
