@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.MenuItemCompat;
 import android.support.v7.app.AlertDialog;
@@ -124,20 +125,7 @@ public class SupplierListFragment extends Fragment {
     @Override
     public void onDestroy() {
         super.onDestroy();
-        _disposables.dispose();
-        if( mDisposable != null ) {mDisposable.dispose();}
-        mSubscription.unsubscribe();
-        mSubscription.clear();
-
-        try {
-            if (dialog != null && dialog.isShowing()) {
-                dialog.dismiss();
-                dialog=null;
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-
+        unBind();
     }
 
     @Override
@@ -194,6 +182,7 @@ public class SupplierListFragment extends Fragment {
 
         mSubscription = new CompositeSubscription();
 
+        showProgressBar();
         mSubscription.add(mViewModel.getMyInvoicesFromSqlServer("2")
                 .subscribeOn(Schedulers.computation())
                 .observeOn(rx.android.schedulers.AndroidSchedulers.mainThread())
@@ -203,6 +192,7 @@ public class SupplierListFragment extends Fragment {
 
         //getObservableSearchViewText();
 
+        ActivityCompat.invalidateOptionsMenu(getActivity());
     }
 
     private void unBind() {
@@ -219,6 +209,9 @@ public class SupplierListFragment extends Fragment {
         } catch (Exception e) {
             e.printStackTrace();
         }
+        //if (!searchView.isIconified()) {
+        //    searchView.setIconified(true);
+        //}
     }
 
 
@@ -233,6 +226,7 @@ public class SupplierListFragment extends Fragment {
             mAdapter.setAbsserver(invoices);
         }
         nastavResultAs(invoices);
+        hideProgressBar();
     }
 
     protected void showResultAs(List<Invoice> resultAs) {
@@ -262,12 +256,10 @@ public class SupplierListFragment extends Fragment {
 
     //listener to searchview
     private void getObservableSearchViewText() {
-        Observable<String> buttonClickStream = createButtonClickObservable();
+
         Observable<String> searchViewChangeStream = createSearchViewTextChangeObservable();
 
-        Observable<String> searchViewTextObservable = Observable.merge(searchViewChangeStream, buttonClickStream);
-
-        mDisposable = searchViewTextObservable
+        mDisposable = searchViewChangeStream
                 .observeOn(AndroidSchedulers.mainThread())
                 .doOnNext(new Consumer<String>() {
                     @Override
@@ -301,17 +293,23 @@ public class SupplierListFragment extends Fragment {
                     @Override
                     public boolean onQueryTextSubmit(String query) {
                         // use this method when query submitted
-                        Toast.makeText(getActivity(), query, Toast.LENGTH_SHORT).show();
+                        //Toast.makeText(getActivity(), "submit " + query, Toast.LENGTH_SHORT).show();
+                        emitter.onNext(query.toString());
                         return false;
                     }
 
                     @Override
                     public boolean onQueryTextChange(String newText) {
                         // use this method for auto complete search process
-                        Toast.makeText(getActivity(), newText, Toast.LENGTH_SHORT).show();
+                        //Toast.makeText(getActivity(), "change " + newText, Toast.LENGTH_SHORT).show();
                         emitter.onNext(newText.toString());
                         return false;
                     }
+
+
+
+
+
                 };
 
                 searchView.setOnQueryTextListener(onQueryTextListener);
@@ -329,21 +327,10 @@ public class SupplierListFragment extends Fragment {
                 .filter(new Predicate<String>() {
                     @Override
                     public boolean test(String query) throws Exception {
-                        return query.length() >= 3;
+                        return query.length() >= 3 || query.equals("");
                     }
-                }).debounce(1000, TimeUnit.MILLISECONDS);  // add this line
+                }).debounce(300, TimeUnit.MILLISECONDS);  // add this line
     }
-
-    private Observable<String> createButtonClickObservable() {
-        return Observable.create(new ObservableOnSubscribe<String>() {
-
-            @Override
-            public void subscribe(final ObservableEmitter<String> emitter) throws Exception {
-
-            }
-        });
-    }
-
 
 
     private void getInvoiceDialog(@NonNull final Invoice invoice) {
@@ -384,9 +371,9 @@ public class SupplierListFragment extends Fragment {
         searchView = (SearchView) MenuItemCompat.getActionView(menu.findItem(R.id.action_search));
         SearchManager searchManager = (SearchManager) getActivity().getSystemService(SEARCH_SERVICE);
         searchView.setSearchableInfo(searchManager.getSearchableInfo(getActivity().getComponentName()));
-
         getObservableSearchViewText();
     }
+
 
 
     @Override
