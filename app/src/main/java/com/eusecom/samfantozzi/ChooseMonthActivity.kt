@@ -36,10 +36,11 @@ class ChooseMonthActivity : AppCompatActivity() {
         (application as SamfantozziApp).dgaeacomponent().inject(this)
 
         val adapter: ChooseMonthAdapter = ChooseMonthAdapter(ArrayList<Month>()){
-            toast("${it.monthsname + " " + it.monthsnumber } Clicked")
+            toast("${it.monthsname + " " + it.monthsnumber } set")
             val editor = prefs.edit()
             editor.putString("ume", it.monthsnumber).apply();
             editor.commit();
+            finish()
         }
         ChooseMonthActivityUI(adapter).setContentView(this)
 

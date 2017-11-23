@@ -10,6 +10,7 @@ import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.MenuItemCompat;
 import android.support.v7.app.AlertDialog;
+import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.SearchView;
@@ -193,7 +194,8 @@ public class SupplierListFragment extends Fragment {
         //getObservableSearchViewText();
 
         ActivityCompat.invalidateOptionsMenu(getActivity());
-    }
+        ((AppCompatActivity)getActivity()).getSupportActionBar().setTitle(mSharedPreferences.getString("ume", "") + " " + getString(R.string.suppliers));
+ }
 
     private void unBind() {
         mSubscription.unsubscribe();
@@ -209,9 +211,7 @@ public class SupplierListFragment extends Fragment {
         } catch (Exception e) {
             e.printStackTrace();
         }
-        //if (!searchView.isIconified()) {
-        //    searchView.setIconified(true);
-        //}
+
     }
 
 
@@ -380,10 +380,16 @@ public class SupplierListFragment extends Fragment {
     public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();
 
-        //noinspection SimplifiableIfStatement
         if (id == R.id.action_settings) {
 
             Intent is = new Intent(getActivity(), SettingsActivity.class);
+            startActivity(is);
+            return true;
+        }
+
+        if (id == R.id.action_setmonth) {
+
+            Intent is = new Intent(getActivity(), ChooseMonthActivity.class);
             startActivity(is);
             return true;
         }
