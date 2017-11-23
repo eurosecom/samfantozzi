@@ -151,6 +151,10 @@
     //choosecompanyactivity
     <string name="choosecompany">Choose company</string>
 
+    //chooseaccountactivity
+    <string name="chooseaccount">Choose account</string>
+    <string name="action_setaccount">Choose account</string>
+
     //cashlistactivity
     <string name="cashdocuments">Cash documents</string>
     <string name="empty">Empty</string>

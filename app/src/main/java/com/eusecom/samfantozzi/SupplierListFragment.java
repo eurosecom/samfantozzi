@@ -394,6 +394,13 @@ public class SupplierListFragment extends Fragment {
             return true;
         }
 
+        if (id == R.id.action_setaccount) {
+
+            Intent is = new Intent(getActivity(), ChooseAccountActivity.class);
+            startActivity(is);
+            return true;
+        }
+
         return super.onOptionsItemSelected(item);
     }
 

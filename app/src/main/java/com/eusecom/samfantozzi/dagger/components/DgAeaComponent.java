@@ -3,6 +3,7 @@ package com.eusecom.samfantozzi.dagger.components;
 import com.eusecom.samfantozzi.AbsServerAsActivity;
 import com.eusecom.samfantozzi.CashListKtActivity;
 import com.eusecom.samfantozzi.CashListKtFragment;
+import com.eusecom.samfantozzi.ChooseAccountActivity;
 import com.eusecom.samfantozzi.ChooseCompanyActivity;
 import com.eusecom.samfantozzi.ChooseMonthActivity;
 import com.eusecom.samfantozzi.DgAbsServerListFragment;
@@ -29,6 +30,7 @@ public interface DgAeaComponent {
   void inject(CashListKtFragment cashListKtFragment);
   void inject(ChooseMonthActivity chooseMonthActivity);
   void inject(ChooseCompanyActivity chooseCompanyActivity);
+  void inject(ChooseAccountActivity chooseAccountActivity);
 
 
 
