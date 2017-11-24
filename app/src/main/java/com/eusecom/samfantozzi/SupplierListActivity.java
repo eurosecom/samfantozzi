@@ -96,7 +96,8 @@ public class  SupplierListActivity extends BaseListActivity {
                 if(position == 0){
                     FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
                     fab.setVisibility(View.VISIBLE);
-                    getSupportActionBar().setTitle(mSharedPreferences.getString("ume", "") + " " + getString(R.string.suppliers));
+                    getSupportActionBar().setTitle(mSharedPreferences.getString("ume", "") + " "
+                            + mSharedPreferences.getString("doduce", "") + " " +  getString(R.string.suppliers));
                 }
                 if(position == 1){
                     FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);

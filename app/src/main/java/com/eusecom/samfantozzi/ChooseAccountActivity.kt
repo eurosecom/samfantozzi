@@ -12,6 +12,10 @@ import com.eusecom.samfantozzi.models.Employee
 import rx.functions.Action1
 import rx.schedulers.Schedulers
 import rx.subscriptions.CompositeSubscription
+import android.support.v4.app.NotificationCompat.getExtras
+import android.content.Intent
+
+
 
 
 /**
@@ -31,11 +35,19 @@ class ChooseAccountActivity : AppCompatActivity() {
 
     var mSubscription: CompositeSubscription = CompositeSubscription()
 
+    var fromact: String = "0"
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         (application as SamfantozziApp).dgaeacomponent().inject(this)
 
-        val adapter: ChooseMonthAdapter = ChooseMonthAdapter(ArrayList<Month>()){
+        val i = intent
+
+        val extras = i.extras
+        fromact = extras!!.getString("fromact")
+        //toast("fromact " + fromact)
+
+        val adapter: ChooseAccountAdapter = ChooseAccountAdapter(ArrayList<Month>()){
             toast("${it.monthsname + " " + it.monthsnumber } set")
             val editor = prefs.edit()
             editor.putString("ume", it.monthsnumber).apply();
@@ -50,19 +62,31 @@ class ChooseAccountActivity : AppCompatActivity() {
 
     }
 
-    private fun bind(adapter: ChooseMonthAdapter) {
+    private fun bind(adapter: ChooseAccountAdapter) {
 
             mSubscription.add(mViewModel.month
                     .subscribeOn(Schedulers.computation())
                     .observeOn(rx.android.schedulers.AndroidSchedulers.mainThread())
                     .subscribe({ it -> setMonths(it, adapter) }))
 
+            mSubscription.add(mViewModel.accounts
+                    .subscribeOn(Schedulers.computation())
+                    .observeOn(rx.android.schedulers.AndroidSchedulers.mainThread())
+                    .subscribe({ it -> setAccounts(it, adapter) }))
+
+
     }
 
-    private fun setMonths(months: List<Month>, adapter: ChooseMonthAdapter) {
+    private fun setMonths(months: List<Month>, adapter: ChooseAccountAdapter) {
 
         //toast("${months.get(0).monthsname } month0")
         adapter.setdata(months)
+    }
+
+    private fun setAccounts(accounts: List<Account>, adapter: ChooseAccountAdapter) {
+
+        toast("${accounts.get(0).accname } account0")
+        //adapter.setdata(accounts)
     }
 
     override fun onDestroy() {

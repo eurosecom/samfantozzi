@@ -9,7 +9,7 @@ import com.mikepenz.materialdrawer.model.DividerDrawerItem
 
 
 
-class ChooseAccountActivityUI (val mAdapter: ChooseMonthAdapter): AnkoComponent<ChooseAccountActivity>{
+class ChooseAccountActivityUI (val mAdapter: ChooseAccountAdapter): AnkoComponent<ChooseAccountActivity>{
 
     override fun createView(ui: AnkoContext<ChooseAccountActivity>): View = with(ui){
 

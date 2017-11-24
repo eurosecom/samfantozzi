@@ -142,14 +142,25 @@ public class DgAllEmpsAbsMvvmViewModel {
 
     //recyclerview method for ChooseMonthActivity
 
-    //get absences from mock
+    //get months
     public Observable<List<Month>> getMonth() {
 
         String rokx = mSharedPreferences.getString("rok", "0");
 
         return mDataModel.getMonthForYear(rokx);
     }
-    //end get absences from mock
+    //end get months
+
+    //recyclerview method for ChooseAccountActivity
+
+    //get accounts
+    public Observable<List<Account>> getAccounts() {
+
+        String rokx = mSharedPreferences.getString("rok", "0");
+
+        return mDataModel.getAccounts(rokx);
+    }
+    //end get accounts
 
 
     //recyclerview method for ChooseCompanyActivity

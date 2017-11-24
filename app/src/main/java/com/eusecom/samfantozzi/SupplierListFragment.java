@@ -194,7 +194,8 @@ public class SupplierListFragment extends Fragment {
         //getObservableSearchViewText();
 
         ActivityCompat.invalidateOptionsMenu(getActivity());
-        ((AppCompatActivity)getActivity()).getSupportActionBar().setTitle(mSharedPreferences.getString("ume", "") + " " + getString(R.string.suppliers));
+        ((AppCompatActivity)getActivity()).getSupportActionBar().setTitle(mSharedPreferences.getString("ume", "") + " "
+                + mSharedPreferences.getString("doduce", "") + " " +  getString(R.string.suppliers));
  }
 
     private void unBind() {
@@ -397,6 +398,9 @@ public class SupplierListFragment extends Fragment {
         if (id == R.id.action_setaccount) {
 
             Intent is = new Intent(getActivity(), ChooseAccountActivity.class);
+            Bundle extras = new Bundle();
+            extras.putString("fromact", "2");
+            is.putExtras(extras);
             startActivity(is);
             return true;
         }

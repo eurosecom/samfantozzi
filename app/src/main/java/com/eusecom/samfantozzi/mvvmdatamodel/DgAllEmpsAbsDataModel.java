@@ -5,6 +5,8 @@ import android.support.annotation.NonNull;
 import java.util.ArrayList;
 import java.util.List;
 import rx.Observable;
+
+import com.eusecom.samfantozzi.Account;
 import com.eusecom.samfantozzi.CompanyKt;
 import com.eusecom.samfantozzi.Invoice;
 import com.eusecom.samfantozzi.Month;
@@ -132,6 +134,19 @@ public class DgAllEmpsAbsDataModel implements DgAllEmpsAbsIDataModel {
 
         return mAbsServerService.getCompaniesFromServer(userhash, userid);
 
+    }
+
+    //recyclerview method for ChooseAccountActivity
+
+    @Override
+    public Observable<List<Account>> getAccounts(String rokx) {
+
+        List<Account> mymonths = new ArrayList<>();
+        Account newmonth = new Account("32100", "Dodav", "2");
+        mymonths.add(newmonth);
+
+
+        return Observable.just(mymonths);
     }
 
     //recyclerview datamodel for SupplierListActivity
