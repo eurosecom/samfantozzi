@@ -154,7 +154,7 @@ public class DgAllEmpsAbsMvvmViewModel {
     //recyclerview method for ChooseAccountActivity
 
     //get accounts from MySql server
-    public Observable<List<Invoice>> getMyAccountsFromSqlServer(String drh) {
+    public Observable<List<Account>> getMyAccountsFromSqlServer(String drh) {
 
         Random r = new Random();
         double d = -10.0 + r.nextDouble() * 20.0;

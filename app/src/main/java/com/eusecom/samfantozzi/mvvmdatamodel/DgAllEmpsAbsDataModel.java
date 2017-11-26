@@ -138,7 +138,7 @@ public class DgAllEmpsAbsDataModel implements DgAllEmpsAbsIDataModel {
 
     //recyclerview method for ChooseAccountActivity
     @Override
-    public Observable<List<Invoice>> getAccountsFromMysqlServer(String userhash, String userid, String fromfir
+    public Observable<List<Account>> getAccountsFromMysqlServer(String userhash, String userid, String fromfir
             , String vyb_rok, String drh) {
 
         return mAbsServerService.getAccountsFromSqlServer(userhash, userid, fromfir, vyb_rok, drh);
@@ -149,7 +149,7 @@ public class DgAllEmpsAbsDataModel implements DgAllEmpsAbsIDataModel {
     public Observable<List<Account>> getAccounts(String rokx) {
 
         List<Account> mymonths = new ArrayList<>();
-        Account newmonth = new Account("Dodavatelia", "32100", "2");
+        Account newmonth = new Account("Dodavatelia", "32100", "830001", "0", "2");
         mymonths.add(newmonth);
 
 

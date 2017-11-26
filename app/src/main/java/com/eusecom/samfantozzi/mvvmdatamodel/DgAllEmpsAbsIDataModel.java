@@ -30,7 +30,7 @@ public interface DgAllEmpsAbsIDataModel {
 
     //recyclerview method for ChooseAccountActivity
     @NonNull
-    public Observable<List<Invoice>> getAccountsFromMysqlServer(String userhash, String userid, String fromfir
+    public Observable<List<Account>> getAccountsFromMysqlServer(String userhash, String userid, String fromfir
             , String vyb_rok, String drh);
 
     @NonNull

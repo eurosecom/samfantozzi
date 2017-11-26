@@ -1,5 +1,6 @@
 package com.eusecom.samfantozzi.retrofit;
 
+import com.eusecom.samfantozzi.Account;
 import com.eusecom.samfantozzi.CompanyKt;
 import com.eusecom.samfantozzi.Invoice;
 import com.eusecom.samfantozzi.models.Attendance;
@@ -25,7 +26,7 @@ public interface AbsServerService {
             , @Query("uce") String uce, @Query("ume") String ume);
 
     @GET("/androidfantozzi/get_accounttypes.php")
-    Observable<List<Invoice>> getAccountsFromSqlServer(@Query("userhash") String userhash
+    Observable<List<Account>> getAccountsFromSqlServer(@Query("userhash") String userhash
             , @Query("userid") String userid, @Query("fromfir") String fromfir
             , @Query("vyb_rok") String vyb_rok, @Query("drh") String drh);
 

@@ -45,6 +45,7 @@ class ChooseAccountActivity : AppCompatActivity() {
             toast("${it.accname + " " + it.accnumber } set")
             val editor = prefs.edit()
             editor.putString("doduce", it.accnumber).apply();
+            editor.putString("doddok", it.accdoc).apply();
             editor.commit();
             finish()
         }
@@ -58,13 +59,6 @@ class ChooseAccountActivity : AppCompatActivity() {
 
     private fun bind(adapter: ChooseAccountAdapter) {
 
-            mSubscription.add(mViewModel.accounts
-                    .subscribeOn(Schedulers.computation())
-                    .observeOn(rx.android.schedulers.AndroidSchedulers.mainThread())
-                    .doOnError { throwable -> Log.e("ChooseAccountAktivity ", "Error Throwable " + throwable.message) }
-                    .onErrorResumeNext({ throwable -> Observable.empty() })
-                    .subscribe({ it -> setAccounts(it, adapter) }))
-
             mSubscription.add(mViewModel.getMyAccountsFromSqlServer(fromact)
                     .subscribeOn(Schedulers.computation())
                     .observeOn(rx.android.schedulers.AndroidSchedulers.mainThread())
@@ -75,16 +69,11 @@ class ChooseAccountActivity : AppCompatActivity() {
     }
 
 
-    private fun setAccounts(accounts: List<Account>, adapter: ChooseAccountAdapter) {
 
-        //toast("${accounts.get(0).accname } account0")
+    private fun setAccountsFromServer(accounts: List<Account>, adapter: ChooseAccountAdapter) {
+
+        //toast("${accounts.get(0).accname } invoice0")
         adapter.setdata(accounts)
-    }
-
-    private fun setAccountsFromServer(invoices: List<Invoice>, adapter: ChooseAccountAdapter) {
-
-        toast("${invoices.get(0).nai } invoice0")
-        //adapter.setdata(invoices)
     }
 
     override fun onDestroy() {
