@@ -3,19 +3,13 @@ package com.eusecom.samfantozzi
 import android.content.SharedPreferences
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
-import dagger.android.AndroidInjection
 import org.jetbrains.anko.setContentView
 import org.jetbrains.anko.toast
 import javax.inject.Inject
-import android.R.id.edit
-import com.eusecom.samfantozzi.models.Employee
-import rx.functions.Action1
 import rx.schedulers.Schedulers
 import rx.subscriptions.CompositeSubscription
-import android.support.v4.app.NotificationCompat.getExtras
-import android.content.Intent
-
-
+import android.util.Log
+import rx.Observable
 
 
 /**
@@ -47,10 +41,10 @@ class ChooseAccountActivity : AppCompatActivity() {
         fromact = extras!!.getString("fromact")
         //toast("fromact " + fromact)
 
-        val adapter: ChooseAccountAdapter = ChooseAccountAdapter(ArrayList<Month>()){
-            toast("${it.monthsname + " " + it.monthsnumber } set")
+        val adapter: ChooseAccountAdapter = ChooseAccountAdapter(ArrayList<Account>()){
+            toast("${it.accname + " " + it.accnumber } set")
             val editor = prefs.edit()
-            editor.putString("ume", it.monthsnumber).apply();
+            editor.putString("doduce", it.accnumber).apply();
             editor.commit();
             finish()
         }
@@ -64,29 +58,33 @@ class ChooseAccountActivity : AppCompatActivity() {
 
     private fun bind(adapter: ChooseAccountAdapter) {
 
-            mSubscription.add(mViewModel.month
-                    .subscribeOn(Schedulers.computation())
-                    .observeOn(rx.android.schedulers.AndroidSchedulers.mainThread())
-                    .subscribe({ it -> setMonths(it, adapter) }))
-
             mSubscription.add(mViewModel.accounts
                     .subscribeOn(Schedulers.computation())
                     .observeOn(rx.android.schedulers.AndroidSchedulers.mainThread())
+                    .doOnError { throwable -> Log.e("ChooseAccountAktivity ", "Error Throwable " + throwable.message) }
+                    .onErrorResumeNext({ throwable -> Observable.empty() })
                     .subscribe({ it -> setAccounts(it, adapter) }))
 
+            mSubscription.add(mViewModel.getMyAccountsFromSqlServer(fromact)
+                    .subscribeOn(Schedulers.computation())
+                    .observeOn(rx.android.schedulers.AndroidSchedulers.mainThread())
+                    .doOnError { throwable -> Log.e("ChooseAccountAktivity ", "Error Throwable " + throwable.message) }
+                    .onErrorResumeNext({ throwable -> Observable.empty() })
+                    .subscribe({ it -> setAccountsFromServer(it, adapter) }))
 
     }
 
-    private fun setMonths(months: List<Month>, adapter: ChooseAccountAdapter) {
-
-        //toast("${months.get(0).monthsname } month0")
-        adapter.setdata(months)
-    }
 
     private fun setAccounts(accounts: List<Account>, adapter: ChooseAccountAdapter) {
 
-        toast("${accounts.get(0).accname } account0")
-        //adapter.setdata(accounts)
+        //toast("${accounts.get(0).accname } account0")
+        adapter.setdata(accounts)
+    }
+
+    private fun setAccountsFromServer(invoices: List<Invoice>, adapter: ChooseAccountAdapter) {
+
+        toast("${invoices.get(0).nai } invoice0")
+        //adapter.setdata(invoices)
     }
 
     override fun onDestroy() {
@@ -95,23 +93,5 @@ class ChooseAccountActivity : AppCompatActivity() {
         mSubscription.clear()
     }
 
-    fun setData(adapter:ChooseMonthAdapter) {
 
-        val rokx = prefs.getString("rok", "0")
-        val alMyMonth = ArrayList<Month>()
-        alMyMonth.add(Month(getString(R.string.january), "01." + rokx, "1"))
-        alMyMonth.add(Month(getString(R.string.february), "02." + rokx, "2"))
-        alMyMonth.add(Month(getString(R.string.march), "03." + rokx, "3"))
-        alMyMonth.add(Month(getString(R.string.april), "04." + rokx, "4"))
-        alMyMonth.add(Month(getString(R.string.may), "05." + rokx, "5"))
-        alMyMonth.add(Month(getString(R.string.june), "06." + rokx, "6"))
-        alMyMonth.add(Month(getString(R.string.july), "07." + rokx, "7"))
-        alMyMonth.add(Month(getString(R.string.august), "08." + rokx, "8"))
-        alMyMonth.add(Month(getString(R.string.september), "09." + rokx, "9"))
-        alMyMonth.add(Month(getString(R.string.october), "10." + rokx, "10"))
-        alMyMonth.add(Month(getString(R.string.november), "11." + rokx, "11"))
-        alMyMonth.add(Month(getString(R.string.december), "12." + rokx, "12"))
-        adapter.setdata(alMyMonth)
-
-    }
 }

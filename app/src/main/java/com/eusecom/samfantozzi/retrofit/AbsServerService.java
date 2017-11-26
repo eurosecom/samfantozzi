@@ -24,6 +24,11 @@ public interface AbsServerService {
             , @Query("vyb_rok") String vyb_rok, @Query("drh") String drh
             , @Query("uce") String uce, @Query("ume") String ume);
 
+    @GET("/androidfantozzi/get_accounttypes.php")
+    Observable<List<Invoice>> getAccountsFromSqlServer(@Query("userhash") String userhash
+            , @Query("userid") String userid, @Query("fromfir") String fromfir
+            , @Query("vyb_rok") String vyb_rok, @Query("drh") String drh);
+
     @GET("/attendance/absserver.php")
     Observable<List<Attendance>> getInvoicesFromServer(@Query("fromfir") String fromfir);
 

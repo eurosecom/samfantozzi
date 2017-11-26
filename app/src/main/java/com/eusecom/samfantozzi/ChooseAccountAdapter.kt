@@ -9,7 +9,7 @@ import com.squareup.picasso.Picasso
 import org.jetbrains.anko.AnkoContext
 
 
-class ChooseAccountAdapter(var mList: MutableList<Month>, val listener: (Month) -> Unit) : RecyclerView.Adapter<ChooseAccountAdapter.ViewHolder>() {
+class ChooseAccountAdapter(var mList: MutableList<Account>, val listener: (Account) -> Unit) : RecyclerView.Adapter<ChooseAccountAdapter.ViewHolder>() {
 
     override fun onBindViewHolder(holder: ViewHolder?, position: Int) {
         holder?.bindItem(mList[position], listener)
@@ -29,18 +29,18 @@ class ChooseAccountAdapter(var mList: MutableList<Month>, val listener: (Month) 
         val accNumber = itemView?.findViewById<TextView>(R.id.accnumber)
         val accImage = itemView?.findViewById<ImageView>(R.id.accimg)
 
-        fun bindItem(month: Month, listener: (Month) -> Unit) = with(itemView) {
+        fun bindItem(month: Account, listener: (Account) -> Unit) = with(itemView) {
 
-            accName?.setText(month.monthsname)
-            accNumber?.setText(month.monthsnumber)
+            accName?.setText(month.accname)
+            accNumber?.setText(month.accnumber)
             Picasso.with(itemView.context).load(R.drawable.ic_history_black_24dp).resize(120, 120).into(accImage)
             itemView.setOnClickListener{listener(month)}
 
         }
     }
 
-    fun setdata(list: List<Month>){
-        mList = list as MutableList<Month>
+    fun setdata(list: List<Account>){
+        mList = list as MutableList<Account>
         notifyDataSetChanged()
     }
 }

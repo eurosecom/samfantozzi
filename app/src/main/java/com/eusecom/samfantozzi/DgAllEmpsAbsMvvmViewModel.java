@@ -153,6 +153,35 @@ public class DgAllEmpsAbsMvvmViewModel {
 
     //recyclerview method for ChooseAccountActivity
 
+    //get accounts from MySql server
+    public Observable<List<Invoice>> getMyAccountsFromSqlServer(String drh) {
+
+        Random r = new Random();
+        double d = -10.0 + r.nextDouble() * 20.0;
+        String ds = String.valueOf(d);
+
+        String usuidx = mSharedPreferences.getString("usuid", "");
+        String userxplus =  ds + "/" + usuidx + "/" + ds;
+        String encrypted = "";
+
+
+        try {
+            encrypted = mMcrypt.bytesToHex( mMcrypt.encrypt(userxplus) );
+        } catch (Exception e1) {
+            // TODO Auto-generated catch block
+            e1.printStackTrace();
+        }
+        Log.d("userxplus ", encrypted + " " + ds);
+        	/* Decrypt */
+        //String decrypted = new String( mMcrypt.decrypt( encrypted ) );
+
+        String firx = mSharedPreferences.getString("fir", "");
+        String rokx = mSharedPreferences.getString("rok", "");
+
+        return mDataModel.getAccountsFromMysqlServer(encrypted, ds, firx, rokx, drh);
+    }
+    //end get accounts from MySql server
+
     //get accounts
     public Observable<List<Account>> getAccounts() {
 
