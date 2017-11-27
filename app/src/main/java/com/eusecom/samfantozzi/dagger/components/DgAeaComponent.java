@@ -8,6 +8,7 @@ import com.eusecom.samfantozzi.ChooseMonthActivity;
 import com.eusecom.samfantozzi.DgAbsServerListFragment;
 import com.eusecom.samfantozzi.DgAeaActivity;
 import com.eusecom.samfantozzi.DgAeaListFragment;
+import com.eusecom.samfantozzi.InvoiceListFragment;
 import com.eusecom.samfantozzi.InvoiceListKtActivity;
 import com.eusecom.samfantozzi.SupplierListActivity;
 import com.eusecom.samfantozzi.SupplierListFragment;
@@ -27,6 +28,7 @@ public interface DgAeaComponent {
   void inject(DgAeaListFragment dgaeafragment);
   void inject(DgAbsServerListFragment absserverfragment);
   void inject(CashListKtFragment cashListKtFragment);
+  void inject(InvoiceListFragment invoicefragment);
   void inject(InvoiceListKtActivity invoiceListKtActivity);
   void inject(ChooseMonthActivity chooseMonthActivity);
   void inject(ChooseCompanyActivity chooseCompanyActivity);

@@ -51,8 +51,6 @@ public class  SupplierListActivity extends BaseListActivity {
 
         ((SamfantozziApp) getApplication()).dgaeacomponent().inject(this);
 
-        getSupportActionBar().setTitle(mSharedPreferences.getString("ume", "") + " " + getString(R.string.suppliers));
-
             // Create the adapter that will return a fragment for each section
             mPagerAdapter = new FragmentPagerAdapter(getSupportFragmentManager()) {
                 private final Fragment[] mFragments = new Fragment[]{
