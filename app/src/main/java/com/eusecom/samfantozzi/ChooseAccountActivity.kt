@@ -37,6 +37,7 @@ class ChooseAccountActivity : AppCompatActivity() {
 
         val i = intent
 
+        //1=customers invoice, 2=supliers invoice, 3=cash document, 4=bank document, 5=internal document
         val extras = i.extras
         fromact = extras!!.getString("fromact")
         //toast("fromact " + fromact)
@@ -44,8 +45,23 @@ class ChooseAccountActivity : AppCompatActivity() {
         val adapter: ChooseAccountAdapter = ChooseAccountAdapter(ArrayList<Account>()){
             toast("${it.accname + " " + it.accnumber } set")
             val editor = prefs.edit()
-            editor.putString("doduce", it.accnumber).apply();
-            editor.putString("doddok", it.accdoc).apply();
+            if ( fromact.equals("1")){
+                editor.putString("odbuce", it.accnumber).apply();
+                editor.putString("odbdok", it.accdoc).apply();
+            }
+            if ( fromact.equals("2")){
+                editor.putString("doduce", it.accnumber).apply();
+                editor.putString("doddok", it.accdoc).apply();
+            }
+            if ( fromact.equals("3")){
+                editor.putString("pokluce", it.accnumber).apply();
+                editor.putString("pokldok", it.accdoc).apply();
+                editor.putString("pokldov", it.accdov).apply();
+            }
+            if ( fromact.equals("4")){
+                editor.putString("bankuce", it.accnumber).apply();
+                editor.putString("bankdok", it.accdoc).apply();
+            }
             editor.commit();
             finish()
         }
