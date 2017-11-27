@@ -63,11 +63,12 @@ class MainFantozziActivity : AppCompatActivity() {
         }
 
         button2.setOnClickListener {
-            _ -> navigateToAbsServer()
+            //to remove _ -> navigateToAbsServer()
+            _ -> navigateToDgAeaActivity()
         }
 
         button3.setOnClickListener {
-            _ -> navigateToDgAeaActivity()
+            _ -> navigateToInvoiceListKt()
         }
 
         button4.setOnClickListener {
@@ -242,10 +243,15 @@ class MainFantozziActivity : AppCompatActivity() {
         startActivity<CashListKtActivity>()
     }
 
-    fun navigateToAbsServer(){
-        val intent = Intent(this, AbsServerAsActivity::class.java)
-        startActivity(intent)
+    fun navigateToInvoiceListKt(){
+        startActivity<InvoiceListKtActivity>()
     }
+
+    //to remove
+    // fun navigateToAbsServer(){
+    //    val intent = Intent(this, AbsServerAsActivity::class.java)
+    //    startActivity(intent)
+    //}
 
     fun navigateToDgAeaActivity(){
         val intent = Intent(this, DgAeaActivity::class.java)

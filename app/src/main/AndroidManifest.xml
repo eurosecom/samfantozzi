@@ -26,9 +26,9 @@
         <activity android:name=".ChooseMonthActivity"/>
         <activity android:name=".ChooseAccountActivity"/>
         <activity android:name=".SupplierListActivity"/>
+        <activity android:name=".InvoiceListKtActivity"/>
         <activity android:name=".CashListKtActivity"/>
 
-        <activity android:name=".AbsServerAsActivity"/>
         <activity android:name=".DgAeaActivity"/>
         <activity android:name=".Detail2Activity"/>
     </application>
