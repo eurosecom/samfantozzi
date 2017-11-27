@@ -33,7 +33,7 @@ class ChooseAccountAdapter(var mList: MutableList<Account>, val listener: (Accou
 
             accName?.setText(month.accname)
             accNumber?.setText(month.accnumber)
-            Picasso.with(itemView.context).load(R.drawable.ic_history_black_24dp).resize(120, 120).into(accImage)
+            Picasso.with(itemView.context).load(R.drawable.ic_call_received_black_24dp).resize(120, 120).into(accImage)
             itemView.setOnClickListener{listener(month)}
 
         }
