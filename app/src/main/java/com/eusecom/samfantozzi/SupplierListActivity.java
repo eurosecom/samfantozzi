@@ -24,6 +24,9 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.view.View;
+
+import com.eusecom.samfantozzi.rxbus.RxBus;
+
 import javax.inject.Inject;
 
 
@@ -42,6 +45,9 @@ public class  SupplierListActivity extends BaseListActivity {
 
     @Inject
     SharedPreferences mSharedPreferences;
+
+    @Inject
+    RxBus _rxBus;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -114,7 +120,7 @@ public class  SupplierListActivity extends BaseListActivity {
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(v -> {
 
-
+            _rxBus.send(new SupplierListFragment.ClickFobEvent());
 
             }
         );

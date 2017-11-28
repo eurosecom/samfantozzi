@@ -149,8 +149,8 @@ public class SupplierListFragment extends Fragment {
 
         _disposables
                 .add(tapEventEmitter.subscribe(event -> {
-                    if (event instanceof DgAeaListFragment.ClickFobEvent) {
-                        Log.d("SupplierActivity  ", " fobClick ");
+                    if (event instanceof SupplierListFragment.ClickFobEvent) {
+                        Log.d("SupplierListFragment  ", " fobClick ");
                         //String serverx = "AbsServerListFragment fobclick";
                         //Toast.makeText(getActivity(), serverx, Toast.LENGTH_SHORT).show();
 
