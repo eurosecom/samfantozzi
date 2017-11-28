@@ -149,8 +149,8 @@ public class InvoiceListFragment extends Fragment {
 
         _disposables
                 .add(tapEventEmitter.subscribe(event -> {
-                    if (event instanceof DgAeaListFragment.ClickFobEvent) {
-                        Log.d("SupplierActivity  ", " fobClick ");
+                    if (event instanceof InvoiceListFragment.ClickFobEvent) {
+                        Log.d("InvoiceListFragment  ", " fobClick ");
                         //String serverx = "AbsServerListFragment fobclick";
                         //Toast.makeText(getActivity(), serverx, Toast.LENGTH_SHORT).show();
 
@@ -161,7 +161,7 @@ public class InvoiceListFragment extends Fragment {
                         String usnamex = ((Invoice) event).getDok();
 
 
-                        Log.d("SupplierListFragment ",  usnamex);
+                        Log.d("InvoiceListFragment ",  usnamex);
                         getInvoiceDialog(((Invoice) event));
                         //String serverx = "DgAeaListFragment " + usnamex;
                         //Toast.makeText(getActivity(), serverx, Toast.LENGTH_SHORT).show();
@@ -184,7 +184,7 @@ public class InvoiceListFragment extends Fragment {
         mSubscription = new CompositeSubscription();
 
         showProgressBar();
-        mSubscription.add(mViewModel.getMyInvoicesFromSqlServer("2")
+        mSubscription.add(mViewModel.getMyInvoicesFromSqlServer("1")
                 .subscribeOn(Schedulers.computation())
                 .observeOn(rx.android.schedulers.AndroidSchedulers.mainThread())
                 .doOnError(throwable -> Log.e(TAG, "Error Throwable " + throwable.getMessage()))
@@ -195,7 +195,7 @@ public class InvoiceListFragment extends Fragment {
 
         ActivityCompat.invalidateOptionsMenu(getActivity());
         ((AppCompatActivity)getActivity()).getSupportActionBar().setTitle(mSharedPreferences.getString("ume", "") + " "
-                + mSharedPreferences.getString("doduce", "") + " " +  getString(R.string.customers));
+                + mSharedPreferences.getString("odbuce", "") + " " +  getString(R.string.customers));
  }
 
     private void unBind() {

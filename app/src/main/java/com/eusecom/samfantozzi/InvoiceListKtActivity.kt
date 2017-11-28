@@ -1,6 +1,5 @@
 package com.eusecom.samfantozzi
 
-import android.content.Intent
 import android.content.SharedPreferences
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
@@ -9,14 +8,9 @@ import android.support.design.widget.TabLayout
 import android.support.v4.app.Fragment
 import android.support.v4.app.FragmentPagerAdapter
 import android.support.v4.view.ViewPager
-import android.util.Log
-import android.view.Menu
-import android.view.MenuItem
 import android.view.View
+import com.eusecom.samfantozzi.rxbus.RxBus
 import org.jetbrains.anko.setContentView
-import rx.Observable
-import rx.schedulers.Schedulers
-import rx.subscriptions.CompositeSubscription
 import javax.inject.Inject
 
 /**
@@ -32,7 +26,9 @@ class InvoiceListKtActivity : AppCompatActivity() {
     @Inject
     lateinit var mViewModel: DgAllEmpsAbsMvvmViewModel
 
-    var mSubscription: CompositeSubscription = CompositeSubscription()
+    @Inject
+    lateinit var _rxBus: RxBus
+
     private var mPagerAdapter: FragmentPagerAdapter? = null
     private var mViewPager: ViewPager? = null
 
@@ -41,7 +37,7 @@ class InvoiceListKtActivity : AppCompatActivity() {
         (application as SamfantozziApp).dgaeacomponent().inject(this)
 
         //setContentView(R.layout.activity_cashlist)
-        InvoiceListKtActivityUI().setContentView(this)
+        InvoiceListKtActivityUI(_rxBus).setContentView(this)
 
         // Create the adapter that will return a fragment for each section
         mPagerAdapter = object : FragmentPagerAdapter(supportFragmentManager) {
@@ -74,15 +70,15 @@ class InvoiceListKtActivity : AppCompatActivity() {
                 override fun onPageSelected(position: Int) {
                     // Check if this is the page you want.
                     if (position == 0) {
-                        val fab = findViewById<View>(R.id.fab) as FloatingActionButton
-                        fab.visibility = View.VISIBLE
-                        supportActionBar!!.setTitle(prefs.getString("ume", "") + " " + getString(R.string.cashdocuments))
+                        val fabinvoice = findViewById<View>(R.id.fabinvoice) as FloatingActionButton
+                        fabinvoice.visibility = View.VISIBLE
+                        supportActionBar!!.setTitle(prefs.getString("ume", "") + " " + getString(R.string.customers))
                     }
                     if (position == 1) {
-                        val fab = findViewById<View>(R.id.fab) as FloatingActionButton
+                        val fabinvoice = findViewById<View>(R.id.fabinvoice) as FloatingActionButton
                         //fab.setVisibility(View.GONE);
-                        fab.visibility = View.VISIBLE
-                        supportActionBar!!.setTitle(getString(R.string.action_absmysql))
+                        fabinvoice.visibility = View.VISIBLE
+                        supportActionBar!!.setTitle(getString(R.string.empty))
                     }
 
                 }
@@ -92,56 +88,13 @@ class InvoiceListKtActivity : AppCompatActivity() {
         tabLayout.setupWithViewPager(mViewPager)
 
 
-    }
-
-    private fun bind() {
-
-        mSubscription.add(mViewModel.myCompaniesFromServer
-                .subscribeOn(Schedulers.computation())
-                .observeOn(rx.android.schedulers.AndroidSchedulers.mainThread())
-                .doOnError { throwable -> Log.e("ChooseCompanyAktivity ", "Error Throwable " + throwable.message) }
-                .onErrorResumeNext({ throwable -> Observable.empty() })
-                .subscribe({ it -> setCompanies(it) }))
-
-
-    }
-
-
-    private fun setCompanies(companies: List<CompanyKt>) {
-
-
 
     }
 
     override fun onDestroy() {
         super.onDestroy()
-        mSubscription?.unsubscribe()
-        mSubscription?.clear()
     }
 
-
-    override fun onCreateOptionsMenu(menu: Menu): Boolean {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        menuInflater.inflate(R.menu.menu_main, menu)
-        return true
-    }
-
-    override fun onOptionsItemSelected(item: MenuItem) = when (item.itemId) {
-        R.id.action_settings -> consume { navigateToSettings() }
-
-        else -> super.onOptionsItemSelected(item)
-    }
-
-    fun navigateToSettings(){
-        val intent = Intent(this, SettingsActivity::class.java)
-        startActivity(intent)
-    }
-
-    //consume oncreateoptionmenu
-    inline fun consume(f: () -> Unit): Boolean {
-        f()
-        return true
-    }
 
 
 }
