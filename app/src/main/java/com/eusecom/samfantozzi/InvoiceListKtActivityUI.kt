@@ -48,8 +48,8 @@ class InvoiceListKtActivityUI (val _rxBus: RxBus): AnkoComponent<InvoiceListKtAc
                 lparams {
                     width = wrapContent
                     height = wrapContent
-                    rightMargin = 10
-                    bottomMargin = 10
+                    rightMargin = 40
+                    bottomMargin = 40
                     alignParentBottom()
                     alignParentRight()
                 }

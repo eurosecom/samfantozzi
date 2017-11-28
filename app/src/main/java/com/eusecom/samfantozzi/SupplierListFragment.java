@@ -187,11 +187,12 @@ public class SupplierListFragment extends Fragment {
         mSubscription.add(mViewModel.getMyInvoicesFromSqlServer("2")
                 .subscribeOn(Schedulers.computation())
                 .observeOn(rx.android.schedulers.AndroidSchedulers.mainThread())
-                .doOnError(throwable -> Log.e(TAG, "Error Throwable " + throwable.getMessage()))
+                .doOnError(throwable -> { Log.e(TAG, "Error SupplierListFragment " + throwable.getMessage());
+                    hideProgressBar();
+                    Toast.makeText(getActivity(), "Server not connected", Toast.LENGTH_SHORT).show();
+                })
                 .onErrorResumeNext(throwable -> empty())
                 .subscribe(this::setServerInvoices));
-
-        //getObservableSearchViewText();
 
         ActivityCompat.invalidateOptionsMenu(getActivity());
         ((AppCompatActivity)getActivity()).getSupportActionBar().setTitle(mSharedPreferences.getString("ume", "") + " "
@@ -212,6 +213,8 @@ public class SupplierListFragment extends Fragment {
         } catch (Exception e) {
             e.printStackTrace();
         }
+
+        hideProgressBar();
 
     }
 

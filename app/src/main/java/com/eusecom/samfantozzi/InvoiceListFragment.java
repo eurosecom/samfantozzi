@@ -126,7 +126,7 @@ public class InvoiceListFragment extends Fragment {
     @Override
     public void onDestroy() {
         super.onDestroy();
-        unBind();
+        //unBind();
     }
 
     @Override
@@ -187,11 +187,12 @@ public class InvoiceListFragment extends Fragment {
         mSubscription.add(mViewModel.getMyInvoicesFromSqlServer("1")
                 .subscribeOn(Schedulers.computation())
                 .observeOn(rx.android.schedulers.AndroidSchedulers.mainThread())
-                .doOnError(throwable -> Log.e(TAG, "Error Throwable " + throwable.getMessage()))
+                .doOnError(throwable -> { Log.e(TAG, "Error InvoiceListFragment " + throwable.getMessage());
+                    hideProgressBar();
+                    Toast.makeText(getActivity(), "Server not connected", Toast.LENGTH_SHORT).show();
+                })
                 .onErrorResumeNext(throwable -> empty())
                 .subscribe(this::setServerInvoices));
-
-        //getObservableSearchViewText();
 
         ActivityCompat.invalidateOptionsMenu(getActivity());
         ((AppCompatActivity)getActivity()).getSupportActionBar().setTitle(mSharedPreferences.getString("ume", "") + " "
@@ -199,6 +200,7 @@ public class InvoiceListFragment extends Fragment {
  }
 
     private void unBind() {
+        Log.e(TAG, "InvoiceListFragment unbind() ");
         mSubscription.unsubscribe();
         mSubscription.clear();
         if( mDisposable != null ) {mDisposable.dispose();}
@@ -212,6 +214,8 @@ public class InvoiceListFragment extends Fragment {
         } catch (Exception e) {
             e.printStackTrace();
         }
+
+        hideProgressBar();
 
     }
 
