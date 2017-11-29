@@ -3,6 +3,7 @@ package com.eusecom.samfantozzi
 import android.content.SharedPreferences
 import android.os.Bundle
 import android.support.v4.app.Fragment
+import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
 import android.util.Log
@@ -35,8 +36,6 @@ class CashListKtFragment : Fragment() {
     private var mRecycler: RecyclerView? = null
     private var mManager: LinearLayoutManager? = null
 
-    protected var mQueryEditText: EditText? = null
-    protected var mSearchButton: Button? = null
     private var mProgressBar: ProgressBar? = null
 
     private var mSubscription: CompositeSubscription? = null
@@ -93,9 +92,6 @@ class CashListKtFragment : Fragment() {
 
         mRecycler = rootView.findViewById<View>(R.id.list) as RecyclerView
         mRecycler?.setHasFixedSize(true)
-
-        mQueryEditText = rootView.findViewById<View>(R.id.query_edit_text) as EditText
-        mSearchButton = rootView.findViewById<View>(R.id.search_button) as Button
         mProgressBar = rootView.findViewById<View>(R.id.progress_bar) as ProgressBar
 
         return rootView
@@ -105,10 +101,6 @@ class CashListKtFragment : Fragment() {
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
 
-        //(activity.application as SamfantozziApp).dgaeacomponent().inject(this)
-
-        val umex = mSharedPreferences.getString("ume", "")
-        toast(" umex " + umex)
         mAdapter = AbsServerAsAdapter(_rxBus)
         // Set up Layout Manager, reverse layout
         mManager = LinearLayoutManager(context)
@@ -118,16 +110,6 @@ class CashListKtFragment : Fragment() {
         mRecycler?.setAdapter(mAdapter)
 
     }//end of onActivityCreated
-
-    override fun onResume() {
-        super.onResume()
-        bind()
-    }
-
-    override fun onPause() {
-        super.onPause()
-        unBind()
-    }
 
     private fun bind() {
         mSubscription = CompositeSubscription()
@@ -139,12 +121,26 @@ class CashListKtFragment : Fragment() {
                 .onErrorResumeNext({ throwable -> Observable.empty() })
                 .subscribe({ it -> setAbsences(it) }))
 
+        mSubscription?.add(mViewModel.getMyInvoicesFromSqlServer("1")
+                .subscribeOn(Schedulers.computation())
+                .observeOn(rx.android.schedulers.AndroidSchedulers.mainThread())
+                .doOnError { throwable ->
+                    Log.e("CashListKtFragment", "Error Throwable " + throwable.message)
+                    //hideProgressBar()
+                    toast("Server not connected")
+                }
+                .onErrorResumeNext { throwable -> Observable.empty() }
+                .subscribe { it -> setServerInvoices(it) })
+
+        (activity as AppCompatActivity).supportActionBar!!.setTitle(mSharedPreferences.getString("ume", "") + " "
+                + mSharedPreferences.getString("pokluce", "") + " " + getString(R.string.cashdocuments))
     }
 
     private fun unBind() {
         mSubscription?.unsubscribe()
         mSubscription?.clear()
         _disposables.dispose()
+        hideProgressBar()
 
     }
 
@@ -152,12 +148,36 @@ class CashListKtFragment : Fragment() {
         mAdapter?.setAbsserver(attendances)
     }
 
+    private fun setServerInvoices(invoices: List<Invoice>) {
+
+        toast(" nai0 " + invoices.get(0).nai)
+
+    }
+
+    class ClickFobEvent
+
+    protected fun showProgressBar() {
+        mProgressBar?.setVisibility(View.VISIBLE)
+    }
+
+    protected fun hideProgressBar() {
+        mProgressBar?.setVisibility(View.GONE)
+    }
+
     override fun onDestroy() {
         super.onDestroy()
-        _disposables.dispose()
-        mSubscription?.unsubscribe()
-        mSubscription?.clear()
+        unBind()
 
+    }
+
+    override fun onResume() {
+        super.onResume()
+        bind()
+    }
+
+    override fun onPause() {
+        super.onPause()
+        unBind()
     }
 
 

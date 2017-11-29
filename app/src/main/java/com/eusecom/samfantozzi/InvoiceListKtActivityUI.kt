@@ -19,7 +19,7 @@ class InvoiceListKtActivityUI (val _rxBus: RxBus): AnkoComponent<InvoiceListKtAc
             lparams {
                 width = matchParent
                 height = wrapContent
-                margin = 5
+                bottomMargin = 40
             }
 
             verticalLayout{
@@ -28,6 +28,7 @@ class InvoiceListKtActivityUI (val _rxBus: RxBus): AnkoComponent<InvoiceListKtAc
                     lparams {
                     width = matchParent
                     height = wrapContent
+                    margin = 5
                     }
                     id = R.id.tabs
 

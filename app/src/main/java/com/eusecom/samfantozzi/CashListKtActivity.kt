@@ -47,7 +47,8 @@ class CashListKtActivity : AppCompatActivity() {
         //setContentView(R.layout.activity_cashlist)
         CashListKtActivityUI().setContentView(this)
 
-        supportActionBar!!.setTitle(prefs.getString("ume", "") + " " + getString(R.string.cashdocuments))
+        supportActionBar!!.setTitle(prefs.getString("ume", "") + " " +
+                prefs.getString("pokluce", "") + " " +  getString(R.string.cashdocuments))
 
         // Create the adapter that will return a fragment for each section
         mPagerAdapter = object : FragmentPagerAdapter(supportFragmentManager) {
