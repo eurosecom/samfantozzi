@@ -16,6 +16,7 @@ import android.view.Menu
 import android.view.MenuItem
 import android.view.View
 import android.widget.LinearLayout
+import com.eusecom.samfantozzi.rxbus.RxBus
 import org.jetbrains.anko.setContentView
 import org.jetbrains.anko.toast
 import rx.Observable
@@ -36,6 +37,9 @@ class CashListKtActivity : AppCompatActivity() {
     @Inject
     lateinit var mViewModel: DgAllEmpsAbsMvvmViewModel
 
+    @Inject
+    lateinit var _rxBus: RxBus
+
     var mSubscription: CompositeSubscription = CompositeSubscription()
     private var mPagerAdapter: FragmentPagerAdapter? = null
     private var mViewPager: ViewPager? = null
@@ -45,7 +49,7 @@ class CashListKtActivity : AppCompatActivity() {
         (application as SamfantozziApp).dgaeacomponent().inject(this)
 
         //setContentView(R.layout.activity_cashlist)
-        CashListKtActivityUI().setContentView(this)
+        CashListKtActivityUI(_rxBus).setContentView(this)
 
         supportActionBar!!.setTitle(prefs.getString("ume", "") + " " +
                 prefs.getString("pokluce", "") + " " +  getString(R.string.cashdocuments))
@@ -101,6 +105,7 @@ class CashListKtActivity : AppCompatActivity() {
         tabLayout.setupWithViewPager(mViewPager)
 
 
+
     }
 
     private fun bind() {
@@ -126,30 +131,6 @@ class CashListKtActivity : AppCompatActivity() {
         super.onDestroy()
         mSubscription?.unsubscribe()
         mSubscription?.clear()
-    }
-
-
-    override fun onCreateOptionsMenu(menu: Menu): Boolean {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        menuInflater.inflate(R.menu.menu_main, menu)
-        return true
-    }
-
-    override fun onOptionsItemSelected(item: MenuItem) = when (item.itemId) {
-        R.id.action_settings -> consume { navigateToSettings() }
-
-        else -> super.onOptionsItemSelected(item)
-    }
-
-    fun navigateToSettings(){
-        val intent = Intent(this, SettingsActivity::class.java)
-        startActivity(intent)
-    }
-
-    //consume oncreateoptionmenu
-    inline fun consume(f: () -> Unit): Boolean {
-        f()
-        return true
     }
 
 

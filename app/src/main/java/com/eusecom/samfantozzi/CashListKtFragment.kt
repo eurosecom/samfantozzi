@@ -1,11 +1,16 @@
 package com.eusecom.samfantozzi
 
+import android.app.SearchManager
+import android.content.Context
+import android.content.Intent
 import android.content.SharedPreferences
 import android.os.Bundle
 import android.support.v4.app.Fragment
+import android.support.v4.view.MenuItemCompat
 import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
+import android.support.v7.widget.SearchView
 import android.util.Log
 import android.view.*
 import android.widget.Button
@@ -50,39 +55,16 @@ class CashListKtFragment : Fragment() {
     @Inject
     lateinit var  _rxBus: RxBus
 
+    //searchview
+    private var searchView: SearchView? = null
+    private var onQueryTextListener: SearchView.OnQueryTextListener? = null
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
         (activity.application as SamfantozziApp).dgaeacomponent().inject(this)
+        setHasOptionsMenu(true)
 
-        val tapEventEmitter = _rxBus.asFlowable().publish()
-
-        _disposables
-                .add(tapEventEmitter.subscribe { event ->
-                    if (event is DgAeaListFragment.ClickFobEvent) {
-                        Log.d("CashListKtActivity  ", " fobClick ")
-
-                    }
-                    if (event is Attendance) {
-
-                        val usnamex = event.getUsname()
-
-                        Log.d("CashListKtFragment ", usnamex)
-                        //String serverx = "DgAeaListFragment " + usnamex;
-                        //Toast.makeText(getActivity(), serverx, Toast.LENGTH_SHORT).show();
-
-
-                    }
-
-                })
-
-        _disposables
-                .add(tapEventEmitter.publish { stream -> stream.buffer(stream.debounce(1, TimeUnit.SECONDS)) }
-                        .observeOn(AndroidSchedulers.mainThread()).subscribe { taps ->
-                    ///_showTapCount(taps.size()); OK
-                })
-
-        _disposables.add(tapEventEmitter.connect())
     }
 
     override fun onCreateView(inflater: LayoutInflater?, container: ViewGroup?,
@@ -112,6 +94,38 @@ class CashListKtFragment : Fragment() {
     }//end of onActivityCreated
 
     private fun bind() {
+
+        _disposables = CompositeDisposable()
+
+        val tapEventEmitter = _rxBus.asFlowable().publish()
+
+        _disposables
+                .add(tapEventEmitter.subscribe { event ->
+                    if (event is CashListKtFragment.ClickFobEvent) {
+                        Log.d("CashListKtActivity  ", " fobClick ")
+
+                    }
+                    if (event is Attendance) {
+
+                        val usnamex = event.getUsname()
+
+                        Log.d("CashListKtFragment ", usnamex)
+                        //String serverx = "DgAeaListFragment " + usnamex;
+                        //Toast.makeText(getActivity(), serverx, Toast.LENGTH_SHORT).show();
+
+
+                    }
+
+                })
+
+        _disposables
+                .add(tapEventEmitter.publish { stream -> stream.buffer(stream.debounce(1, TimeUnit.SECONDS)) }
+                        .observeOn(AndroidSchedulers.mainThread()).subscribe { taps ->
+                    ///_showTapCount(taps.size()); OK
+                })
+
+        _disposables.add(tapEventEmitter.connect())
+
         mSubscription = CompositeSubscription()
 
         mSubscription?.add(mViewModel.myAbsencesFromServer
@@ -180,5 +194,45 @@ class CashListKtFragment : Fragment() {
         unBind()
     }
 
+    override fun onCreateOptionsMenu(menu: Menu?, inflater: MenuInflater?) {
+
+        // Retrieve the SearchView and plug it into SearchManager
+        inflater!!.inflate(R.menu.menu_listdoc, menu)
+        searchView = MenuItemCompat.getActionView(menu!!.findItem(R.id.action_search)) as SearchView
+        val searchManager = activity.getSystemService(Context.SEARCH_SERVICE) as SearchManager
+        searchView?.setSearchableInfo(searchManager.getSearchableInfo(activity.componentName))
+        //getObservableSearchViewText()
+    }
+
+
+    override fun onOptionsItemSelected(item: MenuItem?): Boolean {
+        val id = item!!.itemId
+
+        if (id == R.id.action_settings) {
+
+            val `is` = Intent(activity, SettingsActivity::class.java)
+            startActivity(`is`)
+            return true
+        }
+
+        if (id == R.id.action_setmonth) {
+
+            val `is` = Intent(activity, ChooseMonthActivity::class.java)
+            startActivity(`is`)
+            return true
+        }
+
+        if (id == R.id.action_setaccount) {
+
+            val `is` = Intent(activity, ChooseAccountActivity::class.java)
+            val extras = Bundle()
+            extras.putString("fromact", "3")
+            `is`.putExtras(extras)
+            startActivity(`is`)
+            return true
+        }
+
+        return super.onOptionsItemSelected(item)
+    }
 
 }
