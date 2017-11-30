@@ -29,7 +29,6 @@
         <activity android:name=".InvoiceListKtActivity"/>
         <activity android:name=".CashListKtActivity"/>
 
-        <activity android:name=".DgAeaActivity"/>
         <activity android:name=".Detail2Activity"/>
     </application>
 

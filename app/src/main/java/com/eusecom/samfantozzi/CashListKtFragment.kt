@@ -13,18 +13,12 @@ import android.support.v7.widget.RecyclerView
 import android.support.v7.widget.SearchView
 import android.util.Log
 import android.view.*
-import android.widget.Button
-import android.widget.EditText
 import android.widget.ProgressBar
-import android.widget.Toast
-import com.eusecom.samfantozzi.models.Attendance
 import com.eusecom.samfantozzi.rxbus.RxBus
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
-import io.reactivex.disposables.Disposable
 import org.jetbrains.anko.support.v4.toast
 import rx.Observable
-import rx.functions.Action1
 import rx.schedulers.Schedulers
 import rx.subscriptions.CompositeSubscription
 import java.util.concurrent.TimeUnit
@@ -37,7 +31,7 @@ import javax.inject.Inject
 
 class CashListKtFragment : Fragment() {
 
-    private var mAdapter: AbsServerAsAdapter? = null
+    private var mAdapter: CashListAdapter? = null
     private var mRecycler: RecyclerView? = null
     private var mManager: LinearLayoutManager? = null
 
@@ -83,7 +77,7 @@ class CashListKtFragment : Fragment() {
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
 
-        mAdapter = AbsServerAsAdapter(_rxBus)
+        mAdapter = CashListAdapter(_rxBus)
         // Set up Layout Manager, reverse layout
         mManager = LinearLayoutManager(context)
         mManager?.setReverseLayout(true)
@@ -105,9 +99,9 @@ class CashListKtFragment : Fragment() {
                         Log.d("CashListKtActivity  ", " fobClick ")
 
                     }
-                    if (event is Attendance) {
+                    if (event is Invoice) {
 
-                        val usnamex = event.getUsname()
+                        val usnamex = event.nai
 
                         Log.d("CashListKtFragment ", usnamex)
                         //String serverx = "DgAeaListFragment " + usnamex;
@@ -128,19 +122,13 @@ class CashListKtFragment : Fragment() {
 
         mSubscription = CompositeSubscription()
 
-        mSubscription?.add(mViewModel.myAbsencesFromServer
-                .subscribeOn(Schedulers.computation())
-                .observeOn(rx.android.schedulers.AndroidSchedulers.mainThread())
-                .doOnError { throwable -> Log.e("CashListKtFragment", "Error Throwable " + throwable.message) }
-                .onErrorResumeNext({ throwable -> Observable.empty() })
-                .subscribe({ it -> setAbsences(it) }))
-
+        showProgressBar()
         mSubscription?.add(mViewModel.getMyInvoicesFromSqlServer("1")
                 .subscribeOn(Schedulers.computation())
                 .observeOn(rx.android.schedulers.AndroidSchedulers.mainThread())
                 .doOnError { throwable ->
                     Log.e("CashListKtFragment", "Error Throwable " + throwable.message)
-                    //hideProgressBar()
+                    hideProgressBar()
                     toast("Server not connected")
                 }
                 .onErrorResumeNext { throwable -> Observable.empty() }
@@ -158,14 +146,12 @@ class CashListKtFragment : Fragment() {
 
     }
 
-    private fun setAbsences(attendances: List<Attendance>) {
-        mAdapter?.setAbsserver(attendances)
-    }
 
     private fun setServerInvoices(invoices: List<Invoice>) {
 
-        toast(" nai0 " + invoices.get(0).nai)
-
+        //toast(" nai0 " + invoices.get(0).nai)
+        mAdapter?.setAbsserver(invoices)
+        hideProgressBar()
     }
 
     class ClickFobEvent

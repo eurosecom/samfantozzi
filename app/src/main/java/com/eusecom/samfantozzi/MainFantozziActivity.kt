@@ -64,7 +64,7 @@ class MainFantozziActivity : AppCompatActivity() {
 
         button2.setOnClickListener {
             //to remove _ -> navigateToAbsServer()
-            _ -> navigateToDgAeaActivity()
+            //to remove _ -> navigateToDgAeaActivity()
         }
 
         button3.setOnClickListener {
@@ -247,16 +247,6 @@ class MainFantozziActivity : AppCompatActivity() {
         startActivity<InvoiceListKtActivity>()
     }
 
-    //to remove
-    // fun navigateToAbsServer(){
-    //    val intent = Intent(this, AbsServerAsActivity::class.java)
-    //    startActivity(intent)
-    //}
-
-    fun navigateToDgAeaActivity(){
-        val intent = Intent(this, DgAeaActivity::class.java)
-        startActivity(intent)
-    }
 
     fun donotloginAlert(): AlertDialogBuilder {
 
