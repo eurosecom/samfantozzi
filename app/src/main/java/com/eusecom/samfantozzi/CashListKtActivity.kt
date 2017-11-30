@@ -88,7 +88,7 @@ class CashListKtActivity : AppCompatActivity() {
                         val fab = findViewById<View>(R.id.fab) as FloatingActionButton
                         //fab.setVisibility(View.GONE);
                         fab.visibility = View.VISIBLE
-                        supportActionBar!!.setTitle(getString(R.string.action_absmysql))
+                        supportActionBar!!.setTitle(getString(R.string.empty))
                     }
 
                 }

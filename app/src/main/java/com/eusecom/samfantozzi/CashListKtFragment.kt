@@ -15,8 +15,15 @@ import android.util.Log
 import android.view.*
 import android.widget.ProgressBar
 import com.eusecom.samfantozzi.rxbus.RxBus
+import io.reactivex.ObservableEmitter
+import io.reactivex.ObservableOnSubscribe
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
+import io.reactivex.disposables.Disposable
+import io.reactivex.functions.Cancellable
+import io.reactivex.functions.Consumer
+import io.reactivex.functions.Function
+import io.reactivex.functions.Predicate
 import org.jetbrains.anko.support.v4.toast
 import rx.Observable
 import rx.schedulers.Schedulers
@@ -52,6 +59,8 @@ class CashListKtFragment : Fragment() {
     //searchview
     private var searchView: SearchView? = null
     private var onQueryTextListener: SearchView.OnQueryTextListener? = null
+    private var mDisposable: Disposable? = null
+    protected var mSupplierSearchEngine: SupplierSearchEngine? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -142,6 +151,9 @@ class CashListKtFragment : Fragment() {
         mSubscription?.unsubscribe()
         mSubscription?.clear()
         _disposables.dispose()
+        if (mDisposable != null) {
+            mDisposable?.dispose()
+        }
         hideProgressBar()
 
     }
@@ -151,7 +163,23 @@ class CashListKtFragment : Fragment() {
 
         //toast(" nai0 " + invoices.get(0).nai)
         mAdapter?.setAbsserver(invoices)
+        nastavResultAs(invoices)
         hideProgressBar()
+    }
+
+    protected fun showResultAs(resultAs: List<Invoice>) {
+
+        if (resultAs.isEmpty()) {
+            //Toast.makeText(getActivity(), R.string.nothing_found, Toast.LENGTH_SHORT).show();
+            mAdapter?.setAbsserver(emptyList<Invoice>())
+        } else {
+            //Log.d("showResultAs ", resultAs.get(0).dmna);
+            mAdapter?.setAbsserver(resultAs)
+        }
+    }
+
+    protected fun nastavResultAs(resultAs: List<Invoice>) {
+        mSupplierSearchEngine = SupplierSearchEngine(resultAs)
     }
 
     class ClickFobEvent
@@ -187,7 +215,7 @@ class CashListKtFragment : Fragment() {
         searchView = MenuItemCompat.getActionView(menu!!.findItem(R.id.action_search)) as SearchView
         val searchManager = activity.getSystemService(Context.SEARCH_SERVICE) as SearchManager
         searchView?.setSearchableInfo(searchManager.getSearchableInfo(activity.componentName))
-        //getObservableSearchViewText()
+        getObservableSearchViewText()
     }
 
 
@@ -219,6 +247,55 @@ class CashListKtFragment : Fragment() {
         }
 
         return super.onOptionsItemSelected(item)
+    }
+
+
+    //listener to searchview
+    private fun getObservableSearchViewText() {
+
+        val searchViewChangeStream = createSearchViewTextChangeObservable()
+
+        mDisposable = searchViewChangeStream
+                .observeOn(AndroidSchedulers.mainThread())
+                .doOnNext { showProgressBar() }
+                .observeOn(io.reactivex.schedulers.Schedulers.io())
+                .map(Function<String, List<Invoice>> { query -> mSupplierSearchEngine?.searchModel(query) })
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe { result ->
+                    hideProgressBar()
+                    showResultAs(result)
+                }
+
+    }
+
+
+    private fun createSearchViewTextChangeObservable(): io.reactivex.Observable<String> {
+        val searchViewTextChangeObservable = io.reactivex.Observable.create(ObservableOnSubscribe<String> { emitter ->
+            onQueryTextListener = object : SearchView.OnQueryTextListener {
+                override fun onQueryTextSubmit(query: String): Boolean {
+                    // use this method when query submitted
+                    //Toast.makeText(getActivity(), "submit " + query, Toast.LENGTH_SHORT).show();
+                    emitter.onNext(query.toString())
+                    return false
+                }
+
+                override fun onQueryTextChange(newText: String): Boolean {
+                    // use this method for auto complete search process
+                    //Toast.makeText(getActivity(), "change " + newText, Toast.LENGTH_SHORT).show();
+                    emitter.onNext(newText.toString())
+                    return false
+                }
+
+
+            }
+
+            searchView?.setOnQueryTextListener(onQueryTextListener)
+
+            emitter.setCancellable { searchView?.setOnQueryTextListener(null) }
+        })
+
+        return searchViewTextChangeObservable
+                .filter { query -> query.length >= 3 || query == "" }.debounce(300, TimeUnit.MILLISECONDS)  // add this line
     }
 
 }
