@@ -234,17 +234,37 @@ class MainFantozziActivity : AppCompatActivity() {
     }
 
     fun navigateToSupplierList(){
-        //val intent = Intent(this, DgAeaActivity::class.java)
-        val intent = Intent(this, SupplierListActivity::class.java)
-        startActivity(intent)
+
+        val usuid = prefs.getString("usuid", "")
+        if (usuid == "0") {
+            donotloginAlert().show()
+        }else {
+            val intent = Intent(this, SupplierListActivity::class.java)
+            startActivity(intent)
+        }
+
     }
 
     fun navigateToCashListKt(){
-        startActivity<CashListKtActivity>()
+
+        val usuid = prefs.getString("usuid", "")
+        if (usuid == "0") {
+            donotloginAlert().show()
+        }else {
+            startActivity<CashListKtActivity>()
+        }
+
     }
 
     fun navigateToInvoiceListKt(){
-        startActivity<InvoiceListKtActivity>()
+
+        val usuid = prefs.getString("usuid", "")
+        if (usuid == "0") {
+            donotloginAlert().show()
+        }else {
+            startActivity<InvoiceListKtActivity>()
+        }
+
     }
 
 
