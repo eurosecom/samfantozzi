@@ -23,9 +23,12 @@
     <string name="resetpass_title">Reset password</string>
     <string name="resetpass_summary">Reset password of FB Account</string>
     <string name="company">Company</string>
+    <string name="getcompany">Get company</string>
     <string name="textok">Ok</string>
     <string name="donotlogin">You have to create email account and login</string>
     <string name="didnotlogin">You did not login</string>
+    <string name="donotcompany">You have to choose your company</string>
+    <string name="didnotcompany">You did not choose company</string>
 
 
     //firebase auth

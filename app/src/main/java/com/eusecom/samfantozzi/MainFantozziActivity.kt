@@ -239,8 +239,15 @@ class MainFantozziActivity : AppCompatActivity() {
         if (usuid == "0") {
             donotloginAlert().show()
         }else {
-            val intent = Intent(this, SupplierListActivity::class.java)
-            startActivity(intent)
+
+            val usfir = prefs.getString("fir", "")
+            if (usfir == "") {
+                donotcompanyAlert().show()
+            }else {
+                val intent = Intent(this, SupplierListActivity::class.java)
+                startActivity(intent)
+            }
+
         }
 
     }
@@ -251,7 +258,14 @@ class MainFantozziActivity : AppCompatActivity() {
         if (usuid == "0") {
             donotloginAlert().show()
         }else {
-            startActivity<CashListKtActivity>()
+
+            val usfir = prefs.getString("fir", "")
+            if (usfir == "") {
+                donotcompanyAlert().show()
+            }else {
+                startActivity<CashListKtActivity>()
+            }
+
         }
 
     }
@@ -260,9 +274,16 @@ class MainFantozziActivity : AppCompatActivity() {
 
         val usuid = prefs.getString("usuid", "")
         if (usuid == "0") {
-            donotloginAlert().show()
+            donotcompanyAlert().show()
         }else {
-            startActivity<InvoiceListKtActivity>()
+
+            val usfir = prefs.getString("fir", "")
+            if (usfir == "") {
+                donotcompanyAlert().show()
+            }else {
+                startActivity<InvoiceListKtActivity>()
+            }
+
         }
 
     }
@@ -278,6 +299,21 @@ class MainFantozziActivity : AppCompatActivity() {
             neutralButton(R.string.textok)
         }
         alert.title(R.string.didnotlogin)
+
+        return alert
+
+    }
+
+    fun donotcompanyAlert(): AlertDialogBuilder {
+
+        alert = alert(R.string.donotcompany) {
+            //title = getString(R.string.donotlogin).toString()
+            //title = "jhdsh"
+            positiveButton(R.string.getcompany) { navigateToGetCompany() }
+            //negativeButton("Never Ever") { }
+            neutralButton(R.string.textok)
+        }
+        alert.title(R.string.didnotcompany)
 
         return alert
 
