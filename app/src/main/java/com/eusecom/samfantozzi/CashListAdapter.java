@@ -58,17 +58,17 @@ public class CashListAdapter extends RecyclerView.Adapter<CashListAdapter.CashLi
   @Override
   public void onBindViewHolder(CashListViewHolder holder, int position) {
 
-      holder.invoice_name.setText(mListabsserver.get(position).getNai());
-      Picasso.with(holder.mContext).load(R.drawable.ic_call_made_black_24dp).resize(120, 120).into(holder.invoice_photo);
-      if( mListabsserver.get(position).getDrh().equals("2")) {
-          Picasso.with(holder.mContext).load(R.drawable.ic_call_received_black_24dp).resize(120, 120).into(holder.invoice_photo);
+      holder.invoice_name.setText(mListabsserver.get(position).getNai() + " " + mListabsserver.get(position).getFak());
+      Picasso.with(holder.mContext).load(R.drawable.ic_account_balance_black_24dp).resize(120, 120).into(holder.invoice_photo);
+      if( mListabsserver.get(position).getDrh().equals("3")) {
+          Picasso.with(holder.mContext).load(R.drawable.ic_local_atm_black_24dp).resize(120, 120).into(holder.invoice_photo);
       }
 
       holder.docx.setText(mListabsserver.get(position).getDok());
 
       holder.datex.setText(getDateString(mListabsserver.get(position).getDat()));
 
-      holder.invoicex.setText(mListabsserver.get(position).getFak());
+      //holder.invoicex.setText(mListabsserver.get(position).getFak());
 
       holder.valuex.setText(mListabsserver.get(position).getHod());
 

@@ -119,6 +119,12 @@ public class DgAllEmpsAbsMvvmViewModel {
         if (drh.equals("1")) {
             dodx = mSharedPreferences.getString("odbuce", "");
         }
+        if (drh.equals("3")) {
+            dodx = mSharedPreferences.getString("pokluce", "");
+        }
+        if (drh.equals("4")) {
+            dodx = mSharedPreferences.getString("bankuce", "");
+        }
         String umex = mSharedPreferences.getString("ume", "");
 
         return mDataModel.getInvoicesFromMysqlServer(encrypted, ds, firx, rokx, drh, dodx, umex);

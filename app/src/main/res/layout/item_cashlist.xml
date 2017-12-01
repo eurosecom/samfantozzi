@@ -91,6 +91,7 @@
                 android:layout_toRightOf="@+id/datex"
                 android:layout_marginLeft="5dp"
                 android:layout_marginTop="5dp"
+                android:visibility="gone"
                 android:text="@string/fakshort" />
 
             <TextView
@@ -101,6 +102,7 @@
                 android:layout_toRightOf="@+id/invoice"
                 android:layout_marginLeft="5dp"
                 android:layout_marginTop="5dp"
+                android:visibility="gone"
                 android:textStyle="bold"
                 />
 

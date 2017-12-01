@@ -87,6 +87,8 @@ class CashListKtFragment : Fragment() {
         super.onActivityCreated(savedInstanceState)
 
         mAdapter = CashListAdapter(_rxBus)
+        mAdapter?.setAbsserver(emptyList())
+        mSupplierSearchEngine = SupplierSearchEngine(emptyList())
         // Set up Layout Manager, reverse layout
         mManager = LinearLayoutManager(context)
         mManager?.setReverseLayout(true)
@@ -132,7 +134,7 @@ class CashListKtFragment : Fragment() {
         mSubscription = CompositeSubscription()
 
         showProgressBar()
-        mSubscription?.add(mViewModel.getMyInvoicesFromSqlServer("1")
+        mSubscription?.add(mViewModel.getMyInvoicesFromSqlServer("3")
                 .subscribeOn(Schedulers.computation())
                 .observeOn(rx.android.schedulers.AndroidSchedulers.mainThread())
                 .doOnError { throwable ->

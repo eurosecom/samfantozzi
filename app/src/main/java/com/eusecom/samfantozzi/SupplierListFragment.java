@@ -110,6 +110,8 @@ public class SupplierListFragment extends Fragment {
 
         String umex = mSharedPreferences.getString("ume", "");
         mAdapter = new SupplierAdapter(_rxBus);
+        mAdapter.setAbsserver(Collections.<Invoice>emptyList());
+        mAdapter.setAbsserver(Collections.<Invoice>emptyList());
         // Set up Layout Manager, reverse layout
         mManager = new LinearLayoutManager(getActivity());
         mManager.setReverseLayout(true);
