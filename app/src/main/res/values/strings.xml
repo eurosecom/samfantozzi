@@ -170,6 +170,7 @@
     <string name="value">Value</string>
     <string name="document">Document</string>
     <string name="docshort">Doc</string>
+    <string name="pdf">PDF</string>
     <string name="edit">Edit</string>
     <string name="delete">Delete</string>
     <string name="action_search">Search</string>

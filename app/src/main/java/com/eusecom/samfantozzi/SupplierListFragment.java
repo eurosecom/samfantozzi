@@ -26,6 +26,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ProgressBar;
+import android.widget.TextView;
 import android.widget.Toast;
 import com.eusecom.samfantozzi.rxbus.RxBus;
 import java.util.Collections;
@@ -344,24 +345,29 @@ public class SupplierListFragment extends Fragment {
         LayoutInflater inflater = LayoutInflater.from(getActivity());
         final View textenter = inflater.inflate(R.layout.invoice_edit_dialog, null);
 
-        final EditText valuex = (EditText) textenter.findViewById(R.id.valuex);
+        final TextView valuex = (TextView) textenter.findViewById(R.id.valuex);
         valuex.setText(invoice.getHod());
 
         final AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
         builder.setView(textenter).setTitle(getString(R.string.document) + " " + invoice.getDok());
-        builder.setPositiveButton(getString(R.string.edit), new DialogInterface.OnClickListener() {
 
-            @Override
-            public void onClick(DialogInterface dialog, int id) {
-                dialog.cancel();
+        builder.setItems(new CharSequence[]
+                        {getString(R.string.pdf), getString(R.string.edit), getString(R.string.delete)},
+                new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int which) {
+                        // The 'which' argument contains the index position
+                        // of the selected item
+                        switch (which) {
+                            case 0:
 
+                                break;
+                            case 1:
 
-            }
-        })
-                .setNegativeButton(getString(R.string.delete), new DialogInterface.OnClickListener() {
-                    public void onClick(DialogInterface dialog, int id) {
-                        dialog.cancel();
+                                break;
+                            case 2:
 
+                                break;
+                        }
                     }
                 });
         AlertDialog dialog = builder.create();

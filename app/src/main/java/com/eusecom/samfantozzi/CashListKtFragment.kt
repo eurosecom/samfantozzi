@@ -4,10 +4,12 @@ import android.app.SearchManager
 import android.content.Context
 import android.content.Intent
 import android.content.SharedPreferences
+import android.net.Uri
 import android.os.Bundle
 import android.support.v4.app.ActivityCompat
 import android.support.v4.app.Fragment
 import android.support.v4.view.MenuItemCompat
+import android.support.v7.app.AlertDialog
 import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
@@ -15,16 +17,14 @@ import android.support.v7.widget.SearchView
 import android.util.Log
 import android.view.*
 import android.widget.ProgressBar
+import android.widget.TextView
 import com.eusecom.samfantozzi.rxbus.RxBus
-import io.reactivex.ObservableEmitter
 import io.reactivex.ObservableOnSubscribe
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.disposables.Disposable
-import io.reactivex.functions.Cancellable
-import io.reactivex.functions.Consumer
 import io.reactivex.functions.Function
-import io.reactivex.functions.Predicate
+import org.jetbrains.anko.AlertDialogBuilder
 import org.jetbrains.anko.support.v4.toast
 import rx.Observable
 import rx.schedulers.Schedulers
@@ -56,6 +56,9 @@ class CashListKtFragment : Fragment() {
 
     @Inject
     lateinit var  _rxBus: RxBus
+
+    private lateinit var alert: AlertDialogBuilder
+    var encrypted: String? = null
 
     //searchview
     private var searchView: SearchView? = null
@@ -116,8 +119,7 @@ class CashListKtFragment : Fragment() {
                         val usnamex = event.nai
 
                         Log.d("CashListKtFragment ", usnamex)
-                        //String serverx = "DgAeaListFragment " + usnamex;
-                        //Toast.makeText(getActivity(), serverx, Toast.LENGTH_SHORT).show();
+                        getTodoDialog(event)
 
 
                     }
@@ -300,6 +302,81 @@ class CashListKtFragment : Fragment() {
 
         return searchViewTextChangeObservable
                 .filter { query -> query.length >= 3 || query == "" }.debounce(300, TimeUnit.MILLISECONDS)  // add this line
+    }
+
+
+    fun getTodoDialog(invoice: Invoice) {
+
+        val inflater = LayoutInflater.from(activity)
+        val textenter = inflater.inflate(R.layout.invoice_edit_dialog, null)
+
+        val valuex = textenter.findViewById<View>(R.id.valuex) as TextView
+        valuex.text = invoice.hod
+
+        val builder = AlertDialog.Builder(activity)
+        builder.setView(textenter).setTitle(getString(R.string.document) + " " + invoice.dok)
+
+        builder.setItems(arrayOf<CharSequence>(getString(R.string.pdf), getString(R.string.edit), getString(R.string.delete))
+        ) { dialog, which ->
+            // The 'which' argument contains the index position
+            // of the selected item
+            when (which) {
+                0 -> {
+                    getPDF(invoice)
+                }
+                1 -> {
+                }
+                2 -> {
+                }
+            }
+        }
+        val dialog = builder.create()
+        builder.show()
+
+    }
+
+
+    fun getPDF(invoice: Invoice) {
+
+        val dokladx = "1004"
+
+        //inputAllServer.setText(SettingsActivity.getServerName(this));
+        val serverx = "www.eshoptest.sk/androiducto"
+        val delims = "[/]+"
+        val serverxxx = serverx.split(delims.toRegex()).dropLastWhile({ it.isEmpty() }).toTypedArray()
+
+        //inputAllUser.setText("Nick/" + SettingsActivity.getNickName(this) + "/ID/" + SettingsActivity.getUserId(this) + "/PSW/"
+        //+ SettingsActivity.getUserPsw(this) + "/druhID/" + SettingsActivity.getDruhId(this)
+        //+ "/Doklad/" + SettingsActivity.getDoklad(this) + "/Kateg/" + cat);
+        val userx = "Nick/test2345" + "/ID/1001" + "/PSW/cp41cs" + "/druhID/99" + "/Doklad/1004" + "/Kateg/1"
+
+        //inputAll.setText("Fir/" + SettingsActivity.getFir(this) + "/Firrok/" + SettingsActivity.getFirrok(this));
+        val allx = "Fir/144" + "/Firrok/2014"
+        val allxxx = allx.split(delims.toRegex()).dropLastWhile({ it.isEmpty() }).toTypedArray()
+
+        var drupoh = "1"
+        val userxplus = userx + "/" + dokladx
+
+        val mcrypt = MCrypt()
+        /* Encrypt */
+        try {
+            encrypted  = MCrypt.bytesToHex(mcrypt.encrypt(userxplus))
+        } catch (e1: Exception) {
+            // TODO Auto-generated catch block
+            e1.printStackTrace()
+        }
+
+        var uri: Uri? = null
+        uri = Uri.parse("http://" + serverxxx[0] +
+                "/ucto/vspk_pdf.php?cislo_dok=" + dokladx + "&hladaj_dok=" + dokladx
+                + "&sysx=UCT&rozuct=ANO&zandroidu=1&anduct=1&copern=20&drupoh="+ drupoh + "&page=1&serverx="
+                + serverx + "&userhash=" + encrypted + "&rokx=" + allxxx[3] + "&firx=" + allxxx[1] );
+
+        val intent = Intent(Intent.ACTION_VIEW, uri)
+        startActivity(intent)
+        intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP
+
+
     }
 
 }
