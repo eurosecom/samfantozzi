@@ -18,6 +18,7 @@ import android.util.Log
 import android.view.*
 import android.widget.ProgressBar
 import android.widget.TextView
+import com.eusecom.samfantozzi.models.Attendance
 import com.eusecom.samfantozzi.rxbus.RxBus
 import io.reactivex.ObservableOnSubscribe
 import io.reactivex.android.schedulers.AndroidSchedulers
@@ -65,6 +66,8 @@ class CashListKtFragment : Fragment() {
     private var onQueryTextListener: SearchView.OnQueryTextListener? = null
     private var mDisposable: Disposable? = null
     protected var mSupplierSearchEngine: SupplierSearchEngine? = null
+
+    var dokx = "0"
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -148,6 +151,17 @@ class CashListKtFragment : Fragment() {
                 .onErrorResumeNext { throwable -> Observable.empty() }
                 .subscribe { it -> setServerInvoices(it) })
 
+        mSubscription?.add(mViewModel.getObservableFromFBforRealm()
+                .subscribeOn(Schedulers.computation())
+                .observeOn(rx.android.schedulers.AndroidSchedulers.mainThread())
+                .doOnError { throwable ->
+                    Log.e("CashListKtFragment", "Error Throwable " + throwable.message)
+                    hideProgressBar()
+                    toast("Server not connected")
+                }
+                .onErrorResumeNext { throwable -> Observable.empty() }
+                .subscribe { it -> setFbAbsences(it) })
+
         ActivityCompat.invalidateOptionsMenu(activity)
         (activity as AppCompatActivity).supportActionBar!!.setTitle(mSharedPreferences.getString("ume", "") + " "
                 + mSharedPreferences.getString("pokluce", "") + " " + getString(R.string.cashdocuments))
@@ -160,10 +174,16 @@ class CashListKtFragment : Fragment() {
         if (mDisposable != null) {
             mDisposable?.dispose()
         }
+        mViewModel.clearObservableAbsencesFromFB()
         hideProgressBar()
 
     }
 
+    private fun setFbAbsences(absences: List<Attendance>) {
+
+        toast(" absence0 " + absences.get(0).dmna)
+
+    }
 
     private fun setServerInvoices(invoices: List<Invoice>) {
 
@@ -200,17 +220,20 @@ class CashListKtFragment : Fragment() {
 
     override fun onDestroy() {
         super.onDestroy()
+        Log.d("CashListKtFragment ", "onDestroy");
         unBind()
 
     }
 
     override fun onResume() {
         super.onResume()
+        Log.d("CashListKtFragment ", "onResume");
         bind()
     }
 
     override fun onPause() {
         super.onPause()
+        Log.d("CashListKtFragment ", "onPause");
         unBind()
     }
 
@@ -325,6 +348,9 @@ class CashListKtFragment : Fragment() {
                     getPDF(invoice)
                 }
                 1 -> {
+                    dokx = invoice.dok
+                    mViewModel.emitAbsencesFromFBforRealm(dokx)
+                    dokx = "0"
                 }
                 2 -> {
                 }

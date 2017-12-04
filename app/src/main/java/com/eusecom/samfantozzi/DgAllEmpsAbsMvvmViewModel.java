@@ -12,6 +12,7 @@ import java.util.List;
 import java.util.Random;
 
 import rx.Observable;
+import rx.subjects.BehaviorSubject;
 
 /**
  * View model for the CompaniesMvvmActivity.
@@ -41,10 +42,6 @@ public class DgAllEmpsAbsMvvmViewModel {
         mSharedPreferences = sharedPreferences;
         mMcrypt = mcrypt;
     }
-
-
-
-
 
 
     //recyclerview method for DgAeaActivity
@@ -225,6 +222,34 @@ public class DgAllEmpsAbsMvvmViewModel {
         return mDataModel.getCompaniesFromMysqlServer(encrypted, ds);
     }
     //end get companies from MySql server
+
+
+    //get absences from FB for update realm
+    public void emitAbsencesFromFBforRealm(String dokx) { mObservableAbsencesFromFB.onNext(dokx); }
+
+    @NonNull
+    private BehaviorSubject<String> mObservableAbsencesFromFB = BehaviorSubject.create();
+
+    @NonNull
+    public Observable<List<Attendance>> getObservableFromFBforRealm() {
+        String usicox = "44551142";
+        String usuid = "K6u6ay4ghKbXRh7ZJTAEBoKLazm2";
+        String ustype = "99";
+        String umex = "07.2017";
+
+        //String usicox = "44551142";
+        return mObservableAbsencesFromFB
+                .observeOn(mSchedulerProvider.ui())
+                .flatMap(dokx -> mDataModel.getObservableAbsencesFromFB(dokx, umex, usicox, usuid, ustype));
+    }
+
+    public void clearObservableAbsencesFromFB() {
+
+        mObservableAbsencesFromFB = BehaviorSubject.create();
+
+    }
+    //end get absences from FB for update realm
+
 
 
 }

@@ -48,4 +48,11 @@ public interface DgAllEmpsAbsIDataModel {
     public Observable<List<Invoice>> getInvoicesFromMysqlServer(String userhash, String userid, String fromfir
             , String vyb_rok, String drh, String ucex, String umex);
 
+    //recyclerview method for CashListKtActivity
+    @NonNull
+    Observable<List<Attendance>> getObservableAbsencesFromFB(@NonNull final String dokx, @NonNull final String umex
+            , @NonNull final String usicox
+            , String usuid, String ustype);
+
+
 }

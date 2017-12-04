@@ -3,6 +3,7 @@ package com.eusecom.samfantozzi.mvvmdatamodel;
 import android.content.res.Resources;
 import android.support.annotation.NonNull;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import rx.Observable;
 
@@ -173,6 +174,44 @@ public class DgAllEmpsAbsDataModel implements DgAllEmpsAbsIDataModel {
         return mAbsServerService.getInvoicesFromSqlServer(userhash, userid, fromfir, vyb_rok, drh, ucex, umex);
 
     }
+
+    //recyclerview method for CashListKtActivity
+    @NonNull
+    @Override
+    public Observable<List<Attendance>> getObservableAbsencesFromFB(@NonNull final String dokx, @NonNull final String umex
+            , @NonNull final String usicox, String usuid, String ustype) {
+
+        int lenmoje=1;
+        if (ustype.equals("99")) {
+            lenmoje=0;
+        }else{
+
+        }
+        String umexy = umex;
+        if (dokx.equals("0")) {
+            umexy="0";
+        }
+        Query usersQuery = mFirebaseDatabase.child("company-absences").child(usicox).orderByChild("ume").equalTo(umexy);
+        if( lenmoje == 1 ){
+            usersQuery = mFirebaseDatabase.child("user-absences").child(usuid).orderByChild("ume").equalTo(umexy);
+        }
+
+        return RxFirebaseDatabase.getInstance().observeValueEvent(usersQuery)
+                .flatMap(dataSnapshot ->{
+                    List<Attendance> blogPostEntities = new ArrayList<>();
+                    for (DataSnapshot childDataSnapshot : dataSnapshot.getChildren()) {
+                        String keys = childDataSnapshot.getKey();
+                        //System.out.println("keys " + keys);
+                        Attendance resultx = childDataSnapshot.getValue(Attendance.class);
+                        resultx.setRok(keys);
+                        blogPostEntities.add(resultx);
+                    }
+                    return Observable.just(blogPostEntities);
+                });
+
+    }
+
+
 
 
 }

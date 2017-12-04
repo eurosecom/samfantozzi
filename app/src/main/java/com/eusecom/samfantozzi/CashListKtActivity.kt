@@ -8,13 +8,9 @@ import android.support.design.widget.TabLayout
 import android.support.v4.app.Fragment
 import android.support.v4.app.FragmentPagerAdapter
 import android.support.v4.view.ViewPager
-import android.util.Log
 import android.view.View
 import com.eusecom.samfantozzi.rxbus.RxBus
 import org.jetbrains.anko.setContentView
-import rx.Observable
-import rx.schedulers.Schedulers
-import rx.subscriptions.CompositeSubscription
 import javax.inject.Inject
 
 /**
@@ -33,7 +29,6 @@ class CashListKtActivity : AppCompatActivity() {
     @Inject
     lateinit var _rxBus: RxBus
 
-    var mSubscription: CompositeSubscription = CompositeSubscription()
     private var mPagerAdapter: FragmentPagerAdapter? = null
     private var mViewPager: ViewPager? = null
 
@@ -101,29 +96,9 @@ class CashListKtActivity : AppCompatActivity() {
 
     }
 
-    private fun bind() {
-
-        mSubscription.add(mViewModel.myCompaniesFromServer
-                .subscribeOn(Schedulers.computation())
-                .observeOn(rx.android.schedulers.AndroidSchedulers.mainThread())
-                .doOnError { throwable -> Log.e("ChooseCompanyAktivity ", "Error Throwable " + throwable.message) }
-                .onErrorResumeNext({ throwable -> Observable.empty() })
-                .subscribe({ it -> setCompanies(it) }))
-
-
-    }
-
-
-    private fun setCompanies(companies: List<CompanyKt>) {
-
-
-
-    }
 
     override fun onDestroy() {
         super.onDestroy()
-        mSubscription?.unsubscribe()
-        mSubscription?.clear()
     }
 
 
