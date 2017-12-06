@@ -162,6 +162,17 @@ class CashListKtFragment : Fragment() {
                 .onErrorResumeNext { throwable -> Observable.empty() }
                 .subscribe { it -> setFbAbsences(it) })
 
+        mSubscription?.add(mViewModel.getObservableDocPdf()
+                .subscribeOn(Schedulers.computation())
+                .observeOn(rx.android.schedulers.AndroidSchedulers.mainThread())
+                .doOnError { throwable ->
+                    Log.e("CashListKtFragment", "Error Throwable " + throwable.message)
+                    hideProgressBar()
+                    toast("Server not connected")
+                }
+                .onErrorResumeNext { throwable -> Observable.empty() }
+                .subscribe { it -> setFbAbsences(it) })
+
         ActivityCompat.invalidateOptionsMenu(activity)
         (activity as AppCompatActivity).supportActionBar!!.setTitle(mSharedPreferences.getString("ume", "") + " "
                 + mSharedPreferences.getString("pokluce", "") + " " + getString(R.string.cashdocuments))
@@ -175,6 +186,7 @@ class CashListKtFragment : Fragment() {
             mDisposable?.dispose()
         }
         mViewModel.clearObservableAbsencesFromFB()
+        mViewModel.clearObservableDocPDF()
         hideProgressBar()
 
     }
@@ -353,6 +365,8 @@ class CashListKtFragment : Fragment() {
                     dokx = "0"
                 }
                 2 -> {
+                    dokx = invoice.dok
+                    mViewModel.emitDocumentPdfUri(dokx)
                 }
             }
         }
@@ -398,10 +412,15 @@ class CashListKtFragment : Fragment() {
                 + "&sysx=UCT&rozuct=ANO&zandroidu=1&anduct=1&copern=20&drupoh="+ drupoh + "&page=1&serverx="
                 + serverx + "&userhash=" + encrypted + "&rokx=" + allxxx[3] + "&firx=" + allxxx[1] );
 
+        setUriPdf(uri)
+
+    }
+
+    private fun setUriPdf(uri: Uri) {
+
         val intent = Intent(Intent.ACTION_VIEW, uri)
         startActivity(intent)
         intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP
-
 
     }
 

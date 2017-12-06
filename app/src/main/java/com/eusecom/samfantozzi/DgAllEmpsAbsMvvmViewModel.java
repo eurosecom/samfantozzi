@@ -224,6 +224,32 @@ public class DgAllEmpsAbsMvvmViewModel {
     //end get companies from MySql server
 
 
+    //recyclerview method for CashListKtFragment
+    //get PDF Uri document
+    public void emitDocumentPdfUri(String dokx) { mObservableDocPDF.onNext(dokx); }
+
+    @NonNull
+    private BehaviorSubject<String> mObservableDocPDF = BehaviorSubject.create();
+
+    @NonNull
+    public Observable<List<Attendance>> getObservableDocPdf() {
+        String usicox = "44551142";
+        String usuid = "K6u6ay4ghKbXRh7ZJTAEBoKLazm2";
+        String ustype = "99";
+        String umex = "07.2017";
+
+        return mObservableDocPDF
+                .observeOn(mSchedulerProvider.ui())
+                .flatMap(dokx -> mDataModel.getObservableAbsencesFromFB(dokx, umex, usicox, usuid, ustype));
+    }
+
+    public void clearObservableDocPDF() {
+
+        mObservableDocPDF = BehaviorSubject.create();
+
+    }
+    //end get PDF Uri document
+
     //get absences from FB for update realm
     public void emitAbsencesFromFBforRealm(String dokx) { mObservableAbsencesFromFB.onNext(dokx); }
 

@@ -1,5 +1,6 @@
 package com.eusecom.samfantozzi.mvvmdatamodel;
 
+import android.net.Uri;
 import android.support.annotation.NonNull;
 
 import com.eusecom.samfantozzi.Account;
@@ -51,6 +52,10 @@ public interface DgAllEmpsAbsIDataModel {
     //recyclerview method for CashListKtActivity
     @NonNull
     Observable<List<Attendance>> getObservableAbsencesFromFB(@NonNull final String dokx, @NonNull final String umex
+            , @NonNull final String usicox
+            , String usuid, String ustype);
+
+    Observable<Uri> getObservableUriDocPdf(@NonNull final String dokx, @NonNull final String umex
             , @NonNull final String usicox
             , String usuid, String ustype);
 
