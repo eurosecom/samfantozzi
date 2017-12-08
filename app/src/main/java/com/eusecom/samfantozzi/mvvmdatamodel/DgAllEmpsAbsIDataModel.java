@@ -55,9 +55,9 @@ public interface DgAllEmpsAbsIDataModel {
             , @NonNull final String usicox
             , String usuid, String ustype);
 
-    Observable<Uri> getObservableUriDocPdf(@NonNull final String dokx, @NonNull final String umex
-            , @NonNull final String usicox
-            , String usuid, String ustype);
+    Observable<Uri> getObservableUriDocPdf(@NonNull final String dokx, @NonNull final String firx
+            , @NonNull final String rokx, @NonNull final String serverx, @NonNull final String adresx
+            , String drupoh, String encrypted);
 
 
 }

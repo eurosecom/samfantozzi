@@ -59,15 +59,12 @@ class CashListKtFragment : Fragment() {
     lateinit var  _rxBus: RxBus
 
     private lateinit var alert: AlertDialogBuilder
-    var encrypted: String? = null
 
     //searchview
     private var searchView: SearchView? = null
     private var onQueryTextListener: SearchView.OnQueryTextListener? = null
     private var mDisposable: Disposable? = null
     protected var mSupplierSearchEngine: SupplierSearchEngine? = null
-
-    var dokx = "0"
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -171,7 +168,7 @@ class CashListKtFragment : Fragment() {
                     toast("Server not connected")
                 }
                 .onErrorResumeNext { throwable -> Observable.empty() }
-                .subscribe { it -> setFbAbsences(it) })
+                .subscribe { it -> setUriPdf(it) })
 
         ActivityCompat.invalidateOptionsMenu(activity)
         (activity as AppCompatActivity).supportActionBar!!.setTitle(mSharedPreferences.getString("ume", "") + " "
@@ -218,6 +215,14 @@ class CashListKtFragment : Fragment() {
 
     protected fun nastavResultAs(resultAs: List<Invoice>) {
         mSupplierSearchEngine = SupplierSearchEngine(resultAs)
+    }
+
+    private fun setUriPdf(uri: Uri) {
+
+        val intent = Intent(Intent.ACTION_VIEW, uri)
+        intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP
+        startActivity(intent)
+
     }
 
     class ClickFobEvent
@@ -357,16 +362,13 @@ class CashListKtFragment : Fragment() {
             // of the selected item
             when (which) {
                 0 -> {
-                    getPDF(invoice)
+                    mViewModel.emitDocumentPdfUri(invoice.dok)
                 }
                 1 -> {
-                    dokx = invoice.dok
-                    mViewModel.emitAbsencesFromFBforRealm(dokx)
-                    dokx = "0"
+                    mViewModel.emitAbsencesFromFBforRealm(invoice.dok)
                 }
                 2 -> {
-                    dokx = invoice.dok
-                    mViewModel.emitDocumentPdfUri(dokx)
+
                 }
             }
         }
@@ -376,52 +378,6 @@ class CashListKtFragment : Fragment() {
     }
 
 
-    fun getPDF(invoice: Invoice) {
 
-        val dokladx = "1004"
-
-        //inputAllServer.setText(SettingsActivity.getServerName(this));
-        val serverx = "www.eshoptest.sk/androiducto"
-        val delims = "[/]+"
-        val serverxxx = serverx.split(delims.toRegex()).dropLastWhile({ it.isEmpty() }).toTypedArray()
-
-        //inputAllUser.setText("Nick/" + SettingsActivity.getNickName(this) + "/ID/" + SettingsActivity.getUserId(this) + "/PSW/"
-        //+ SettingsActivity.getUserPsw(this) + "/druhID/" + SettingsActivity.getDruhId(this)
-        //+ "/Doklad/" + SettingsActivity.getDoklad(this) + "/Kateg/" + cat);
-        val userx = "Nick/test2345" + "/ID/1001" + "/PSW/cp41cs" + "/druhID/99" + "/Doklad/1004" + "/Kateg/1"
-
-        //inputAll.setText("Fir/" + SettingsActivity.getFir(this) + "/Firrok/" + SettingsActivity.getFirrok(this));
-        val allx = "Fir/144" + "/Firrok/2014"
-        val allxxx = allx.split(delims.toRegex()).dropLastWhile({ it.isEmpty() }).toTypedArray()
-
-        var drupoh = "1"
-        val userxplus = userx + "/" + dokladx
-
-        val mcrypt = MCrypt()
-        /* Encrypt */
-        try {
-            encrypted  = MCrypt.bytesToHex(mcrypt.encrypt(userxplus))
-        } catch (e1: Exception) {
-            // TODO Auto-generated catch block
-            e1.printStackTrace()
-        }
-
-        var uri: Uri? = null
-        uri = Uri.parse("http://" + serverxxx[0] +
-                "/ucto/vspk_pdf.php?cislo_dok=" + dokladx + "&hladaj_dok=" + dokladx
-                + "&sysx=UCT&rozuct=ANO&zandroidu=1&anduct=1&copern=20&drupoh="+ drupoh + "&page=1&serverx="
-                + serverx + "&userhash=" + encrypted + "&rokx=" + allxxx[3] + "&firx=" + allxxx[1] );
-
-        setUriPdf(uri)
-
-    }
-
-    private fun setUriPdf(uri: Uri) {
-
-        val intent = Intent(Intent.ACTION_VIEW, uri)
-        startActivity(intent)
-        intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP
-
-    }
 
 }

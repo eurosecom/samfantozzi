@@ -1,6 +1,7 @@
 package com.eusecom.samfantozzi;
 
 import android.content.SharedPreferences;
+import android.net.Uri;
 import android.support.annotation.NonNull;
 import android.util.Log;
 
@@ -31,6 +32,7 @@ public class DgAllEmpsAbsMvvmViewModel {
     SharedPreferences mSharedPreferences;
 
     MCrypt mMcrypt;
+    String encrypted;
 
     //@Inject only by Base constructor injection
     public DgAllEmpsAbsMvvmViewModel(@NonNull final DgAllEmpsAbsIDataModel dataModel,
@@ -97,7 +99,7 @@ public class DgAllEmpsAbsMvvmViewModel {
 
         String usuidx = mSharedPreferences.getString("usuid", "");
         String userxplus =  ds + "/" + usuidx + "/" + ds;
-        String encrypted = "";
+        encrypted = "";
 
 
         try {
@@ -165,7 +167,7 @@ public class DgAllEmpsAbsMvvmViewModel {
 
         String usuidx = mSharedPreferences.getString("usuid", "");
         String userxplus =  ds + "/" + usuidx + "/" + ds;
-        String encrypted = "";
+        encrypted = "";
 
 
         try {
@@ -206,7 +208,7 @@ public class DgAllEmpsAbsMvvmViewModel {
 
         String usuidx = mSharedPreferences.getString("usuid", "");
         String userxplus =  ds + "/" + usuidx + "/" + ds;
-        String encrypted = "";
+        encrypted = "";
 
 
         try {
@@ -232,15 +234,33 @@ public class DgAllEmpsAbsMvvmViewModel {
     private BehaviorSubject<String> mObservableDocPDF = BehaviorSubject.create();
 
     @NonNull
-    public Observable<List<Attendance>> getObservableDocPdf() {
+    public Observable<Uri> getObservableDocPdf() {
         String usicox = "44551142";
         String usuid = "K6u6ay4ghKbXRh7ZJTAEBoKLazm2";
         String ustype = "99";
         String umex = "07.2017";
 
+        String dokladx = "1004";
+        String firx = "144";
+        String rokx = "2014";
+        String serverx = "www.eshoptest.sk";
+        String adresx = "www.eshoptest.sk/androiducto";
+        String userx = "Nick/test2345" + "/ID/1001" + "/PSW/cp41cs" + "/druhID/99" + "/Doklad/1004" + "/Kateg/1";
+        String drupoh = "1";
+        String userxplus = userx + "/" + dokladx;
+
+        encrypted = "";
+
+        try {
+            encrypted = mMcrypt.bytesToHex( mMcrypt.encrypt(userxplus) );
+        } catch (Exception e1) {
+            // TODO Auto-generated catch block
+            e1.printStackTrace();
+        }
+
         return mObservableDocPDF
                 .observeOn(mSchedulerProvider.ui())
-                .flatMap(dokx -> mDataModel.getObservableAbsencesFromFB(dokx, umex, usicox, usuid, ustype));
+                .flatMap(dokx -> mDataModel.getObservableUriDocPdf(dokx, firx, rokx, serverx, adresx, drupoh, encrypted));
     }
 
     public void clearObservableDocPDF() {

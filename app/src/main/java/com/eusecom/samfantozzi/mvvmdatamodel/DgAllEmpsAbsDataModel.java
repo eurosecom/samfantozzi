@@ -3,15 +3,14 @@ package com.eusecom.samfantozzi.mvvmdatamodel;
 import android.content.res.Resources;
 import android.net.Uri;
 import android.support.annotation.NonNull;
+import android.util.Log;
+
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 import rx.Observable;
-
 import com.eusecom.samfantozzi.Account;
 import com.eusecom.samfantozzi.CompanyKt;
 import com.eusecom.samfantozzi.Invoice;
-import com.eusecom.samfantozzi.MCrypt;
 import com.eusecom.samfantozzi.Month;
 import com.eusecom.samfantozzi.R;
 import com.eusecom.samfantozzi.models.Attendance;
@@ -215,35 +214,15 @@ public class DgAllEmpsAbsDataModel implements DgAllEmpsAbsIDataModel {
 
     @NonNull
     @Override
-    public Observable<Uri> getObservableUriDocPdf(@NonNull final String dokx, @NonNull final String umex
-            , @NonNull final String usicox, String usuid, String ustype) {
+    public Observable<Uri> getObservableUriDocPdf(@NonNull final String dokx, @NonNull final String firx
+            , @NonNull final String rokx, @NonNull final String serverx, @NonNull final String adresx
+            , String drupoh, String encrypted) {
 
-        String dokladx = "1004";
-        String firx = "144";
-        String rokx = "2014";
-        String serverx = "www.eshoptest.sk/androiducto";
-        String adresx = "www.eshoptest.sk/androiducto";
-        String userx = "Nick/test2345" + "/ID/1001" + "/PSW/cp41cs" + "/druhID/99" + "/Doklad/1004" + "/Kateg/1";
-        String drupoh = "1";
-        String userxplus = userx + "/" + dokladx;
-
-        String encrypted = "";
-
-        MCrypt mMcrypt = new MCrypt();
-        try {
-            encrypted = mMcrypt.bytesToHex( mMcrypt.encrypt(userxplus) );
-        } catch (Exception e1) {
-            // TODO Auto-generated catch block
-            e1.printStackTrace();
-        }
-
-        Uri uri = null;
-        uri = Uri.parse("http://" + serverx +
-                "/ucto/vspk_pdf.php?cislo_dok=" + dokladx + "&hladaj_dok=" + dokladx
+        Log.d("dokx ", dokx);
+        return Observable.just(Uri.parse("http://" + serverx +
+                "/ucto/vspk_pdf.php?cislo_dok=" + dokx + "&hladaj_dok=" + dokx
                 + "&sysx=UCT&rozuct=ANO&zandroidu=1&anduct=1&copern=20&drupoh="+ drupoh + "&page=1&serverx="
-                + adresx + "&userhash=" + encrypted + "&rokx=" + rokx + "&firx=" + firx );
-
-        return Observable.just(uri);
+                + adresx + "&userhash=" + encrypted + "&rokx=" + rokx + "&firx=" + firx ));
     }
 
 
