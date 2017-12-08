@@ -9,7 +9,10 @@ import android.support.v7.widget.RecyclerView
 import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
+import android.view.View
 import android.widget.LinearLayout
+import android.widget.ProgressBar
+import org.jetbrains.anko.support.v4.toast
 import org.jetbrains.anko.toast
 import rx.Observable
 import rx.schedulers.Schedulers
@@ -33,6 +36,7 @@ class ChooseCompanyActivity : AppCompatActivity() {
     private lateinit var recyclerView: RecyclerView
 
     var mSubscription: CompositeSubscription = CompositeSubscription()
+    private var mProgressBar: ProgressBar? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -44,6 +48,7 @@ class ChooseCompanyActivity : AppCompatActivity() {
 
         //Bind the recyclerview
         recyclerView = findViewById<RecyclerView>(R.id.rvAndroidVersions)
+        mProgressBar = findViewById<View>(R.id.progress_bar) as ProgressBar
 
         //Add a LayoutManager
         recyclerView.layoutManager = LinearLayoutManager(this, LinearLayout.VERTICAL, false)
@@ -55,10 +60,15 @@ class ChooseCompanyActivity : AppCompatActivity() {
 
     private fun bind() {
 
+        showProgressBar()
         mSubscription.add(mViewModel.myCompaniesFromServer
                 .subscribeOn(Schedulers.computation())
                 .observeOn(rx.android.schedulers.AndroidSchedulers.mainThread())
-                .doOnError { throwable -> Log.e("ChooseCompanyAktivity ", "Error Throwable " + throwable.message) }
+                .doOnError { throwable ->
+                    Log.e("ChooseCompanyActivity", "Error Throwable " + throwable.message)
+                    hideProgressBar()
+                    toast("Server not connected")
+                }
                 .onErrorResumeNext({ throwable -> Observable.empty() })
                 .subscribe({ it -> setCompanies(it) }))
 
@@ -73,9 +83,9 @@ class ChooseCompanyActivity : AppCompatActivity() {
         //val myCompanies : MutableList<CompanyKt> = arrayListOf()
         //myCompanies.add(CompanyKt("301","JUCTO 2017", "2017", R.drawable.donut1))
         //myCompanies.add(CompanyKt("302","PUCTO 2017", "2017", R.drawable.kitkat))
-
+        hideProgressBar()
         recyclerView.adapter = ChooseCompanyAdapter(companies){
-            toast("${it.naz + " " + it.rok } Clicked")
+            toast("${it.xcf + " " + it.naz + " " + it.rok } Clicked")
             val editor = prefs.edit()
             editor.putString("fir", it.xcf).apply();
             editor.putString("firnaz", it.naz).apply();
@@ -106,10 +116,19 @@ class ChooseCompanyActivity : AppCompatActivity() {
 
     }
 
+    protected fun showProgressBar() {
+        mProgressBar?.setVisibility(View.VISIBLE)
+    }
+
+    protected fun hideProgressBar() {
+        mProgressBar?.setVisibility(View.GONE)
+    }
+
     override fun onDestroy() {
         super.onDestroy()
         mSubscription?.unsubscribe()
         mSubscription?.clear()
+        hideProgressBar()
     }
 
 

@@ -31,7 +31,7 @@ class ChooseCompanyAdapter(var myAndroidOSList: List<CompanyKt>, val listener: (
 
         fun bindItems(myAndroidOS: CompanyKt, listener: (CompanyKt) -> Unit) = with(itemView)  {
 
-            itemView.tvName.text = myAndroidOS.naz
+            itemView.tvName.text = myAndroidOS.xcf + " " + myAndroidOS.naz
             itemView.tvVersion.text = myAndroidOS.rok
             //itemView.ivIcon.setImageResource(myAndroidOS.imageIcon)
             Picasso.with(itemView.context).load(R.drawable.ic_check_circle_black_24dp).resize(120, 120).into(itemView.ivIcon)
