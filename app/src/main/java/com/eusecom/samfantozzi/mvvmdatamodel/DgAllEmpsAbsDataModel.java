@@ -214,17 +214,24 @@ public class DgAllEmpsAbsDataModel implements DgAllEmpsAbsIDataModel {
 
     @NonNull
     @Override
-    public Observable<Uri> getObservableUriDocPdf(@NonNull final String dokx, @NonNull final String firx
+    public Observable<Uri> getObservableUriDocPdf(Invoice invx, @NonNull final String firx
             , @NonNull final String rokx, @NonNull final String serverx, @NonNull final String adresx
-            , String drupoh, String encrypted) {
+            , String encrypted) {
 
-        Log.d("dokx ", dokx);
+        String drupoh = "1";
+        Log.d("dokx ", invx.getDok());
         return Observable.just(Uri.parse("http://" + serverx +
-                "/ucto/vspk_pdf.php?cislo_dok=" + dokx + "&hladaj_dok=" + dokx
+                "/ucto/vspk_pdf.php?cislo_dok=" + invx.getDok() + "&hladaj_dok=" + invx.getDok()
                 + "&sysx=UCT&rozuct=ANO&zandroidu=1&anduct=1&copern=20&drupoh="+ drupoh + "&page=1&serverx="
-                + adresx + "&userhash=" + encrypted + "&rokx=" + rokx + "&firx=" + firx ));
+                + adresx + "&userhash=" + encrypted + "&rokx=" + rokx + "&firx=" + firx + "&newfntz=1" ));
     }
 
+    @NonNull
+    @Override
+    public Observable<String> getObservableCashListQuery(@NonNull final String queryx) {
+
+        return Observable.just(queryx);
+    }
 
 
 

@@ -228,26 +228,31 @@ public class DgAllEmpsAbsMvvmViewModel {
 
     //recyclerview method for CashListKtFragment
     //get PDF Uri document
-    public void emitDocumentPdfUri(String dokx) { mObservableDocPDF.onNext(dokx); }
+    public void emitDocumentPdfUri(Invoice invx) { mObservableDocPDF.onNext(invx); }
 
     @NonNull
-    private BehaviorSubject<String> mObservableDocPDF = BehaviorSubject.create();
+    private BehaviorSubject<Invoice> mObservableDocPDF = BehaviorSubject.create();
 
     @NonNull
     public Observable<Uri> getObservableDocPdf() {
-        String usicox = "44551142";
-        String usuid = "K6u6ay4ghKbXRh7ZJTAEBoKLazm2";
-        String ustype = "99";
-        String umex = "07.2017";
 
-        String dokladx = "1004";
-        String firx = "144";
-        String rokx = "2014";
-        String serverx = "www.eshoptest.sk";
-        String adresx = "www.eshoptest.sk/androiducto";
-        String userx = "Nick/test2345" + "/ID/1001" + "/PSW/cp41cs" + "/druhID/99" + "/Doklad/1004" + "/Kateg/1";
-        String drupoh = "1";
-        String userxplus = userx + "/" + dokladx;
+        String firx = mSharedPreferences.getString("fir", "");
+        //String rokx = "2014";
+        String rokx = mSharedPreferences.getString("rok", "");
+        //String serverx = "www.eshoptest.sk";
+        String serverx = mSharedPreferences.getString("servername", "");
+        //String adresx = "www.eshoptest.sk/androiducto";
+        String adresx = mSharedPreferences.getString("servername", "") + "/androiducto";
+
+        String usuidx = mSharedPreferences.getString("usuid", "");
+
+        Random r = new Random();
+        double d = -10.0 + r.nextDouble() * 20.0;
+        String ds = String.valueOf(d);
+
+        String userx = "Nick/test2345" + "/ID/1001" + "/PSW/cp41cs" + "/Doklad/" + ds;
+
+        String userxplus = userx + "/" + usuidx;
 
         encrypted = "";
 
@@ -260,7 +265,8 @@ public class DgAllEmpsAbsMvvmViewModel {
 
         return mObservableDocPDF
                 .observeOn(mSchedulerProvider.ui())
-                .flatMap(dokx -> mDataModel.getObservableUriDocPdf(dokx, firx, rokx, serverx, adresx, drupoh, encrypted));
+                .flatMap(invx ->
+                        mDataModel.getObservableUriDocPdf(invx, firx, rokx, serverx, adresx, encrypted));
     }
 
     public void clearObservableDocPDF() {
@@ -269,6 +275,27 @@ public class DgAllEmpsAbsMvvmViewModel {
 
     }
     //end get PDF Uri document
+
+    //emit CashList search query
+    public void emitMyObservableCashListQuery(String queryx) { mObservableCashListQuery.onNext(queryx); }
+
+    @NonNull
+    private BehaviorSubject<String> mObservableCashListQuery = BehaviorSubject.create();
+
+    @NonNull
+    public Observable<String> getMyObservableCashListQuery() {
+
+        return mObservableCashListQuery
+                .observeOn(mSchedulerProvider.ui())
+                .flatMap(queryx -> mDataModel.getObservableCashListQuery(queryx));
+    }
+
+    public void clearObservableCashListQuery() {
+
+        mObservableCashListQuery = BehaviorSubject.create();
+
+    }
+    //end emit CashList search query
 
     //get absences from FB for update realm
     public void emitAbsencesFromFBforRealm(String dokx) { mObservableAbsencesFromFB.onNext(dokx); }

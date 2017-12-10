@@ -65,6 +65,7 @@ class CashListKtFragment : Fragment() {
     private var onQueryTextListener: SearchView.OnQueryTextListener? = null
     private var mDisposable: Disposable? = null
     protected var mSupplierSearchEngine: SupplierSearchEngine? = null
+    var searchManager: SearchManager? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -170,6 +171,18 @@ class CashListKtFragment : Fragment() {
                 .onErrorResumeNext { throwable -> Observable.empty() }
                 .subscribe { it -> setUriPdf(it) })
 
+        mSubscription?.add(mViewModel.getMyObservableCashListQuery()
+                .subscribeOn(Schedulers.computation())
+                .observeOn(rx.android.schedulers.AndroidSchedulers.mainThread())
+                .doOnError { throwable ->
+                    Log.e("CashListKtFragment", "Error Throwable " + throwable.message)
+                    hideProgressBar()
+                    toast("Server not connected")
+                }
+                .onErrorResumeNext { throwable -> Observable.empty() }
+                .subscribe { it -> setQueryString(it) })
+
+
         ActivityCompat.invalidateOptionsMenu(activity)
         (activity as AppCompatActivity).supportActionBar!!.setTitle(mSharedPreferences.getString("ume", "") + " "
                 + mSharedPreferences.getString("pokluce", "") + " " + getString(R.string.cashdocuments))
@@ -184,7 +197,19 @@ class CashListKtFragment : Fragment() {
         }
         mViewModel.clearObservableAbsencesFromFB()
         mViewModel.clearObservableDocPDF()
+        mViewModel.clearObservableCashListQuery()
         hideProgressBar()
+
+    }
+
+    private fun setQueryString(querystring: String) {
+
+        //toast(" querystring " + querystring)
+        if( querystring.equals("")){
+
+        }else {
+            searchView?.setQuery(querystring, false)
+        }
 
     }
 
@@ -259,11 +284,15 @@ class CashListKtFragment : Fragment() {
         // Retrieve the SearchView and plug it into SearchManager
         inflater!!.inflate(R.menu.menu_listdoc, menu)
         searchView = MenuItemCompat.getActionView(menu!!.findItem(R.id.action_search)) as SearchView
-        val searchManager = activity.getSystemService(Context.SEARCH_SERVICE) as SearchManager
-        searchView?.setSearchableInfo(searchManager.getSearchableInfo(activity.componentName))
+        searchManager = activity.getSystemService(Context.SEARCH_SERVICE) as SearchManager
+        searchView?.setSearchableInfo(searchManager?.getSearchableInfo(activity.componentName))
         getObservableSearchViewText()
     }
 
+    override fun onDestroyOptionsMenu() {
+        searchView?.setOnQueryTextListener(null)
+        searchManager = null
+    }
 
     override fun onOptionsItemSelected(item: MenuItem?): Boolean {
         val id = item!!.itemId
@@ -305,7 +334,9 @@ class CashListKtFragment : Fragment() {
                 .observeOn(AndroidSchedulers.mainThread())
                 .doOnNext { showProgressBar() }
                 .observeOn(io.reactivex.schedulers.Schedulers.io())
-                .map(Function<String, List<Invoice>> { query -> mSupplierSearchEngine?.searchModel(query) })
+                .map(Function<String, List<Invoice>> {
+                    query -> mSupplierSearchEngine?.searchModel(query)
+                })
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe { result ->
                     hideProgressBar()
@@ -329,6 +360,7 @@ class CashListKtFragment : Fragment() {
                     // use this method for auto complete search process
                     //Toast.makeText(getActivity(), "change " + newText, Toast.LENGTH_SHORT).show();
                     emitter.onNext(newText.toString())
+                    mViewModel.emitMyObservableCashListQuery(newText.toString())
                     return false
                 }
 
@@ -362,7 +394,7 @@ class CashListKtFragment : Fragment() {
             // of the selected item
             when (which) {
                 0 -> {
-                    mViewModel.emitDocumentPdfUri(invoice.dok)
+                    mViewModel.emitDocumentPdfUri(invoice)
                 }
                 1 -> {
                     mViewModel.emitAbsencesFromFBforRealm(invoice.dok)
