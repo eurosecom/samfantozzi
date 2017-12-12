@@ -161,6 +161,12 @@
     //cashlistactivity
     <string name="cashdocuments">Cash documents</string>
     <string name="empty">Empty</string>
+    <string name="close">Close</string>
+    <string name="deletedoc">Delete document</string>
+    <string name="editdoc">Edit document</string>
+    <string name="createdoc">Create document</string>
+    <string name="expense">Expense</string>
+    <string name="receipt">Receipt</string>
 
     //supplieractivity
     <string name="suppliers">Suppliers</string>
@@ -181,5 +187,8 @@
 
     //lunchemptymenu
     <string name="lunch_empty_menu">No menu loaded</string>
+
+    //rxjava demo
+    <string name="btn_demo_form_validation_combinel">Form Validation with CombineLatest</string>
 
 </resources>
