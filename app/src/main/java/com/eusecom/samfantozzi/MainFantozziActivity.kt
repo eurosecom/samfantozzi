@@ -338,7 +338,6 @@ class MainFantozziActivity : AppCompatActivity() {
 
     }
 
-
     //consume oncreateoptionmenu
     inline fun consume(f: () -> Unit): Boolean {
         f()

@@ -26,6 +26,9 @@ import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.disposables.Disposable
 import io.reactivex.functions.Function
 import org.jetbrains.anko.AlertDialogBuilder
+import org.jetbrains.anko.alert
+import org.jetbrains.anko.startActivity
+import org.jetbrains.anko.support.v4.alert
 import org.jetbrains.anko.support.v4.toast
 import rx.Observable
 import rx.schedulers.Schedulers
@@ -112,14 +115,15 @@ class CashListKtFragment : Fragment() {
         _disposables
                 .add(tapEventEmitter.subscribe { event ->
                     if (event is CashListKtFragment.ClickFobEvent) {
-                        Log.d("CashListKtActivity  ", " fobClick ")
+                        //Log.d("CashListKtActivity  ", " fobClick ")
+                        newCashDocDialog().show()
 
                     }
                     if (event is Invoice) {
 
                         val usnamex = event.nai
 
-                        Log.d("CashListKtFragment ", usnamex)
+                        //Log.d("CashListKtFragment ", usnamex)
                         getTodoDialog(event)
 
 
@@ -397,10 +401,10 @@ class CashListKtFragment : Fragment() {
                     mViewModel.emitDocumentPdfUri(invoice)
                 }
                 1 -> {
-                    mViewModel.emitAbsencesFromFBforRealm(invoice.dok)
+                    editDialog(invoice).show()
                 }
                 2 -> {
-
+                    deleteDialog(invoice).show()
                 }
             }
         }
@@ -409,7 +413,64 @@ class CashListKtFragment : Fragment() {
 
     }
 
+    fun newCashDocDialog(): AlertDialogBuilder {
 
+        alert = alert() {
+            positiveButton(R.string.expense) { navigateToNewCashDoc(2) }
+            neutralButton(R.string.receipt)  { navigateToNewCashDoc(1) }
+        }
+        val titlex: String = getString(R.string.createdoc)
+        alert.title(titlex)
+
+        return alert
+
+    }
+
+    fun navigateToNewCashDoc(drupoh: Int){
+
+        //getActivity().startActivity<InvoiceListKtActivity>()
+        val intent = Intent(getActivity(), FormValidationActivity::class.java)
+        startActivity(intent)
+
+    }
+
+    fun editDialog(invoice: Invoice): AlertDialogBuilder {
+
+        alert = alert() {
+            positiveButton(R.string.edit) { navigateToEditDoc(invoice) }
+            neutralButton(R.string.close)
+        }
+        val titlex: String = getString(R.string.editdoc) + " " + invoice.dok
+        alert.title(titlex)
+
+        return alert
+
+    }
+
+    fun navigateToEditDoc(invoice: Invoice){
+
+        //getActivity().startActivity<InvoiceListKtActivity>()
+
+    }
+
+    fun deleteDialog(invoice: Invoice): AlertDialogBuilder {
+
+        alert = alert() {
+            positiveButton(R.string.delete) { navigateToDeleteDoc(invoice) }
+            neutralButton(R.string.close)
+        }
+        val titlex: String = getString(R.string.deletedoc) + " " + invoice.dok
+        alert.title(titlex)
+
+        return alert
+
+    }
+
+    fun navigateToDeleteDoc(invoice: Invoice){
+
+        //getActivity().startActivity<InvoiceListKtActivity>()
+
+    }
 
 
 }

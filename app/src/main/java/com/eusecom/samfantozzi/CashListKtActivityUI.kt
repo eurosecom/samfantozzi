@@ -51,6 +51,7 @@ class CashListKtActivityUI (val _rxBus: RxBus): AnkoComponent<CashListKtActivity
                 id = R.id.fab
                 onClick{
                     _rxBus.send(CashListKtFragment.ClickFobEvent())
+
                 }
 
             }
@@ -58,5 +59,7 @@ class CashListKtActivityUI (val _rxBus: RxBus): AnkoComponent<CashListKtActivity
         }
 
     }
+
+
 
 }
