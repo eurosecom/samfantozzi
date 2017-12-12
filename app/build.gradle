@@ -41,12 +41,13 @@ android {
         //duplicate files copied in apk meta-inf/rxjava
         exclude 'META-INF/rxjava.properties'
         exclude 'META-INF/MANIFEST.MF'
+        exclude '1.jar:META-INF/MANIFEST.MF'
     }
 
 }
 
 dependencies {
-    implementation 'com.android.support:multidex:1.0.1'
+    implementation 'com.android.support:multidex:1.0.2'
     implementation fileTree(dir: 'libs', include: ['*.jar'])
     androidTestImplementation ('com.android.support.test.espresso:espresso-core:3.0.1', {
         exclude group: 'com.android.support', module: 'support-annotations'
@@ -79,6 +80,15 @@ dependencies {
     compile "org.jetbrains.anko:anko-appcompat-v7:$anko_version"
     compile "org.jetbrains.anko:anko-design:$anko_version"
     compile "org.jetbrains.anko:anko-recyclerview-v7:$anko_version"
+
+    //butterknife
+    annotationProcessor 'com.jakewharton:butterknife:7.0.1'
+    compile 'com.jakewharton:butterknife:7.0.1'
+
+    //icons by https://github.com/mikepenz/Android-Iconics
+    //the core iconcis library (without any widgets)
+    //implementation "com.mikepenz:iconics-core:2.9.5@aar"
+    //implementation 'com.mikepenz:google-material-typeface:3.0.1.2.original@aar'
 
     //Firebase
     //Firebase Authentication email password
