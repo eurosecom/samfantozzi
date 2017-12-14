@@ -28,6 +28,7 @@
         <activity android:name=".SupplierListActivity"/>
         <activity android:name=".InvoiceListKtActivity"/>
         <activity android:name=".CashListKtActivity"/>
+        <activity android:name=".NewCashDocKtActivity"/>
 
         <activity android:name=".FormValidationActivity"/>
         <activity android:name=".Detail2Activity"/>

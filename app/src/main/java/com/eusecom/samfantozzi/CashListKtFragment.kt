@@ -416,7 +416,7 @@ class CashListKtFragment : Fragment() {
     fun newCashDocDialog(): AlertDialogBuilder {
 
         alert = alert() {
-            positiveButton(R.string.expense) { navigateToNewCashDoc(2) }
+            positiveButton(R.string.expense) { navigateToNewCashDocTest(2) }
             neutralButton(R.string.receipt)  { navigateToNewCashDoc(1) }
         }
         val titlex: String = getString(R.string.createdoc)
@@ -427,6 +427,12 @@ class CashListKtFragment : Fragment() {
     }
 
     fun navigateToNewCashDoc(drupoh: Int){
+
+        getActivity().startActivity<NewCashDocKtActivity>()
+
+    }
+
+    fun navigateToNewCashDocTest(drupoh: Int){
 
         //getActivity().startActivity<InvoiceListKtActivity>()
         val intent = Intent(getActivity(), FormValidationActivity::class.java)
