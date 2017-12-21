@@ -10,6 +10,8 @@ import com.eusecom.samfantozzi.Month;
 import com.eusecom.samfantozzi.models.Attendance;
 import com.eusecom.samfantozzi.models.Employee;
 import java.util.List;
+
+import io.reactivex.Flowable;
 import rx.Observable;
 
 public interface DgAllEmpsAbsIDataModel {
@@ -61,4 +63,10 @@ public interface DgAllEmpsAbsIDataModel {
 
     @NonNull
     public Observable<String> getObservableCashListQuery(String queryx);
+
+    //method for NewCashDocKtActivity
+    @NonNull
+    public Observable<Boolean> getObservableIdCompany(String userhash, String userid, String fromfir
+            , String vyb_rok, String drh, String queryx);
+
 }

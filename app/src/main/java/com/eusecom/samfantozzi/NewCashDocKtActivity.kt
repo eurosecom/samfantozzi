@@ -39,15 +39,12 @@ class NewCashDocKtActivity : AppCompatActivity() {
         //setContentView(R.layout.activity_cashlist)
         NewCashDocKtActivityUI(_rxBus).setContentView(this)
 
-        supportActionBar!!.setTitle(prefs.getString("ume", "") + " " +
-                prefs.getString("pokluce", "") + " " +  getString(R.string.cashdocuments))
+        supportActionBar!!.setTitle(prefs.getString("pokluce", "") + " " +  getString(R.string.newdoc))
 
         // Create the adapter that will return a fragment for each section
         mPagerAdapter = object : FragmentPagerAdapter(supportFragmentManager) {
-            //private val mFragments = arrayOf(DgAeaListFragment(), DgAbsServerListFragment())
-            //private val mFragments = arrayOf(CashListKtFragment(), EmptyKtFragment())
-            private val mFragments = arrayOf(CashListKtFragment(), EmptyKtFragment())
-            private val mFragmentNames = arrayOf(getString(R.string.cashdocuments), getString(R.string.empty))
+            private val mFragments = arrayOf(NewCashDocFragment(), EmptyKtFragment())
+            private val mFragmentNames = arrayOf(getString(R.string.newdoc), getString(R.string.empty))
 
             override fun getItem(position: Int): Fragment {
                 return mFragments[position]

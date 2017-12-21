@@ -7,6 +7,8 @@ import android.util.Log;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import io.reactivex.Flowable;
 import rx.Observable;
 import com.eusecom.samfantozzi.Account;
 import com.eusecom.samfantozzi.CompanyKt;
@@ -144,6 +146,7 @@ public class DgAllEmpsAbsDataModel implements DgAllEmpsAbsIDataModel {
             , String vyb_rok, String drh) {
 
         return mAbsServerService.getAccountsFromSqlServer(userhash, userid, fromfir, vyb_rok, drh);
+        //return mAbsServerService.controlIdCompanyOnSqlServer(userhash, userid, fromfir, vyb_rok, drh, "xxx");
 
     }
 
@@ -151,7 +154,7 @@ public class DgAllEmpsAbsDataModel implements DgAllEmpsAbsIDataModel {
     public Observable<List<Account>> getAccounts(String rokx) {
 
         List<Account> mymonths = new ArrayList<>();
-        Account newmonth = new Account("Dodavatelia", "32100", "830001", "0", "2");
+        Account newmonth = new Account("Dodavatelia", "32100", "830001", "0", "2", true);
         mymonths.add(newmonth);
 
 
@@ -233,6 +236,14 @@ public class DgAllEmpsAbsDataModel implements DgAllEmpsAbsIDataModel {
         return Observable.just(queryx);
     }
 
+    //method for NewCashDocKtActivity
+    @NonNull
+    public Observable<Boolean> getObservableIdCompany(String userhash, String userid, String fromfir
+            , String vyb_rok, String drh, String queryx){
+
+        return Observable.just(true);
+        //return mAbsServerService.controlIdCompanyOnSqlServer(userhash, userid, fromfir, vyb_rok, drh, queryx);
+    }
 
 
 }

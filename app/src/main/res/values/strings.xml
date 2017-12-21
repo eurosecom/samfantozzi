@@ -184,6 +184,11 @@
     //invoiceactivity
     <string name="customers">Customers</string>
 
+    //newcashdocactivity
+    <string name="newdoc">New document</string>
+    <string name="save">Save</string>
+    <string name="companyid">Company ID</string>
+
 
     //lunchemptymenu
     <string name="lunch_empty_menu">No menu loaded</string>

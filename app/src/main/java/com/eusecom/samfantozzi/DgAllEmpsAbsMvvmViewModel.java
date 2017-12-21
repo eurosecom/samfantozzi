@@ -4,7 +4,6 @@ import android.content.SharedPreferences;
 import android.net.Uri;
 import android.support.annotation.NonNull;
 import android.util.Log;
-
 import com.eusecom.samfantozzi.models.Attendance;
 import com.eusecom.samfantozzi.models.Employee;
 import com.eusecom.samfantozzi.mvvmdatamodel.DgAllEmpsAbsIDataModel;
@@ -12,6 +11,7 @@ import com.eusecom.samfantozzi.mvvmschedulers.ISchedulerProvider;
 import java.util.List;
 import java.util.Random;
 
+import io.reactivex.Flowable;
 import rx.Observable;
 import rx.subjects.BehaviorSubject;
 
@@ -322,6 +322,56 @@ public class DgAllEmpsAbsMvvmViewModel {
 
     }
     //end get absences from FB for update realm
+
+
+
+    //NewCashDocFragment and NewCashDocActivity
+    //emit Observable control IdCompany
+    public void emitMyObservableIdCompany(String queryx) {
+        //String querys = String.valueOf(queryx);
+        mObservableIdCompany.onNext(queryx);
+    }
+
+    @NonNull
+    private BehaviorSubject<String> mObservableIdCompany = BehaviorSubject.create();
+
+    @NonNull
+    public Observable<Boolean> getMyObservableIdCompany() {
+
+        Random r = new Random();
+        double d = -10.0 + r.nextDouble() * 20.0;
+        String ds = String.valueOf(d);
+
+        String usuidx = mSharedPreferences.getString("usuid", "");
+        String userxplus =  ds + "/" + usuidx + "/" + ds;
+        encrypted = "";
+
+
+        try {
+            encrypted = mMcrypt.bytesToHex( mMcrypt.encrypt(userxplus) );
+        } catch (Exception e1) {
+            // TODO Auto-generated catch block
+            e1.printStackTrace();
+        }
+        Log.d("userxplus ", encrypted + " " + ds);
+        	/* Decrypt */
+        //String decrypted = new String( mMcrypt.decrypt( encrypted ) );
+
+        String firx = mSharedPreferences.getString("fir", "");
+        String rokx = mSharedPreferences.getString("rok", "");
+        String drh = "2";
+
+        return mObservableIdCompany
+                .observeOn(mSchedulerProvider.ui())
+                .flatMap(queryx -> mDataModel.getObservableIdCompany(encrypted, ds, firx, rokx, drh, queryx ));
+    }
+
+    public void clearObservableIdCompany() {
+
+        mObservableIdCompany = BehaviorSubject.create();
+
+    }
+    //end emit Observable control IdCompany
 
 
 

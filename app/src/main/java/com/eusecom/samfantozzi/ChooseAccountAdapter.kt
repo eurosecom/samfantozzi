@@ -32,6 +32,11 @@ class ChooseAccountAdapter(var mList: MutableList<Account>, val listener: (Accou
         fun bindItem(account: Account, listener: (Account) -> Unit) = with(itemView) {
 
             accName?.setText(account.accname)
+            //if(account.logprx) {
+            //    accName?.setText(account.accname + " true")
+            //}else{
+            //    accName?.setText(account.accname + " false")
+            //}
             accNumber?.setText(account.accnumber)
             Picasso.with(itemView.context).load(R.drawable.ic_call_made_black_24dp).resize(120, 120).into(accImage)
             if( account.acctype.equals("2")){
