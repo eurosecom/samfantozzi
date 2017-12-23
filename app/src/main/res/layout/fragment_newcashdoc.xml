@@ -5,14 +5,6 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     >
 
-    <TextView
-        android:layout_height="wrap_content"
-        android:layout_width="match_parent"
-        android:padding="10dp"
-        android:gravity="center"
-        android:text="msg_demo_form_comb_latest"
-        />
-
     <LinearLayout
         android:orientation="horizontal"
         android:layout_height="wrap_content"
@@ -70,15 +62,15 @@
             android:layout_height="wrap_content"
             android:layout_width="0dp"
             android:padding="10dp"
-            android:text="Enter a valid email below:"
+            android:text="@string/person"
             />
 
         <EditText
-            android:id="@+id/demo_combl_email"
+            android:id="@+id/person"
             android:layout_weight="1"
             android:layout_height="wrap_content"
             android:layout_width="0dp"
-            android:inputType="textEmailAddress"
+            android:inputType="text"
             />
     </LinearLayout>
 
@@ -93,17 +85,17 @@
             android:layout_height="wrap_content"
             android:layout_width="0dp"
             android:padding="10dp"
-            android:text="password (> than 8 chrs):"
+            android:text="@string/memo"
             />
 
         <EditText
-            android:id="@+id/demo_combl_password"
+            android:id="@+id/memo"
             android:layout_weight="1"
             android:layout_height="wrap_content"
             android:layout_width="0dp"
+            android:inputType="text"
             />
     </LinearLayout>
-
 
     <LinearLayout
         android:orientation="horizontal"
@@ -116,15 +108,15 @@
             android:layout_height="wrap_content"
             android:layout_width="0dp"
             android:padding="10dp"
-            android:text="number (between 1 &amp; 100):"
+            android:text="@string/totalvalue"
             />
 
         <EditText
-            android:id="@+id/demo_combl_num"
+            android:id="@+id/hod"
             android:layout_weight="1"
             android:layout_height="wrap_content"
             android:layout_width="0dp"
-            android:inputType="number"
+            android:inputType="numberDecimal"
             />
     </LinearLayout>
 

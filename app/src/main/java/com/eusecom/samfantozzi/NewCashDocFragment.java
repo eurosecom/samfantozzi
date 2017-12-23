@@ -32,20 +32,18 @@ public class NewCashDocFragment extends Fragment {
 
     }
 
-    @Bind(R.id.btn_demo_form_valid)
     TextView _btnValidIndicator;
-    @Bind(R.id.demo_combl_email) EditText _email;
-    @Bind(R.id.demo_combl_password) EditText _password;
-    @Bind(R.id.demo_combl_num) EditText _number;
-
     @Bind(R.id.datex) EditText _datex;
     @Bind(R.id.companyid) EditText _companyid;
+    @Bind(R.id.person) EditText _person;
+    @Bind(R.id.memo) EditText _memo;
+    @Bind(R.id.hod) EditText _hod;
 
 
     private DisposableSubscriber<Boolean> _disposableObserver = null;
-    private Flowable<CharSequence> _emailChangeObservable;
-    private Flowable<CharSequence> _numberChangeObservable;
-    private Flowable<CharSequence> _passwordChangeObservable;
+    private Flowable<CharSequence> _hodChangeObservable;
+    private Flowable<CharSequence> _personChangeObservable;
+    private Flowable<CharSequence> _memoChangeObservable;
     private Flowable<Boolean> _icoChangeObservable;
     Observable<String> obsIco;
 
@@ -78,14 +76,14 @@ public class NewCashDocFragment extends Fragment {
 
         //mProgressBar = (ProgressBar) rootView.findViewById(R.id.progress_bar);
 
-        _emailChangeObservable = RxJavaInterop.toV2Flowable(RxTextView
-                .textChanges(_email)
+        _personChangeObservable = RxJavaInterop.toV2Flowable(RxTextView
+                .textChanges(_person)
                 .skip(1));
-        _passwordChangeObservable = RxJavaInterop.toV2Flowable(RxTextView
-                .textChanges(_password)
+        _memoChangeObservable = RxJavaInterop.toV2Flowable(RxTextView
+                .textChanges(_memo)
                 .skip(1));
-        _numberChangeObservable = RxJavaInterop.toV2Flowable(RxTextView
-                .textChanges(_number)
+        _hodChangeObservable = RxJavaInterop.toV2Flowable(RxTextView
+                .textChanges(_hod)
                 .skip(1));
 
 
@@ -176,39 +174,37 @@ public class NewCashDocFragment extends Fragment {
         };
 
         Flowable
-                .combineLatest(_emailChangeObservable,
-                        _passwordChangeObservable,
-                        _numberChangeObservable,
+                .combineLatest(_personChangeObservable,
+                        _memoChangeObservable,
+                        _hodChangeObservable,
                         _icoChangeObservable,
-                        (newEmail, newPassword, newNumber, newIco) -> {
+                        (newPerson, newMemo, newHod, newIco) -> {
 
                             if (!newIco) {
                                 _companyid.setError("Company ID does not match!");
                             }
 
-                            boolean emailValid = !isEmpty(newEmail) &&
-                                    EMAIL_ADDRESS
-                                            .matcher(newEmail)
-                                            .matches();
-                            if (!emailValid) {
-                                _email.setError("Invalid Email!");
+
+                            boolean personValid = !isEmpty(newPerson) && newPerson.length() > 8;
+                            if (!personValid) {
+                                _person.setError("Invalid Person!");
                             }
 
-                            boolean passValid = !isEmpty(newPassword) && newPassword.length() > 8;
-                            if (!passValid) {
-                                _password.setError("Invalid Password!");
+                            boolean memoValid = !isEmpty(newMemo) && newMemo.length() > 8;
+                            if (!memoValid) {
+                                _memo.setError("Invalid Memo!");
                             }
 
-                            boolean numValid = !isEmpty(newNumber);
-                            if (numValid) {
-                                int num = Integer.parseInt(newNumber.toString());
-                                numValid = num > 0 && num <= 100;
+                            boolean hodValid = !isEmpty(newHod);
+                            if (hodValid) {
+                                int num = Integer.parseInt(newHod.toString());
+                                hodValid = num > 0 && num <= 100;
                             }
-                            if (!numValid) {
-                                _number.setError("Invalid Number!");
+                            if (!hodValid) {
+                                _hod.setError("Invalid Hod!");
                             }
 
-                            return emailValid && passValid && numValid && newIco;
+                            return personValid && memoValid && hodValid && newIco;
                         })
                 .subscribe(_disposableObserver);
     }

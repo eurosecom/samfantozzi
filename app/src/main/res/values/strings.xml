@@ -188,7 +188,9 @@
     <string name="newdoc">New document</string>
     <string name="save">Save</string>
     <string name="companyid">Company ID</string>
-
+    <string name="person">Person</string>
+    <string name="memo">Memo</string>
+    <string name="totalvalue">Total value</string>
 
     //lunchemptymenu
     <string name="lunch_empty_menu">No menu loaded</string>
