@@ -73,13 +73,13 @@ class NewCashDocKtActivity : AppCompatActivity() {
                     // Check if this is the page you want.
                     if (position == 0) {
                         val fab = findViewById<View>(R.id.fab) as FloatingActionButton
-                        fab.visibility = View.VISIBLE
+                        fab.visibility = View.GONE
                         supportActionBar!!.setTitle(prefs.getString("ume", "") + " " + getString(R.string.cashdocuments))
                     }
                     if (position == 1) {
                         val fab = findViewById<View>(R.id.fab) as FloatingActionButton
-                        //fab.setVisibility(View.GONE);
-                        fab.visibility = View.VISIBLE
+                        fab.setVisibility(View.GONE);
+                        //fab.visibility = View.VISIBLE
                         supportActionBar!!.setTitle(getString(R.string.empty))
                     }
 
@@ -88,6 +88,8 @@ class NewCashDocKtActivity : AppCompatActivity() {
 
         val tabLayout = findViewById<View>(R.id.tabs) as TabLayout
         tabLayout.setupWithViewPager(mViewPager)
+        val fab = findViewById<View>(R.id.fab) as FloatingActionButton
+        fab.setVisibility(View.GONE);
 
     }
 

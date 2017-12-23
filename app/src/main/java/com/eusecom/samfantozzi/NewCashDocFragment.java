@@ -10,6 +10,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ProgressBar;
 import android.widget.TextView;
@@ -32,12 +33,12 @@ public class NewCashDocFragment extends Fragment {
 
     }
 
-    TextView _btnValidIndicator;
     @Bind(R.id.datex) EditText _datex;
     @Bind(R.id.companyid) EditText _companyid;
     @Bind(R.id.person) EditText _person;
     @Bind(R.id.memo) EditText _memo;
     @Bind(R.id.hod) EditText _hod;
+    @Bind(R.id.btnsave) Button _btnsave;
 
 
     private DisposableSubscriber<Boolean> _disposableObserver = null;
@@ -155,10 +156,12 @@ public class NewCashDocFragment extends Fragment {
             @Override
             public void onNext(Boolean formValid) {
                 if (formValid) {
-                    _btnValidIndicator.setBackgroundColor(getResources().getColor(R.color.blue));
+                    _btnsave.setBackgroundColor(getResources().getColor(R.color.blue));
+                    Log.d("NewCashDoc", "formvalid true ");
                 }
                 else {
-                    _btnValidIndicator.setBackgroundColor(getResources().getColor(R.color.gray));
+                    _btnsave.setBackgroundColor(getResources().getColor(R.color.gray));
+                    Log.d("NewCashDoc", "formvalid false ");
                 }
             }
 

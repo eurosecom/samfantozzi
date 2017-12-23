@@ -191,6 +191,12 @@
     <string name="person">Person</string>
     <string name="memo">Memo</string>
     <string name="totalvalue">Total value</string>
+    <string name="popzakl2">Basis %s</string>
+    <string name="popdph2">VAT%s</string>
+    <string name="popzakl1">Basis %s</string>
+    <string name="popdph1">VAT%s</string>
+    <string name="popzakl0">Basis0%</string>
+    <string name="pohyb">Account</string>
 
     //lunchemptymenu
     <string name="lunch_empty_menu">No menu loaded</string>
