@@ -30,7 +30,6 @@
         <activity android:name=".CashListKtActivity"/>
         <activity android:name=".NewCashDocKtActivity"/>
 
-        <activity android:name=".FormValidationActivity"/>
         <activity android:name=".Detail2Activity"/>
     </application>
 

@@ -435,8 +435,8 @@ class CashListKtFragment : Fragment() {
     fun navigateToNewCashDocTest(drupoh: Int){
 
         //getActivity().startActivity<InvoiceListKtActivity>()
-        val intent = Intent(getActivity(), FormValidationActivity::class.java)
-        startActivity(intent)
+        //val intent = Intent(getActivity(), FormValidationActivity::class.java)
+        //startActivity(intent)
 
     }
 
