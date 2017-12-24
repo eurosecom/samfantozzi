@@ -29,6 +29,7 @@
     <string name="didnotlogin">You did not login</string>
     <string name="donotcompany">You have to choose your company</string>
     <string name="didnotcompany">You did not choose company</string>
+    <string name="descimg">Desc</string>
 
 
     //firebase auth

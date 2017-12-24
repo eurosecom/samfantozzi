@@ -69,4 +69,8 @@ public interface DgAllEmpsAbsIDataModel {
     public Observable<Boolean> getObservableIdCompany(String userhash, String userid, String fromfir
             , String vyb_rok, String drh, String queryx);
 
+    @NonNull
+    public Observable<List<Account>> getObservableIdModelCompany(String userhash, String userid, String fromfir
+            , String vyb_rok, String drh, String queryx);
+
 }

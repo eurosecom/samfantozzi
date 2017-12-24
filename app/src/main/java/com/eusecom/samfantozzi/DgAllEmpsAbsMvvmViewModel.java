@@ -326,7 +326,57 @@ public class DgAllEmpsAbsMvvmViewModel {
 
 
     //NewCashDocFragment and NewCashDocActivity
-    //emit Observable control IdCompany
+
+    //emit Observable<Account> control IdCompany
+    public void emitMyObservableIdModelCompany(String queryx) {
+        //String querys = String.valueOf(queryx);
+        mObservableIdModelCompany.onNext(queryx);
+    }
+
+    @NonNull
+    private BehaviorSubject<String> mObservableIdModelCompany = BehaviorSubject.create();
+
+    @NonNull
+    public Observable<List<Account>> getMyObservableIdModelCompany() {
+
+        Random r = new Random();
+        double d = -10.0 + r.nextDouble() * 20.0;
+        String ds = String.valueOf(d);
+
+        String usuidx = mSharedPreferences.getString("usuid", "");
+        String userxplus =  ds + "/" + usuidx + "/" + ds;
+        encrypted = "";
+
+
+        try {
+            encrypted = mMcrypt.bytesToHex( mMcrypt.encrypt(userxplus) );
+        } catch (Exception e1) {
+            // TODO Auto-generated catch block
+            e1.printStackTrace();
+        }
+        Log.d("userxplus ", encrypted + " " + ds);
+        	/* Decrypt */
+        //String decrypted = new String( mMcrypt.decrypt( encrypted ) );
+
+        String firx = mSharedPreferences.getString("fir", "");
+        String rokx = mSharedPreferences.getString("rok", "");
+        String drh = "2";
+
+        return mObservableIdModelCompany
+                .observeOn(mSchedulerProvider.ui())
+                .flatMap(queryx -> mDataModel.getObservableIdModelCompany(encrypted, ds, firx, rokx, drh, queryx ));
+    }
+
+    public void clearObservableIdModelCompany() {
+
+        mObservableIdModelCompany = BehaviorSubject.create();
+
+    }
+    //end emit Observable<Account> control IdCompany
+
+
+
+    //emit Observable<Boolean> control IdCompany
     public void emitMyObservableIdCompany(String queryx) {
         //String querys = String.valueOf(queryx);
         mObservableIdCompany.onNext(queryx);
@@ -371,7 +421,7 @@ public class DgAllEmpsAbsMvvmViewModel {
         mObservableIdCompany = BehaviorSubject.create();
 
     }
-    //end emit Observable control IdCompany
+    //end emit Observable<Boolean> control IdCompany
 
 
 

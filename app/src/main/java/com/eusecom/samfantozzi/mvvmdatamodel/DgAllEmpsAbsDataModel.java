@@ -245,5 +245,17 @@ public class DgAllEmpsAbsDataModel implements DgAllEmpsAbsIDataModel {
         //return mAbsServerService.controlIdCompanyOnSqlServer(userhash, userid, fromfir, vyb_rok, drh, queryx);
     }
 
+    @NonNull
+    public Observable<List<Account>> getObservableIdModelCompany(String userhash, String userid, String fromfir
+            , String vyb_rok, String drh, String queryx){
+
+        List<Account> mymonths = new ArrayList<>();
+        Account newmonth = new Account("Dodavatelia", "32100", "830001", "0", "2", true);
+        mymonths.add(newmonth);
+
+        return Observable.just(mymonths);
+        //return mAbsServerService.controlIdCompanyOnSqlServer(userhash, userid, fromfir, vyb_rok, drh, queryx);
+    }
+
 
 }

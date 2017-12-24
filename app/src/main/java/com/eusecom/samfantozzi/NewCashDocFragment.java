@@ -13,9 +13,11 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ProgressBar;
-import android.widget.TextView;
 import com.eusecom.samfantozzi.rxbus.RxBus;
 import com.jakewharton.rxbinding.widget.RxTextView;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.List;
 import java.util.concurrent.TimeUnit;
 import javax.inject.Inject;
 import butterknife.Bind;
@@ -25,7 +27,7 @@ import io.reactivex.Flowable;
 import io.reactivex.Observable;
 import io.reactivex.subscribers.DisposableSubscriber;
 import static android.text.TextUtils.isEmpty;
-import static android.util.Patterns.EMAIL_ADDRESS;
+
 
 public class NewCashDocFragment extends Fragment {
 
@@ -42,10 +44,12 @@ public class NewCashDocFragment extends Fragment {
 
 
     private DisposableSubscriber<Boolean> _disposableObserver = null;
+    private Flowable<CharSequence> _datexChangeObservable;
     private Flowable<CharSequence> _hodChangeObservable;
     private Flowable<CharSequence> _personChangeObservable;
     private Flowable<CharSequence> _memoChangeObservable;
-    private Flowable<Boolean> _icoChangeObservable;
+    //private Flowable<Boolean> _icoChangeObservable;
+    private Flowable<List<Account>> _icoModelChangeObservable;
     Observable<String> obsIco;
 
     private ProgressBar mProgressBar;
@@ -77,6 +81,9 @@ public class NewCashDocFragment extends Fragment {
 
         //mProgressBar = (ProgressBar) rootView.findViewById(R.id.progress_bar);
 
+        _datexChangeObservable = RxJavaInterop.toV2Flowable(RxTextView
+                .textChanges(_datex)
+                .skip(1));
         _personChangeObservable = RxJavaInterop.toV2Flowable(RxTextView
                 .textChanges(_person)
                 .skip(1));
@@ -95,10 +102,13 @@ public class NewCashDocFragment extends Fragment {
 
         obsIco.subscribe(string -> {
             Log.d("NewCashDoc", "debounced " + string);
-            mViewModel.emitMyObservableIdCompany(string);
+            //mViewModel.emitMyObservableIdCompany(string);
+            mViewModel.emitMyObservableIdModelCompany(string);
         });
 
-        _icoChangeObservable = RxJavaInterop.toV2Flowable(mViewModel.getMyObservableIdCompany());
+        //_icoChangeObservable = RxJavaInterop.toV2Flowable(mViewModel.getMyObservableIdCompany());
+
+        _icoModelChangeObservable = RxJavaInterop.toV2Flowable(mViewModel.getMyObservableIdModelCompany());
 
         _combineLatestEvents();
 
@@ -127,6 +137,12 @@ public class NewCashDocFragment extends Fragment {
     }
 
     private void bind() {
+
+        Calendar c = Calendar.getInstance();
+        SimpleDateFormat df = new SimpleDateFormat("dd.MM.yyyy");
+        String formattedDate = df.format(c.getTime());
+        _datex.setText(formattedDate);
+        _datex.setEnabled(false);
 
         ActivityCompat.invalidateOptionsMenu(getActivity());
         ((AppCompatActivity)getActivity()).getSupportActionBar().setTitle(mSharedPreferences.getString("pokluce", "")
@@ -180,13 +196,19 @@ public class NewCashDocFragment extends Fragment {
                 .combineLatest(_personChangeObservable,
                         _memoChangeObservable,
                         _hodChangeObservable,
-                        _icoChangeObservable,
-                        (newPerson, newMemo, newHod, newIco) -> {
+                        _datexChangeObservable,
+                        _icoModelChangeObservable,
+                        (newPerson, newMemo, newHod, newDatex, newIcoModel) -> {
 
-                            if (!newIco) {
+                            boolean icoValid = newIcoModel.get(0).getLogprx();
+                            if (!icoValid) {
                                 _companyid.setError("Company ID does not match!");
                             }
 
+                            boolean datexValid = !isEmpty(newDatex);
+                            if (!datexValid) {
+                                _datex.setError("Invalid Date!");
+                            }
 
                             boolean personValid = !isEmpty(newPerson) && newPerson.length() > 8;
                             if (!personValid) {
@@ -207,7 +229,7 @@ public class NewCashDocFragment extends Fragment {
                                 _hod.setError("Invalid Hod!");
                             }
 
-                            return personValid && memoValid && hodValid && newIco;
+                            return personValid && memoValid && hodValid && icoValid && datexValid;
                         })
                 .subscribe(_disposableObserver);
     }
