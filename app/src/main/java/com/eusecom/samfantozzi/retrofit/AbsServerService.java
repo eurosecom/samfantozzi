@@ -2,6 +2,7 @@ package com.eusecom.samfantozzi.retrofit;
 
 import com.eusecom.samfantozzi.Account;
 import com.eusecom.samfantozzi.CompanyKt;
+import com.eusecom.samfantozzi.IdCompanyKt;
 import com.eusecom.samfantozzi.Invoice;
 import com.eusecom.samfantozzi.models.Attendance;
 import java.util.List;
@@ -14,7 +15,7 @@ import rx.Observable;
 public interface AbsServerService {
 
     @GET("/androidfantozzi/control_idcompany.php")
-    Observable<List<Account>> controlIdCompanyOnSqlServer(@Query("userhash") String userhash
+    Observable<List<IdCompanyKt>> controlIdCompanyOnSqlServer(@Query("userhash") String userhash
             , @Query("userid") String userid, @Query("fromfir") String fromfir
             , @Query("vyb_rok") String vyb_rok, @Query("drh") String drh, @Query("queryx") String queryx);
 

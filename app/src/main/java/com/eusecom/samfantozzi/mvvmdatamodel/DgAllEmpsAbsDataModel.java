@@ -12,6 +12,7 @@ import io.reactivex.Flowable;
 import rx.Observable;
 import com.eusecom.samfantozzi.Account;
 import com.eusecom.samfantozzi.CompanyKt;
+import com.eusecom.samfantozzi.IdCompanyKt;
 import com.eusecom.samfantozzi.Invoice;
 import com.eusecom.samfantozzi.Month;
 import com.eusecom.samfantozzi.R;
@@ -151,6 +152,15 @@ public class DgAllEmpsAbsDataModel implements DgAllEmpsAbsIDataModel {
     }
 
     @Override
+    public Observable<List<IdCompanyKt>> getIDCFromMysqlServer(String userhash, String userid, String fromfir
+            , String vyb_rok, String drh) {
+
+        //return mAbsServerService.getAccountsFromSqlServer(userhash, userid, fromfir, vyb_rok, drh);
+        return mAbsServerService.controlIdCompanyOnSqlServer(userhash, userid, fromfir, vyb_rok, drh, "xxx");
+
+    }
+
+    @Override
     public Observable<List<Account>> getAccounts(String rokx) {
 
         List<Account> mymonths = new ArrayList<>();
@@ -246,15 +256,23 @@ public class DgAllEmpsAbsDataModel implements DgAllEmpsAbsIDataModel {
     }
 
     @NonNull
-    public Observable<List<Account>> getObservableIdModelCompany(String userhash, String userid, String fromfir
+    public Observable<List<IdCompanyKt>> getObservableIdModelCompany(String userhash, String userid, String fromfir
             , String vyb_rok, String drh, String queryx){
 
-        List<Account> mymonths = new ArrayList<>();
-        Account newmonth = new Account("Dodavatelia", "32100", "830001", "0", "2", true);
-        mymonths.add(newmonth);
+        List<IdCompanyKt> myidc = new ArrayList<>();
+        IdCompanyKt newidc = new IdCompanyKt("31414466", "", "", "Firma xyz", "ulixyz",
+                "Mesto", "", true);
+        myidc.add(newidc);
 
-        return Observable.just(mymonths);
-        //return mAbsServerService.controlIdCompanyOnSqlServer(userhash, userid, fromfir, vyb_rok, drh, queryx);
+        System.out.println("userhash " + userhash);
+        System.out.println("userid " + userid);
+        System.out.println("fromfir " + fromfir);
+        System.out.println("vyb_rok " + vyb_rok);
+        System.out.println("drh " + drh);
+        System.out.println("queryx " + queryx);
+
+        //return Observable.just(myidc);
+        return mAbsServerService.controlIdCompanyOnSqlServer(userhash, userid, fromfir, vyb_rok, drh, queryx);
     }
 
 

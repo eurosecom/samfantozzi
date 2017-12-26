@@ -13,6 +13,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ProgressBar;
+import android.widget.TextView;
 import com.eusecom.samfantozzi.rxbus.RxBus;
 import com.jakewharton.rxbinding.widget.RxTextView;
 import java.text.SimpleDateFormat;
@@ -41,6 +42,17 @@ public class NewCashDocFragment extends Fragment {
     @Bind(R.id.memo) EditText _memo;
     @Bind(R.id.hod) EditText _hod;
     @Bind(R.id.btnsave) Button _btnsave;
+    @Bind(R.id.textzakl2) TextView _textzakl2;
+    @Bind(R.id.textdph2) TextView _textdph2;
+    @Bind(R.id.textzakl1) TextView _textzakl1;
+    @Bind(R.id.textdph1) TextView _textdph1;
+    @Bind(R.id.companyname) TextView _companyname;
+    @Bind(R.id.inputZk0) EditText _inputZk0;
+    @Bind(R.id.inputZk1) EditText _inputZk1;
+    @Bind(R.id.inputZk2) EditText _inputZk2;
+    @Bind(R.id.inputDn1) EditText _inputDn1;
+    @Bind(R.id.inputDn2) EditText _inputDn2;
+
 
 
     private DisposableSubscriber<Boolean> _disposableObserver = null;
@@ -49,7 +61,7 @@ public class NewCashDocFragment extends Fragment {
     private Flowable<CharSequence> _personChangeObservable;
     private Flowable<CharSequence> _memoChangeObservable;
     //private Flowable<Boolean> _icoChangeObservable;
-    private Flowable<List<Account>> _icoModelChangeObservable;
+    private Flowable<List<IdCompanyKt>> _icoModelChangeObservable;
     Observable<String> obsIco;
 
     private ProgressBar mProgressBar;
@@ -143,10 +155,21 @@ public class NewCashDocFragment extends Fragment {
         String formattedDate = df.format(c.getTime());
         _datex.setText(formattedDate);
         _datex.setEnabled(false);
-
+        _textzakl2.setText(String.format(getResources().getString(R.string.popzakl2), mSharedPreferences.getString("firdph2", "")) + "%");
+        _textdph2.setText(String.format(getResources().getString(R.string.popdph2), mSharedPreferences.getString("firdph2", "")) + "%");
+        _textzakl1.setText(String.format(getResources().getString(R.string.popzakl1), mSharedPreferences.getString("firdph1", "")) + "%");
+        _textdph1.setText(String.format(getResources().getString(R.string.popdph1), mSharedPreferences.getString("firdph1", "")) + "%");
         ActivityCompat.invalidateOptionsMenu(getActivity());
         ((AppCompatActivity)getActivity()).getSupportActionBar().setTitle(mSharedPreferences.getString("pokluce", "")
                 + " " +  getString(R.string.newdoc));
+
+        _inputZk0.setText("0");
+        _inputZk1.setText("0");
+        _inputZk2.setText("0");
+        _inputDn1.setText("0");
+        _inputDn2.setText("0");
+        _hod.setText("0");
+
  }
 
     private void unBind() {
@@ -173,11 +196,11 @@ public class NewCashDocFragment extends Fragment {
             public void onNext(Boolean formValid) {
                 if (formValid) {
                     _btnsave.setBackgroundColor(getResources().getColor(R.color.blue));
-                    Log.d("NewCashDoc", "formvalid true ");
+                    //Log.d("NewCashDoc", "formvalid true ");
                 }
                 else {
                     _btnsave.setBackgroundColor(getResources().getColor(R.color.gray));
-                    Log.d("NewCashDoc", "formvalid false ");
+                    //Log.d("NewCashDoc", "formvalid false ");
                 }
             }
 
@@ -203,6 +226,9 @@ public class NewCashDocFragment extends Fragment {
                             boolean icoValid = newIcoModel.get(0).getLogprx();
                             if (!icoValid) {
                                 _companyid.setError("Company ID does not match!");
+                                _companyname.setText("");
+                            }else{
+                                _companyname.setText(newIcoModel.get(0).getNai());
                             }
 
                             boolean datexValid = !isEmpty(newDatex);

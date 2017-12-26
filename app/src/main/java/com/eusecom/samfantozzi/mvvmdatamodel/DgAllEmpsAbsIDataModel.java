@@ -5,6 +5,7 @@ import android.support.annotation.NonNull;
 
 import com.eusecom.samfantozzi.Account;
 import com.eusecom.samfantozzi.CompanyKt;
+import com.eusecom.samfantozzi.IdCompanyKt;
 import com.eusecom.samfantozzi.Invoice;
 import com.eusecom.samfantozzi.Month;
 import com.eusecom.samfantozzi.models.Attendance;
@@ -34,6 +35,10 @@ public interface DgAllEmpsAbsIDataModel {
     //recyclerview method for ChooseAccountActivity
     @NonNull
     public Observable<List<Account>> getAccountsFromMysqlServer(String userhash, String userid, String fromfir
+            , String vyb_rok, String drh);
+
+    @NonNull
+    public Observable<List<IdCompanyKt>> getIDCFromMysqlServer(String userhash, String userid, String fromfir
             , String vyb_rok, String drh);
 
     @NonNull
@@ -70,7 +75,7 @@ public interface DgAllEmpsAbsIDataModel {
             , String vyb_rok, String drh, String queryx);
 
     @NonNull
-    public Observable<List<Account>> getObservableIdModelCompany(String userhash, String userid, String fromfir
+    public Observable<List<IdCompanyKt>> getObservableIdModelCompany(String userhash, String userid, String fromfir
             , String vyb_rok, String drh, String queryx);
 
 }
