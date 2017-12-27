@@ -2,6 +2,7 @@ package com.eusecom.samfantozzi;
 
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
@@ -14,6 +15,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ProgressBar;
 import android.widget.TextView;
+import android.widget.Toast;
 import com.eusecom.samfantozzi.rxbus.RxBus;
 import com.jakewharton.rxbinding.widget.RxTextView;
 import java.text.SimpleDateFormat;
@@ -25,9 +27,13 @@ import butterknife.Bind;
 import butterknife.ButterKnife;
 import hu.akarnokd.rxjava.interop.RxJavaInterop;
 import io.reactivex.Flowable;
-import io.reactivex.Observable;
+import io.reactivex.disposables.CompositeDisposable;
 import io.reactivex.subscribers.DisposableSubscriber;
+import rx.schedulers.Schedulers;
+import rx.subscriptions.CompositeSubscription;
+import static android.content.ContentValues.TAG;
 import static android.text.TextUtils.isEmpty;
+import static rx.Observable.empty;
 
 
 public class NewCashDocFragment extends Fragment {
@@ -38,6 +44,7 @@ public class NewCashDocFragment extends Fragment {
 
     @Bind(R.id.datex) EditText _datex;
     @Bind(R.id.companyid) EditText _companyid;
+    @Bind(R.id.idcexist) EditText _idcexist;
     @Bind(R.id.person) EditText _person;
     @Bind(R.id.memo) EditText _memo;
     @Bind(R.id.hod) EditText _hod;
@@ -53,16 +60,16 @@ public class NewCashDocFragment extends Fragment {
     @Bind(R.id.inputDn1) EditText _inputDn1;
     @Bind(R.id.inputDn2) EditText _inputDn2;
 
-
+    @NonNull
+    private CompositeSubscription mSubscription;
+    private CompositeDisposable _disposables;
 
     private DisposableSubscriber<Boolean> _disposableObserver = null;
     private Flowable<CharSequence> _datexChangeObservable;
     private Flowable<CharSequence> _hodChangeObservable;
     private Flowable<CharSequence> _personChangeObservable;
     private Flowable<CharSequence> _memoChangeObservable;
-    //private Flowable<Boolean> _icoChangeObservable;
-    private Flowable<List<IdCompanyKt>> _icoModelChangeObservable;
-    Observable<String> obsIco;
+    private Flowable<CharSequence> _icoChangeObservable;
 
     private ProgressBar mProgressBar;
 
@@ -91,7 +98,13 @@ public class NewCashDocFragment extends Fragment {
         View layout = inflater.inflate(R.layout.fragment_newcashdoc, container, false);
         ButterKnife.bind(this, layout);
 
-        //mProgressBar = (ProgressBar) rootView.findViewById(R.id.progress_bar);
+
+        return layout;
+    }
+
+    @Override
+    public void onActivityCreated(Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
 
         _datexChangeObservable = RxJavaInterop.toV2Flowable(RxTextView
                 .textChanges(_datex)
@@ -106,34 +119,76 @@ public class NewCashDocFragment extends Fragment {
                 .textChanges(_hod)
                 .skip(1));
 
+        _icoChangeObservable = RxJavaInterop.toV2Flowable(RxTextView
+                .textChanges(_idcexist)
+                .skip(1));
 
-        obsIco = RxJavaInterop.toV2Observable(RxTextView
-                .textChanges(_companyid)
-                .filter(charSequence -> charSequence.length() > 3)
-                .debounce(300, TimeUnit.MILLISECONDS)).map(charSequence -> charSequence.toString());
+        mSubscription = new CompositeSubscription();
 
-        obsIco.subscribe(string -> {
-            Log.d("NewCashDoc", "debounced " + string);
-            //mViewModel.emitMyObservableIdCompany(string);
-            mViewModel.emitMyObservableIdModelCompany(string);
-        });
+        mSubscription.add(mViewModel.getMyInvoicesFromSqlServer("2")
+                .subscribeOn(Schedulers.computation())
+                .observeOn(rx.android.schedulers.AndroidSchedulers.mainThread())
+                .doOnError(throwable -> { Log.e(TAG, "Error NewCashDocFragment " + throwable.getMessage());
+                    hideProgressBar();
+                    Toast.makeText(getActivity(), "Server not connected", Toast.LENGTH_SHORT).show();
+                })
+                .onErrorResumeNext(throwable -> empty())
+                .subscribe(this::setInvoices));
 
-        //_icoChangeObservable = RxJavaInterop.toV2Flowable(mViewModel.getMyObservableIdCompany());
+        mSubscription.add(mViewModel.getMyObservableIdModelCompany()
+                .subscribeOn(Schedulers.computation())
+                .observeOn(rx.android.schedulers.AndroidSchedulers.mainThread())
+                .doOnError(throwable -> { Log.e(TAG, "Error NewCashDocFragment " + throwable.getMessage());
+                    hideProgressBar();
+                    Toast.makeText(getActivity(), "Server not connected", Toast.LENGTH_SHORT).show();
+                })
+                .onErrorResumeNext(throwable -> empty())
+                .subscribe(this::setIdCompanyKt));
 
-        _icoModelChangeObservable = RxJavaInterop.toV2Flowable(mViewModel.getMyObservableIdModelCompany());
+        _disposables = new CompositeDisposable();
+        _disposables.add(RxJavaInterop.toV2Observable(RxTextView
+                        .textChanges(_companyid)
+                        .filter(charSequence -> charSequence.length() > 3)
+                        .debounce(600, TimeUnit.MILLISECONDS)).map(charSequence -> charSequence.toString())
+                        .subscribe(string -> {
+                            Log.d("NewCashLog frg2", "debounced " + string);
+                            //mViewModel.emitMyObservableIdCompany(string);
+                            mViewModel.emitMyObservableIdModelCompany(string);
+                        })
+         );
 
         _combineLatestEvents();
 
-        return layout;
     }
 
+    protected void setIdCompanyKt(List<IdCompanyKt> resultAs) {
+        Log.d("NewCashLog Idc0 ", resultAs.get(0).getNai());
+
+        Boolean icoValid = resultAs.get(0).getLogprx();
+        //_disposableObserver.onNext(icoValid);
+        if (!icoValid) {
+            _companyid.setError("Company ID " + resultAs.get(0).getIco() + " does not match!");
+            _companyname.setText(resultAs.get(0).getNai());
+            _idcexist.setText("false");
+        }else{
+            _companyname.setText(resultAs.get(0).getNai());
+            _idcexist.setText("true");
+        }
+
+    }
+
+    protected void setInvoices(List<Invoice> resultAs) {
+        Log.d("NewCashLog Invoice0 ", resultAs.get(0).getNai());
+    }
 
     @Override
     public void onDestroy() {
         super.onDestroy();
         ButterKnife.unbind(this);
         _disposableObserver.dispose();
-       obsIco.subscribe();
+        mSubscription.unsubscribe();
+        _disposables.dispose();
+
     }
 
     @Override
@@ -163,18 +218,17 @@ public class NewCashDocFragment extends Fragment {
         ((AppCompatActivity)getActivity()).getSupportActionBar().setTitle(mSharedPreferences.getString("pokluce", "")
                 + " " +  getString(R.string.newdoc));
 
-        _inputZk0.setText("0");
-        _inputZk1.setText("0");
-        _inputZk2.setText("0");
-        _inputDn1.setText("0");
-        _inputDn2.setText("0");
-        _hod.setText("0");
+        if(_inputZk0.getText().equals("")) { _inputZk0.setText("0"); }
+        if(_inputZk1.getText().equals("")) { _inputZk1.setText("0"); }
+        if(_inputZk2.getText().equals("")) { _inputZk2.setText("0"); }
+        if(_inputDn1.getText().equals("")) { _inputDn1.setText("0"); }
+        if(_inputDn2.getText().equals("")) { _inputDn2.setText("0"); }
+        if(_hod.getText().equals("")) { _hod.setText("0"); }
 
- }
+    }
 
     private void unBind() {
 
-        //hideProgressBar();
 
     }
 
@@ -220,16 +274,8 @@ public class NewCashDocFragment extends Fragment {
                         _memoChangeObservable,
                         _hodChangeObservable,
                         _datexChangeObservable,
-                        _icoModelChangeObservable,
-                        (newPerson, newMemo, newHod, newDatex, newIcoModel) -> {
-
-                            boolean icoValid = newIcoModel.get(0).getLogprx();
-                            if (!icoValid) {
-                                _companyid.setError("Company ID does not match!");
-                                _companyname.setText("");
-                            }else{
-                                _companyname.setText(newIcoModel.get(0).getNai());
-                            }
+                        _icoChangeObservable,
+                        (newPerson, newMemo, newHod, newDatex, newIco) -> {
 
                             boolean datexValid = !isEmpty(newDatex);
                             if (!datexValid) {
@@ -255,7 +301,9 @@ public class NewCashDocFragment extends Fragment {
                                 _hod.setError("Invalid Hod!");
                             }
 
-                            return personValid && memoValid && hodValid && icoValid && datexValid;
+                            boolean icoxValid = newIco.toString().equals("true");
+
+                            return personValid && memoValid && hodValid && datexValid && icoxValid;
                         })
                 .subscribe(_disposableObserver);
     }

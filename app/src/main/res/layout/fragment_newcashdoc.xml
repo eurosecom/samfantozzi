@@ -50,6 +50,15 @@
             android:layout_width="0dp"
             android:inputType="number"
             />
+
+        <EditText android:id="@+id/idcexist"
+            android:inputType="text"
+            android:layout_height="wrap_content"
+            android:layout_width="0dp"
+            android:visibility="gone"
+            android:text="@string/falsex"
+            android:layout_weight="1"/>
+
     </LinearLayout>
 
         <TextView

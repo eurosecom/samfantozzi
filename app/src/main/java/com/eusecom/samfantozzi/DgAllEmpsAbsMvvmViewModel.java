@@ -383,13 +383,12 @@ public class DgAllEmpsAbsMvvmViewModel {
             // TODO Auto-generated catch block
             e1.printStackTrace();
         }
-        Log.d("userxplus ", encrypted + " " + ds);
-        	/* Decrypt */
-        //String decrypted = new String( mMcrypt.decrypt( encrypted ) );
 
         String firx = mSharedPreferences.getString("fir", "");
         String rokx = mSharedPreferences.getString("rok", "");
         String drh = "2";
+
+        Log.d("NewCashLog mvvm fir ", firx);
 
         return mObservableIdModelCompany
                 .observeOn(mSchedulerProvider.computation())
@@ -401,7 +400,7 @@ public class DgAllEmpsAbsMvvmViewModel {
         mObservableIdModelCompany = BehaviorSubject.create();
 
     }
-    //end emit Observable<Account> control IdCompany
+    //end emit Observable<IdCompanyKt> control IdCompany
 
 
 

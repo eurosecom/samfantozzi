@@ -198,6 +198,7 @@
     <string name="popdph1">VAT%s</string>
     <string name="popzakl0">Basis0%</string>
     <string name="pohyb">Account</string>
+    <string name="falsex">false</string>
 
     //lunchemptymenu
     <string name="lunch_empty_menu">No menu loaded</string>

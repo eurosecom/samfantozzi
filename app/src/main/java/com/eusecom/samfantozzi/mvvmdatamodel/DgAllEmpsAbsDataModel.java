@@ -264,12 +264,12 @@ public class DgAllEmpsAbsDataModel implements DgAllEmpsAbsIDataModel {
                 "Mesto", "", true);
         myidc.add(newidc);
 
-        System.out.println("userhash " + userhash);
-        System.out.println("userid " + userid);
-        System.out.println("fromfir " + fromfir);
-        System.out.println("vyb_rok " + vyb_rok);
-        System.out.println("drh " + drh);
-        System.out.println("queryx " + queryx);
+        //Log.d("userhash ", userhash);
+        //System.out.println("userid " + userid);
+        //System.out.println("fromfir " + fromfir);
+        //System.out.println("vyb_rok " + vyb_rok);
+        //System.out.println("drh " + drh);
+        Log.d("NewCashLog data queryx ", queryx);
 
         //return Observable.just(myidc);
         return mAbsServerService.controlIdCompanyOnSqlServer(userhash, userid, fromfir, vyb_rok, drh, queryx);
