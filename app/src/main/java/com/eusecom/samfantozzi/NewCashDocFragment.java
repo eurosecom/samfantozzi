@@ -1,5 +1,8 @@
 package com.eusecom.samfantozzi;
 
+import android.app.Application;
+import android.app.DatePickerDialog;
+import android.content.DialogInterface;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -8,6 +11,7 @@ import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -21,10 +25,12 @@ import com.jakewharton.rxbinding.widget.RxTextView;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.List;
+import java.util.TimeZone;
 import java.util.concurrent.TimeUnit;
 import javax.inject.Inject;
 import butterknife.Bind;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 import hu.akarnokd.rxjava.interop.RxJavaInterop;
 import io.reactivex.Flowable;
 import io.reactivex.disposables.CompositeDisposable;
@@ -49,6 +55,7 @@ public class NewCashDocFragment extends Fragment {
     @Bind(R.id.memo) EditText _memo;
     @Bind(R.id.hod) EditText _hod;
     @Bind(R.id.btnsave) Button _btnsave;
+    Button datebutton;
     @Bind(R.id.textzakl2) TextView _textzakl2;
     @Bind(R.id.textdph2) TextView _textdph2;
     @Bind(R.id.textzakl1) TextView _textzakl1;
@@ -82,12 +89,12 @@ public class NewCashDocFragment extends Fragment {
     @Inject
     RxBus _rxBus;
 
-
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
         ((SamfantozziApp) getActivity().getApplication()).dgaeacomponent().inject(this);
+
 
     }
 
@@ -98,6 +105,16 @@ public class NewCashDocFragment extends Fragment {
         View layout = inflater.inflate(R.layout.fragment_newcashdoc, container, false);
         ButterKnife.bind(this, layout);
 
+        datebutton = (Button) layout.findViewById(R.id.datebutton);
+        datebutton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                getDatePicker(_datex.getText().toString()).show();
+                //mViewModel.getDatePickerFromMvvm(_datex.getText().toString(), getString(R.string.datedialogpos), getActivity()).show();
+
+
+            }
+        });
 
         return layout;
     }
@@ -306,6 +323,51 @@ public class NewCashDocFragment extends Fragment {
                             return personValid && memoValid && hodValid && datexValid && icoxValid;
                         })
                 .subscribe(_disposableObserver);
+    }
+
+    private DatePickerDialog getDatePicker(String datumx) {
+
+        final Calendar calendar = Calendar.getInstance();
+        int yy = calendar.get(Calendar.YEAR);
+        int mm = calendar.get(Calendar.MONTH);
+        int dd = calendar.get(Calendar.DAY_OF_MONTH);
+        //dd = 38;
+
+        //String datumx = "12.12.2017";
+
+        String delims = "[.]+";
+        String[] datumxxx = datumx.split(delims);
+
+        String ddx = datumxxx[0];
+        String mmx = datumxxx[1];
+        String yyx = datumxxx[2];
+
+        int ddi = Integer.parseInt(ddx);
+        int mmi = Integer.parseInt(mmx);
+        int yyi = Integer.parseInt(yyx);
+        dd=ddi; mm=mmi-1; yy=yyi;
+
+        DatePickerDialog dpd = new DatePickerDialog(getActivity(), null, yy, mm, dd);
+        //dpd.setButton(DatePickerDialog.BUTTON_NEGATIVE, "Button Neg Text", dpd);
+        dpd.setButton(DialogInterface.BUTTON_POSITIVE, getString(R.string.datedialogpos), new DialogInterface.OnClickListener()
+        {
+            public void onClick(DialogInterface dialog, int which) {
+                if (which == DialogInterface.BUTTON_POSITIVE) {
+
+                    int dayx = dpd.getDatePicker().getDayOfMonth();
+                    int monthx = dpd.getDatePicker().getMonth();
+                    int yearx = dpd.getDatePicker().getYear();
+                    int monthy = monthx + 1;
+
+                    Log.d("NewCashLog dayx ", dayx + "");
+                    _datex.setText(dayx + "." + monthy + "." + yearx);
+                }
+            }
+
+        });
+
+
+        return dpd;
     }
 
 

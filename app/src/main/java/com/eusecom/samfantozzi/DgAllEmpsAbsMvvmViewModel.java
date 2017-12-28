@@ -1,5 +1,9 @@
 package com.eusecom.samfantozzi;
 
+import android.app.Application;
+import android.app.DatePickerDialog;
+import android.content.Context;
+import android.content.DialogInterface;
 import android.content.SharedPreferences;
 import android.net.Uri;
 import android.support.annotation.NonNull;
@@ -8,10 +12,12 @@ import com.eusecom.samfantozzi.models.Attendance;
 import com.eusecom.samfantozzi.models.Employee;
 import com.eusecom.samfantozzi.mvvmdatamodel.DgAllEmpsAbsIDataModel;
 import com.eusecom.samfantozzi.mvvmschedulers.ISchedulerProvider;
+import java.util.Calendar;
 import java.util.List;
 import java.util.Random;
 
-import io.reactivex.Flowable;
+import javax.inject.Inject;
+
 import rx.Observable;
 import rx.subjects.BehaviorSubject;
 
@@ -451,6 +457,45 @@ public class DgAllEmpsAbsMvvmViewModel {
     }
     //end emit Observable<Boolean> control IdCompany
 
+    //DatePickerDialog
+    public DatePickerDialog getDatePickerFromMvvm(String datumx, String posbut, Context context) {
+
+        final Calendar calendar = Calendar.getInstance();
+        int yy = calendar.get(Calendar.YEAR);
+        int mm = calendar.get(Calendar.MONTH);
+        int dd = calendar.get(Calendar.DAY_OF_MONTH);
+        //dd = 38;
+
+        //String datumx = "12.12.2017";
+
+        String delims = "[.]+";
+        String[] datumxxx = datumx.split(delims);
+
+        String ddx = datumxxx[0];
+        String mmx = datumxxx[1];
+        String yyx = datumxxx[2];
+
+        int ddi = Integer.parseInt(ddx);
+        int mmi = Integer.parseInt(mmx);
+        int yyi = Integer.parseInt(yyx);
+        dd=ddi; mm=mmi-1; yy=yyi;
+
+        DatePickerDialog dpd = new DatePickerDialog(context, null, yy, mm, dd);
+        //dpd.setButton(DatePickerDialog.BUTTON_NEGATIVE, "Button Neg Text", dpd);
+        dpd.setButton(DialogInterface.BUTTON_POSITIVE, posbut, new DialogInterface.OnClickListener()
+        {
+            public void onClick(DialogInterface dialog, int which) {
+                if (which == DialogInterface.BUTTON_POSITIVE) {
+
+                }
+            }
+
+        });
+
+
+        return dpd;
+    }
+    //end DatePickerDialog
 
 
 }
