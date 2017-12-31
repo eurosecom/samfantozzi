@@ -103,6 +103,8 @@
     <string name="odbdok_summary">Following document number of customer invoice.</string>
     <string name="pokluce_title">Cash register account.</string>
     <string name="pokluce_summary">Default account for cash register 21100,21101 etc.</string>
+    <string name="drupoh_summary">Cash register type.</string>
+    <string name="drupoh_title">Default type for cash register 1=receipt, 2=expense.</string>
     <string name="pokldok_title">Receipt cash document.</string>
     <string name="pokldok_summary">The following number of receipt cash document.</string>
     <string name="pokldov_title">Expense cash dokument.</string>
@@ -187,6 +189,8 @@
 
     //newcashdocactivity
     <string name="newdoc">New document</string>
+    <string name="newreceipt">New receipt document</string>
+    <string name="newexpense">New expense document</string>
     <string name="save">Save</string>
     <string name="companyid">Company ID</string>
     <string name="person">Person</string>
@@ -200,6 +204,16 @@
     <string name="pohyb">Account</string>
     <string name="falsex">false</string>
     <string name="datedialogpos">Set date</string>
+
+    //idclistktfragment
+    <string name="idc">ID company</string>
+    <string name="idcs">ID companies</string>
+    <string name="idcshort">IDC</string>
+    <string name="dic">DIC</string>
+    <string name="idvat">idVAT</string>
+    <string name="telshort">Tel.</string>
+    <string name="editidc">Edit IDC</string>
+    <string name="chooseidc">Choose IDC</string>
 
     //lunchemptymenu
     <string name="lunch_empty_menu">No menu loaded</string>

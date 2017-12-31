@@ -196,6 +196,7 @@ class MainFantozziActivity : AppCompatActivity() {
     override fun onOptionsItemSelected(item: MenuItem) = when (item.itemId) {
         R.id.action_settings -> consume { navigateToSettings() }
         R.id.action_setmonth -> consume { navigateToSetMonth() }
+        R.id.action_idc -> consume { navigateToIdCompanies() }
 
         else -> super.onOptionsItemSelected(item)
     }
@@ -212,14 +213,45 @@ class MainFantozziActivity : AppCompatActivity() {
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
 
-        if (requestCode == 101) {
+        //choosecompany
+        if (resultCode == 101) {
 
-            //toast("Returned 101")
+            //toast("Returned 101 ChooseCompany " + resultCode)
+        }
+        //idc company
+        if (resultCode == 201) {
+
+            //toast("Returned 201 IdCompany " + akeico)
         }
     }
 
     fun navigateToSetMonth(){
         startActivity<ChooseMonthActivity>()
+
+    }
+
+    fun navigateToIdCompanies(){
+
+        val usuid = prefs.getString("usuid", "")
+        if (usuid == "0") {
+            donotloginAlert().show()
+        }else {
+
+            val usfir = prefs.getString("fir", "")
+            if (usfir == "") {
+                donotcompanyAlert().show()
+            }else {
+
+                val `is` = Intent(this, TypesKtActivity::class.java)
+                val extras = Bundle()
+                extras.putString("fromact", "0")
+                `is`.putExtras(extras)
+                startActivityForResult(`is`, 201)
+
+                //startActivity<TypesKtActivity>()
+            }
+
+        }
 
     }
 

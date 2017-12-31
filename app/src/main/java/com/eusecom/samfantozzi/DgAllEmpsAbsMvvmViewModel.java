@@ -193,35 +193,6 @@ public class DgAllEmpsAbsMvvmViewModel {
     }
     //end get accounts from MySql server
 
-    //get IDC from MySql server
-    public Observable<List<IdCompanyKt>> getMyIDCFromSqlServer(String drh) {
-
-        Random r = new Random();
-        double d = -10.0 + r.nextDouble() * 20.0;
-        String ds = String.valueOf(d);
-
-        String usuidx = mSharedPreferences.getString("usuid", "");
-        String userxplus =  ds + "/" + usuidx + "/" + ds;
-        encrypted = "";
-
-
-        try {
-            encrypted = mMcrypt.bytesToHex( mMcrypt.encrypt(userxplus) );
-        } catch (Exception e1) {
-            // TODO Auto-generated catch block
-            e1.printStackTrace();
-        }
-        Log.d("userxplus ", encrypted + " " + ds);
-        	/* Decrypt */
-        //String decrypted = new String( mMcrypt.decrypt( encrypted ) );
-
-        String firx = mSharedPreferences.getString("fir", "");
-        String rokx = mSharedPreferences.getString("rok", "");
-
-        return mDataModel.getIDCFromMysqlServer(encrypted, ds, firx, rokx, drh);
-    }
-    //end get IDC from MySql server
-
     //get accounts
     public Observable<List<Account>> getAccounts() {
 
@@ -496,6 +467,38 @@ public class DgAllEmpsAbsMvvmViewModel {
         return dpd;
     }
     //end DatePickerDialog
+
+
+    //IdcKtFragment and TypesKtActivity
+
+    //get IDC from MySql server
+    public Observable<List<IdCompanyKt>> getMyIdcFromSqlServer(String drh) {
+
+        Random r = new Random();
+        double d = -10.0 + r.nextDouble() * 20.0;
+        String ds = String.valueOf(d);
+
+        String usuidx = mSharedPreferences.getString("usuid", "");
+        String userxplus =  ds + "/" + usuidx + "/" + ds;
+        encrypted = "";
+
+
+        try {
+            encrypted = mMcrypt.bytesToHex( mMcrypt.encrypt(userxplus) );
+        } catch (Exception e1) {
+            // TODO Auto-generated catch block
+            e1.printStackTrace();
+        }
+        Log.d("userxplus ", encrypted + " " + ds);
+        	/* Decrypt */
+        //String decrypted = new String( mMcrypt.decrypt( encrypted ) );
+
+        String firx = mSharedPreferences.getString("fir", "");
+        String rokx = mSharedPreferences.getString("rok", "");
+
+        return mDataModel.getAllIdcFromMysqlServer(encrypted, ds, firx, rokx, drh);
+    }
+    //end get IDC from MySql server
 
 
 }

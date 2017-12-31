@@ -38,10 +38,6 @@ public interface DgAllEmpsAbsIDataModel {
             , String vyb_rok, String drh);
 
     @NonNull
-    public Observable<List<IdCompanyKt>> getIDCFromMysqlServer(String userhash, String userid, String fromfir
-            , String vyb_rok, String drh);
-
-    @NonNull
     public Observable<List<Account>> getAccounts(String rokx);
 
     //recyclerview method for ChooseCompanyActivity
@@ -77,5 +73,12 @@ public interface DgAllEmpsAbsIDataModel {
     @NonNull
     public Observable<List<IdCompanyKt>> getObservableIdModelCompany(String userhash, String userid, String fromfir
             , String vyb_rok, String drh, String queryx);
+
+
+    //recyclerview method for TypesKtActivity
+
+    @NonNull
+    public Observable<List<IdCompanyKt>> getAllIdcFromMysqlServer(String userhash, String userid, String fromfir
+            , String vyb_rok, String drh);
 
 }

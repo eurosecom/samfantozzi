@@ -151,14 +151,6 @@ public class DgAllEmpsAbsDataModel implements DgAllEmpsAbsIDataModel {
 
     }
 
-    @Override
-    public Observable<List<IdCompanyKt>> getIDCFromMysqlServer(String userhash, String userid, String fromfir
-            , String vyb_rok, String drh) {
-
-        //return mAbsServerService.getAccountsFromSqlServer(userhash, userid, fromfir, vyb_rok, drh);
-        return mAbsServerService.controlIdCompanyOnSqlServer(userhash, userid, fromfir, vyb_rok, drh, "xxx");
-
-    }
 
     @Override
     public Observable<List<Account>> getAccounts(String rokx) {
@@ -261,7 +253,7 @@ public class DgAllEmpsAbsDataModel implements DgAllEmpsAbsIDataModel {
 
         List<IdCompanyKt> myidc = new ArrayList<>();
         IdCompanyKt newidc = new IdCompanyKt("31414466", "", "", "Firma xyz", "ulixyz",
-                "Mesto", "", true);
+                "Mesto", "", "", true);
         myidc.add(newidc);
 
         //Log.d("userhash ", userhash);
@@ -273,6 +265,15 @@ public class DgAllEmpsAbsDataModel implements DgAllEmpsAbsIDataModel {
 
         //return Observable.just(myidc);
         return mAbsServerService.controlIdCompanyOnSqlServer(userhash, userid, fromfir, vyb_rok, drh, queryx);
+    }
+
+    //method for TypesKtActivity
+    @Override
+    public Observable<List<IdCompanyKt>> getAllIdcFromMysqlServer(String userhash, String userid, String fromfir
+            , String vyb_rok, String drh) {
+
+        return mAbsServerService.getAllIdCompanyOnSqlServer(userhash, userid, fromfir, vyb_rok, drh, "xxx");
+
     }
 
 

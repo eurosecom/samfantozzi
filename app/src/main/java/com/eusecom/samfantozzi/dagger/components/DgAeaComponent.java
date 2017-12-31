@@ -5,12 +5,14 @@ import com.eusecom.samfantozzi.CashListKtFragment;
 import com.eusecom.samfantozzi.ChooseAccountActivity;
 import com.eusecom.samfantozzi.ChooseCompanyActivity;
 import com.eusecom.samfantozzi.ChooseMonthActivity;
+import com.eusecom.samfantozzi.IdcListKtFragment;
 import com.eusecom.samfantozzi.InvoiceListFragment;
 import com.eusecom.samfantozzi.InvoiceListKtActivity;
 import com.eusecom.samfantozzi.NewCashDocFragment;
 import com.eusecom.samfantozzi.NewCashDocKtActivity;
 import com.eusecom.samfantozzi.SupplierListActivity;
 import com.eusecom.samfantozzi.SupplierListFragment;
+import com.eusecom.samfantozzi.TypesKtActivity;
 import com.eusecom.samfantozzi.dagger.modules.ApplicationModule;
 import com.eusecom.samfantozzi.dagger.modules.DgAeaModule;
 
@@ -23,9 +25,11 @@ public interface DgAeaComponent {
   void inject(SupplierListActivity supplierListActivity);
   void inject(SupplierListFragment supplierfragment);
   void inject(CashListKtActivity cashListKtActivity);
+  void inject(TypesKtActivity typestKtActivity);
   void inject(NewCashDocKtActivity newCashDocKtActivity);
   void inject(NewCashDocFragment newCashDocFragment);
   void inject(CashListKtFragment cashListKtFragment);
+  void inject(IdcListKtFragment idcListKtFragment);
   void inject(InvoiceListFragment invoicefragment);
   void inject(InvoiceListKtActivity invoiceListKtActivity);
   void inject(ChooseMonthActivity chooseMonthActivity);

@@ -14,6 +14,11 @@ import rx.Observable;
 
 public interface AbsServerService {
 
+    @GET("/androidfantozzi/get_idcompany.php")
+    Observable<List<IdCompanyKt>> getAllIdCompanyOnSqlServer(@Query("userhash") String userhash
+            , @Query("userid") String userid, @Query("fromfir") String fromfir
+            , @Query("vyb_rok") String vyb_rok, @Query("drh") String drh, @Query("queryx") String queryx);
+
     @GET("/androidfantozzi/control_idcompany.php")
     Observable<List<IdCompanyKt>> controlIdCompanyOnSqlServer(@Query("userhash") String userhash
             , @Query("userid") String userid, @Query("fromfir") String fromfir
