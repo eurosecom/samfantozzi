@@ -31,6 +31,7 @@ public class SettingsActivity extends android.preference.PreferenceActivity {
 	public static final String FIRDPH1 = "firdph1";
 	public static final String FIRDPH2 = "firdph2";
 	public static final String POKLUCE = "pokluce";
+	public static final String DRUPOH = "drupoh";
 	public static final String POKLDOK = "pokldok";
 	public static final String POKLDOV = "pokldov";
 	public static final String BANKUCE = "bankuce";
@@ -149,6 +150,10 @@ public class SettingsActivity extends android.preference.PreferenceActivity {
 
 	public static String getPokluce(Context ctx){
 		return PreferenceManager.getDefaultSharedPreferences(ctx).getString(POKLUCE, "0");
+	}
+
+	public static String getDrupoh(Context ctx){
+		return PreferenceManager.getDefaultSharedPreferences(ctx).getString(DRUPOH, "1");
 	}
 
 	public static String getBankdok(Context ctx){

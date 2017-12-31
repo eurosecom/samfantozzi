@@ -153,17 +153,6 @@ class CashListKtFragment : Fragment() {
                 .onErrorResumeNext { throwable -> Observable.empty() }
                 .subscribe { it -> setServerInvoices(it) })
 
-        mSubscription?.add(mViewModel.getObservableFromFBforRealm()
-                .subscribeOn(Schedulers.computation())
-                .observeOn(rx.android.schedulers.AndroidSchedulers.mainThread())
-                .doOnError { throwable ->
-                    Log.e("CashListKtFragment", "Error Throwable " + throwable.message)
-                    hideProgressBar()
-                    toast("Server not connected")
-                }
-                .onErrorResumeNext { throwable -> Observable.empty() }
-                .subscribe { it -> setFbAbsences(it) })
-
         mSubscription?.add(mViewModel.getObservableDocPdf()
                 .subscribeOn(Schedulers.computation())
                 .observeOn(rx.android.schedulers.AndroidSchedulers.mainThread())
@@ -217,11 +206,6 @@ class CashListKtFragment : Fragment() {
 
     }
 
-    private fun setFbAbsences(absences: List<Attendance>) {
-
-        toast(" absence0 " + absences.get(0).dmna)
-
-    }
 
     private fun setServerInvoices(invoices: List<Invoice>) {
 
@@ -416,7 +400,7 @@ class CashListKtFragment : Fragment() {
     fun newCashDocDialog(): AlertDialogBuilder {
 
         alert = alert() {
-            positiveButton(R.string.expense) { navigateToNewCashDocTest(2) }
+            positiveButton(R.string.expense) { navigateToNewCashDoc(2) }
             neutralButton(R.string.receipt)  { navigateToNewCashDoc(1) }
         }
         val titlex: String = getString(R.string.createdoc)
@@ -428,17 +412,17 @@ class CashListKtFragment : Fragment() {
 
     fun navigateToNewCashDoc(drupoh: Int){
 
-        getActivity().startActivity<NewCashDocKtActivity>()
+        val drupohx: String = drupoh.toString()
+        val `is` = Intent(context, NewCashDocKtActivity::class.java)
+        val extras = Bundle()
+        extras.putString("drupoh", drupohx)
+        `is`.putExtras(extras)
+        startActivity(`is`)
+
+        //getActivity().startActivity<NewCashDocKtActivity>()
 
     }
 
-    fun navigateToNewCashDocTest(drupoh: Int){
-
-        //getActivity().startActivity<InvoiceListKtActivity>()
-        //val intent = Intent(getActivity(), FormValidationActivity::class.java)
-        //startActivity(intent)
-
-    }
 
     fun editDialog(invoice: Invoice): AlertDialogBuilder {
 

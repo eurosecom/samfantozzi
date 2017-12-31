@@ -3,6 +3,7 @@ package com.eusecom.samfantozzi;
 import android.app.Application;
 import android.app.DatePickerDialog;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -25,15 +26,14 @@ import com.jakewharton.rxbinding.widget.RxTextView;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.List;
-import java.util.TimeZone;
 import java.util.concurrent.TimeUnit;
 import javax.inject.Inject;
 import butterknife.Bind;
 import butterknife.ButterKnife;
-import butterknife.OnClick;
 import hu.akarnokd.rxjava.interop.RxJavaInterop;
 import io.reactivex.Flowable;
 import io.reactivex.disposables.CompositeDisposable;
+import io.reactivex.flowables.ConnectableFlowable;
 import io.reactivex.subscribers.DisposableSubscriber;
 import rx.schedulers.Schedulers;
 import rx.subscriptions.CompositeSubscription;
@@ -55,7 +55,7 @@ public class NewCashDocFragment extends Fragment {
     @Bind(R.id.memo) EditText _memo;
     @Bind(R.id.hod) EditText _hod;
     @Bind(R.id.btnsave) Button _btnsave;
-    Button datebutton;
+    Button datebutton, idbutton;
     @Bind(R.id.textzakl2) TextView _textzakl2;
     @Bind(R.id.textdph2) TextView _textdph2;
     @Bind(R.id.textzakl1) TextView _textzakl1;
@@ -89,13 +89,14 @@ public class NewCashDocFragment extends Fragment {
     @Inject
     RxBus _rxBus;
 
+    String drupoh = "1";
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
         ((SamfantozziApp) getActivity().getApplication()).dgaeacomponent().inject(this);
-
-
+        drupoh = mSharedPreferences.getString("drupoh", "1");
     }
 
     @Override
@@ -112,6 +113,22 @@ public class NewCashDocFragment extends Fragment {
                 getDatePicker(_datex.getText().toString()).show();
                 //mViewModel.getDatePickerFromMvvm(_datex.getText().toString(), getString(R.string.datedialogpos), getActivity()).show();
 
+
+            }
+        });
+
+        idbutton = (Button) layout.findViewById(R.id.idbutton);
+        idbutton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                Intent in = new Intent(getActivity(),TypesKtActivity.class);
+                //Intent in = new Intent(getActivity(),ChooseMonthActivity.class);
+                Bundle extras = new Bundle();
+                extras.putString("fromact", "3");
+                in.putExtras(extras);
+                startActivityForResult(in, 201);
+                //startActivity(in );
 
             }
         });
@@ -140,18 +157,82 @@ public class NewCashDocFragment extends Fragment {
                 .textChanges(_idcexist)
                 .skip(1));
 
+
+        _disposables = new CompositeDisposable();
+        _disposables.add(RxJavaInterop.toV2Observable(RxTextView
+                        .textChanges(_companyid)
+                        .filter(charSequence -> charSequence.length() > 1)
+                        .debounce(600, TimeUnit.MILLISECONDS)).map(charSequence -> charSequence.toString())
+                        .subscribe(string -> {
+                            Log.d("NewCashLog frg2", "debounced " + string);
+                            //mViewModel.emitMyObservableIdCompany(string);
+                            mViewModel.emitMyObservableIdModelCompany(string);
+                        })
+         );
+
+        ConnectableFlowable<Object> tapEventEmitter = _rxBus.asFlowable().publish();
+        _disposables
+                .add(tapEventEmitter.subscribe(event -> {
+
+                    Log.d("NewCashLog frg2", "tapEventEmitter ");
+
+                    if (event instanceof SupplierListFragment.ClickFobEvent) {
+                        //Log.d("SupplierListFragment  ", " fobClick ");
+                        //Toast.makeText(getActivity(), serverx, Toast.LENGTH_SHORT).show();
+
+                    }
+                    if (event instanceof IdcChoosenKt) {
+                        String icox = ((IdcChoosenKt) event).getIco();
+                        Toast.makeText(getActivity(), icox, Toast.LENGTH_SHORT).show();
+                        //_companyid.setText(icox);
+
+
+                    }
+
+                }));
+        _disposables.add(tapEventEmitter.connect());
+
+        _combineLatestEvents();
+
+        Log.d("NewCashLog ", "onActivityCreated ");
+    }
+
+    protected void setIdCompanyKt(List<IdCompanyKt> resultAs) {
+
+        if (resultAs.size() > 0) {
+            Log.d("NewCashLog Idc0 ", resultAs.get(0).getNai());
+            Boolean icoValid = resultAs.get(0).getLogprx();
+            //_disposableObserver.onNext(icoValid);
+            if (!icoValid) {
+                _companyid.setError("Company ID " + resultAs.get(0).getIco() + " does not match!");
+                _companyname.setText(resultAs.get(0).getNai());
+                _idcexist.setText("false");
+            } else {
+                _companyname.setText(resultAs.get(0).getNai());
+                _idcexist.setText("true");
+            }
+        }
+
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        ButterKnife.unbind(this);
+        _disposableObserver.dispose();
+        mSubscription.clear();
+        _disposables.dispose();
+        mViewModel.clearObservableIdModelCompany();
+
+        Log.d("NewCashLog ", "onDestroy ");
+
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        bind();
         mSubscription = new CompositeSubscription();
-
-        mSubscription.add(mViewModel.getMyInvoicesFromSqlServer("2")
-                .subscribeOn(Schedulers.computation())
-                .observeOn(rx.android.schedulers.AndroidSchedulers.mainThread())
-                .doOnError(throwable -> { Log.e(TAG, "Error NewCashDocFragment " + throwable.getMessage());
-                    hideProgressBar();
-                    Toast.makeText(getActivity(), "Server not connected", Toast.LENGTH_SHORT).show();
-                })
-                .onErrorResumeNext(throwable -> empty())
-                .subscribe(this::setInvoices));
-
         mSubscription.add(mViewModel.getMyObservableIdModelCompany()
                 .subscribeOn(Schedulers.computation())
                 .observeOn(rx.android.schedulers.AndroidSchedulers.mainThread())
@@ -161,64 +242,15 @@ public class NewCashDocFragment extends Fragment {
                 })
                 .onErrorResumeNext(throwable -> empty())
                 .subscribe(this::setIdCompanyKt));
-
-        _disposables = new CompositeDisposable();
-        _disposables.add(RxJavaInterop.toV2Observable(RxTextView
-                        .textChanges(_companyid)
-                        .filter(charSequence -> charSequence.length() > 3)
-                        .debounce(600, TimeUnit.MILLISECONDS)).map(charSequence -> charSequence.toString())
-                        .subscribe(string -> {
-                            Log.d("NewCashLog frg2", "debounced " + string);
-                            //mViewModel.emitMyObservableIdCompany(string);
-                            mViewModel.emitMyObservableIdModelCompany(string);
-                        })
-         );
-
-        _combineLatestEvents();
-
-    }
-
-    protected void setIdCompanyKt(List<IdCompanyKt> resultAs) {
-        Log.d("NewCashLog Idc0 ", resultAs.get(0).getNai());
-
-        Boolean icoValid = resultAs.get(0).getLogprx();
-        //_disposableObserver.onNext(icoValid);
-        if (!icoValid) {
-            _companyid.setError("Company ID " + resultAs.get(0).getIco() + " does not match!");
-            _companyname.setText(resultAs.get(0).getNai());
-            _idcexist.setText("false");
-        }else{
-            _companyname.setText(resultAs.get(0).getNai());
-            _idcexist.setText("true");
-        }
-
-    }
-
-    protected void setInvoices(List<Invoice> resultAs) {
-        Log.d("NewCashLog Invoice0 ", resultAs.get(0).getNai());
-    }
-
-    @Override
-    public void onDestroy() {
-        super.onDestroy();
-        ButterKnife.unbind(this);
-        _disposableObserver.dispose();
-        mSubscription.unsubscribe();
-        _disposables.dispose();
-
-    }
-
-    @Override
-    public void onResume() {
-        super.onResume();
-        bind();
     }
 
     @Override
     public void onPause() {
         super.onPause();
         unBind();
+        mSubscription.clear();
     }
+
 
     private void bind() {
 
@@ -232,15 +264,21 @@ public class NewCashDocFragment extends Fragment {
         _textzakl1.setText(String.format(getResources().getString(R.string.popzakl1), mSharedPreferences.getString("firdph1", "")) + "%");
         _textdph1.setText(String.format(getResources().getString(R.string.popdph1), mSharedPreferences.getString("firdph1", "")) + "%");
         ActivityCompat.invalidateOptionsMenu(getActivity());
-        ((AppCompatActivity)getActivity()).getSupportActionBar().setTitle(mSharedPreferences.getString("pokluce", "")
-                + " " +  getString(R.string.newdoc));
 
-        if(_inputZk0.getText().equals("")) { _inputZk0.setText("0"); }
-        if(_inputZk1.getText().equals("")) { _inputZk1.setText("0"); }
-        if(_inputZk2.getText().equals("")) { _inputZk2.setText("0"); }
-        if(_inputDn1.getText().equals("")) { _inputDn1.setText("0"); }
-        if(_inputDn2.getText().equals("")) { _inputDn2.setText("0"); }
-        if(_hod.getText().equals("")) { _hod.setText("0"); }
+        if(drupoh.equals("1")) {
+            ((AppCompatActivity)getActivity()).getSupportActionBar().setTitle(mSharedPreferences.getString("pokluce", "")
+                    + " " +  getString(R.string.newreceipt));
+        }else{
+            ((AppCompatActivity)getActivity()).getSupportActionBar().setTitle(mSharedPreferences.getString("pokluce", "")
+                    + " " +  getString(R.string.newexpense));
+        }
+
+        if(_inputZk0.getText().toString().equals("")) { _inputZk0.setText("0"); }
+        if(_inputZk1.getText().toString().equals("")) { _inputZk1.setText("0"); }
+        if(_inputZk2.getText().toString().equals("")) { _inputZk2.setText("0"); }
+        if(_inputDn1.getText().toString().equals("")) { _inputDn1.setText("0"); }
+        if(_inputDn2.getText().toString().equals("")) { _inputDn2.setText("0"); }
+        if(_hod.getText().toString().equals("")) { _hod.setText("0"); }
 
     }
 

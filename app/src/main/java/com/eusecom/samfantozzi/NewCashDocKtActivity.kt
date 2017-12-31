@@ -1,5 +1,6 @@
 package com.eusecom.samfantozzi
 
+import android.content.Intent
 import android.content.SharedPreferences
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
@@ -11,6 +12,7 @@ import android.support.v4.view.ViewPager
 import android.view.View
 import com.eusecom.samfantozzi.rxbus.RxBus
 import org.jetbrains.anko.setContentView
+import org.jetbrains.anko.toast
 import javax.inject.Inject
 
 /**
@@ -32,14 +34,29 @@ class NewCashDocKtActivity : AppCompatActivity() {
     private var mPagerAdapter: FragmentPagerAdapter? = null
     private var mViewPager: ViewPager? = null
 
+    var drupoh: String = "1"
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         (application as SamfantozziApp).dgaeacomponent().inject(this)
 
+        val i = intent
+        //drupoh 1=receipt, 2=expense
+        val extras = i.extras
+        drupoh = extras!!.getString("drupoh")
+
         //setContentView(R.layout.activity_cashlist)
         NewCashDocKtActivityUI(_rxBus).setContentView(this)
 
-        supportActionBar!!.setTitle(prefs.getString("pokluce", "") + " " +  getString(R.string.newdoc))
+        if( drupoh == "1" ){
+            supportActionBar!!.setTitle(prefs.getString("pokluce", "") + " " +  getString(R.string.newreceipt))
+        }else{
+            supportActionBar!!.setTitle(prefs.getString("pokluce", "") + " " +  getString(R.string.newexpense))
+        }
+
+        val editor = prefs.edit()
+        editor.putString("drupoh", drupoh).apply()
+        editor.commit()
 
         // Create the adapter that will return a fragment for each section
         mPagerAdapter = object : FragmentPagerAdapter(supportFragmentManager) {
@@ -74,7 +91,11 @@ class NewCashDocKtActivity : AppCompatActivity() {
                     if (position == 0) {
                         val fab = findViewById<View>(R.id.fab) as FloatingActionButton
                         fab.visibility = View.GONE
-                        supportActionBar!!.setTitle(prefs.getString("ume", "") + " " + getString(R.string.cashdocuments))
+                        if( drupoh == "1" ){
+                            supportActionBar!!.setTitle(prefs.getString("pokluce", "") + " " +  getString(R.string.newreceipt))
+                        }else{
+                            supportActionBar!!.setTitle(prefs.getString("pokluce", "") + " " +  getString(R.string.newexpense))
+                        }
                     }
                     if (position == 1) {
                         val fab = findViewById<View>(R.id.fab) as FloatingActionButton
@@ -93,6 +114,20 @@ class NewCashDocKtActivity : AppCompatActivity() {
 
     }
 
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+
+        //idc company
+        if (resultCode == 201) {
+
+            val extras = data?.extras
+            val akeico: String = extras!!.getString("akeico")
+            toast("Returned 201 IdCompany in act ico " + akeico)
+
+            val akeicomodel = IdcChoosenKt(akeico, "", true)
+
+            _rxBus.send(akeicomodel)
+        }
+    }
 
     override fun onDestroy() {
         super.onDestroy()

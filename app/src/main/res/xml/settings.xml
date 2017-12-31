@@ -122,6 +122,12 @@
         android:title="@string/pokluce_title" />
 
     <EditTextPreference
+        android:key="drupoh"
+        android:defaultValue="1"
+        android:summary="@string/drupoh_summary"
+        android:title="@string/drupoh_title" />
+
+    <EditTextPreference
         android:key="pokldok"
         android:defaultValue="1"
         android:summary="@string/pokldok_summary"
