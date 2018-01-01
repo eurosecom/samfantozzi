@@ -379,6 +379,61 @@ public class DgAllEmpsAbsMvvmViewModel {
     }
     //end emit Observable<IdCompanyKt> control IdCompany
 
+    //emit Observable<CalcVatKt> recount
+    public void emitMyObservableRecount(CalcVatKt calcx) {
+        //String querys = String.valueOf(queryx);
+        mObservableRecount.onNext(calcx);
+    }
+
+    @NonNull
+    private BehaviorSubject<CalcVatKt> mObservableRecount = BehaviorSubject.create();
+
+    @NonNull
+    public Observable<CalcVatKt> getMyObservableRecount() {
+
+        return mObservableRecount
+                .observeOn(mSchedulerProvider.computation())
+                .flatMap(calcx -> mDataModel.getObservableRecountFromRealm(calcx ));
+
+    }
+
+    public void clearObservableRecount() {
+
+        mObservableRecount = BehaviorSubject.create();
+
+    }
+    //end emit Observable<CalcVatKt> recount
+
+    //get uct.pohyby from MySql server
+    public Observable<List<Account>> getMyPohybyFromSqlServer(String drh, String drupoh) {
+
+        Random r = new Random();
+        double d = -10.0 + r.nextDouble() * 20.0;
+        String ds = String.valueOf(d);
+
+        String usuidx = mSharedPreferences.getString("usuid", "");
+        String userxplus =  ds + "/" + usuidx + "/" + ds;
+        encrypted = "";
+
+
+        try {
+            encrypted = mMcrypt.bytesToHex( mMcrypt.encrypt(userxplus) );
+        } catch (Exception e1) {
+            // TODO Auto-generated catch block
+            e1.printStackTrace();
+        }
+        Log.d("userxplus ", encrypted + " " + ds);
+        	/* Decrypt */
+        //String decrypted = new String( mMcrypt.decrypt( encrypted ) );
+
+        String firx = mSharedPreferences.getString("fir", "");
+        String rokx = mSharedPreferences.getString("rok", "");
+        String uctox = mSharedPreferences.getString("firduct", "");
+
+        return mDataModel.getReceiptsExpensesFromSql(encrypted, ds, firx, rokx, drh, drupoh, uctox);
+    }
+    //end get get uct.pohyby from MySql server
+
 
 
     //emit Observable<Boolean> control IdCompany

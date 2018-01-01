@@ -204,6 +204,16 @@
     <string name="pohyb">Account</string>
     <string name="falsex">false</string>
     <string name="datedialogpos">Set date</string>
+    <string name="select_receipt">Select receipt</string>
+    <string name="select_expense">Select expense</string>
+    <string-array name="AbsenceSpinnerArray">
+        <item>506 Holliday</item>
+        <item>510 Bank holliday</item>
+        <item>518 Visit Doctor</item>
+        <item>520 Other</item>
+        <item>801 Illness</item>
+    </string-array>
+
 
     //idclistktfragment
     <string name="idc">ID company</string>

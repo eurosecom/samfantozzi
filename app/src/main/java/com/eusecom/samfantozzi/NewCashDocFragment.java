@@ -16,15 +16,20 @@ import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ProgressBar;
+import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 import com.eusecom.samfantozzi.rxbus.RxBus;
 import com.jakewharton.rxbinding.widget.RxTextView;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Collections;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 import javax.inject.Inject;
@@ -66,6 +71,7 @@ public class NewCashDocFragment extends Fragment {
     @Bind(R.id.inputZk2) EditText _inputZk2;
     @Bind(R.id.inputDn1) EditText _inputDn1;
     @Bind(R.id.inputDn2) EditText _inputDn2;
+    @Bind(R.id.inputPoh) EditText _inputPoh;
 
     @NonNull
     private CompositeSubscription mSubscription;
@@ -73,7 +79,6 @@ public class NewCashDocFragment extends Fragment {
 
     private DisposableSubscriber<Boolean> _disposableObserver = null;
     private Flowable<CharSequence> _datexChangeObservable;
-    private Flowable<CharSequence> _hodChangeObservable;
     private Flowable<CharSequence> _personChangeObservable;
     private Flowable<CharSequence> _memoChangeObservable;
     private Flowable<CharSequence> _icoChangeObservable;
@@ -90,6 +95,8 @@ public class NewCashDocFragment extends Fragment {
     RxBus _rxBus;
 
     String drupoh = "1";
+    Spinner spinner;
+    protected ArrayAdapter<Account> mAdapter;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -97,6 +104,7 @@ public class NewCashDocFragment extends Fragment {
 
         ((SamfantozziApp) getActivity().getApplication()).dgaeacomponent().inject(this);
         drupoh = mSharedPreferences.getString("drupoh", "1");
+
     }
 
     @Override
@@ -133,6 +141,8 @@ public class NewCashDocFragment extends Fragment {
             }
         });
 
+        spinner = (Spinner) layout.findViewById(R.id.spinnerPoh);
+
         return layout;
     }
 
@@ -149,9 +159,6 @@ public class NewCashDocFragment extends Fragment {
         _memoChangeObservable = RxJavaInterop.toV2Flowable(RxTextView
                 .textChanges(_memo)
                 .skip(1));
-        _hodChangeObservable = RxJavaInterop.toV2Flowable(RxTextView
-                .textChanges(_hod)
-                .skip(1));
 
         _icoChangeObservable = RxJavaInterop.toV2Flowable(RxTextView
                 .textChanges(_idcexist)
@@ -159,16 +166,27 @@ public class NewCashDocFragment extends Fragment {
 
 
         _disposables = new CompositeDisposable();
+
         _disposables.add(RxJavaInterop.toV2Observable(RxTextView
-                        .textChanges(_companyid)
-                        .filter(charSequence -> charSequence.length() > 1)
-                        .debounce(600, TimeUnit.MILLISECONDS)).map(charSequence -> charSequence.toString())
-                        .subscribe(string -> {
-                            Log.d("NewCashLog frg2", "debounced " + string);
-                            //mViewModel.emitMyObservableIdCompany(string);
-                            mViewModel.emitMyObservableIdModelCompany(string);
-                        })
-         );
+                .textChanges(_companyid)
+                .filter(charSequence -> charSequence.length() > 1)
+                .debounce(600, TimeUnit.MILLISECONDS)).map(charSequence -> charSequence.toString())
+                .subscribe(string -> {
+                    Log.d("NewCashLog frg2", "debounced " + string);
+                    //mViewModel.emitMyObservableIdCompany(string);
+                    mViewModel.emitMyObservableIdModelCompany(string);
+                })
+        );
+        _disposables.add(RxJavaInterop.toV2Observable(RxTextView
+                .textChanges(_inputZk0)
+                .filter(charSequence -> charSequence.length() > 1)
+                .debounce(600, TimeUnit.MILLISECONDS)).map(charSequence -> charSequence.toString())
+                .subscribe(string -> {
+                    Log.d("NewCashLog frg2", "debounced " + string);
+                    CalcVatKt calcvatx = getCalcVat(0);
+                    mViewModel.emitMyObservableRecount(calcvatx);
+                })
+        );
 
         ConnectableFlowable<Object> tapEventEmitter = _rxBus.asFlowable().publish();
         _disposables
@@ -183,8 +201,11 @@ public class NewCashDocFragment extends Fragment {
                     }
                     if (event instanceof IdcChoosenKt) {
                         String icox = ((IdcChoosenKt) event).getIco();
-                        Toast.makeText(getActivity(), icox, Toast.LENGTH_SHORT).show();
-                        //_companyid.setText(icox);
+                        //Toast.makeText(getActivity(), icox, Toast.LENGTH_SHORT).show();
+                        //_idcexist.setText("true");
+                        //_companyid.setError(null);
+                        _companyid.setText(icox);
+
 
 
                     }
@@ -208,6 +229,7 @@ public class NewCashDocFragment extends Fragment {
                 _companyname.setText(resultAs.get(0).getNai());
                 _idcexist.setText("false");
             } else {
+                _companyid.setError(null);
                 _companyname.setText(resultAs.get(0).getNai());
                 _idcexist.setText("true");
             }
@@ -223,6 +245,7 @@ public class NewCashDocFragment extends Fragment {
         mSubscription.clear();
         _disposables.dispose();
         mViewModel.clearObservableIdModelCompany();
+        mViewModel.clearObservableRecount();
 
         Log.d("NewCashLog ", "onDestroy ");
 
@@ -233,6 +256,17 @@ public class NewCashDocFragment extends Fragment {
         super.onResume();
         bind();
         mSubscription = new CompositeSubscription();
+
+        mSubscription.add(mViewModel.getMyPohybyFromSqlServer("3", drupoh)
+                .subscribeOn(Schedulers.computation())
+                .observeOn(rx.android.schedulers.AndroidSchedulers.mainThread())
+                .doOnError(throwable -> { Log.e(TAG, "Error NewCashDocFragment " + throwable.getMessage());
+                    hideProgressBar();
+                    Toast.makeText(getActivity(), "Server not connected", Toast.LENGTH_SHORT).show();
+                })
+                .onErrorResumeNext(throwable -> empty())
+                .subscribe(this::setPohyby));
+
         mSubscription.add(mViewModel.getMyObservableIdModelCompany()
                 .subscribeOn(Schedulers.computation())
                 .observeOn(rx.android.schedulers.AndroidSchedulers.mainThread())
@@ -242,6 +276,17 @@ public class NewCashDocFragment extends Fragment {
                 })
                 .onErrorResumeNext(throwable -> empty())
                 .subscribe(this::setIdCompanyKt));
+
+        mSubscription.add(mViewModel.getMyObservableRecount()
+                .subscribeOn(Schedulers.computation())
+                .observeOn(rx.android.schedulers.AndroidSchedulers.mainThread())
+                .doOnError(throwable -> { Log.e(TAG, "Error NewCashDocFragment " + throwable.getMessage());
+                    hideProgressBar();
+                    Toast.makeText(getActivity(), "Server not connected", Toast.LENGTH_SHORT).show();
+                })
+                .onErrorResumeNext(throwable -> empty())
+                .subscribe(this::setRecount));
+
     }
 
     @Override
@@ -249,6 +294,48 @@ public class NewCashDocFragment extends Fragment {
         super.onPause();
         unBind();
         mSubscription.clear();
+    }
+
+    private void setRecount(@NonNull final CalcVatKt result) {
+
+        String serverx = result.getNod() + "";
+        Toast.makeText(getActivity(), "Recalculated nod " + serverx, Toast.LENGTH_SHORT).show();
+        _hod.setText(result.getNod() + "");
+
+    }
+
+    private void setPohyby(@NonNull final List<Account> pohyby) {
+
+        if (pohyby.size() > 0) {
+            //String serverx = pohyby.get(0).getAccname();
+            //Toast.makeText(getActivity(), serverx, Toast.LENGTH_SHORT).show();
+
+            ArrayList<Account> pohybys = new ArrayList<>();
+
+            for (int i = 0; i < pohyby.size(); i++) {
+                pohybys.add(new Account(pohyby.get(i).getAccname(), pohyby.get(i).getAccnumber(), "", "", "", true));
+            }
+
+            mAdapter = new ArrayAdapter<Account>(getActivity(), android.R.layout.simple_spinner_item, pohybys);
+            mAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+            spinner.setAdapter(mAdapter);
+            if(_inputPoh.getText().toString().equals("")) { _inputPoh.setText(pohyby.get(0).getAccnumber()); }
+            if(_inputPoh.getText().toString().equals("0")) { _inputPoh.setText(pohyby.get(0).getAccnumber()); }
+            spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+
+                @Override
+                public void onItemSelected(AdapterView<?> adapterView, View view,
+                                           int position, long id) {
+                    // Here you get the current item (a User object) that is selected by its position
+                    Account account = mAdapter.getItem(position);
+                    _inputPoh.setText(account.getAccnumber());
+                }
+                @Override
+                public void onNothingSelected(AdapterView<?> adapter) {  }
+            });
+
+        }
+
     }
 
 
@@ -273,12 +360,19 @@ public class NewCashDocFragment extends Fragment {
                     + " " +  getString(R.string.newexpense));
         }
 
+        if( drupoh.equals("1") ) {
+            spinner.setPrompt(getString(R.string.select_receipt));
+        }else{
+            spinner.setPrompt(getString(R.string.select_expense));
+        }
+
         if(_inputZk0.getText().toString().equals("")) { _inputZk0.setText("0"); }
         if(_inputZk1.getText().toString().equals("")) { _inputZk1.setText("0"); }
         if(_inputZk2.getText().toString().equals("")) { _inputZk2.setText("0"); }
         if(_inputDn1.getText().toString().equals("")) { _inputDn1.setText("0"); }
         if(_inputDn2.getText().toString().equals("")) { _inputDn2.setText("0"); }
         if(_hod.getText().toString().equals("")) { _hod.setText("0"); }
+        if(_inputPoh.getText().toString().equals("")) { _inputPoh.setText("0"); }
 
     }
 
@@ -327,10 +421,9 @@ public class NewCashDocFragment extends Fragment {
         Flowable
                 .combineLatest(_personChangeObservable,
                         _memoChangeObservable,
-                        _hodChangeObservable,
                         _datexChangeObservable,
                         _icoChangeObservable,
-                        (newPerson, newMemo, newHod, newDatex, newIco) -> {
+                        (newPerson, newMemo, newDatex, newIco) -> {
 
                             boolean datexValid = !isEmpty(newDatex);
                             if (!datexValid) {
@@ -347,18 +440,10 @@ public class NewCashDocFragment extends Fragment {
                                 _memo.setError("Invalid Memo!");
                             }
 
-                            boolean hodValid = !isEmpty(newHod);
-                            if (hodValid) {
-                                int num = Integer.parseInt(newHod.toString());
-                                hodValid = num > 0 && num <= 100;
-                            }
-                            if (!hodValid) {
-                                _hod.setError("Invalid Hod!");
-                            }
 
                             boolean icoxValid = newIco.toString().equals("true");
 
-                            return personValid && memoValid && hodValid && datexValid && icoxValid;
+                            return personValid && memoValid && datexValid && icoxValid;
                         })
                 .subscribe(_disposableObserver);
     }
@@ -406,6 +491,20 @@ public class NewCashDocFragment extends Fragment {
 
 
         return dpd;
+    }
+
+    private CalcVatKt getCalcVat(int winp) {
+
+        Double zk0d = Double.valueOf(_inputZk0.getText().toString());
+        Double zk1d = Double.valueOf(_inputZk1.getText().toString());
+        Double zk2d = Double.valueOf(_inputZk2.getText().toString());
+        Double dn1d = Double.valueOf(_inputDn1.getText().toString());
+        Double dn2d = Double.valueOf(_inputDn2.getText().toString());
+        Double hodd = Double.valueOf(_hod.getText().toString());
+
+        CalcVatKt newcalcvat = new CalcVatKt(zk0d, zk1d, zk2d, dn1d, dn2d, hodd, 0d, winp,true);
+
+        return newcalcvat;
     }
 
 

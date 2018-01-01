@@ -11,6 +11,7 @@ import java.util.List;
 import io.reactivex.Flowable;
 import rx.Observable;
 import com.eusecom.samfantozzi.Account;
+import com.eusecom.samfantozzi.CalcVatKt;
 import com.eusecom.samfantozzi.CompanyKt;
 import com.eusecom.samfantozzi.IdCompanyKt;
 import com.eusecom.samfantozzi.Invoice;
@@ -265,6 +266,22 @@ public class DgAllEmpsAbsDataModel implements DgAllEmpsAbsIDataModel {
 
         //return Observable.just(myidc);
         return mAbsServerService.controlIdCompanyOnSqlServer(userhash, userid, fromfir, vyb_rok, drh, queryx);
+    }
+
+    @Override
+    public Observable<List<Account>> getReceiptsExpensesFromSql(String userhash, String userid, String fromfir
+            , String vyb_rok, String drh, String drupoh, String ucto) {
+
+        return mAbsServerService.getReceiptExpensesFromSqlServer(userhash, userid, fromfir, vyb_rok, drh, drupoh, ucto);
+
+    }
+
+    @NonNull
+    @Override
+    public Observable<CalcVatKt> getObservableRecountFromRealm(CalcVatKt calcx) {
+
+        calcx.setSumnod();
+        return Observable.just(calcx);
     }
 
     //method for TypesKtActivity

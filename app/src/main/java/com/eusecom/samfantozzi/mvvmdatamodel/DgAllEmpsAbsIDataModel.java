@@ -4,6 +4,7 @@ import android.net.Uri;
 import android.support.annotation.NonNull;
 
 import com.eusecom.samfantozzi.Account;
+import com.eusecom.samfantozzi.CalcVatKt;
 import com.eusecom.samfantozzi.CompanyKt;
 import com.eusecom.samfantozzi.IdCompanyKt;
 import com.eusecom.samfantozzi.Invoice;
@@ -73,6 +74,13 @@ public interface DgAllEmpsAbsIDataModel {
     @NonNull
     public Observable<List<IdCompanyKt>> getObservableIdModelCompany(String userhash, String userid, String fromfir
             , String vyb_rok, String drh, String queryx);
+
+    @NonNull
+    public Observable<List<Account>> getReceiptsExpensesFromSql(String userhash, String userid, String fromfir
+            , String vyb_rok, String drh, String drupoh, String ucto);
+
+    @NonNull
+    public Observable<CalcVatKt> getObservableRecountFromRealm(CalcVatKt calcx);
 
 
     //recyclerview method for TypesKtActivity
