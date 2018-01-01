@@ -28,6 +28,7 @@
             android:layout_width="0dp"
             android:focusable="false"
             android:inputType="date"
+            android:textColor="@color/md_black_1000"
             />
     </LinearLayout>
 
@@ -77,6 +78,22 @@
         >
 
         <TextView
+            android:layout_weight="0.5"
+            android:layout_height="wrap_content"
+            android:layout_width="0dp"
+            android:padding="5dp"
+            android:text="@string/invoiceshort"
+            />
+
+        <EditText
+            android:id="@+id/invoice"
+            android:layout_weight="2"
+            android:layout_height="wrap_content"
+            android:layout_width="0dp"
+            android:inputType="number"
+            />
+
+        <TextView
             android:layout_weight="1"
             android:layout_height="wrap_content"
             android:layout_width="0dp"
@@ -86,11 +103,12 @@
 
         <EditText
             android:id="@+id/person"
-            android:layout_weight="2"
+            android:layout_weight="2.5"
             android:layout_height="wrap_content"
             android:layout_width="0dp"
             android:inputType="text"
             />
+
     </LinearLayout>
 
     <LinearLayout
@@ -100,7 +118,7 @@
         >
 
         <TextView
-            android:layout_weight="1"
+            android:layout_weight="0.8"
             android:layout_height="wrap_content"
             android:layout_width="0dp"
             android:padding="5dp"
@@ -109,7 +127,7 @@
 
         <EditText
             android:id="@+id/memo"
-            android:layout_weight="2"
+            android:layout_weight="2.2"
             android:layout_height="wrap_content"
             android:layout_width="0dp"
             android:inputType="text"
@@ -282,7 +300,9 @@
             android:layout_height="wrap_content"
             android:layout_margin="1dp"
             android:layout_marginBottom="5dp"
-            android:layout_weight="1"/>
+            android:layout_weight="1"
+            android:focusable="false"
+            android:textColor="@color/md_black_1000"/>
 
         <TextView
             android:visibility="invisible"

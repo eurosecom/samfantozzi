@@ -194,6 +194,7 @@
     <string name="save">Save</string>
     <string name="companyid">Company ID</string>
     <string name="person">Person</string>
+    <string name="invoiceshort">Inv.</string>
     <string name="memo">Memo</string>
     <string name="totalvalue">Total value</string>
     <string name="popzakl2">Basis%s</string>

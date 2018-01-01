@@ -57,6 +57,7 @@ public class NewCashDocFragment extends Fragment {
     @Bind(R.id.companyid) EditText _companyid;
     @Bind(R.id.idcexist) EditText _idcexist;
     @Bind(R.id.person) EditText _person;
+    @Bind(R.id.invoice) EditText _invoice;
     @Bind(R.id.memo) EditText _memo;
     @Bind(R.id.hod) EditText _hod;
     @Bind(R.id.btnsave) Button _btnsave;
