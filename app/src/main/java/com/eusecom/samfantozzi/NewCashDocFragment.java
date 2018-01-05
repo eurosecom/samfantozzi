@@ -60,8 +60,7 @@ public class NewCashDocFragment extends Fragment {
     @Bind(R.id.invoice) EditText _invoice;
     @Bind(R.id.memo) EditText _memo;
     @Bind(R.id.hod) EditText _hod;
-    @Bind(R.id.btnsave) Button _btnsave;
-    Button datebutton, idbutton;
+    Button datebutton, idbutton, _btnsave;
     @Bind(R.id.textzakl2) TextView _textzakl2;
     @Bind(R.id.textdph2) TextView _textdph2;
     @Bind(R.id.textzakl1) TextView _textzakl1;
@@ -142,6 +141,18 @@ public class NewCashDocFragment extends Fragment {
             }
         });
 
+        _btnsave = (Button) layout.findViewById(R.id.btnsave);
+        _btnsave.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                Log.d("NewCashDoc", "Clicked save ");
+                Toast.makeText(getActivity(), "Clicked save", Toast.LENGTH_SHORT).show();
+
+            }
+        });
+
+
         spinner = (Spinner) layout.findViewById(R.id.spinnerPoh);
 
         return layout;
@@ -180,11 +191,51 @@ public class NewCashDocFragment extends Fragment {
         );
         _disposables.add(RxJavaInterop.toV2Observable(RxTextView
                 .textChanges(_inputZk0)
-                .filter(charSequence -> charSequence.length() > 1)
+                .filter(charSequence -> charSequence.length() > 0)
                 .debounce(600, TimeUnit.MILLISECONDS)).map(charSequence -> charSequence.toString())
                 .subscribe(string -> {
                     Log.d("NewCashLog frg2", "debounced " + string);
                     CalcVatKt calcvatx = getCalcVat(0);
+                    mViewModel.emitMyObservableRecount(calcvatx);
+                })
+        );
+        _disposables.add(RxJavaInterop.toV2Observable(RxTextView
+                .textChanges(_inputZk2)
+                .filter(charSequence -> charSequence.length() > 0)
+                .debounce(600, TimeUnit.MILLISECONDS)).map(charSequence -> charSequence.toString())
+                .subscribe(string -> {
+                    Log.d("NewCashLog frg2", "debounced " + string);
+                    CalcVatKt calcvatx = getCalcVat(2);
+                    mViewModel.emitMyObservableRecount(calcvatx);
+                })
+        );
+        _disposables.add(RxJavaInterop.toV2Observable(RxTextView
+                .textChanges(_inputDn2)
+                .filter(charSequence -> charSequence.length() > 0)
+                .debounce(600, TimeUnit.MILLISECONDS)).map(charSequence -> charSequence.toString())
+                .subscribe(string -> {
+                    Log.d("NewCashLog frg2", "debounced " + string);
+                    CalcVatKt calcvatx = getCalcVat(22);
+                    mViewModel.emitMyObservableRecount(calcvatx);
+                })
+        );
+        _disposables.add(RxJavaInterop.toV2Observable(RxTextView
+                .textChanges(_inputZk1)
+                .filter(charSequence -> charSequence.length() > 0)
+                .debounce(600, TimeUnit.MILLISECONDS)).map(charSequence -> charSequence.toString())
+                .subscribe(string -> {
+                    Log.d("NewCashLog frg2", "debounced " + string);
+                    CalcVatKt calcvatx = getCalcVat(1);
+                    mViewModel.emitMyObservableRecount(calcvatx);
+                })
+        );
+        _disposables.add(RxJavaInterop.toV2Observable(RxTextView
+                .textChanges(_inputDn1)
+                .filter(charSequence -> charSequence.length() > 0)
+                .debounce(600, TimeUnit.MILLISECONDS)).map(charSequence -> charSequence.toString())
+                .subscribe(string -> {
+                    Log.d("NewCashLog frg2", "debounced " + string);
+                    CalcVatKt calcvatx = getCalcVat(11);
                     mViewModel.emitMyObservableRecount(calcvatx);
                 })
         );
@@ -299,8 +350,13 @@ public class NewCashDocFragment extends Fragment {
 
     private void setRecount(@NonNull final CalcVatKt result) {
 
-        String serverx = result.getNod() + "";
-        Toast.makeText(getActivity(), "Recalculated nod " + serverx, Toast.LENGTH_SHORT).show();
+        //String serverx = result.getNod() + "";
+        //Toast.makeText(getActivity(), "Recalculated nod " + serverx, Toast.LENGTH_SHORT).show();
+        //if( result.getWinp() != 0 ) { _inputZk0.setText(result.getZk0() + ""); }
+        //if( result.getWinp() != 1 ) { _inputZk1.setText(result.getZk1() + ""); }
+        //if( result.getWinp() != 2 ) { _inputZk2.setText(result.getZk2() + ""); }
+        if( result.getWinp() == 1 ) { _inputDn1.setText(result.getDn1() + ""); }
+        if( result.getWinp() == 2 ) { _inputDn2.setText(result.getDn2() + ""); }
         _hod.setText(result.getNod() + "");
 
     }
@@ -367,12 +423,12 @@ public class NewCashDocFragment extends Fragment {
             spinner.setPrompt(getString(R.string.select_expense));
         }
 
-        if(_inputZk0.getText().toString().equals("")) { _inputZk0.setText("0"); }
-        if(_inputZk1.getText().toString().equals("")) { _inputZk1.setText("0"); }
-        if(_inputZk2.getText().toString().equals("")) { _inputZk2.setText("0"); }
-        if(_inputDn1.getText().toString().equals("")) { _inputDn1.setText("0"); }
-        if(_inputDn2.getText().toString().equals("")) { _inputDn2.setText("0"); }
-        if(_hod.getText().toString().equals("")) { _hod.setText("0"); }
+        //if(_inputZk0.getText().toString().equals("")) { _inputZk0.setText("0"); }
+        //if(_inputZk1.getText().toString().equals("")) { _inputZk1.setText("0"); }
+        //if(_inputZk2.getText().toString().equals("")) { _inputZk2.setText("0"); }
+        //if(_inputDn1.getText().toString().equals("")) { _inputDn1.setText("0"); }
+        //if(_inputDn2.getText().toString().equals("")) { _inputDn2.setText("0"); }
+        //if(_hod.getText().toString().equals("")) { _hod.setText("0"); }
         if(_inputPoh.getText().toString().equals("")) { _inputPoh.setText("0"); }
 
     }
@@ -399,12 +455,16 @@ public class NewCashDocFragment extends Fragment {
             @Override
             public void onNext(Boolean formValid) {
                 if (formValid) {
-                    _btnsave.setBackgroundColor(getResources().getColor(R.color.blue));
-                    //Log.d("NewCashDoc", "formvalid true ");
+                    //_btnsave.setBackgroundColor(getResources().getColor(R.color.material_light_blue_A200));
+                    _btnsave.setEnabled(true);
+                    _btnsave.setClickable(true);
+                    Log.d("NewCashDoc", "formvalid true ");
                 }
                 else {
-                    _btnsave.setBackgroundColor(getResources().getColor(R.color.gray));
-                    //Log.d("NewCashDoc", "formvalid false ");
+                    //_btnsave.setBackgroundColor(getResources().getColor(R.color.gray));
+                    _btnsave.setEnabled(false);
+                    _btnsave.setClickable(false);
+                    Log.d("NewCashDoc", "formvalid false ");
                 }
             }
 
@@ -496,12 +556,47 @@ public class NewCashDocFragment extends Fragment {
 
     private CalcVatKt getCalcVat(int winp) {
 
-        Double zk0d = Double.valueOf(_inputZk0.getText().toString());
-        Double zk1d = Double.valueOf(_inputZk1.getText().toString());
-        Double zk2d = Double.valueOf(_inputZk2.getText().toString());
-        Double dn1d = Double.valueOf(_inputDn1.getText().toString());
-        Double dn2d = Double.valueOf(_inputDn2.getText().toString());
-        Double hodd = Double.valueOf(_hod.getText().toString());
+        String zk0s = _inputZk0.getText().toString();
+        String zk1s = _inputZk1.getText().toString();
+        String zk2s = _inputZk2.getText().toString();
+        String dn1s = _inputDn1.getText().toString();
+        String dn2s = _inputDn2.getText().toString();
+        String hods = _hod.getText().toString();
+
+        if(zk0s.equals("")){ zk0s="0"; }
+        if(zk1s.equals("")){ zk1s="0"; }
+        if(zk2s.equals("")){ zk2s="0"; }
+        if(dn1s.equals("")){ dn1s="0"; }
+        if(dn2s.equals("")){ dn2s="0"; }
+        if(hods.equals("")){ hods="0"; }
+
+        if(zk0s.equals(".")){ zk0s="0"; }
+        if(zk1s.equals(".")){ zk1s="0"; }
+        if(zk2s.equals(".")){ zk2s="0"; }
+        if(dn1s.equals(".")){ dn1s="0"; }
+        if(dn2s.equals(".")){ dn2s="0"; }
+        if(hods.equals(".")){ hods="0"; }
+
+        if(zk0s.equals("-")){ zk0s="0"; }
+        if(zk1s.equals("-")){ zk1s="0"; }
+        if(zk2s.equals("-")){ zk2s="0"; }
+        if(dn1s.equals("-")){ dn1s="0"; }
+        if(dn2s.equals("-")){ dn2s="0"; }
+        if(hods.equals("-")){ hods="0"; }
+
+        if(zk0s.equals("+")){ zk0s="0"; }
+        if(zk1s.equals("+")){ zk1s="0"; }
+        if(zk2s.equals("+")){ zk2s="0"; }
+        if(dn1s.equals("+")){ dn1s="0"; }
+        if(dn2s.equals("+")){ dn2s="0"; }
+        if(hods.equals("+")){ hods="0"; }
+
+        Double zk0d = Double.valueOf(zk0s);
+        Double zk1d = Double.valueOf(zk1s);
+        Double zk2d = Double.valueOf(zk2s);
+        Double dn1d = Double.valueOf(dn1s);
+        Double dn2d = Double.valueOf(dn2s);
+        Double hodd = Double.valueOf(hods);
 
         CalcVatKt newcalcvat = new CalcVatKt(zk0d, zk1d, zk2d, dn1d, dn2d, hodd, 0d, winp,true);
 
