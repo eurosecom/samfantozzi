@@ -82,6 +82,9 @@ public interface DgAllEmpsAbsIDataModel {
     @NonNull
     public Observable<CalcVatKt> getObservableRecountFromRealm(CalcVatKt calcx);
 
+    @NonNull
+    public Observable<Invoice> saveCashDocToRealm(Invoice invx);
+
 
     //recyclerview method for TypesKtActivity
 

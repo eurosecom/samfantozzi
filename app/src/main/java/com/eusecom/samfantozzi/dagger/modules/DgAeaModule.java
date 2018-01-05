@@ -15,6 +15,8 @@ import javax.inject.Singleton;
 import dagger.Module;
 import dagger.Provides;
 import javax.inject.Named;
+
+import io.realm.Realm;
 import okhttp3.Cache;
 import com.google.gson.FieldNamingPolicy;
 import com.google.gson.Gson;
@@ -107,8 +109,8 @@ public class DgAeaModule {
     @Singleton
     public DgAllEmpsAbsIDataModel providesDgAllEmpsAbsIDataModel(DatabaseReference databasereference,
                                                                  AbsServerService absServerService,
-                                                                 Resources resources) {
-        return new DgAllEmpsAbsDataModel(databasereference, absServerService, resources);
+                                                                 Resources resources, Realm realm) {
+        return new DgAllEmpsAbsDataModel(databasereference, absServerService, resources, realm);
     }
 
 

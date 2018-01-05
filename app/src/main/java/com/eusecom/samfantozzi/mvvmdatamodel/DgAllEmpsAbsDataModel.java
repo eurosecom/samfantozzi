@@ -9,6 +9,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import io.reactivex.Flowable;
+import io.realm.Realm;
 import rx.Observable;
 import com.eusecom.samfantozzi.Account;
 import com.eusecom.samfantozzi.CalcVatKt;
@@ -30,13 +31,16 @@ public class DgAllEmpsAbsDataModel implements DgAllEmpsAbsIDataModel {
     DatabaseReference mFirebaseDatabase;
     AbsServerService mAbsServerService;
     Resources mResources;
+    Realm mRealm;
 
     public DgAllEmpsAbsDataModel(@NonNull final DatabaseReference databaseReference,
                                  @NonNull final AbsServerService absServerService,
-                                 @NonNull final Resources resources) {
+                                 @NonNull final Resources resources,
+                                 @NonNull final Realm realm) {
         mFirebaseDatabase = databaseReference;
         mAbsServerService = absServerService;
         mResources = resources;
+        mRealm = realm;
     }
 
 
@@ -282,6 +286,13 @@ public class DgAllEmpsAbsDataModel implements DgAllEmpsAbsIDataModel {
 
         calcx.setSumnod();
         return Observable.just(calcx);
+    }
+
+    @NonNull
+    @Override
+    public Observable<Invoice> saveCashDocToRealm(Invoice invx) {
+
+        return Observable.just(invx);
     }
 
     //method for TypesKtActivity

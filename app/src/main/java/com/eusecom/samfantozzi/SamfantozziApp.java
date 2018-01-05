@@ -17,6 +17,8 @@ import com.squareup.leakcanary.LeakCanary;
 import javax.inject.Inject;
 import dagger.android.DispatchingAndroidInjector;
 import dagger.android.HasActivityInjector;
+import io.realm.Realm;
+import io.realm.RealmConfiguration;
 
 
 public class SamfantozziApp extends MultiDexApplication implements HasActivityInjector {
@@ -28,6 +30,7 @@ public class SamfantozziApp extends MultiDexApplication implements HasActivityIn
 
     @NonNull
     private DatabaseReference mDatabaseReference;
+    private Realm mRealm;
 
     @Override
     public void onCreate() {
@@ -42,6 +45,13 @@ public class SamfantozziApp extends MultiDexApplication implements HasActivityIn
 
         mDatabaseReference = FirebaseDatabase.getInstance().getReference();
 
+        RealmConfiguration realmConfiguration = new RealmConfiguration.Builder(this)
+                .name(Realm.DEFAULT_REALM_NAME)
+                .schemaVersion(0)
+                .deleteRealmIfMigrationNeeded()
+                .build();
+        Realm.setDefaultConfiguration(realmConfiguration);
+
         DaggerAppComponent
                 .builder()
                 .application(this)
@@ -55,8 +65,10 @@ public class SamfantozziApp extends MultiDexApplication implements HasActivityIn
         return activityDispatchingAndroidInjector;
     }
 
-
-
+    @NonNull
+    public Realm getRealm() {
+        return Realm.getDefaultInstance();
+    }
 
     @NonNull
     public ISchedulerProvider getSchedulerProvider() {

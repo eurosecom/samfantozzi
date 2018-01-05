@@ -3,13 +3,14 @@ package com.eusecom.samfantozzi.dagger.modules;
 import android.app.Application;
 import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
-
 import com.eusecom.samfantozzi.SamfantozziApp;
+import com.eusecom.samfantozzi.realm.RealmController;
 import com.eusecom.samfantozzi.rxbus.RxBus;
-
 import javax.inject.Singleton;
 import dagger.Module;
 import dagger.Provides;
+import io.realm.Realm;
+
 
 @Module
 public class ApplicationModule {
@@ -38,5 +39,20 @@ public class ApplicationModule {
     RxBus providesRxBus(Application application) {
         return ((SamfantozziApp) application).getRxBusSingleton();
     }
+
+    @Provides
+    @Singleton
+    RealmController providesRealmConroller(Application application) {
+        return new RealmController(application);
+    }
+
+    @Provides
+    @Singleton
+    Realm providesRealm(RealmController realmcontroller) {
+        return realmcontroller.getRealm();
+    }
+
+
+
 
 }

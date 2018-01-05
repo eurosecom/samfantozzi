@@ -333,6 +333,30 @@ public class DgAllEmpsAbsMvvmViewModel {
 
     //NewCashDocFragment and NewCashDocActivity
 
+    //emit Observable<Invoice> SaveCashDocRealm
+    public void emitMyObservableSaveCashDocRealm(Invoice invx) {
+        mObservableSaveCashDocRealm.onNext(invx);
+    }
+
+    @NonNull
+    private BehaviorSubject<Invoice> mObservableSaveCashDocRealm = BehaviorSubject.create();
+
+    @NonNull
+    public Observable<Invoice> getMyObservableSaveCashDocRealm() {
+
+        return mObservableSaveCashDocRealm
+                .observeOn(mSchedulerProvider.computation())
+                .flatMap(invx -> mDataModel.saveCashDocToRealm(invx ));
+
+    }
+
+    public void clearObservableSaveCashDocRealm() {
+
+        mObservableSaveCashDocRealm = BehaviorSubject.create();
+
+    }
+    //end emit Observable<Invoice> SaveCashDocRealm
+
     //emit Observable<IdCompanyKt> control IdCompany
     public void emitMyObservableIdModelCompany(String queryx) {
         //String querys = String.valueOf(queryx);

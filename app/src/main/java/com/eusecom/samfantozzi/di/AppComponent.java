@@ -2,9 +2,7 @@ package com.eusecom.samfantozzi.di;
 
 import android.app.Application;
 import com.eusecom.samfantozzi.SamfantozziApp;
-
 import javax.inject.Singleton;
-
 import dagger.BindsInstance;
 import dagger.Component;
 import dagger.android.AndroidInjectionModule;
