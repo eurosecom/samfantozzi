@@ -11,6 +11,8 @@ import com.eusecom.samfantozzi.Invoice;
 import com.eusecom.samfantozzi.Month;
 import com.eusecom.samfantozzi.models.Attendance;
 import com.eusecom.samfantozzi.models.Employee;
+import com.eusecom.samfantozzi.realm.RealmEmployee;
+
 import java.util.List;
 
 import io.reactivex.Flowable;
@@ -85,11 +87,20 @@ public interface DgAllEmpsAbsIDataModel {
     @NonNull
     public Observable<Invoice> saveCashDocToRealm(Invoice invx);
 
+    @NonNull
+    Observable<String> getObservableSavingToRealm(@NonNull final List<RealmEmployee> employees);
+
 
     //recyclerview method for TypesKtActivity
 
     @NonNull
     public Observable<List<IdCompanyKt>> getAllIdcFromMysqlServer(String userhash, String userid, String fromfir
             , String vyb_rok, String drh);
+
+
+    //recyclerview method for NoSavedDocActivity
+
+    @NonNull
+    public Observable<List<RealmEmployee>> getObservableNosavedDocRealm();
 
 }

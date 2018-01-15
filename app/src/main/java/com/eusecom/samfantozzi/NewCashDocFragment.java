@@ -24,6 +24,8 @@ import android.widget.ProgressBar;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import com.eusecom.samfantozzi.realm.RealmEmployee;
 import com.eusecom.samfantozzi.rxbus.RxBus;
 import com.jakewharton.rxbinding.widget.RxTextView;
 import java.text.SimpleDateFormat;
@@ -148,6 +150,18 @@ public class NewCashDocFragment extends Fragment {
 
                 Log.d("NewCashDoc", "Clicked save ");
                 Toast.makeText(getActivity(), "Clicked save", Toast.LENGTH_SHORT).show();
+                //save realmemployees to Realm
+                //transform employee to realmemployee
+                List<RealmEmployee> realmemployees = new ArrayList<>();
+                RealmEmployee realmemployee = new RealmEmployee();
+                realmemployee.setUsername("username");
+                realmemployee.setEmail("usermail");
+                realmemployee.setUsico("usico");
+                realmemployee.setUstype("ustype");
+                realmemployee.setKeyf("keyf");
+                realmemployees.add(realmemployee);
+
+                mViewModel.emitRealmEmployeesToRealm(realmemployees);
 
             }
         });
@@ -298,6 +312,7 @@ public class NewCashDocFragment extends Fragment {
         _disposables.dispose();
         mViewModel.clearObservableIdModelCompany();
         mViewModel.clearObservableRecount();
+        mViewModel.clearObservableSaveToRealm();
 
         Log.d("NewCashLog ", "onDestroy ");
 
@@ -338,6 +353,11 @@ public class NewCashDocFragment extends Fragment {
                 })
                 .onErrorResumeNext(throwable -> empty())
                 .subscribe(this::setRecount));
+
+        mSubscription.add(mViewModel.getObservableDataSavedToRealm()
+                .subscribeOn(Schedulers.computation())
+                .observeOn(rx.android.schedulers.AndroidSchedulers.mainThread())
+                .subscribe(this::dataSavedToRealm));
 
     }
 
@@ -393,6 +413,10 @@ public class NewCashDocFragment extends Fragment {
 
         }
 
+    }
+
+    private void dataSavedToRealm(@NonNull final String message) {
+        Toast.makeText(getActivity(), message, Toast.LENGTH_SHORT).show();
     }
 
 

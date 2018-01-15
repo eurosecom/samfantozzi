@@ -12,6 +12,8 @@ import com.eusecom.samfantozzi.models.Attendance;
 import com.eusecom.samfantozzi.models.Employee;
 import com.eusecom.samfantozzi.mvvmdatamodel.DgAllEmpsAbsIDataModel;
 import com.eusecom.samfantozzi.mvvmschedulers.ISchedulerProvider;
+import com.eusecom.samfantozzi.realm.RealmEmployee;
+
 import java.util.Calendar;
 import java.util.List;
 import java.util.Random;
@@ -507,6 +509,29 @@ public class DgAllEmpsAbsMvvmViewModel {
     }
     //end emit Observable<Boolean> control IdCompany
 
+    //save employees to realm
+    public void emitRealmEmployeesToRealm(List<RealmEmployee> employees) {
+        mObservableSaveToRealm.onNext(employees);
+    }
+
+    @NonNull
+    private BehaviorSubject<List<RealmEmployee>> mObservableSaveToRealm = BehaviorSubject.create();
+
+    @NonNull
+    public Observable<String> getObservableDataSavedToRealm() {
+        return mObservableSaveToRealm
+                .observeOn(mSchedulerProvider.ui())
+                .flatMap(list -> mDataModel.getObservableSavingToRealm(list));
+    }
+
+    public void clearObservableSaveToRealm() {
+
+        mObservableSaveToRealm = BehaviorSubject.create();
+
+    }
+    //end save employees to realm
+
+
     //DatePickerDialog
     public DatePickerDialog getDatePickerFromMvvm(String datumx, String posbut, Context context) {
 
@@ -578,6 +603,18 @@ public class DgAllEmpsAbsMvvmViewModel {
         return mDataModel.getAllIdcFromMysqlServer(encrypted, ds, firx, rokx, drh);
     }
     //end get IDC from MySql server
+
+
+    //recyclerview method for NoSavedDocActivity
+
+    //get no saved doc from MySql server
+    public Observable<List<RealmEmployee>> getNoSavedDocFromRealm() {
+
+        return mDataModel.getObservableNosavedDocRealm();
+    }
+    //end get no saved doc from MySql server
+
+
 
 
 }

@@ -20,6 +20,7 @@ import com.eusecom.samfantozzi.Month;
 import com.eusecom.samfantozzi.R;
 import com.eusecom.samfantozzi.models.Attendance;
 import com.eusecom.samfantozzi.models.Employee;
+import com.eusecom.samfantozzi.realm.RealmEmployee;
 import com.eusecom.samfantozzi.retrofit.AbsServerService;
 import com.eusecom.samfantozzi.rxfirebase2.database.RxFirebaseDatabase;
 import com.google.firebase.database.DataSnapshot;
@@ -295,6 +296,34 @@ public class DgAllEmpsAbsDataModel implements DgAllEmpsAbsIDataModel {
         return Observable.just(invx);
     }
 
+    @NonNull
+    @Override
+    public Observable<String> getObservableSavingToRealm(@NonNull final List<RealmEmployee> employees) {
+
+        //save to realm and get String OK or ERROR
+        setRealmEmployeeData( employees );
+
+        return Observable.just("Employees Data saved to Realm");
+
+    }
+
+    private void setRealmEmployeeData(@NonNull final List<RealmEmployee> realmemployees) {
+
+        //realmcontroller.clearAll();
+        mRealm.beginTransaction();
+        mRealm.clear(RealmEmployee.class);
+        mRealm.commitTransaction();
+        for (RealmEmployee b : realmemployees) {
+            // Persist your data easily
+            mRealm.beginTransaction();
+            mRealm.copyToRealm(b);
+            mRealm.commitTransaction();
+        }
+
+
+    }
+
+
     //method for TypesKtActivity
     @Override
     public Observable<List<IdCompanyKt>> getAllIdcFromMysqlServer(String userhash, String userid, String fromfir
@@ -303,6 +332,23 @@ public class DgAllEmpsAbsDataModel implements DgAllEmpsAbsIDataModel {
         return mAbsServerService.getAllIdCompanyOnSqlServer(userhash, userid, fromfir, vyb_rok, drh, "xxx");
 
     }
+
+
+
+    //recyclerview method for NoSavedDocActivity
+
+    @NonNull
+    @Override
+    public Observable<List<RealmEmployee>> getObservableNosavedDocRealm() {
+
+        List<RealmEmployee> results = mRealm.where(RealmEmployee.class).findAll();
+
+        return Observable.just(results);
+    }
+
+
+
+
 
 
 }

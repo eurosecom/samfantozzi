@@ -30,6 +30,7 @@
         <activity android:name=".CashListKtActivity"/>
         <activity android:name=".TypesKtActivity"/>
         <activity android:name=".NewCashDocKtActivity"/>
+        <activity android:name=".NoSavedDocActivity"/>
 
         <activity android:name=".Detail2Activity"/>
     </application>

@@ -309,6 +309,16 @@ class CashListKtFragment : Fragment() {
             return true
         }
 
+        if (id == R.id.action_nosaveddoc) {
+
+            val `is` = Intent(activity, NoSavedDocActivity::class.java)
+            val extras = Bundle()
+            extras.putString("fromact", "3")
+            `is`.putExtras(extras)
+            startActivity(`is`)
+            return true
+        }
+
         return super.onOptionsItemSelected(item)
     }
 

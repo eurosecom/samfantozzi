@@ -170,6 +170,7 @@
     <string name="createdoc">Create document</string>
     <string name="expense">Expense</string>
     <string name="receipt">Receipt</string>
+    <string name="action_nosaveddoc">No saved Documents</string>
 
     //supplieractivity
     <string name="suppliers">Suppliers</string>
