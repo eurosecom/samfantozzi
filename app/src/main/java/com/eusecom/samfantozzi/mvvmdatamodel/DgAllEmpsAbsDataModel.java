@@ -21,6 +21,7 @@ import com.eusecom.samfantozzi.R;
 import com.eusecom.samfantozzi.models.Attendance;
 import com.eusecom.samfantozzi.models.Employee;
 import com.eusecom.samfantozzi.realm.RealmEmployee;
+import com.eusecom.samfantozzi.realm.RealmInvoice;
 import com.eusecom.samfantozzi.retrofit.AbsServerService;
 import com.eusecom.samfantozzi.rxfirebase2.database.RxFirebaseDatabase;
 import com.google.firebase.database.DataSnapshot;
@@ -298,28 +299,27 @@ public class DgAllEmpsAbsDataModel implements DgAllEmpsAbsIDataModel {
 
     @NonNull
     @Override
-    public Observable<String> getObservableSavingToRealm(@NonNull final List<RealmEmployee> employees) {
+    public Observable<String> getInvoiceSavingToRealm(@NonNull final List<RealmInvoice> invoices) {
 
         //save to realm and get String OK or ERROR
-        setRealmEmployeeData( employees );
+        setRealmInvoiceData( invoices );
 
-        return Observable.just("Employees Data saved to Realm");
+        return Observable.just("Invoice Data saved to Realm");
 
     }
 
-    private void setRealmEmployeeData(@NonNull final List<RealmEmployee> realmemployees) {
+    private void setRealmInvoiceData(@NonNull final List<RealmInvoice> invoices) {
 
         //realmcontroller.clearAll();
         mRealm.beginTransaction();
-        mRealm.clear(RealmEmployee.class);
+        mRealm.clear(RealmInvoice.class);
         mRealm.commitTransaction();
-        for (RealmEmployee b : realmemployees) {
+        for (RealmInvoice b : invoices) {
             // Persist your data easily
             mRealm.beginTransaction();
             mRealm.copyToRealm(b);
             mRealm.commitTransaction();
         }
-
 
     }
 
@@ -339,9 +339,9 @@ public class DgAllEmpsAbsDataModel implements DgAllEmpsAbsIDataModel {
 
     @NonNull
     @Override
-    public Observable<List<RealmEmployee>> getObservableNosavedDocRealm() {
+    public Observable<List<RealmInvoice>> getObservableNosavedDocRealm() {
 
-        List<RealmEmployee> results = mRealm.where(RealmEmployee.class).findAll();
+        List<RealmInvoice> results = mRealm.where(RealmInvoice.class).findAll();
 
         return Observable.just(results);
     }

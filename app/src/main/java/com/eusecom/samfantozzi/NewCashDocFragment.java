@@ -26,6 +26,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.eusecom.samfantozzi.realm.RealmEmployee;
+import com.eusecom.samfantozzi.realm.RealmInvoice;
 import com.eusecom.samfantozzi.rxbus.RxBus;
 import com.jakewharton.rxbinding.widget.RxTextView;
 import java.text.SimpleDateFormat;
@@ -150,18 +151,19 @@ public class NewCashDocFragment extends Fragment {
 
                 Log.d("NewCashDoc", "Clicked save ");
                 Toast.makeText(getActivity(), "Clicked save", Toast.LENGTH_SHORT).show();
-                //save realmemployees to Realm
-                //transform employee to realmemployee
-                List<RealmEmployee> realmemployees = new ArrayList<>();
-                RealmEmployee realmemployee = new RealmEmployee();
-                realmemployee.setUsername("username");
-                realmemployee.setEmail("usermail");
-                realmemployee.setUsico("usico");
-                realmemployee.setUstype("ustype");
-                realmemployee.setKeyf("keyf");
-                realmemployees.add(realmemployee);
 
-                mViewModel.emitRealmEmployeesToRealm(realmemployees);
+                //save invoice to Realm
+                List<RealmInvoice> realminvoices = new ArrayList<>();
+                RealmInvoice realminvoice = new RealmInvoice();
+                realminvoice.setUce("21100");
+                realminvoice.setDrh("3");
+                realminvoice.setDok("1001");
+                realminvoice.setIco("44551142");
+                realminvoice.setHod("120.00");
+                realminvoice.setSaved("false");
+                realminvoices.add(realminvoice);
+
+                mViewModel.emitRealmInvoicesToRealm(realminvoices);
 
             }
         });
@@ -312,7 +314,7 @@ public class NewCashDocFragment extends Fragment {
         _disposables.dispose();
         mViewModel.clearObservableIdModelCompany();
         mViewModel.clearObservableRecount();
-        mViewModel.clearObservableSaveToRealm();
+        mViewModel.clearObservableInvoiceSaveToRealm();
 
         Log.d("NewCashLog ", "onDestroy ");
 
@@ -354,7 +356,7 @@ public class NewCashDocFragment extends Fragment {
                 .onErrorResumeNext(throwable -> empty())
                 .subscribe(this::setRecount));
 
-        mSubscription.add(mViewModel.getObservableDataSavedToRealm()
+        mSubscription.add(mViewModel.getDataInvoiceSavedToRealm()
                 .subscribeOn(Schedulers.computation())
                 .observeOn(rx.android.schedulers.AndroidSchedulers.mainThread())
                 .subscribe(this::dataSavedToRealm));

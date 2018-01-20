@@ -13,6 +13,7 @@ import com.eusecom.samfantozzi.models.Employee;
 import com.eusecom.samfantozzi.mvvmdatamodel.DgAllEmpsAbsIDataModel;
 import com.eusecom.samfantozzi.mvvmschedulers.ISchedulerProvider;
 import com.eusecom.samfantozzi.realm.RealmEmployee;
+import com.eusecom.samfantozzi.realm.RealmInvoice;
 
 import java.util.Calendar;
 import java.util.List;
@@ -509,27 +510,27 @@ public class DgAllEmpsAbsMvvmViewModel {
     }
     //end emit Observable<Boolean> control IdCompany
 
-    //save employees to realm
-    public void emitRealmEmployeesToRealm(List<RealmEmployee> employees) {
-        mObservableSaveToRealm.onNext(employees);
+    //save invoices to realm
+    public void emitRealmInvoicesToRealm(List<RealmInvoice> invoice) {
+        mInvoiceSaveToRealm.onNext(invoice);
     }
 
     @NonNull
-    private BehaviorSubject<List<RealmEmployee>> mObservableSaveToRealm = BehaviorSubject.create();
+    private BehaviorSubject<List<RealmInvoice>> mInvoiceSaveToRealm = BehaviorSubject.create();
 
     @NonNull
-    public Observable<String> getObservableDataSavedToRealm() {
-        return mObservableSaveToRealm
+    public Observable<String> getDataInvoiceSavedToRealm() {
+        return mInvoiceSaveToRealm
                 .observeOn(mSchedulerProvider.ui())
-                .flatMap(list -> mDataModel.getObservableSavingToRealm(list));
+                .flatMap(list -> mDataModel.getInvoiceSavingToRealm(list));
     }
 
-    public void clearObservableSaveToRealm() {
+    public void clearObservableInvoiceSaveToRealm() {
 
-        mObservableSaveToRealm = BehaviorSubject.create();
+        mInvoiceSaveToRealm = BehaviorSubject.create();
 
     }
-    //end save employees to realm
+    //end save invoices to realm
 
 
     //DatePickerDialog
@@ -608,7 +609,7 @@ public class DgAllEmpsAbsMvvmViewModel {
     //recyclerview method for NoSavedDocActivity
 
     //get no saved doc from MySql server
-    public Observable<List<RealmEmployee>> getNoSavedDocFromRealm() {
+    public Observable<List<RealmInvoice>> getNoSavedDocFromRealm() {
 
         return mDataModel.getObservableNosavedDocRealm();
     }

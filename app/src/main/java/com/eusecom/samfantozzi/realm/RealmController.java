@@ -70,11 +70,6 @@ public class RealmController {
         return realm.where(RealmEmployee.class).findAll();
     }
 
-    //find all objects in the RealmEmployee.class
-    public RealmResults<RealmCompany> getRealmCompanies() {
-
-        return realm.where(RealmCompany.class).findAll();
-    }
  
     //query a single item with the given id
     public RealmEmployee getRealmEmployee(String id) {

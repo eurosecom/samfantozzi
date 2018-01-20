@@ -12,6 +12,7 @@ import com.eusecom.samfantozzi.Month;
 import com.eusecom.samfantozzi.models.Attendance;
 import com.eusecom.samfantozzi.models.Employee;
 import com.eusecom.samfantozzi.realm.RealmEmployee;
+import com.eusecom.samfantozzi.realm.RealmInvoice;
 
 import java.util.List;
 
@@ -88,8 +89,7 @@ public interface DgAllEmpsAbsIDataModel {
     public Observable<Invoice> saveCashDocToRealm(Invoice invx);
 
     @NonNull
-    Observable<String> getObservableSavingToRealm(@NonNull final List<RealmEmployee> employees);
-
+    Observable<String> getInvoiceSavingToRealm(@NonNull final List<RealmInvoice> invoices);
 
     //recyclerview method for TypesKtActivity
 
@@ -101,6 +101,6 @@ public interface DgAllEmpsAbsIDataModel {
     //recyclerview method for NoSavedDocActivity
 
     @NonNull
-    public Observable<List<RealmEmployee>> getObservableNosavedDocRealm();
+    public Observable<List<RealmInvoice>> getObservableNosavedDocRealm();
 
 }
