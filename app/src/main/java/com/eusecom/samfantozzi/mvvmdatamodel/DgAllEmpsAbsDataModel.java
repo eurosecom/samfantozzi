@@ -310,10 +310,9 @@ public class DgAllEmpsAbsDataModel implements DgAllEmpsAbsIDataModel {
 
     private void setRealmInvoiceData(@NonNull final List<RealmInvoice> invoices) {
 
-        //realmcontroller.clearAll();
-        mRealm.beginTransaction();
-        mRealm.clear(RealmInvoice.class);
-        mRealm.commitTransaction();
+        //mRealm.beginTransaction();
+        //mRealm.clear(RealmInvoice.class);
+        //mRealm.commitTransaction();
         for (RealmInvoice b : invoices) {
             // Persist your data easily
             mRealm.beginTransaction();

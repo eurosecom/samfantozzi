@@ -10,6 +10,7 @@ import rx.schedulers.Schedulers
 import rx.subscriptions.CompositeSubscription
 import android.util.Log
 import com.eusecom.samfantozzi.realm.RealmEmployee
+import com.eusecom.samfantozzi.realm.RealmInvoice
 import rx.Observable
 
 
@@ -43,45 +44,20 @@ class NoSavedDocActivity : AppCompatActivity() {
         fromact = extras!!.getString("fromact")
         //toast("fromact " + fromact)
 
-        val adapter: NoSavedDocAdapter = NoSavedDocAdapter(ArrayList<Account>()){
-            toast("${it.accname + " " + it.accnumber } set")
-            val editor = prefs.edit()
-            if ( fromact.equals("1")){
-                editor.putString("odbuce", it.accnumber).apply();
-                editor.putString("odbdok", it.accdoc).apply();
-            }
-            if ( fromact.equals("2")){
-                editor.putString("doduce", it.accnumber).apply();
-                editor.putString("doddok", it.accdoc).apply();
-            }
-            if ( fromact.equals("3")){
-                editor.putString("pokluce", it.accnumber).apply();
-                editor.putString("pokldok", it.accdoc).apply();
-                editor.putString("pokldov", it.accdov).apply();
-            }
-            if ( fromact.equals("4")){
-                editor.putString("bankuce", it.accnumber).apply();
-                editor.putString("bankdok", it.accdoc).apply();
-            }
-            editor.commit();
+        val adapter: NoSavedDocAdapter = NoSavedDocAdapter(ArrayList<RealmInvoice>()){
+            toast("${it.nai + " " + it.dok } set")
+
             finish()
         }
         NoSavedDocActivityUI(adapter).setContentView(this)
 
-        supportActionBar!!.setTitle(getString(R.string.chooseaccount))
+        supportActionBar!!.setTitle(getString(R.string.action_nosaveddoc))
 
         bind(adapter)
 
     }
 
     private fun bind(adapter: NoSavedDocAdapter) {
-
-            mSubscription.add(mViewModel.getMyAccountsFromSqlServer(fromact)
-                    .subscribeOn(Schedulers.computation())
-                    .observeOn(rx.android.schedulers.AndroidSchedulers.mainThread())
-                    .doOnError { throwable -> Log.e("NoSavedDocAktivity ", "Error Throwable " + throwable.message) }
-                    .onErrorResumeNext({ throwable -> Observable.empty() })
-                    .subscribe({ it -> setAccountsFromServer(it, adapter) }))
 
             mSubscription.add(mViewModel.getNoSavedDocFromRealm()
                     .subscribeOn(Schedulers.computation())
@@ -95,17 +71,12 @@ class NoSavedDocActivity : AppCompatActivity() {
     }
 
 
-    private fun setNoSavedDocs(nosaveds: List<RealmEmployee>, adapter: NoSavedDocAdapter) {
+    private fun setNoSavedDocs(nosaveds: List<RealmInvoice>, adapter: NoSavedDocAdapter) {
 
-        toast("${nosaveds.get(0).username } realmemployee0")
-        //adapter.setdata(accounts)
+        toast("${nosaveds.get(0).dok } realminvoicedoc0")
+        adapter.setdata(nosaveds)
     }
 
-    private fun setAccountsFromServer(accounts: List<Account>, adapter: NoSavedDocAdapter) {
-
-        //toast("${accounts.get(0).accname } invoice0")
-        adapter.setdata(accounts)
-    }
 
     override fun onDestroy() {
         super.onDestroy()

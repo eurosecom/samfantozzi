@@ -170,7 +170,6 @@
     <string name="createdoc">Create document</string>
     <string name="expense">Expense</string>
     <string name="receipt">Receipt</string>
-    <string name="action_nosaveddoc">No saved Documents</string>
 
     //supplieractivity
     <string name="suppliers">Suppliers</string>
@@ -226,6 +225,9 @@
     <string name="telshort">Tel.</string>
     <string name="editidc">Edit IDC</string>
     <string name="chooseidc">Choose IDC</string>
+
+    //nosaveddocactivity
+    <string name="action_nosaveddoc">No saved Documents</string>
 
     //lunchemptymenu
     <string name="lunch_empty_menu">No menu loaded</string>

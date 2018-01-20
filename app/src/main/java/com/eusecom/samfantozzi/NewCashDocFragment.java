@@ -157,9 +157,10 @@ public class NewCashDocFragment extends Fragment {
                 RealmInvoice realminvoice = new RealmInvoice();
                 realminvoice.setUce("21100");
                 realminvoice.setDrh("3");
-                realminvoice.setDok("1001");
+                realminvoice.setDok("1002");
+                realminvoice.setDat("12.01.2017");
                 realminvoice.setIco("44551142");
-                realminvoice.setHod("120.00");
+                realminvoice.setHod(_hod.getText().toString());
                 realminvoice.setSaved("false");
                 realminvoices.add(realminvoice);
 

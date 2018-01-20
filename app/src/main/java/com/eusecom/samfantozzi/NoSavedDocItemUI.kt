@@ -37,7 +37,7 @@ class NoSavedDocItemUI : AnkoComponent<Context> {
                     height = wrapContent
                     rightOf(R.id.accimg)
                 }
-                textSize = sp(9).toFloat()
+                textSize = sp(7).toFloat()
                 id = R.id.accname
 
             }
