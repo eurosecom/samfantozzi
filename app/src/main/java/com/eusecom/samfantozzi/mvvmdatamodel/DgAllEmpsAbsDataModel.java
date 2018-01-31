@@ -10,6 +10,7 @@ import java.util.List;
 
 import io.reactivex.Flowable;
 import io.realm.Realm;
+import io.realm.RealmConfiguration;
 import rx.Observable;
 import com.eusecom.samfantozzi.Account;
 import com.eusecom.samfantozzi.CalcVatKt;
@@ -310,9 +311,12 @@ public class DgAllEmpsAbsDataModel implements DgAllEmpsAbsIDataModel {
 
     private void setRealmInvoiceData(@NonNull final List<RealmInvoice> invoices) {
 
+        //clear table
         //mRealm.beginTransaction();
         //mRealm.clear(RealmInvoice.class);
         //mRealm.commitTransaction();
+
+
         for (RealmInvoice b : invoices) {
             // Persist your data easily
             mRealm.beginTransaction();

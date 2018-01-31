@@ -11,6 +11,7 @@ import io.realm.annotations.PrimaryKey;
 
 public class RealmInvoice extends RealmObject {
 
+    //1=customers invoice, 2=supliers invoice, 31=cash document receipt, 32=cash document expense, 4=bank document, 5=internal document
     private String drh;
     private String uce;
     @PrimaryKey
@@ -34,6 +35,24 @@ public class RealmInvoice extends RealmObject {
     private String saved;
     private String datm;
     private String uzid;
+    private String kto;
+    private String poh;
+
+    public String getKto() {
+        return kto;
+    }
+
+    public void setKto(String kto) {
+        this.kto = kto;
+    }
+
+    public String getPoh() {
+        return poh;
+    }
+
+    public void setPoh(String poh) {
+        this.poh = poh;
+    }
 
     public String getDrh() {
         return drh;

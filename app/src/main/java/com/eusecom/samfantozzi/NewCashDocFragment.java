@@ -28,6 +28,7 @@ import android.widget.Toast;
 import com.eusecom.samfantozzi.realm.RealmEmployee;
 import com.eusecom.samfantozzi.realm.RealmInvoice;
 import com.eusecom.samfantozzi.rxbus.RxBus;
+import com.jakewharton.rxbinding.view.RxView;
 import com.jakewharton.rxbinding.widget.RxTextView;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -43,6 +44,9 @@ import io.reactivex.Flowable;
 import io.reactivex.disposables.CompositeDisposable;
 import io.reactivex.flowables.ConnectableFlowable;
 import io.reactivex.subscribers.DisposableSubscriber;
+import rx.Subscriber;
+import rx.Subscription;
+import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;
 import rx.subscriptions.CompositeSubscription;
 import static android.content.ContentValues.TAG;
@@ -75,6 +79,7 @@ public class NewCashDocFragment extends Fragment {
     @Bind(R.id.inputDn1) EditText _inputDn1;
     @Bind(R.id.inputDn2) EditText _inputDn2;
     @Bind(R.id.inputPoh) EditText _inputPoh;
+    @Bind(R.id.inputDoc) EditText _inputDoc;
 
     @NonNull
     private CompositeSubscription mSubscription;
@@ -85,6 +90,7 @@ public class NewCashDocFragment extends Fragment {
     private Flowable<CharSequence> _personChangeObservable;
     private Flowable<CharSequence> _memoChangeObservable;
     private Flowable<CharSequence> _icoChangeObservable;
+    private Subscription subscriptionSave;
 
     private ProgressBar mProgressBar;
 
@@ -145,30 +151,6 @@ public class NewCashDocFragment extends Fragment {
         });
 
         _btnsave = (Button) layout.findViewById(R.id.btnsave);
-        _btnsave.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-                Log.d("NewCashDoc", "Clicked save ");
-                Toast.makeText(getActivity(), "Clicked save", Toast.LENGTH_SHORT).show();
-
-                //save invoice to Realm
-                List<RealmInvoice> realminvoices = new ArrayList<>();
-                RealmInvoice realminvoice = new RealmInvoice();
-                realminvoice.setUce("21100");
-                realminvoice.setDrh("3");
-                realminvoice.setDok("1002");
-                realminvoice.setDat("12.01.2017");
-                realminvoice.setIco("44551142");
-                realminvoice.setHod(_hod.getText().toString());
-                realminvoice.setSaved("false");
-                realminvoices.add(realminvoice);
-
-                mViewModel.emitRealmInvoicesToRealm(realminvoices);
-
-            }
-        });
-
 
         spinner = (Spinner) layout.findViewById(R.id.spinnerPoh);
 
@@ -192,6 +174,54 @@ public class NewCashDocFragment extends Fragment {
         _icoChangeObservable = RxJavaInterop.toV2Flowable(RxTextView
                 .textChanges(_idcexist)
                 .skip(1));
+
+        subscriptionSave = RxView.clicks(_btnsave)
+                .debounce(300, TimeUnit.MILLISECONDS)
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new Subscriber<Object>() {
+                    public int mCount;
+
+                    @Override
+                    public void onCompleted() {
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+                    }
+
+                    @Override
+                    public void onNext(Object o) {
+
+                        Log.d("NewCashDoc", "Clicked save ");
+                        Toast.makeText(getActivity(), "Clicked save", Toast.LENGTH_SHORT).show();
+
+                        //save invoice to Realm
+                        List<RealmInvoice> realminvoices = new ArrayList<>();
+                        RealmInvoice realminvoice = new RealmInvoice();
+                        realminvoice.setUce(mSharedPreferences.getString("pokluce", ""));
+                        //1=customers invoice, 2=supliers invoice,
+                        //31=cash document receipt, 32=cash document expense, 4=bank document, 5=internal document
+                        realminvoice.setDrh("3" + drupoh);
+                        realminvoice.setDok(_inputDoc.getText().toString());
+                        realminvoice.setDat(_datex.getText().toString());
+                        realminvoice.setIco(_companyid.getText().toString());
+                        realminvoice.setHod(_hod.getText().toString());
+                        realminvoice.setZk0(_inputZk0.getText().toString());
+                        realminvoice.setZk1(_inputZk1.getText().toString());
+                        realminvoice.setZk2(_inputZk2.getText().toString());
+                        realminvoice.setDn1(_inputDn1.getText().toString());
+                        realminvoice.setDn2(_inputDn2.getText().toString());
+                        realminvoice.setPoz(_memo.getText().toString());
+                        realminvoice.setFak(_invoice.getText().toString());
+                        realminvoice.setKto(_person.getText().toString());
+                        realminvoice.setPoh(_inputPoh.getText().toString());
+                        realminvoice.setSaved("false");
+                        realminvoices.add(realminvoice);
+
+                        mViewModel.emitRealmInvoicesToRealm(realminvoices);
+
+                    }
+                });
 
 
         _disposables = new CompositeDisposable();
@@ -313,6 +343,7 @@ public class NewCashDocFragment extends Fragment {
         _disposableObserver.dispose();
         mSubscription.clear();
         _disposables.dispose();
+        subscriptionSave.unsubscribe();
         mViewModel.clearObservableIdModelCompany();
         mViewModel.clearObservableRecount();
         mViewModel.clearObservableInvoiceSaveToRealm();
@@ -457,6 +488,15 @@ public class NewCashDocFragment extends Fragment {
         //if(_inputDn2.getText().toString().equals("")) { _inputDn2.setText("0"); }
         //if(_hod.getText().toString().equals("")) { _hod.setText("0"); }
         if(_inputPoh.getText().toString().equals("")) { _inputPoh.setText("0"); }
+        if( _inputDoc.getText().toString().equals("0") ) {
+            if (drupoh.equals("1")) {
+                _inputDoc.setText(mSharedPreferences.getString("pokldok", ""));
+            } else {
+                _inputDoc.setText(mSharedPreferences.getString("pokldov", ""));
+            }
+        }else{
+
+        }
 
     }
 
@@ -518,12 +558,12 @@ public class NewCashDocFragment extends Fragment {
                                 _datex.setError("Invalid Date!");
                             }
 
-                            boolean personValid = !isEmpty(newPerson) && newPerson.length() > 8;
+                            boolean personValid = !isEmpty(newPerson) && newPerson.length() > 3;
                             if (!personValid) {
                                 _person.setError("Invalid Person!");
                             }
 
-                            boolean memoValid = !isEmpty(newMemo) && newMemo.length() > 8;
+                            boolean memoValid = !isEmpty(newMemo) && newMemo.length() > 3;
                             if (!memoValid) {
                                 _memo.setError("Invalid Memo!");
                             }

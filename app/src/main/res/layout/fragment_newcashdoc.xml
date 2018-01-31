@@ -15,15 +15,35 @@
         android:layout_width="match_parent"
         >
 
+        <TextView
+            android:id="@+id/dokxname"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="0.5"
+            android:text="@string/docshort"
+            android:textSize="15sp"
+            />
+
+        <EditText
+            android:id="@+id/inputDoc"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1.5"
+            android:focusable="true"
+            android:inputType="number"
+            android:text="0"
+            android:textColor="@color/md_black_1000"
+            />
+
         <Button android:id="@+id/datebutton"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
+            android:layout_weight="0.8"
             android:text="@string/date"/>
 
         <EditText
             android:id="@+id/datex"
-            android:layout_weight="1"
+            android:layout_weight="1.2"
             android:layout_height="wrap_content"
             android:layout_width="0dp"
             android:focusable="false"
