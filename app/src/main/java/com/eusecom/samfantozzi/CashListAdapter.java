@@ -60,8 +60,11 @@ public class CashListAdapter extends RecyclerView.Adapter<CashListAdapter.CashLi
 
       holder.invoice_name.setText(mListabsserver.get(position).getNai() + " " + mListabsserver.get(position).getFak());
       Picasso.with(holder.mContext).load(R.drawable.ic_account_balance_black_24dp).resize(120, 120).into(holder.invoice_photo);
-      if( mListabsserver.get(position).getDrh().equals("3")) {
-          Picasso.with(holder.mContext).load(R.drawable.ic_local_atm_black_24dp).resize(120, 120).into(holder.invoice_photo);
+      if( mListabsserver.get(position).getDrh().equals("31")) {
+          Picasso.with(holder.mContext).load(R.drawable.ic_local_atm_blue_24dp).resize(120, 120).into(holder.invoice_photo);
+      }
+      if( mListabsserver.get(position).getDrh().equals("32")) {
+          Picasso.with(holder.mContext).load(R.drawable.ic_local_atm_red_24dp).resize(120, 120).into(holder.invoice_photo);
       }
 
       holder.docx.setText(mListabsserver.get(position).getDok());
