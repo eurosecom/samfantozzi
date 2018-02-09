@@ -11,6 +11,7 @@ import java.util.List;
 import io.reactivex.Flowable;
 import io.realm.Realm;
 import io.realm.RealmConfiguration;
+import io.realm.RealmResults;
 import rx.Observable;
 import com.eusecom.samfantozzi.Account;
 import com.eusecom.samfantozzi.CalcVatKt;
@@ -302,6 +303,15 @@ public class DgAllEmpsAbsDataModel implements DgAllEmpsAbsIDataModel {
     @Override
     public Observable<String> getInvoiceSavingToRealm(@NonNull final List<RealmInvoice> invoices) {
 
+        //does exist invoice in Realm?
+        RealmInvoice invoiceexists = existRealmInvoice( invoices );
+
+        if(invoiceexists != null){
+            System.out.println("existRealmInvoice " + true);
+            deleteRealmInvoiceData( invoices );
+        }else{
+            System.out.println("existRealmInvoice " + false);
+        }
         //save to realm and get String OK or ERROR
         setRealmInvoiceData( invoices );
 
@@ -309,9 +319,15 @@ public class DgAllEmpsAbsDataModel implements DgAllEmpsAbsIDataModel {
 
     }
 
+    public RealmInvoice existRealmInvoice(@NonNull final List<RealmInvoice> invoices) {
+
+        String dokx = invoices.get(0).getDok();
+        return mRealm.where(RealmInvoice.class).equalTo("dok", dokx).findFirst();
+    }
+
     private void setRealmInvoiceData(@NonNull final List<RealmInvoice> invoices) {
 
-        //clear table
+        //clear all items in table
         //mRealm.beginTransaction();
         //mRealm.clear(RealmInvoice.class);
         //mRealm.commitTransaction();
@@ -323,6 +339,20 @@ public class DgAllEmpsAbsDataModel implements DgAllEmpsAbsIDataModel {
             mRealm.copyToRealm(b);
             mRealm.commitTransaction();
         }
+
+    }
+
+    private void deleteRealmInvoiceData(@NonNull final List<RealmInvoice> invoices) {
+
+        String dokx = invoices.get(0).getDok();
+
+        mRealm.executeTransaction(new Realm.Transaction() {
+            @Override
+            public void execute(Realm realm) {
+                RealmResults<RealmInvoice> result = realm.where(RealmInvoice.class).equalTo("dok", dokx).findAll();
+                result.clear();
+            }
+        });
 
     }
 
