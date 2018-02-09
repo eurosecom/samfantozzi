@@ -449,8 +449,8 @@ public class NewCashDocFragment extends Fragment {
 
     }
 
-    private void dataSavedToRealm(@NonNull final String message) {
-        Toast.makeText(getActivity(), message, Toast.LENGTH_SHORT).show();
+    private void dataSavedToRealm(@NonNull final RealmInvoice invoice) {
+        Toast.makeText(getActivity(), "Saved doc " + invoice.getDok(), Toast.LENGTH_SHORT).show();
     }
 
 

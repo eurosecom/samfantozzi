@@ -519,7 +519,7 @@ public class DgAllEmpsAbsMvvmViewModel {
     private BehaviorSubject<List<RealmInvoice>> mInvoiceSaveToRealm = BehaviorSubject.create();
 
     @NonNull
-    public Observable<String> getDataInvoiceSavedToRealm() {
+    public Observable<RealmInvoice> getDataInvoiceSavedToRealm() {
         return mInvoiceSaveToRealm
                 .observeOn(mSchedulerProvider.ui())
                 .flatMap(list -> mDataModel.getInvoiceSavingToRealm(list));

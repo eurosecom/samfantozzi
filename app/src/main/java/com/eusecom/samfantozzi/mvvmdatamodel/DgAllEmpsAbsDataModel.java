@@ -301,7 +301,7 @@ public class DgAllEmpsAbsDataModel implements DgAllEmpsAbsIDataModel {
 
     @NonNull
     @Override
-    public Observable<String> getInvoiceSavingToRealm(@NonNull final List<RealmInvoice> invoices) {
+    public Observable<RealmInvoice> getInvoiceSavingToRealm(@NonNull final List<RealmInvoice> invoices) {
 
         //does exist invoice in Realm?
         RealmInvoice invoiceexists = existRealmInvoice( invoices );
@@ -315,7 +315,7 @@ public class DgAllEmpsAbsDataModel implements DgAllEmpsAbsIDataModel {
         //save to realm and get String OK or ERROR
         setRealmInvoiceData( invoices );
 
-        return Observable.just("Invoice Data saved to Realm");
+        return Observable.just(invoices.get(0));
 
     }
 

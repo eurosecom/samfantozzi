@@ -89,7 +89,7 @@ public interface DgAllEmpsAbsIDataModel {
     public Observable<Invoice> saveCashDocToRealm(Invoice invx);
 
     @NonNull
-    Observable<String> getInvoiceSavingToRealm(@NonNull final List<RealmInvoice> invoices);
+    Observable<RealmInvoice> getInvoiceSavingToRealm(@NonNull final List<RealmInvoice> invoices);
 
     //recyclerview method for TypesKtActivity
 
