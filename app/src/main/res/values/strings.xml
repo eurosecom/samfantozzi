@@ -227,7 +227,7 @@
     <string name="chooseidc">Choose IDC</string>
 
     //nosaveddocactivity
-    <string name="action_nosaveddoc">No saved Documents</string>
+    <string name="action_nosaveddoc">Docs not saved to Server</string>
 
     //lunchemptymenu
     <string name="lunch_empty_menu">No menu loaded</string>
