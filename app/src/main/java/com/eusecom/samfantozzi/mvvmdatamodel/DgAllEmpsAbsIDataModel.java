@@ -104,6 +104,9 @@ public interface DgAllEmpsAbsIDataModel {
     public Observable<List<RealmInvoice>> getObservableNosavedDocRealm(String fromact);
 
     @NonNull
-    public Observable<Boolean> deleteInvoiceFromRealm(String docx);
+    public Observable<List<RealmInvoice>> deleteInvoiceFromRealm(RealmInvoice invoicex);
+
+    @NonNull
+    public Observable<List<RealmInvoice>> deleteAllInvoicesFromRealm(RealmInvoice invoicex);
 
 }

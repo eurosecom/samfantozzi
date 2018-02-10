@@ -637,24 +637,46 @@ public class DgAllEmpsAbsMvvmViewModel {
     //end get no saved doc from MySql server
 
     //emit delete document from Realm
-    public void emitDeleteInvoiceFromRealm(String dokx) {
-        mObservableDeleteInvoiceRealm.onNext(dokx);
+    public void emitDeleteInvoiceFromRealm(RealmInvoice invoicex) {
+        mObservableDeleteInvoiceRealm.onNext(invoicex);
     }
 
     @NonNull
-    private BehaviorSubject<String> mObservableDeleteInvoiceRealm = BehaviorSubject.create();
+    private BehaviorSubject<RealmInvoice> mObservableDeleteInvoiceRealm = BehaviorSubject.create();
 
     @NonNull
-    public Observable<Boolean> deletedInvoiceFromRealm() {
+    public Observable<List<RealmInvoice>> deletedInvoiceFromRealm() {
 
         return mObservableDeleteInvoiceRealm
                 .observeOn(mSchedulerProvider.ui())
-                .flatMap(dokx -> mDataModel.deleteInvoiceFromRealm(dokx));
+                .flatMap(invoicex -> mDataModel.deleteInvoiceFromRealm(invoicex));
     }
 
     public void clearDeleteInvoiceRealm() {
 
         mObservableDeleteInvoiceRealm = BehaviorSubject.create();
+
+    }
+
+    //emit delete all document from Realm
+    public void emitDeleteAllInvoicesFromRealm(RealmInvoice invoicex) {
+        mObservableDeleteAllInvoicesRealm.onNext(invoicex);
+    }
+
+    @NonNull
+    private BehaviorSubject<RealmInvoice> mObservableDeleteAllInvoicesRealm = BehaviorSubject.create();
+
+    @NonNull
+    public Observable<List<RealmInvoice>> deletedAllInvoicesFromRealm() {
+
+        return mObservableDeleteAllInvoicesRealm
+                .observeOn(mSchedulerProvider.ui())
+                .flatMap(invoicex -> mDataModel.deleteAllInvoicesFromRealm(invoicex));
+    }
+
+    public void clearDeleteAllInvoicesRealm() {
+
+        mObservableDeleteAllInvoicesRealm = BehaviorSubject.create();
 
     }
 

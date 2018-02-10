@@ -390,19 +390,59 @@ public class DgAllEmpsAbsDataModel implements DgAllEmpsAbsIDataModel {
 
     @NonNull
     @Override
-    public Observable<Boolean> deleteInvoiceFromRealm(String docx) {
+    public Observable<List<RealmInvoice>> deleteInvoiceFromRealm(RealmInvoice invoicex) {
 
+        String docx = invoicex.getDok();
+        String fromact = invoicex.getDrh();
         //System.out.println("deleteInvoiceFromRealm " + docx);
 
         mRealm.executeTransaction(new Realm.Transaction() {
-            @Override
-            public void execute(Realm realm) {
-                RealmResults<RealmInvoice> result = realm.where(RealmInvoice.class).equalTo("dok", docx).findAll();
-                result.clear();
-            }
-        });
+                @Override
+                public void execute(Realm realm) {
+                    RealmResults<RealmInvoice> result = realm.where(RealmInvoice.class).equalTo("drh", fromact).equalTo("dok", docx).findAll();
+                    result.clear();
+                }
+         });
 
-        return Observable.just(true);
+        List<RealmInvoice> results = null;
+        String drhx = fromact;
+        if (fromact.equals("31") && fromact.equals("32")) {
+            results = mRealm.where(RealmInvoice.class).equalTo("saved", "false").equalTo("drh", "31")
+                    .or().equalTo("saved", "false").equalTo("drh", "32").findAll();
+        }else{
+            results = mRealm.where(RealmInvoice.class).equalTo("saved", "false").equalTo("drh", drhx).findAll();
+        }
+
+        return Observable.just(results);
+    }
+
+    @NonNull
+    @Override
+    public Observable<List<RealmInvoice>> deleteAllInvoicesFromRealm(RealmInvoice invoicex) {
+
+        String docx = invoicex.getDok();
+        String fromact = invoicex.getDrh();
+        //System.out.println("fromact " + fromact);
+
+        mRealm.executeTransaction(new Realm.Transaction() {
+                @Override
+                public void execute(Realm realm) {
+                    RealmResults<RealmInvoice> result = realm.where(RealmInvoice.class).equalTo("drh", fromact).findAll();
+                    result.clear();
+                }
+         });
+
+
+        List<RealmInvoice> results = null;
+        String drhx = fromact;
+        if (fromact.equals("31") && fromact.equals("32")) {
+            results = mRealm.where(RealmInvoice.class).equalTo("saved", "false").equalTo("drh", "31")
+                    .or().equalTo("saved", "false").equalTo("drh", "32").findAll();
+        }else{
+            results = mRealm.where(RealmInvoice.class).equalTo("saved", "false").equalTo("drh", drhx).findAll();
+        }
+
+        return Observable.just(results);
     }
 
 

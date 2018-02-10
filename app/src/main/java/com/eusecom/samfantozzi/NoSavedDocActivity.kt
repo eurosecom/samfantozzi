@@ -76,7 +76,16 @@ class NoSavedDocActivity : AppCompatActivity() {
                     .observeOn(rx.android.schedulers.AndroidSchedulers.mainThread())
                     .doOnError { throwable -> Log.e("NoSavedDocAktivity ", "Error Throwable " + throwable.message) }
                     .onErrorResumeNext({ throwable -> Observable.empty() })
-                    .subscribe({ it -> deletedInvoice(it) }))
+                    .subscribe({ it -> deletedInvoice(it, adapter) }))
+
+            mSubscription.add(mViewModel.deletedAllInvoicesFromRealm()
+                    .subscribeOn(Schedulers.computation())
+                    .observeOn(rx.android.schedulers.AndroidSchedulers.mainThread())
+                    .doOnError { throwable -> Log.e("NoSavedDocAktivity ", "Error Throwable " + throwable.message) }
+                    .onErrorResumeNext({ throwable -> Observable.empty() })
+                    .subscribe({ it -> deletedInvoice(it, adapter) }))
+
+
 
 
     }
@@ -88,9 +97,9 @@ class NoSavedDocActivity : AppCompatActivity() {
         adapter.setdata(nosaveds)
     }
 
-    private fun deletedInvoice(isdeleted: Boolean) {
+    private fun deletedInvoice(nosaveds: List<RealmInvoice>, adapter: NoSavedDocAdapter) {
 
-        toast("deleted " + isdeleted)
+        adapter.setdata(nosaveds)
 
     }
 
@@ -129,10 +138,10 @@ class NoSavedDocActivity : AppCompatActivity() {
                     //finish()
                 }
                 1 -> {
-                    mViewModel.emitDeleteInvoiceFromRealm(invoice.dok)
+                    mViewModel.emitDeleteInvoiceFromRealm(invoice)
                 }
                 2 -> {
-                    //mViewModel.emitDocumentPdfUri(invoice)
+                    mViewModel.emitDeleteAllInvoicesFromRealm(invoice)
                 }
 
             }
