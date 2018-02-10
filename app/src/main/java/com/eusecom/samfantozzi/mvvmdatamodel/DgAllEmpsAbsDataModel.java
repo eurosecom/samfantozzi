@@ -6,6 +6,7 @@ import android.support.annotation.NonNull;
 import android.util.Log;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import io.reactivex.Flowable;
@@ -372,9 +373,17 @@ public class DgAllEmpsAbsDataModel implements DgAllEmpsAbsIDataModel {
 
     @NonNull
     @Override
-    public Observable<List<RealmInvoice>> getObservableNosavedDocRealm() {
+    public Observable<List<RealmInvoice>> getObservableNosavedDocRealm(String fromact) {
 
-        List<RealmInvoice> results = mRealm.where(RealmInvoice.class).findAll();
+        List<RealmInvoice> results = null;
+        String drhx = fromact;
+        if (fromact.equals("3")) {
+            results = mRealm.where(RealmInvoice.class).equalTo("saved", "false").equalTo("drh", "31")
+                    .or().equalTo("saved", "false").equalTo("drh", "32").findAll();
+        }else{
+            results = mRealm.where(RealmInvoice.class).equalTo("saved", "false").equalTo("drh", drhx).findAll();
+        }
+
 
         return Observable.just(results);
     }

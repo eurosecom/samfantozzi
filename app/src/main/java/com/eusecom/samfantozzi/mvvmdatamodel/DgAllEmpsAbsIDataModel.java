@@ -101,6 +101,6 @@ public interface DgAllEmpsAbsIDataModel {
     //recyclerview method for NoSavedDocActivity
 
     @NonNull
-    public Observable<List<RealmInvoice>> getObservableNosavedDocRealm();
+    public Observable<List<RealmInvoice>> getObservableNosavedDocRealm(String fromact);
 
 }

@@ -630,9 +630,9 @@ public class DgAllEmpsAbsMvvmViewModel {
     //recyclerview method for NoSavedDocActivity
 
     //get no saved doc from MySql server
-    public Observable<List<RealmInvoice>> getNoSavedDocFromRealm() {
+    public Observable<List<RealmInvoice>> getNoSavedDocFromRealm(String fromact) {
 
-        return mDataModel.getObservableNosavedDocRealm();
+        return mDataModel.getObservableNosavedDocRealm(fromact);
     }
     //end get no saved doc from MySql server
 

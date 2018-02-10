@@ -59,7 +59,7 @@ class NoSavedDocActivity : AppCompatActivity() {
 
     private fun bind(adapter: NoSavedDocAdapter) {
 
-            mSubscription.add(mViewModel.getNoSavedDocFromRealm()
+            mSubscription.add(mViewModel.getNoSavedDocFromRealm(fromact)
                     .subscribeOn(Schedulers.computation())
                     .observeOn(rx.android.schedulers.AndroidSchedulers.mainThread())
                     .doOnError { throwable -> Log.e("NoSavedDocAktivity ", "Error Throwable " + throwable.message) }
@@ -73,7 +73,7 @@ class NoSavedDocActivity : AppCompatActivity() {
 
     private fun setNoSavedDocs(nosaveds: List<RealmInvoice>, adapter: NoSavedDocAdapter) {
 
-        toast("${nosaveds.get(0).dok } realminvoicedoc0")
+        //toast("${nosaveds.get(0).dok } realminvoicedoc0")
         adapter.setdata(nosaveds)
     }
 
