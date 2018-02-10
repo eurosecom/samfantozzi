@@ -109,6 +109,7 @@ class NoSavedDocActivity : AppCompatActivity() {
         mSubscription.unsubscribe()
         mSubscription.clear()
         mViewModel.clearDeleteInvoiceRealm()
+        mViewModel.clearDeleteAllInvoicesRealm()
     }
 
     fun getTodoNoSavedDocDialog(invoice: RealmInvoice) {
