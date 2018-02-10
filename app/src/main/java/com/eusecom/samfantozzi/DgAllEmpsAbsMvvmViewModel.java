@@ -532,6 +532,27 @@ public class DgAllEmpsAbsMvvmViewModel {
     }
     //end save invoices to realm
 
+    public void saveDocToPreferences(RealmInvoice invoice) {
+
+        String dokladsaved = invoice.getDok();
+        String drhsaved = invoice.getDrh();
+
+        int dokladn = Integer.parseInt(dokladsaved.trim());
+        dokladn = dokladn + 1;
+        String dokladnew = dokladn + "";
+
+        Log.d("drhsaved ", drhsaved);
+
+        SharedPreferences.Editor editor = mSharedPreferences.edit();
+        if(drhsaved.equals("1")) { editor.putString("odbdok", dokladnew).apply(); }
+        if(drhsaved.equals("2")) { editor.putString("doddok", dokladnew).apply(); }
+        if(drhsaved.equals("31")) { editor.putString("pokldok", dokladnew).apply(); }
+        if(drhsaved.equals("32")) { editor.putString("pokldov", dokladnew).apply(); }
+        if(drhsaved.equals("4")) { editor.putString("bankdok", dokladnew).apply(); }
+        editor.commit();
+
+    }
+
 
     //DatePickerDialog
     public DatePickerDialog getDatePickerFromMvvm(String datumx, String posbut, Context context) {

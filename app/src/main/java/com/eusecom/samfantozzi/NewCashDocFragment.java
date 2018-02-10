@@ -450,7 +450,15 @@ public class NewCashDocFragment extends Fragment {
     }
 
     private void dataSavedToRealm(@NonNull final RealmInvoice invoice) {
+        mViewModel.clearObservableInvoiceSaveToRealm();
+        mViewModel.saveDocToPreferences(invoice);
+
         Toast.makeText(getActivity(), "Saved doc " + invoice.getDok(), Toast.LENGTH_SHORT).show();
+        //save invoice to Server to move to cashlist
+        //List<RealmInvoice> realminvoices = new ArrayList<>();
+        //realminvoices.add(invoice);
+        //mViewModel.emitRealmInvoicesToServer(invoice);
+        getActivity().finish();
     }
 
 
