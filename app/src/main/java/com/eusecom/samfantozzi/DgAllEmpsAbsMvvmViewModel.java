@@ -636,6 +636,28 @@ public class DgAllEmpsAbsMvvmViewModel {
     }
     //end get no saved doc from MySql server
 
+    //emit delete document from Realm
+    public void emitDeleteInvoiceFromRealm(String dokx) {
+        mObservableDeleteInvoiceRealm.onNext(dokx);
+    }
+
+    @NonNull
+    private BehaviorSubject<String> mObservableDeleteInvoiceRealm = BehaviorSubject.create();
+
+    @NonNull
+    public Observable<Boolean> deletedInvoiceFromRealm() {
+
+        return mObservableDeleteInvoiceRealm
+                .observeOn(mSchedulerProvider.ui())
+                .flatMap(dokx -> mDataModel.deleteInvoiceFromRealm(dokx));
+    }
+
+    public void clearDeleteInvoiceRealm() {
+
+        mObservableDeleteInvoiceRealm = BehaviorSubject.create();
+
+    }
+
 
 
 

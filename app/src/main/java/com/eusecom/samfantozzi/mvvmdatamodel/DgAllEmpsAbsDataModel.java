@@ -308,10 +308,10 @@ public class DgAllEmpsAbsDataModel implements DgAllEmpsAbsIDataModel {
         RealmInvoice invoiceexists = existRealmInvoice( invoices );
 
         if(invoiceexists != null){
-            System.out.println("existRealmInvoice " + true);
+            //System.out.println("existRealmInvoice " + true);
             deleteRealmInvoiceData( invoices );
         }else{
-            System.out.println("existRealmInvoice " + false);
+            //System.out.println("existRealmInvoice " + false);
         }
         //save to realm and get String OK or ERROR
         setRealmInvoiceData( invoices );
@@ -386,6 +386,23 @@ public class DgAllEmpsAbsDataModel implements DgAllEmpsAbsIDataModel {
 
 
         return Observable.just(results);
+    }
+
+    @NonNull
+    @Override
+    public Observable<Boolean> deleteInvoiceFromRealm(String docx) {
+
+        //System.out.println("deleteInvoiceFromRealm " + docx);
+
+        mRealm.executeTransaction(new Realm.Transaction() {
+            @Override
+            public void execute(Realm realm) {
+                RealmResults<RealmInvoice> result = realm.where(RealmInvoice.class).equalTo("dok", docx).findAll();
+                result.clear();
+            }
+        });
+
+        return Observable.just(true);
     }
 
 
