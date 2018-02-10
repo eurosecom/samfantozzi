@@ -406,7 +406,7 @@ public class DgAllEmpsAbsDataModel implements DgAllEmpsAbsIDataModel {
 
         List<RealmInvoice> results = null;
         String drhx = fromact;
-        if (fromact.equals("31") && fromact.equals("32")) {
+        if (fromact.equals("31") || fromact.equals("32")) {
             results = mRealm.where(RealmInvoice.class).equalTo("saved", "false").equalTo("drh", "31")
                     .or().equalTo("saved", "false").equalTo("drh", "32").findAll();
         }else{
@@ -435,7 +435,7 @@ public class DgAllEmpsAbsDataModel implements DgAllEmpsAbsIDataModel {
 
         List<RealmInvoice> results = null;
         String drhx = fromact;
-        if (fromact.equals("31") && fromact.equals("32")) {
+        if (fromact.equals("31") || fromact.equals("32")) {
             results = mRealm.where(RealmInvoice.class).equalTo("saved", "false").equalTo("drh", "31")
                     .or().equalTo("saved", "false").equalTo("drh", "32").findAll();
         }else{
