@@ -19,6 +19,7 @@ import android.view.*
 import android.widget.ProgressBar
 import android.widget.TextView
 import com.eusecom.samfantozzi.models.Attendance
+import com.eusecom.samfantozzi.realm.RealmInvoice
 import com.eusecom.samfantozzi.rxbus.RxBus
 import io.reactivex.ObservableOnSubscribe
 import io.reactivex.android.schedulers.AndroidSchedulers
@@ -175,6 +176,13 @@ class CashListKtFragment : Fragment() {
                 .onErrorResumeNext { throwable -> Observable.empty() }
                 .subscribe { it -> setQueryString(it) })
 
+        mSubscription?.add(mViewModel.getNoSavedDocFromRealm("3")
+                .subscribeOn(Schedulers.computation())
+                .observeOn(rx.android.schedulers.AndroidSchedulers.mainThread())
+                .doOnError { throwable -> Log.e("CashListKtFragment ", "Error Throwable " + throwable.message) }
+                .onErrorResumeNext({ throwable -> Observable.empty() })
+                .subscribe({ it -> setNoSavedDocs(it) }))
+
 
         ActivityCompat.invalidateOptionsMenu(activity)
         (activity as AppCompatActivity).supportActionBar!!.setTitle(mSharedPreferences.getString("ume", "") + " "
@@ -192,6 +200,15 @@ class CashListKtFragment : Fragment() {
         mViewModel.clearObservableDocPDF()
         mViewModel.clearObservableCashListQuery()
         hideProgressBar()
+
+    }
+
+    private fun setNoSavedDocs(nosaveds: List<RealmInvoice> ) {
+
+        if( nosaveds.size > 0  ) {
+            toast("${nosaveds.get(0).dok } to save the realminvoicedoc0")
+        }
+
 
     }
 
