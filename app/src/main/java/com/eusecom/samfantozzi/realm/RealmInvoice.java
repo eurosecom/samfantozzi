@@ -231,7 +231,5 @@ public class RealmInvoice extends RealmObject {
     }
 
 
-
-
 }
 

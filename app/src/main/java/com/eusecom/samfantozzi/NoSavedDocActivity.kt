@@ -16,6 +16,7 @@ import android.widget.TextView
 import android.widget.Toast
 import com.eusecom.samfantozzi.realm.RealmEmployee
 import com.eusecom.samfantozzi.realm.RealmInvoice
+import io.realm.annotations.PrimaryKey
 import rx.Observable
 
 
@@ -154,10 +155,31 @@ class NoSavedDocActivity : AppCompatActivity() {
                 0 -> {
 
                     val invoicex = RealmInvoice()
-                    invoicex.uce = invoice.uce
                     invoicex.drh = invoice.drh
+                    invoicex.uce = invoice.uce
                     invoicex.dok = invoice.dok
-                    invoicex.saved = "false"
+
+                    invoicex.ico = invoice.ico
+                    invoicex.nai = invoice.nai
+                    invoicex.fak = invoice.fak
+                    invoicex.ksy = invoice.ksy
+                    invoicex.ssy = invoice.ssy
+                    invoicex.ume = invoice.ume
+                    invoicex.dat = invoice.dat
+                    invoicex.daz = invoice.daz
+                    invoicex.das = invoice.das
+                    invoicex.poz = invoice.poz
+                    invoicex.hod = invoice.hod
+                    invoicex.zk0 = invoice.zk0
+                    invoicex.zk1 = invoice.zk1
+                    invoicex.dn1 = invoice.dn1
+                    invoicex.zk2 = invoice.zk2
+                    invoicex.dn2 = invoice.dn2
+                    invoicex.saved = invoice.saved
+                    invoicex.datm = invoice.datm
+                    invoicex.uzid = invoice.uzid
+                    invoicex.kto = invoice.kto
+                    invoicex.poh = invoice.poh
 
                     mViewModel.emitMyObservableInvoiceToServer(invoicex)
                 }

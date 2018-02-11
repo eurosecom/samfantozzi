@@ -8,7 +8,12 @@ import com.eusecom.samfantozzi.models.Attendance;
 import com.eusecom.samfantozzi.realm.RealmInvoice;
 
 import java.util.List;
+
+import retrofit2.http.Body;
+import retrofit2.http.Field;
+import retrofit2.http.FormUrlEncoded;
 import retrofit2.http.GET;
+import retrofit2.http.POST;
 import retrofit2.http.Path;
 import retrofit2.http.Query;
 import rx.Observable;
@@ -16,10 +21,18 @@ import rx.Observable;
 
 public interface AbsServerService {
 
+    @POST("/androidfantozzi/save_invoice.php")
+    @FormUrlEncoded
+    Observable<List<IdCompanyKt>> saveInvoiceToMysqlPost(@Field("userhash") String userhash
+            , @Field("userid") String userid, @Field("fromfir") String fromfir
+            , @Field("vyb_rok") String vyb_rok, @Field("drh") String drh
+            , @Field("invx") String invx);
+
     @GET("/androidfantozzi/save_invoice.php")
     Observable<List<IdCompanyKt>> saveInvoiceToMysql(@Query("userhash") String userhash
             , @Query("userid") String userid, @Query("fromfir") String fromfir
-            , @Query("vyb_rok") String vyb_rok, @Query("drh") String drh, @Query("invx") RealmInvoice invx);
+            , @Query("vyb_rok") String vyb_rok, @Query("drh") String drh
+            , @Query("invx") RealmInvoice invx);
 
     @GET("/androidfantozzi/get_drhpohyby.php")
     Observable<List<Account>> getReceiptExpensesFromSqlServer(@Query("userhash") String userhash

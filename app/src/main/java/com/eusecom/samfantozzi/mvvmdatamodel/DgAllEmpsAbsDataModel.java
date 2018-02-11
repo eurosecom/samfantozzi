@@ -30,6 +30,7 @@ import com.eusecom.samfantozzi.rxfirebase2.database.RxFirebaseDatabase;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.Query;
+import com.google.gson.Gson;
 
 public class DgAllEmpsAbsDataModel implements DgAllEmpsAbsIDataModel {
 
@@ -455,14 +456,23 @@ public class DgAllEmpsAbsDataModel implements DgAllEmpsAbsIDataModel {
         myidc.add(newidc);
 
         //Log.d("userhash ", userhash);
-        //System.out.println("userid " + userid);
-        //System.out.println("fromfir " + fromfir);
-        //System.out.println("vyb_rok " + vyb_rok);
         System.out.println("invx.dok " + invx.getDok());
-        //Log.d("NewCashLog data queryx ", queryx);
+        System.out.println("invx.hod " + invx.getHod());
 
-        //return Observable.just(myidc);
-        return mAbsServerService.saveInvoiceToMysql(userhash, userid, fromfir, vyb_rok, drh, invx);
+
+        String invxstring = "{" +
+                " \"drh\":" + invx.getDrh()  +
+                ", \"uce\":" + invx.getUce() +
+                ", \"dok\":" + invx.getDok() +
+                ", \"ico\":" + invx.getIco() +
+                " }";
+
+        System.out.println("invxstring " + invxstring);
+
+        //GET API
+        //return mAbsServerService.saveInvoiceToMysql(userhash, userid, fromfir, vyb_rok, drh, invx);
+        //POST API
+        return mAbsServerService.saveInvoiceToMysqlPost(userhash, userid, fromfir, vyb_rok, drh, invxstring);
     }
 
 
