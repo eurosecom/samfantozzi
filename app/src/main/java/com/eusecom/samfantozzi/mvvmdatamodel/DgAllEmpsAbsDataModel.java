@@ -459,12 +459,35 @@ public class DgAllEmpsAbsDataModel implements DgAllEmpsAbsIDataModel {
         System.out.println("invx.dok " + invx.getDok());
         System.out.println("invx.hod " + invx.getHod());
 
+        //data class Invoice(var drh : String, var uce : String, var dok : String, var ico: String, var nai: String
+//        , var fak: String, var ksy: String, var ssy: String
+//        , var ume: String, var dat: String, var daz: String, var das: String, var poz: String
+//        , var hod: String, var zk0: String, var zk1: String, var dn1: String, var zk2: String, var dn2: String
+//        , var saved: Boolean, var datm: Long, var uzid: String)
 
         String invxstring = "{" +
-                " \"drh\":" + invx.getDrh()  +
-                ", \"uce\":" + invx.getUce() +
-                ", \"dok\":" + invx.getDok() +
-                ", \"ico\":" + invx.getIco() +
+                "  \"drh\":" + "\"" + invx.getDrh() + "\"" +
+                ", \"uce\":" + "\"" + invx.getUce() + "\"" +
+                ", \"dok\":" + "\"" + invx.getDok() + "\"" +
+                ", \"ico\":" + "\"" + invx.getIco() + "\"" +
+                ", \"nai\":" + "\"" + invx.getNai() + "\"" +
+                ", \"kto\":" + "\"" + invx.getKto() + "\"" +
+                ", \"fak\":" + "\"" + invx.getFak() + "\"" +
+                ", \"ksy\":" + "\"" + invx.getKsy() + "\"" +
+                ", \"ssy\":" + "\"" + invx.getSsy() + "\"" +
+                ", \"ume\":" + "\"" + invx.getUme() + "\"" +
+                ", \"dat\":" + "\"" + invx.getDat() + "\"" +
+                ", \"daz\":" + "\"" + invx.getDaz() + "\"" +
+                ", \"das\":" + "\"" + invx.getDas() + "\"" +
+                ", \"poz\":" + "\"" + invx.getPoz() + "\"" +
+                ", \"zk0\":" + "\"" + invx.getZk0() + "\"" +
+                ", \"zk1\":" + "\"" + invx.getZk1() + "\"" +
+                ", \"dn1\":" + "\"" + invx.getDn1() + "\"" +
+                ", \"zk2\":" + "\"" + invx.getZk2() + "\"" +
+                ", \"dn2\":" + "\"" + invx.getDn2() + "\"" +
+                ", \"saved\":" + "\"" + invx.getSaved() + "\"" +
+                ", \"datm\":" + "\"" + invx.getDatm() + "\"" +
+                ", \"uzid\":" + "\"" + invx.getUzid() + "\"" +
                 " }";
 
         System.out.println("invxstring " + invxstring);
