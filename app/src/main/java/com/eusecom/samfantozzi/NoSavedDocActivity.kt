@@ -13,6 +13,7 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.widget.TextView
+import android.widget.Toast
 import com.eusecom.samfantozzi.realm.RealmEmployee
 import com.eusecom.samfantozzi.realm.RealmInvoice
 import rx.Observable
@@ -86,7 +87,21 @@ class NoSavedDocActivity : AppCompatActivity() {
                     .subscribe({ it -> deletedInvoice(it, adapter) }))
 
 
+            mSubscription.add(mViewModel.myObservableInvoiceToServer
+                    .subscribeOn(Schedulers.computation())
+                    .observeOn(rx.android.schedulers.AndroidSchedulers.mainThread())
+                    .doOnError { throwable -> Log.e("NoSavedDocAktivity ", "Error Throwable " + throwable.message) }
+                    .onErrorResumeNext({ throwable -> Observable.empty() })
+                    .subscribe({ it -> setIdCompanyKt(it ) }))
 
+
+    }
+
+
+
+    private fun setIdCompanyKt(resultAs: List<IdCompanyKt> ) {
+
+        toast("${resultAs.get(0).nai } realminvoicedoc0")
 
     }
 
@@ -103,6 +118,13 @@ class NoSavedDocActivity : AppCompatActivity() {
 
     }
 
+    private fun savedInvoice(saveds: List<Invoice>, adapter: NoSavedDocAdapter) {
+
+        System.out.println("savedinvoice " + saveds);
+        toast("${saveds.get(0).dok } saveds0")
+
+    }
+
 
     override fun onDestroy() {
         super.onDestroy()
@@ -110,6 +132,7 @@ class NoSavedDocActivity : AppCompatActivity() {
         mSubscription.clear()
         mViewModel.clearDeleteInvoiceRealm()
         mViewModel.clearDeleteAllInvoicesRealm()
+        mViewModel.clearObservableInvoiceToServer()
     }
 
     fun getTodoNoSavedDocDialog(invoice: RealmInvoice) {
@@ -130,13 +153,13 @@ class NoSavedDocActivity : AppCompatActivity() {
             when (which) {
                 0 -> {
 
-                    val i = intent
-                    val extras = Bundle()
-                    extras.putString("akeico", invoice.ico)
-                    i.putExtras(extras)
+                    val invoicex = RealmInvoice()
+                    invoicex.uce = invoice.uce
+                    invoicex.drh = invoice.drh
+                    invoicex.dok = invoice.dok
+                    invoicex.saved = "false"
 
-                    setResult(201, i)
-                    //finish()
+                    mViewModel.emitMyObservableInvoiceToServer(invoicex)
                 }
                 1 -> {
                     mViewModel.emitDeleteInvoiceFromRealm(invoice)

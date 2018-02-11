@@ -445,6 +445,26 @@ public class DgAllEmpsAbsDataModel implements DgAllEmpsAbsIDataModel {
         return Observable.just(results);
     }
 
+    @NonNull
+    public Observable<List<IdCompanyKt>> getObservableInvoiceToMysql(String userhash, String userid, String fromfir
+            , String vyb_rok, String drh, RealmInvoice invx){
+
+        List<IdCompanyKt> myidc = new ArrayList<>();
+        IdCompanyKt newidc = new IdCompanyKt("31414466", "", "", "Firma xyz", "ulixyz",
+                "Mesto", "", "", true);
+        myidc.add(newidc);
+
+        //Log.d("userhash ", userhash);
+        //System.out.println("userid " + userid);
+        //System.out.println("fromfir " + fromfir);
+        //System.out.println("vyb_rok " + vyb_rok);
+        System.out.println("invx.dok " + invx.getDok());
+        //Log.d("NewCashLog data queryx ", queryx);
+
+        //return Observable.just(myidc);
+        return mAbsServerService.saveInvoiceToMysql(userhash, userid, fromfir, vyb_rok, drh, invx);
+    }
+
 
 
 

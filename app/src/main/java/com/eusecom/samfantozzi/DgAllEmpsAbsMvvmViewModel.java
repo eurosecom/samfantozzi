@@ -15,6 +15,7 @@ import com.eusecom.samfantozzi.mvvmschedulers.ISchedulerProvider;
 import com.eusecom.samfantozzi.realm.RealmEmployee;
 import com.eusecom.samfantozzi.realm.RealmInvoice;
 
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 import java.util.Random;
@@ -679,6 +680,53 @@ public class DgAllEmpsAbsMvvmViewModel {
         mObservableDeleteAllInvoicesRealm = BehaviorSubject.create();
 
     }
+
+
+    //emit save Invoice to Mysql
+    public void emitMyObservableInvoiceToServer(RealmInvoice invx) {
+
+        mObservableInvoiceToServer.onNext(invx);
+    }
+
+    @NonNull
+    private BehaviorSubject<RealmInvoice> mObservableInvoiceToServer = BehaviorSubject.create();
+
+    @NonNull
+    public Observable<List<IdCompanyKt>> getMyObservableInvoiceToServer() {
+
+        Random r = new Random();
+        double d = -10.0 + r.nextDouble() * 20.0;
+        String ds = String.valueOf(d);
+
+        String usuidx = mSharedPreferences.getString("usuid", "");
+        String userxplus =  ds + "/" + usuidx + "/" + ds;
+        encrypted = "";
+
+
+        try {
+            encrypted = mMcrypt.bytesToHex( mMcrypt.encrypt(userxplus) );
+        } catch (Exception e1) {
+            // TODO Auto-generated catch block
+            e1.printStackTrace();
+        }
+
+        String firx = mSharedPreferences.getString("fir", "");
+        String rokx = mSharedPreferences.getString("rok", "");
+        String drh = "2";
+
+        Log.d("NewCashLog mvvm fir ", firx);
+
+        return mObservableInvoiceToServer
+                .observeOn(mSchedulerProvider.computation())
+                .flatMap(invx -> mDataModel.getObservableInvoiceToMysql(encrypted, ds, firx, rokx, drh, invx ));
+    }
+
+    public void clearObservableInvoiceToServer() {
+
+        mObservableInvoiceToServer = BehaviorSubject.create();
+
+    }
+    //end save Invoice to Mysql
 
 
 

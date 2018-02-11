@@ -109,4 +109,8 @@ public interface DgAllEmpsAbsIDataModel {
     @NonNull
     public Observable<List<RealmInvoice>> deleteAllInvoicesFromRealm(RealmInvoice invoicex);
 
+    @NonNull
+    public Observable<List<IdCompanyKt>> getObservableInvoiceToMysql(String userhash, String userid, String fromfir
+            , String vyb_rok, String drh, RealmInvoice invx);
+
 }
