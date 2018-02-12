@@ -465,7 +465,21 @@ public class DgAllEmpsAbsDataModel implements DgAllEmpsAbsIDataModel {
 //        , var hod: String, var zk0: String, var zk1: String, var dn1: String, var zk2: String, var dn2: String
 //        , var saved: Boolean, var datm: Long, var uzid: String)
 
-        String invxstring = "{" +
+        String invxstring = JSsonFromRealmInvoice(invx);
+
+        System.out.println("invxstring " + invxstring);
+
+        //GET API
+        //return mAbsServerService.saveInvoiceToMysql(userhash, userid, fromfir, vyb_rok, drh, invx);
+        //POST API
+        return mAbsServerService.saveInvoiceToMysqlPost(userhash, userid, fromfir, vyb_rok, drh, invxstring);
+    }
+
+    //JSON from RealmInvoice
+    public String JSsonFromRealmInvoice(RealmInvoice invx) {
+
+
+        String jsonstring = "{" +
                 "  \"drh\":" + "\"" + invx.getDrh() + "\"" +
                 ", \"uce\":" + "\"" + invx.getUce() + "\"" +
                 ", \"dok\":" + "\"" + invx.getDok() + "\"" +
@@ -480,6 +494,7 @@ public class DgAllEmpsAbsDataModel implements DgAllEmpsAbsIDataModel {
                 ", \"daz\":" + "\"" + invx.getDaz() + "\"" +
                 ", \"das\":" + "\"" + invx.getDas() + "\"" +
                 ", \"poz\":" + "\"" + invx.getPoz() + "\"" +
+                ", \"poh\":" + "\"" + invx.getPoh() + "\"" +
                 ", \"zk0\":" + "\"" + invx.getZk0() + "\"" +
                 ", \"zk1\":" + "\"" + invx.getZk1() + "\"" +
                 ", \"dn1\":" + "\"" + invx.getDn1() + "\"" +
@@ -490,17 +505,9 @@ public class DgAllEmpsAbsDataModel implements DgAllEmpsAbsIDataModel {
                 ", \"uzid\":" + "\"" + invx.getUzid() + "\"" +
                 " }";
 
-        System.out.println("invxstring " + invxstring);
-
-        //GET API
-        //return mAbsServerService.saveInvoiceToMysql(userhash, userid, fromfir, vyb_rok, drh, invx);
-        //POST API
-        return mAbsServerService.saveInvoiceToMysqlPost(userhash, userid, fromfir, vyb_rok, drh, invxstring);
+        return jsonstring;
     }
-
-
-
-
+    //end JSON from RealmInvoice
 
 
 }

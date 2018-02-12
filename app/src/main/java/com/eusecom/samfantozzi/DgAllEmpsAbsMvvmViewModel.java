@@ -729,6 +729,4 @@ public class DgAllEmpsAbsMvvmViewModel {
     //end save Invoice to Mysql
 
 
-
-
 }
