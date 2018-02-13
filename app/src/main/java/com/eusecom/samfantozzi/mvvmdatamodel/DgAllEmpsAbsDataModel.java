@@ -194,6 +194,33 @@ public class DgAllEmpsAbsDataModel implements DgAllEmpsAbsIDataModel {
 
     //recyclerview method for CashListKtActivity
     @NonNull
+    public Observable<List<Invoice>> getObservableInvoiceDelFromMysql(String userhash, String userid, String fromfir
+            , String vyb_rok, String drh, Invoice invx){
+
+        List<IdCompanyKt> myidc = new ArrayList<>();
+        IdCompanyKt newidc = new IdCompanyKt("31414466", "", "", "Firma xyz", "ulixyz",
+                "Mesto", "", "", true);
+        myidc.add(newidc);
+
+        //Log.d("userhash ", userhash);
+        System.out.println("invx.dok " + invx.getDok());
+        System.out.println("invx.hod " + invx.getHod());
+
+        //data class Invoice(var drh : String, var uce : String, var dok : String, var ico: String, var nai: String
+//        , var fak: String, var ksy: String, var ssy: String
+//        , var ume: String, var dat: String, var daz: String, var das: String, var poz: String
+//        , var hod: String, var zk0: String, var zk1: String, var dn1: String, var zk2: String, var dn2: String
+//        , var saved: Boolean, var datm: Long, var uzid: String)
+
+        String invxstring = JSsonFromInvoice(invx);
+
+        System.out.println("invxstring " + invxstring);
+
+        //POST API
+        return mAbsServerService.deleteInvoiceFromMysqlPost(userhash, userid, fromfir, vyb_rok, drh, invxstring);
+    }
+
+    @NonNull
     @Override
     public Observable<List<Attendance>> getObservableAbsencesFromFB(@NonNull final String dokx, @NonNull final String umex
             , @NonNull final String usicox, String usuid, String ustype) {
@@ -447,7 +474,7 @@ public class DgAllEmpsAbsDataModel implements DgAllEmpsAbsIDataModel {
     }
 
     @NonNull
-    public Observable<List<IdCompanyKt>> getObservableInvoiceToMysql(String userhash, String userid, String fromfir
+    public Observable<List<Invoice>> getObservableInvoiceToMysql(String userhash, String userid, String fromfir
             , String vyb_rok, String drh, RealmInvoice invx){
 
         List<IdCompanyKt> myidc = new ArrayList<>();
@@ -469,11 +496,43 @@ public class DgAllEmpsAbsDataModel implements DgAllEmpsAbsIDataModel {
 
         System.out.println("invxstring " + invxstring);
 
-        //GET API
-        //return mAbsServerService.saveInvoiceToMysql(userhash, userid, fromfir, vyb_rok, drh, invx);
         //POST API
         return mAbsServerService.saveInvoiceToMysqlPost(userhash, userid, fromfir, vyb_rok, drh, invxstring);
     }
+
+    //JSON from Invoice
+    public String JSsonFromInvoice(Invoice invx) {
+
+
+        String jsonstring = "{" +
+                "  \"drh\":" + "\"" + invx.getDrh() + "\"" +
+                ", \"uce\":" + "\"" + invx.getUce() + "\"" +
+                ", \"dok\":" + "\"" + invx.getDok() + "\"" +
+                ", \"ico\":" + "\"" + invx.getIco() + "\"" +
+                ", \"nai\":" + "\"" + invx.getNai() + "\"" +
+                ", \"kto\":" + "\"" + invx.getKto() + "\"" +
+                ", \"fak\":" + "\"" + invx.getFak() + "\"" +
+                ", \"ksy\":" + "\"" + invx.getKsy() + "\"" +
+                ", \"ssy\":" + "\"" + invx.getSsy() + "\"" +
+                ", \"ume\":" + "\"" + invx.getUme() + "\"" +
+                ", \"dat\":" + "\"" + invx.getDat() + "\"" +
+                ", \"daz\":" + "\"" + invx.getDaz() + "\"" +
+                ", \"das\":" + "\"" + invx.getDas() + "\"" +
+                ", \"poz\":" + "\"" + invx.getPoz() + "\"" +
+                ", \"poh\":" + "\"" + invx.getPoh() + "\"" +
+                ", \"zk0\":" + "\"" + invx.getZk0() + "\"" +
+                ", \"zk1\":" + "\"" + invx.getZk1() + "\"" +
+                ", \"dn1\":" + "\"" + invx.getDn1() + "\"" +
+                ", \"zk2\":" + "\"" + invx.getZk2() + "\"" +
+                ", \"dn2\":" + "\"" + invx.getDn2() + "\"" +
+                ", \"saved\":" + "\"" + invx.getSaved() + "\"" +
+                ", \"datm\":" + "\"" + invx.getDatm() + "\"" +
+                ", \"uzid\":" + "\"" + invx.getUzid() + "\"" +
+                " }";
+
+        return jsonstring;
+    }
+    //end JSON from Invoice
 
     //JSON from RealmInvoice
     public String JSsonFromRealmInvoice(RealmInvoice invx) {

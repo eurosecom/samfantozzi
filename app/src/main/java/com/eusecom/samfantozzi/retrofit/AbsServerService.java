@@ -21,18 +21,19 @@ import rx.Observable;
 
 public interface AbsServerService {
 
-    @POST("/androidfantozzi/save_invoice.php")
+    @POST("/androidfantozzi/delete_invoice.php")
     @FormUrlEncoded
-    Observable<List<IdCompanyKt>> saveInvoiceToMysqlPost(@Field("userhash") String userhash
+    Observable<List<Invoice>> deleteInvoiceFromMysqlPost(@Field("userhash") String userhash
             , @Field("userid") String userid, @Field("fromfir") String fromfir
             , @Field("vyb_rok") String vyb_rok, @Field("drh") String drh
             , @Field("invx") String invx);
 
-    @GET("/androidfantozzi/save_invoice.php")
-    Observable<List<IdCompanyKt>> saveInvoiceToMysql(@Query("userhash") String userhash
-            , @Query("userid") String userid, @Query("fromfir") String fromfir
-            , @Query("vyb_rok") String vyb_rok, @Query("drh") String drh
-            , @Query("invx") RealmInvoice invx);
+    @POST("/androidfantozzi/save_invoice.php")
+    @FormUrlEncoded
+    Observable<List<Invoice>> saveInvoiceToMysqlPost(@Field("userhash") String userhash
+            , @Field("userid") String userid, @Field("fromfir") String fromfir
+            , @Field("vyb_rok") String vyb_rok, @Field("drh") String drh
+            , @Field("invx") String invx);
 
     @GET("/androidfantozzi/get_drhpohyby.php")
     Observable<List<Account>> getReceiptExpensesFromSqlServer(@Query("userhash") String userhash

@@ -58,6 +58,10 @@ public interface DgAllEmpsAbsIDataModel {
 
     //recyclerview method for CashListKtActivity
     @NonNull
+    public Observable<List<Invoice>> getObservableInvoiceDelFromMysql(String userhash, String userid, String fromfir
+            , String vyb_rok, String drh, Invoice invx);
+
+    @NonNull
     Observable<List<Attendance>> getObservableAbsencesFromFB(@NonNull final String dokx, @NonNull final String umex
             , @NonNull final String usicox
             , String usuid, String ustype);
@@ -110,7 +114,8 @@ public interface DgAllEmpsAbsIDataModel {
     public Observable<List<RealmInvoice>> deleteAllInvoicesFromRealm(RealmInvoice invoicex);
 
     @NonNull
-    public Observable<List<IdCompanyKt>> getObservableInvoiceToMysql(String userhash, String userid, String fromfir
+    public Observable<List<Invoice>> getObservableInvoiceToMysql(String userhash, String userid, String fromfir
             , String vyb_rok, String drh, RealmInvoice invx);
+
 
 }

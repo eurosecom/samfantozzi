@@ -11,6 +11,7 @@ import com.eusecom.samfantozzi.InvoiceListKtActivity;
 import com.eusecom.samfantozzi.NewCashDocFragment;
 import com.eusecom.samfantozzi.NewCashDocKtActivity;
 import com.eusecom.samfantozzi.NoSavedDocActivity;
+import com.eusecom.samfantozzi.ShowPdfActivity;
 import com.eusecom.samfantozzi.SupplierListActivity;
 import com.eusecom.samfantozzi.SupplierListFragment;
 import com.eusecom.samfantozzi.TypesKtActivity;
@@ -37,6 +38,7 @@ public interface DgAeaComponent {
   void inject(ChooseCompanyActivity chooseCompanyActivity);
   void inject(ChooseAccountActivity chooseAccountActivity);
   void inject(NoSavedDocActivity noSavedDoctActivity);
+  void inject(ShowPdfActivity showPdftActivity);
 
 
 

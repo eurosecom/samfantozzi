@@ -237,4 +237,7 @@
     //rxjava demo
     <string name="btn_demo_form_validation_combinel">Form Validation with CombineLatest</string>
 
+    //showpdfactivity
+    <string name="showpdf">Show PDF</string>
+
 </resources>

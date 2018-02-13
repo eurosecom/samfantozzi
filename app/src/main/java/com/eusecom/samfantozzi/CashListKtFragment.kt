@@ -154,16 +154,12 @@ class CashListKtFragment : Fragment() {
                 .onErrorResumeNext { throwable -> Observable.empty() }
                 .subscribe { it -> setServerInvoices(it) })
 
-        mSubscription?.add(mViewModel.getObservableDocPdf()
+        mSubscription?.add(mViewModel.getMyInvoiceDelFromServer()
                 .subscribeOn(Schedulers.computation())
                 .observeOn(rx.android.schedulers.AndroidSchedulers.mainThread())
-                .doOnError { throwable ->
-                    Log.e("CashListKtFragment", "Error Throwable " + throwable.message)
-                    hideProgressBar()
-                    toast("Server not connected")
-                }
-                .onErrorResumeNext { throwable -> Observable.empty() }
-                .subscribe { it -> setUriPdf(it) })
+                .doOnError { throwable -> Log.e("CashListKtFragment ", "Error Throwable " + throwable.message) }
+                .onErrorResumeNext({ throwable -> Observable.empty() })
+                .subscribe({ it -> deletedInvoice(it) }))
 
         mSubscription?.add(mViewModel.getMyObservableCashListQuery()
                 .subscribeOn(Schedulers.computation())
@@ -175,6 +171,7 @@ class CashListKtFragment : Fragment() {
                 }
                 .onErrorResumeNext { throwable -> Observable.empty() }
                 .subscribe { it -> setQueryString(it) })
+
 
         mSubscription?.add(mViewModel.getNoSavedDocFromRealm("3")
                 .subscribeOn(Schedulers.computation())
@@ -197,9 +194,16 @@ class CashListKtFragment : Fragment() {
             mDisposable?.dispose()
         }
         mViewModel.clearObservableAbsencesFromFB()
-        mViewModel.clearObservableDocPDF()
         mViewModel.clearObservableCashListQuery()
+        mViewModel.clearObservableInvoiceDelFromServer()
         hideProgressBar()
+
+    }
+
+    private fun deletedInvoice(saveds: List<Invoice>) {
+
+        //System.out.println("savedinvoice " + saveds);
+        toast("${saveds.get(0).dok } deleted ")
 
     }
 
@@ -245,14 +249,6 @@ class CashListKtFragment : Fragment() {
 
     protected fun nastavResultAs(resultAs: List<Invoice>) {
         mSupplierSearchEngine = SupplierSearchEngine(resultAs)
-    }
-
-    private fun setUriPdf(uri: Uri) {
-
-        val intent = Intent(Intent.ACTION_VIEW, uri)
-        intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP
-        startActivity(intent)
-
     }
 
     class ClickFobEvent
@@ -409,7 +405,15 @@ class CashListKtFragment : Fragment() {
             // of the selected item
             when (which) {
                 0 -> {
-                    mViewModel.emitDocumentPdfUri(invoice)
+                    //mViewModel.emitDocumentPdfUri(invoice)
+                    val `is` = Intent(activity, ShowPdfActivity::class.java)
+                    val extras = Bundle()
+                    extras.putString("fromact", "3")
+                    extras.putString("drhx", invoice.drh)
+                    extras.putString("ucex", invoice.uce)
+                    extras.putString("dokx", invoice.dok)
+                    `is`.putExtras(extras)
+                    startActivity(`is`)
                 }
                 1 -> {
                     editDialog(invoice).show()
@@ -484,8 +488,8 @@ class CashListKtFragment : Fragment() {
     }
 
     fun navigateToDeleteDoc(invoice: Invoice){
-
         //getActivity().startActivity<InvoiceListKtActivity>()
+        mViewModel.emitDelInvFromServer(invoice)
 
     }
 

@@ -31,6 +31,7 @@
         <activity android:name=".TypesKtActivity"/>
         <activity android:name=".NewCashDocKtActivity"/>
         <activity android:name=".NoSavedDocActivity"/>
+        <activity android:name=".ShowPdfActivity"/>
 
         <activity android:name=".Detail2Activity"/>
     </application>

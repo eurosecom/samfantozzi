@@ -237,6 +237,53 @@ public class DgAllEmpsAbsMvvmViewModel {
 
 
     //recyclerview method for CashListKtFragment
+    //emit delete Invoice from Mysql
+    public void emitDelInvFromServer(Invoice invx) {
+
+        mObservableInvoiceDelFromServer.onNext(invx);
+    }
+
+    @NonNull
+    private BehaviorSubject<Invoice> mObservableInvoiceDelFromServer = BehaviorSubject.create();
+
+    @NonNull
+    public Observable<List<Invoice>> getMyInvoiceDelFromServer() {
+
+        Random r = new Random();
+        double d = -10.0 + r.nextDouble() * 20.0;
+        String ds = String.valueOf(d);
+
+        String usuidx = mSharedPreferences.getString("usuid", "");
+        String userxplus =  ds + "/" + usuidx + "/" + ds;
+        encrypted = "";
+
+
+        try {
+            encrypted = mMcrypt.bytesToHex( mMcrypt.encrypt(userxplus) );
+        } catch (Exception e1) {
+            // TODO Auto-generated catch block
+            e1.printStackTrace();
+        }
+
+        String firx = mSharedPreferences.getString("fir", "");
+        String rokx = mSharedPreferences.getString("rok", "");
+        String drh = "2";
+
+        Log.d("NewCashLog del fir ", firx);
+
+        return mObservableInvoiceDelFromServer
+                .observeOn(mSchedulerProvider.computation())
+                .flatMap(invx -> mDataModel.getObservableInvoiceDelFromMysql(encrypted, ds, firx, rokx, drh, invx ));
+    }
+
+    public void clearObservableInvoiceDelFromServer() {
+
+        mObservableInvoiceDelFromServer = BehaviorSubject.create();
+
+    }
+    //end delete Invoice from Mysql
+
+
     //get PDF Uri document
     public void emitDocumentPdfUri(Invoice invx) { mObservableDocPDF.onNext(invx); }
 
@@ -393,7 +440,7 @@ public class DgAllEmpsAbsMvvmViewModel {
         String rokx = mSharedPreferences.getString("rok", "");
         String drh = "2";
 
-        Log.d("NewCashLog mvvm fir ", firx);
+        Log.d("NewCashLog idc fir ", firx);
 
         return mObservableIdModelCompany
                 .observeOn(mSchedulerProvider.computation())
@@ -692,7 +739,7 @@ public class DgAllEmpsAbsMvvmViewModel {
     private BehaviorSubject<RealmInvoice> mObservableInvoiceToServer = BehaviorSubject.create();
 
     @NonNull
-    public Observable<List<IdCompanyKt>> getMyObservableInvoiceToServer() {
+    public Observable<List<Invoice>> getMyObservableInvoiceToServer() {
 
         Random r = new Random();
         double d = -10.0 + r.nextDouble() * 20.0;
@@ -714,7 +761,7 @@ public class DgAllEmpsAbsMvvmViewModel {
         String rokx = mSharedPreferences.getString("rok", "");
         String drh = "2";
 
-        Log.d("NewCashLog mvvm fir ", firx);
+        Log.d("NewCashLog save fir ", firx);
 
         return mObservableInvoiceToServer
                 .observeOn(mSchedulerProvider.computation())
