@@ -93,19 +93,10 @@ class NoSavedDocActivity : AppCompatActivity() {
                     .observeOn(rx.android.schedulers.AndroidSchedulers.mainThread())
                     .doOnError { throwable -> Log.e("NoSavedDocAktivity ", "Error Throwable " + throwable.message) }
                     .onErrorResumeNext({ throwable -> Observable.empty() })
-                    .subscribe({ it -> setIdCompanyKt(it ) }))
+                    .subscribe({ it -> savedInvoice(it) }))
 
 
     }
-
-
-
-    private fun setIdCompanyKt(resultAs: List<IdCompanyKt> ) {
-
-        toast("${resultAs.get(0).nai } realminvoicedoc0")
-
-    }
-
 
     private fun setNoSavedDocs(nosaveds: List<RealmInvoice>, adapter: NoSavedDocAdapter) {
 
@@ -119,10 +110,10 @@ class NoSavedDocActivity : AppCompatActivity() {
 
     }
 
-    private fun savedInvoice(saveds: List<Invoice>, adapter: NoSavedDocAdapter) {
+    private fun savedInvoice(saveds: List<Invoice>) {
 
-        System.out.println("savedinvoice " + saveds);
-        toast("${saveds.get(0).dok } saveds0")
+        //System.out.println("savedinvoice " + saveds);
+        toast("${saveds.get(0).dok } saved ")
 
     }
 
