@@ -113,6 +113,10 @@
     <string name="bankuce_summary">Default account for the bank 22100,22101 etc.</string>
     <string name="bankdok_title">Bank document.</string>
     <string name="bankdok_summary">The following number of bank document.</string>
+    <string name="newdok_summary">New document.</string>
+    <string name="newdok_title">0=no, 1=yes</string>
+    <string name="edidok_summary">Edit document.</string>
+    <string name="edidok_title">0=no, 1=yes</string>
 
 
     //dgaeaactivity

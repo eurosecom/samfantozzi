@@ -40,7 +40,8 @@ public class SettingsActivity extends android.preference.PreferenceActivity {
 	public static final String DODDOK = "doddok";
 	public static final String ODBUCE = "odbuce";
 	public static final String ODBDOK = "odbdok";
-
+	public static final String NEWDOK = "newdok";
+	public static final String EDIDOK = "edidok";
 
 	@Override
 	protected void onCreate(Bundle icicle) {
@@ -178,6 +179,14 @@ public class SettingsActivity extends android.preference.PreferenceActivity {
 
 	public static String getDoduce(Context ctx){
 		return PreferenceManager.getDefaultSharedPreferences(ctx).getString(DODUCE, "0");
+	}
+
+	public static String getNewdok(Context ctx){
+		return PreferenceManager.getDefaultSharedPreferences(ctx).getString(NEWDOK, "0");
+	}
+
+	public static String getEdidok(Context ctx){
+		return PreferenceManager.getDefaultSharedPreferences(ctx).getString(EDIDOK, "0");
 	}
 
 } 

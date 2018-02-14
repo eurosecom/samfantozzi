@@ -35,6 +35,8 @@ class NewCashDocKtActivity : AppCompatActivity() {
     private var mViewPager: ViewPager? = null
 
     var drupoh: String = "1"
+    var newdok: String = "1"
+    var edidok: String = "0"
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -44,6 +46,8 @@ class NewCashDocKtActivity : AppCompatActivity() {
         //drupoh 1=receipt, 2=expense
         val extras = i.extras
         drupoh = extras!!.getString("drupoh")
+        newdok = extras!!.getString("newdok")
+        edidok = extras!!.getString("edidok")
 
         //setContentView(R.layout.activity_cashlist)
         NewCashDocKtActivityUI(_rxBus).setContentView(this)

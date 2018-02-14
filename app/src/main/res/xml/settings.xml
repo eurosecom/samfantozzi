@@ -175,6 +175,18 @@
         android:summary="@string/odbdok_summary"
         android:title="@string/odbdok_title" />
 
+    <EditTextPreference
+        android:key="newdok"
+        android:defaultValue="1"
+        android:summary="@string/newdok_summary"
+        android:title="@string/newdok_title" />
+
+    <EditTextPreference
+        android:key="edidok"
+        android:defaultValue="0"
+        android:summary="@string/edidok_summary"
+        android:title="@string/edidok_title" />
+
 
 
 </PreferenceScreen>

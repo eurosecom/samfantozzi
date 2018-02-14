@@ -469,6 +469,8 @@ class CashListKtFragment : Fragment() {
         val `is` = Intent(context, NewCashDocKtActivity::class.java)
         val extras = Bundle()
         extras.putString("drupoh", drupohx)
+        extras.putString("newdok", "1")
+        extras.putString("edidok", "0")
         `is`.putExtras(extras)
         startActivity(`is`)
 
