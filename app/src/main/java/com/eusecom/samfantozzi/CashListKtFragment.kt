@@ -438,7 +438,8 @@ class CashListKtFragment : Fragment() {
                     startActivity(`is`)
                 }
                 1 -> {
-                    editDialog(invoice).show()
+                    navigateToEditDoc(invoice)
+                    //editDialog(invoice).show()
                 }
                 2 -> {
                     deleteDialog(invoice).show()
@@ -494,6 +495,16 @@ class CashListKtFragment : Fragment() {
 
     fun navigateToEditDoc(invoice: Invoice){
 
+        var drupohx: String = "1"
+        if (invoice.drh.equals("32")){ drupohx = "2" }
+
+        val `is` = Intent(context, NewCashDocKtActivity::class.java)
+        val extras = Bundle()
+        extras.putString("drupoh", drupohx)
+        extras.putString("newdok", "0")
+        extras.putString("edidok", "1")
+        `is`.putExtras(extras)
+        startActivity(`is`)
         //getActivity().startActivity<InvoiceListKtActivity>()
 
     }
