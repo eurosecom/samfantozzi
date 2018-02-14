@@ -67,6 +67,7 @@ public class CashListAdapter extends RecyclerView.Adapter<CashListAdapter.CashLi
           Picasso.with(holder.mContext).load(R.drawable.ic_local_atm_red_24dp).resize(120, 120).into(holder.invoice_photo);
       }
 
+      //holder.docx.setText(mListabsserver.get(position).getDok() + " pos." + mListabsserver.get(position).getPoh());
       holder.docx.setText(mListabsserver.get(position).getDok());
 
       holder.datex.setText(getDateString(mListabsserver.get(position).getDat()));
@@ -92,6 +93,7 @@ public class CashListAdapter extends RecyclerView.Adapter<CashListAdapter.CashLi
           }
       });
 
+
   }//end onbindviewholder
 
     @Override
@@ -99,6 +101,10 @@ public class CashListAdapter extends RecyclerView.Adapter<CashListAdapter.CashLi
         return mListabsserver == null ? 0 : mListabsserver.size();
     }
 
+    public void remove(int position) {
+        mListabsserver.remove(position);
+        notifyItemRemoved(position);
+    }
 
     public void setAbsserver(List<Invoice> listabsserver) {
         mListabsserver = listabsserver;

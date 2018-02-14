@@ -4,7 +4,6 @@ import android.app.SearchManager
 import android.content.Context
 import android.content.Intent
 import android.content.SharedPreferences
-import android.net.Uri
 import android.os.Bundle
 import android.support.v4.app.ActivityCompat
 import android.support.v4.app.Fragment
@@ -27,8 +26,6 @@ import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.disposables.Disposable
 import io.reactivex.functions.Function
 import org.jetbrains.anko.AlertDialogBuilder
-import org.jetbrains.anko.alert
-import org.jetbrains.anko.startActivity
 import org.jetbrains.anko.support.v4.alert
 import org.jetbrains.anko.support.v4.toast
 import rx.Observable
@@ -70,6 +67,7 @@ class CashListKtFragment : Fragment() {
     private var mDisposable: Disposable? = null
     protected var mSupplierSearchEngine: SupplierSearchEngine? = null
     var searchManager: SearchManager? = null
+    private var invoiceszal: MutableList<Invoice>  = mutableListOf<Invoice>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -203,7 +201,30 @@ class CashListKtFragment : Fragment() {
     private fun deletedInvoice(saveds: List<Invoice>) {
 
         //System.out.println("savedinvoice " + saveds);
-        toast("${saveds.get(0).dok } deleted ")
+        toast("${saveds.get(0).dok } deleted pos. ${saveds.get(0).poh }")
+
+        val pohx: String = saveds.get(0).poh
+        //invoiceszal.removeAt(posx)
+        //invoiceszal.remove(invoiceszal.get(posx))
+
+        var invoiceszalnew: MutableList<Invoice>  = mutableListOf<Invoice>()
+        val iterate = invoiceszal.listIterator()
+        var ix: Int = 0
+        while (iterate.hasNext()) {
+            val oldValue = iterate.next()
+            if (!oldValue.poh.equals(pohx))
+            {
+                System.out.println("iterate dok " + invoiceszal.get(ix).dok);
+                invoiceszalnew.add(invoiceszal.get(ix))
+            }
+            ix = ix + 1
+
+        }
+
+        invoiceszal = invoiceszalnew
+        mAdapter?.setAbsserver(invoiceszalnew)
+        nastavResultAs(invoiceszalnew)
+
 
     }
 
@@ -231,6 +252,7 @@ class CashListKtFragment : Fragment() {
     private fun setServerInvoices(invoices: List<Invoice>) {
 
         //toast(" nai0 " + invoices.get(0).nai)
+        invoiceszal = invoices.toMutableList()
         mAdapter?.setAbsserver(invoices)
         nastavResultAs(invoices)
         hideProgressBar()
