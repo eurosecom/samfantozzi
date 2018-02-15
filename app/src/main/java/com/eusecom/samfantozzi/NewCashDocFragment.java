@@ -99,6 +99,8 @@ public class NewCashDocFragment extends Fragment {
     RxBus _rxBus;
 
     String drupoh = "1";
+    String newdok = "1";
+    String edidok = "0";
     Spinner spinner;
     protected ArrayAdapter<Account> mAdapter;
 
@@ -108,6 +110,8 @@ public class NewCashDocFragment extends Fragment {
 
         ((SamfantozziApp) getActivity().getApplication()).dgaeacomponent().inject(this);
         drupoh = mSharedPreferences.getString("drupoh", "1");
+        newdok = mSharedPreferences.getString("newdok", "1");
+        edidok = mSharedPreferences.getString("edidok", "0");
 
     }
 
@@ -343,6 +347,7 @@ public class NewCashDocFragment extends Fragment {
         mViewModel.clearObservableRecount();
         mViewModel.clearObservableInvoiceSaveToRealm();
 
+
         Log.d("NewCashLog ", "onDestroy ");
 
     }
@@ -352,6 +357,16 @@ public class NewCashDocFragment extends Fragment {
         super.onResume();
         bind();
         mSubscription = new CompositeSubscription();
+
+        mSubscription.add(mViewModel.getMyInvoicesFromSqlServer("3")
+                .subscribeOn(Schedulers.computation())
+                .observeOn(rx.android.schedulers.AndroidSchedulers.mainThread())
+                .doOnError(throwable -> { Log.e(TAG, "Error NewCashDocFragment " + throwable.getMessage());
+                    hideProgressBar();
+                    Toast.makeText(getActivity(), "Server not connected", Toast.LENGTH_SHORT).show();
+                })
+                .onErrorResumeNext(throwable -> empty())
+                .subscribe(this::setServerInvoices));
 
         mSubscription.add(mViewModel.getMyPohybyFromSqlServer("3", drupoh)
                 .subscribeOn(Schedulers.computation())
@@ -388,6 +403,9 @@ public class NewCashDocFragment extends Fragment {
                 .observeOn(rx.android.schedulers.AndroidSchedulers.mainThread())
                 .subscribe(this::dataSavedToRealm));
 
+
+
+
     }
 
     @Override
@@ -395,6 +413,49 @@ public class NewCashDocFragment extends Fragment {
         super.onPause();
         unBind();
         mSubscription.clear();
+    }
+
+    private void setServerInvoices(List<Invoice> invoices) {
+
+        Log.d("invoices dok ", invoices.get(0).getDok());
+        if (_inputDoc.getText().toString().equals("0")) {
+            _inputDoc.setText(invoices.get(0).getDok());
+        }
+        _inputDoc.setEnabled(false);
+        if (_datex.getText().toString().equals("")) {
+            _datex.setText(invoices.get(0).getDat());
+        }
+        _datex.setEnabled(false);
+        if (_companyid.getText().toString().equals("")) {
+            _companyid.setText(invoices.get(0).getIco());
+        }
+        if (_person.getText().toString().equals("")) {
+            _person.setText(invoices.get(0).getKto());
+        }
+        if (_memo.getText().toString().equals("")) {
+            _memo.setText(invoices.get(0).getPoz());
+        }
+        if (_invoice.getText().toString().equals("")) {
+            _invoice.setText(invoices.get(0).getFak());
+        }
+        if (_hod.getText().toString().equals("")) {
+            _hod.setText(invoices.get(0).getHod());
+        }
+        if (_inputZk0.getText().toString().equals("")) {
+            _inputZk0.setText(invoices.get(0).getZk0());
+        }
+        if (_inputZk1.getText().toString().equals("")) {
+            _inputZk1.setText(invoices.get(0).getZk1());
+        }
+        if (_inputZk2.getText().toString().equals("")) {
+            _inputZk2.setText(invoices.get(0).getZk2());
+        }
+        if (_inputDn1.getText().toString().equals("")) {
+            _inputDn1.setText(invoices.get(0).getDn1());
+        }
+        if (_inputDn2.getText().toString().equals("")) {
+            _inputDn2.setText(invoices.get(0).getDn2());
+        }
     }
 
     private void setRecount(@NonNull final CalcVatKt result) {
@@ -459,47 +520,61 @@ public class NewCashDocFragment extends Fragment {
 
     private void bind() {
 
-        Calendar c = Calendar.getInstance();
-        SimpleDateFormat df = new SimpleDateFormat("dd.MM.yyyy");
-        String formattedDate = df.format(c.getTime());
-        if(_datex.getText().toString().equals("")) {_datex.setText(formattedDate); }
-        _datex.setEnabled(false);
-        if(_companyid.getText().toString().equals("")) {_companyid.setText(mSharedPreferences.getString("usico", "")); }
         _textzakl2.setText(String.format(getResources().getString(R.string.popzakl2), mSharedPreferences.getString("firdph2", "")) + "%");
         _textdph2.setText(String.format(getResources().getString(R.string.popdph2), mSharedPreferences.getString("firdph2", "")) + "%");
         _textzakl1.setText(String.format(getResources().getString(R.string.popzakl1), mSharedPreferences.getString("firdph1", "")) + "%");
         _textdph1.setText(String.format(getResources().getString(R.string.popdph1), mSharedPreferences.getString("firdph1", "")) + "%");
-        ActivityCompat.invalidateOptionsMenu(getActivity());
 
-        if(drupoh.equals("1")) {
-            ((AppCompatActivity)getActivity()).getSupportActionBar().setTitle(mSharedPreferences.getString("pokluce", "")
-                    + " " +  getString(R.string.newreceipt));
+        //newdok
+        if(newdok.equals("1")) {
+
+            Calendar c = Calendar.getInstance();
+            SimpleDateFormat df = new SimpleDateFormat("dd.MM.yyyy");
+            String formattedDate = df.format(c.getTime());
+            if (_datex.getText().toString().equals("")) {
+                _datex.setText(formattedDate);
+            }
+            _datex.setEnabled(false);
+            if (_companyid.getText().toString().equals("")) {
+                _companyid.setText(mSharedPreferences.getString("usico", ""));
+            }
+            if(drupoh.equals("1")) {
+                ((AppCompatActivity)getActivity()).getSupportActionBar().setTitle(mSharedPreferences.getString("pokluce", "")
+                        + " " +  getString(R.string.newreceipt));
+            }else{
+                ((AppCompatActivity)getActivity()).getSupportActionBar().setTitle(mSharedPreferences.getString("pokluce", "")
+                        + " " +  getString(R.string.newexpense));
+            }
+
+            if(_inputPoh.getText().toString().equals("")) { _inputPoh.setText("0"); }
+            if( _inputDoc.getText().toString().equals("0") ) {
+                if (drupoh.equals("1")) {
+                    _inputDoc.setText(mSharedPreferences.getString("pokldok", ""));
+                } else {
+                    _inputDoc.setText(mSharedPreferences.getString("pokldov", ""));
+                }
+            }else{
+
+            }
+        //edit dok
         }else{
-            ((AppCompatActivity)getActivity()).getSupportActionBar().setTitle(mSharedPreferences.getString("pokluce", "")
-                    + " " +  getString(R.string.newexpense));
+
+            if(drupoh.equals("1")) {
+                ((AppCompatActivity)getActivity()).getSupportActionBar().setTitle(mSharedPreferences.getString("pokluce", "")
+                        + " " +  getString(R.string.editreceipt));
+            }else{
+                ((AppCompatActivity)getActivity()).getSupportActionBar().setTitle(mSharedPreferences.getString("pokluce", "")
+                        + " " +  getString(R.string.editexpense));
+            }
+
         }
+
+        ActivityCompat.invalidateOptionsMenu(getActivity());
 
         if( drupoh.equals("1") ) {
             spinner.setPrompt(getString(R.string.select_receipt));
         }else{
             spinner.setPrompt(getString(R.string.select_expense));
-        }
-
-        //if(_inputZk0.getText().toString().equals("")) { _inputZk0.setText("0"); }
-        //if(_inputZk1.getText().toString().equals("")) { _inputZk1.setText("0"); }
-        //if(_inputZk2.getText().toString().equals("")) { _inputZk2.setText("0"); }
-        //if(_inputDn1.getText().toString().equals("")) { _inputDn1.setText("0"); }
-        //if(_inputDn2.getText().toString().equals("")) { _inputDn2.setText("0"); }
-        //if(_hod.getText().toString().equals("")) { _hod.setText("0"); }
-        if(_inputPoh.getText().toString().equals("")) { _inputPoh.setText("0"); }
-        if( _inputDoc.getText().toString().equals("0") ) {
-            if (drupoh.equals("1")) {
-                _inputDoc.setText(mSharedPreferences.getString("pokldok", ""));
-            } else {
-                _inputDoc.setText(mSharedPreferences.getString("pokldov", ""));
-            }
-        }else{
-
         }
 
     }
@@ -582,6 +657,8 @@ public class NewCashDocFragment extends Fragment {
 
     private DatePickerDialog getDatePicker(String datumx) {
 
+        String datumx2=datumx;
+        if(datumx2.equals("")){ datumx2 = "01.01.2018";}
         final Calendar calendar = Calendar.getInstance();
         int yy = calendar.get(Calendar.YEAR);
         int mm = calendar.get(Calendar.MONTH);
@@ -591,7 +668,7 @@ public class NewCashDocFragment extends Fragment {
         //String datumx = "12.12.2017";
 
         String delims = "[.]+";
-        String[] datumxxx = datumx.split(delims);
+        String[] datumxxx = datumx2.split(delims);
 
         String ddx = datumxxx[0];
         String mmx = datumxxx[1];

@@ -196,6 +196,8 @@
     <string name="newdoc">New document</string>
     <string name="newreceipt">New receipt document</string>
     <string name="newexpense">New expense document</string>
+    <string name="editreceipt">Edit receipt document</string>
+    <string name="editexpense">Edit expense document</string>
     <string name="save">Save</string>
     <string name="companyid">Company ID</string>
     <string name="person">Person</string>

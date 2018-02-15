@@ -52,14 +52,24 @@ class NewCashDocKtActivity : AppCompatActivity() {
         //setContentView(R.layout.activity_cashlist)
         NewCashDocKtActivityUI(_rxBus).setContentView(this)
 
-        if( drupoh == "1" ){
-            supportActionBar!!.setTitle(prefs.getString("pokluce", "") + " " +  getString(R.string.newreceipt))
+        if( newdok == "1" ) {
+            if (drupoh == "1") {
+                supportActionBar!!.setTitle(prefs.getString("pokluce", "") + " " + getString(R.string.newreceipt))
+            } else {
+                supportActionBar!!.setTitle(prefs.getString("pokluce", "") + " " + getString(R.string.newexpense))
+            }
         }else{
-            supportActionBar!!.setTitle(prefs.getString("pokluce", "") + " " +  getString(R.string.newexpense))
+            if (drupoh == "1") {
+                supportActionBar!!.setTitle(prefs.getString("pokluce", "") + " " + getString(R.string.editreceipt))
+            } else {
+                supportActionBar!!.setTitle(prefs.getString("pokluce", "") + " " + getString(R.string.editexpense))
+            }
         }
 
         val editor = prefs.edit()
         editor.putString("drupoh", drupoh).apply()
+        editor.putString("newdok", newdok).apply()
+        editor.putString("edidok", edidok).apply()
         editor.commit()
 
         // Create the adapter that will return a fragment for each section
@@ -95,10 +105,18 @@ class NewCashDocKtActivity : AppCompatActivity() {
                     if (position == 0) {
                         val fab = findViewById<View>(R.id.fab) as FloatingActionButton
                         fab.visibility = View.GONE
-                        if( drupoh == "1" ){
-                            supportActionBar!!.setTitle(prefs.getString("pokluce", "") + " " +  getString(R.string.newreceipt))
+                        if( newdok == "1" ) {
+                            if (drupoh == "1") {
+                                supportActionBar!!.setTitle(prefs.getString("pokluce", "") + " " + getString(R.string.newreceipt))
+                            } else {
+                                supportActionBar!!.setTitle(prefs.getString("pokluce", "") + " " + getString(R.string.newexpense))
+                            }
                         }else{
-                            supportActionBar!!.setTitle(prefs.getString("pokluce", "") + " " +  getString(R.string.newexpense))
+                            if (drupoh == "1") {
+                                supportActionBar!!.setTitle(prefs.getString("pokluce", "") + " " + getString(R.string.editreceipt))
+                            } else {
+                                supportActionBar!!.setTitle(prefs.getString("pokluce", "") + " " + getString(R.string.editexpense))
+                            }
                         }
                     }
                     if (position == 1) {
