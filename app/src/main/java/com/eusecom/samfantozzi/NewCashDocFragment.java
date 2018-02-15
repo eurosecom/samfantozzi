@@ -358,15 +358,20 @@ public class NewCashDocFragment extends Fragment {
         bind();
         mSubscription = new CompositeSubscription();
 
-        mSubscription.add(mViewModel.getMyInvoicesFromSqlServer("3")
-                .subscribeOn(Schedulers.computation())
-                .observeOn(rx.android.schedulers.AndroidSchedulers.mainThread())
-                .doOnError(throwable -> { Log.e(TAG, "Error NewCashDocFragment " + throwable.getMessage());
-                    hideProgressBar();
-                    Toast.makeText(getActivity(), "Server not connected", Toast.LENGTH_SHORT).show();
-                })
-                .onErrorResumeNext(throwable -> empty())
-                .subscribe(this::setServerInvoices));
+        if(newdok.equals("0")) {
+            mSubscription.add(mViewModel.getMyInvoicesFromSqlServer("3")
+                    .subscribeOn(Schedulers.computation())
+                    .observeOn(rx.android.schedulers.AndroidSchedulers.mainThread())
+                    .doOnError(throwable -> {
+                        Log.e(TAG, "Error NewCashDocFragment " + throwable.getMessage());
+                        hideProgressBar();
+                        Toast.makeText(getActivity(), "Server not connected", Toast.LENGTH_SHORT).show();
+                    })
+                    .onErrorResumeNext(throwable -> empty())
+                    .subscribe(this::setServerInvoices));
+        }else{
+
+        }
 
         mSubscription.add(mViewModel.getMyPohybyFromSqlServer("3", drupoh)
                 .subscribeOn(Schedulers.computation())

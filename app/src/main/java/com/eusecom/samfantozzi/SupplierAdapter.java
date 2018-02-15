@@ -66,7 +66,8 @@ public class SupplierAdapter extends RecyclerView.Adapter<SupplierAdapter.Suppli
 
       holder.docx.setText(mListabsserver.get(position).getDok());
 
-      holder.datex.setText(getDateString(mListabsserver.get(position).getDat()));
+      //holder.datex.setText(getDateString(mListabsserver.get(position).getDat()));
+      holder.datex.setText(mListabsserver.get(position).getDat());
 
       holder.invoicex.setText(mListabsserver.get(position).getFak());
 

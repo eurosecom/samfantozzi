@@ -70,7 +70,8 @@ public class CashListAdapter extends RecyclerView.Adapter<CashListAdapter.CashLi
       //holder.docx.setText(mListabsserver.get(position).getDok() + " pos." + mListabsserver.get(position).getPoh());
       holder.docx.setText(mListabsserver.get(position).getDok());
 
-      holder.datex.setText(getDateString(mListabsserver.get(position).getDat()));
+      //holder.datex.setText(getDateString(mListabsserver.get(position).getDat()));
+      holder.datex.setText(mListabsserver.get(position).getDat());
 
       //holder.invoicex.setText(mListabsserver.get(position).getFak());
 
