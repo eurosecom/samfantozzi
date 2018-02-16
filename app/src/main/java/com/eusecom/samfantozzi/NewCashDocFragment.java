@@ -194,30 +194,66 @@ public class NewCashDocFragment extends Fragment {
                         Log.d("NewCashDoc", "Clicked save ");
                         Toast.makeText(getActivity(), "Clicked save", Toast.LENGTH_SHORT).show();
 
-                        //save invoice to Realm
-                        List<RealmInvoice> realminvoices = new ArrayList<>();
-                        RealmInvoice realminvoice = new RealmInvoice();
-                        realminvoice.setUce(mSharedPreferences.getString("pokluce", ""));
-                        //1=customers invoice, 2=supliers invoice,
-                        //31=cash document receipt, 32=cash document expense, 4=bank document, 5=internal document
-                        realminvoice.setDrh("3" + drupoh);
-                        realminvoice.setDok(_inputDoc.getText().toString());
-                        realminvoice.setDat(_datex.getText().toString());
-                        realminvoice.setIco(_companyid.getText().toString());
-                        realminvoice.setHod(_hod.getText().toString());
-                        realminvoice.setZk0(_inputZk0.getText().toString());
-                        realminvoice.setZk1(_inputZk1.getText().toString());
-                        realminvoice.setZk2(_inputZk2.getText().toString());
-                        realminvoice.setDn1(_inputDn1.getText().toString());
-                        realminvoice.setDn2(_inputDn2.getText().toString());
-                        realminvoice.setPoz(_memo.getText().toString());
-                        realminvoice.setFak(_invoice.getText().toString());
-                        realminvoice.setKto(_person.getText().toString());
-                        realminvoice.setPoh(_inputPoh.getText().toString());
-                        realminvoice.setSaved("false");
-                        realminvoices.add(realminvoice);
 
-                        mViewModel.emitRealmInvoicesToRealm(realminvoices);
+
+                        if( newdok.equals("1")) {
+
+                            //save invoice to Realm
+                            List<RealmInvoice> realminvoices = new ArrayList<>();
+                            RealmInvoice realminvoice = new RealmInvoice();
+                            realminvoice.setUce(mSharedPreferences.getString("pokluce", ""));
+                            //1=customers invoice, 2=supliers invoice,
+                            //31=cash document receipt, 32=cash document expense, 4=bank document, 5=internal document
+                            realminvoice.setDrh("3" + drupoh);
+                            realminvoice.setDok(_inputDoc.getText().toString());
+                            realminvoice.setDat(_datex.getText().toString());
+                            realminvoice.setIco(_companyid.getText().toString());
+                            realminvoice.setHod(_hod.getText().toString());
+                            realminvoice.setZk0(_inputZk0.getText().toString());
+                            realminvoice.setZk1(_inputZk1.getText().toString());
+                            realminvoice.setZk2(_inputZk2.getText().toString());
+                            realminvoice.setDn1(_inputDn1.getText().toString());
+                            realminvoice.setDn2(_inputDn2.getText().toString());
+                            realminvoice.setPoz(_memo.getText().toString());
+                            realminvoice.setFak(_invoice.getText().toString());
+                            realminvoice.setKto(_person.getText().toString());
+                            realminvoice.setPoh(_inputPoh.getText().toString());
+                            realminvoice.setSaved("false");
+                            realminvoices.add(realminvoice);
+
+                            mViewModel.emitRealmInvoicesToRealm(realminvoices);
+                        }else{
+
+                            RealmInvoice realminvoice = new RealmInvoice();
+                            realminvoice.setUce(mSharedPreferences.getString("pokluce", ""));
+                            //1=customers invoice, 2=supliers invoice,
+                            //31=cash document receipt, 32=cash document expense, 4=bank document, 5=internal document
+                            realminvoice.setDrh("3" + drupoh);
+                            realminvoice.setDok(_inputDoc.getText().toString());
+                            realminvoice.setDat(_datex.getText().toString());
+                            realminvoice.setIco(_companyid.getText().toString());
+                            realminvoice.setNai("");
+                            realminvoice.setHod(_hod.getText().toString());
+                            realminvoice.setZk0(_inputZk0.getText().toString());
+                            realminvoice.setZk1(_inputZk1.getText().toString());
+                            realminvoice.setZk2(_inputZk2.getText().toString());
+                            realminvoice.setDn1(_inputDn1.getText().toString());
+                            realminvoice.setDn2(_inputDn2.getText().toString());
+                            realminvoice.setPoz(_memo.getText().toString());
+                            realminvoice.setFak(_invoice.getText().toString());
+                            realminvoice.setKsy("");
+                            realminvoice.setSsy("");
+                            realminvoice.setUme("");
+                            realminvoice.setDaz("");
+                            realminvoice.setDas("");
+                            realminvoice.setKto(_person.getText().toString());
+                            realminvoice.setPoh(_inputPoh.getText().toString());
+                            realminvoice.setSaved("false");
+                            realminvoice.setDatm("");
+                            realminvoice.setUzid("");
+                            Log.d("NewCashedit ", realminvoice.getDok());
+                            mViewModel.emitMyObservableInvoiceToServer(realminvoice);
+                        }
 
                     }
                 });
@@ -347,9 +383,6 @@ public class NewCashDocFragment extends Fragment {
         mViewModel.clearObservableRecount();
         mViewModel.clearObservableInvoiceSaveToRealm();
 
-
-        Log.d("NewCashLog ", "onDestroy ");
-
     }
 
     @Override
@@ -357,6 +390,7 @@ public class NewCashDocFragment extends Fragment {
         super.onResume();
         bind();
         mSubscription = new CompositeSubscription();
+
 
         if(newdok.equals("0")) {
             mSubscription.add(mViewModel.getEditedInvoiceFromSqlServer("3")
@@ -369,7 +403,25 @@ public class NewCashDocFragment extends Fragment {
                     })
                     .onErrorResumeNext(throwable -> empty())
                     .subscribe(this::setServerInvoices));
+
+            mSubscription.add(mViewModel.getMyObservableInvoiceToServer()
+                    .subscribeOn(Schedulers.computation())
+                    .observeOn(rx.android.schedulers.AndroidSchedulers.mainThread())
+                    .doOnError(throwable -> {
+                        Log.e(TAG, "Error NewCashDocFragment " + throwable.getMessage());
+                        hideProgressBar();
+                        Toast.makeText(getActivity(), "Server not connected", Toast.LENGTH_SHORT).show();
+                    })
+                    .onErrorResumeNext(throwable -> empty())
+                    .subscribe(this::savedInvoice));
+
+
         }else{
+
+            mSubscription.add(mViewModel.getDataInvoiceSavedToRealm()
+                    .subscribeOn(Schedulers.computation())
+                    .observeOn(rx.android.schedulers.AndroidSchedulers.mainThread())
+                    .subscribe(this::dataSavedToRealm));
 
         }
 
@@ -403,12 +455,6 @@ public class NewCashDocFragment extends Fragment {
                 .onErrorResumeNext(throwable -> empty())
                 .subscribe(this::setRecount));
 
-        mSubscription.add(mViewModel.getDataInvoiceSavedToRealm()
-                .subscribeOn(Schedulers.computation())
-                .observeOn(rx.android.schedulers.AndroidSchedulers.mainThread())
-                .subscribe(this::dataSavedToRealm));
-
-
 
 
     }
@@ -418,6 +464,17 @@ public class NewCashDocFragment extends Fragment {
         super.onPause();
         unBind();
         mSubscription.clear();
+    }
+
+    private void savedInvoice(List<Invoice> saveds) {
+
+        Log.d("invxstring saved ", saveds.get(0).getDok());
+        Log.d("invxstring  ", saveds.get(0).getNai());
+        mViewModel.clearObservableInvoiceToServer();
+
+        Log.d("invxstring ", "saved ");
+        getActivity().finish();
+
     }
 
     private void setServerInvoices(List<Invoice> invoices) {

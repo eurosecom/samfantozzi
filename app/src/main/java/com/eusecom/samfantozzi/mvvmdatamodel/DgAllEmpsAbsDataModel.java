@@ -494,6 +494,12 @@ public class DgAllEmpsAbsDataModel implements DgAllEmpsAbsIDataModel {
 
         String invxstring = JSsonFromRealmInvoice(invx);
 
+
+        System.out.println("invxstring userhash " + userhash);
+        System.out.println("invxstring userid " + userid);
+        System.out.println("invxstring fromfir " + fromfir);
+        System.out.println("invxstring vyb_rok " + vyb_rok);
+        System.out.println("invxstring drh " + drh);
         System.out.println("invxstring " + invxstring);
 
         //POST API

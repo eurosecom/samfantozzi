@@ -42,7 +42,7 @@ public class DgAllEmpsAbsMvvmViewModel {
     SharedPreferences mSharedPreferences;
 
     MCrypt mMcrypt;
-    String encrypted;
+    String encrypted, encrypted2;
 
     //@Inject only by Base constructor injection
     public DgAllEmpsAbsMvvmViewModel(@NonNull final DgAllEmpsAbsIDataModel dataModel,
@@ -783,16 +783,16 @@ public class DgAllEmpsAbsMvvmViewModel {
     public Observable<List<Invoice>> getMyObservableInvoiceToServer() {
 
         Random r = new Random();
-        double d = -10.0 + r.nextDouble() * 20.0;
+        double d = 10.0 + r.nextDouble() * 20.0;
         String ds = String.valueOf(d);
 
         String usuidx = mSharedPreferences.getString("usuid", "");
         String userxplus =  ds + "/" + usuidx + "/" + ds;
-        encrypted = "";
+        encrypted2 = "";
 
 
         try {
-            encrypted = mMcrypt.bytesToHex( mMcrypt.encrypt(userxplus) );
+            encrypted2 = mMcrypt.bytesToHex( mMcrypt.encrypt(userxplus) );
         } catch (Exception e1) {
             // TODO Auto-generated catch block
             e1.printStackTrace();
@@ -802,11 +802,12 @@ public class DgAllEmpsAbsMvvmViewModel {
         String rokx = mSharedPreferences.getString("rok", "");
         String drh = "2";
 
-        Log.d("NewCashLog save fir ", firx);
+        //Log.d("NewCashLog save fir ", firx);
+        Log.d("NewCashedit ", firx);
 
         return mObservableInvoiceToServer
                 .observeOn(mSchedulerProvider.computation())
-                .flatMap(invx -> mDataModel.getObservableInvoiceToMysql(encrypted, ds, firx, rokx, drh, invx ));
+                .flatMap(invx -> mDataModel.getObservableInvoiceToMysql(encrypted2, ds, firx, rokx, drh, invx ));
     }
 
     public void clearObservableInvoiceToServer() {

@@ -60,6 +60,10 @@ class NoSavedDocActivity : AppCompatActivity() {
 
         supportActionBar!!.setTitle(getString(R.string.action_nosaveddoc))
 
+        val editor = prefs.edit()
+        editor.putString("edidok", "0").apply()
+        editor.commit()
+
         bind(adapter)
 
     }
@@ -114,6 +118,9 @@ class NoSavedDocActivity : AppCompatActivity() {
 
         //System.out.println("savedinvoice " + saveds);
         toast("${saveds.get(0).dok } saved ")
+        Log.d("invxstring saved ", saveds[0].dok)
+        Log.d("invxstring  ", saveds[0].nai)
+        Log.d("invxstring ", "saved ")
 
     }
 
