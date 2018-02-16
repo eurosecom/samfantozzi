@@ -136,7 +136,7 @@ public class DgAllEmpsAbsMvvmViewModel {
         }
         String umex = mSharedPreferences.getString("ume", "");
 
-        return mDataModel.getInvoicesFromMysqlServer(encrypted, ds, firx, rokx, drh, dodx, umex);
+        return mDataModel.getInvoicesFromMysqlServer(encrypted, ds, firx, rokx, drh, dodx, umex, "0");
     }
     //end get invoices from MySql server
 
@@ -383,6 +383,47 @@ public class DgAllEmpsAbsMvvmViewModel {
 
 
     //NewCashDocFragment and NewCashDocActivity
+
+    //get edidok invoice from MySql server
+    public Observable<List<Invoice>> getEditedInvoiceFromSqlServer(String drh) {
+
+        Random r = new Random();
+        double d = -10.0 + r.nextDouble() * 20.0;
+        String ds = String.valueOf(d);
+
+        String usuidx = mSharedPreferences.getString("usuid", "");
+        String userxplus =  ds + "/" + usuidx + "/" + ds;
+        encrypted = "";
+
+
+        try {
+            encrypted = mMcrypt.bytesToHex( mMcrypt.encrypt(userxplus) );
+        } catch (Exception e1) {
+            // TODO Auto-generated catch block
+            e1.printStackTrace();
+        }
+        Log.d("userxplus ", encrypted + " " + ds);
+        	/* Decrypt */
+        //String decrypted = new String( mMcrypt.decrypt( encrypted ) );
+
+        String firx = mSharedPreferences.getString("fir", "");
+        String rokx = mSharedPreferences.getString("rok", "");
+        String dodx = mSharedPreferences.getString("doduce", "");
+        if (drh.equals("1")) {
+            dodx = mSharedPreferences.getString("odbuce", "");
+        }
+        if (drh.equals("3")) {
+            dodx = mSharedPreferences.getString("pokluce", "");
+        }
+        if (drh.equals("4")) {
+            dodx = mSharedPreferences.getString("bankuce", "");
+        }
+        String umex = mSharedPreferences.getString("ume", "");
+        String dokx = mSharedPreferences.getString("edidok", "");
+
+        return mDataModel.getInvoicesFromMysqlServer(encrypted, ds, firx, rokx, drh, dodx, umex, dokx);
+    }
+    //end get edidok invoice from MySql server
 
     //emit Observable<Invoice> SaveCashDocRealm
     public void emitMyObservableSaveCashDocRealm(Invoice invx) {

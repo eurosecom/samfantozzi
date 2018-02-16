@@ -61,7 +61,7 @@ public interface AbsServerService {
     Observable<List<Invoice>> getInvoicesFromSqlServer(@Query("userhash") String userhash
             , @Query("userid") String userid, @Query("fromfir") String fromfir
             , @Query("vyb_rok") String vyb_rok, @Query("drh") String drh
-            , @Query("uce") String uce, @Query("ume") String ume);
+            , @Query("uce") String uce, @Query("ume") String ume, @Query("dokx") String dokx);
 
     @GET("/androidfantozzi/get_accounttypes.php")
     Observable<List<Account>> getAccountsFromSqlServer(@Query("userhash") String userhash

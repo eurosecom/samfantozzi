@@ -186,9 +186,9 @@ public class DgAllEmpsAbsDataModel implements DgAllEmpsAbsIDataModel {
 
     @Override
     public Observable<List<Invoice>> getInvoicesFromMysqlServer(String userhash, String userid, String fromfir
-            , String vyb_rok, String drh, String ucex, String umex) {
+            , String vyb_rok, String drh, String ucex, String umex, String dokx) {
 
-        return mAbsServerService.getInvoicesFromSqlServer(userhash, userid, fromfir, vyb_rok, drh, ucex, umex);
+        return mAbsServerService.getInvoicesFromSqlServer(userhash, userid, fromfir, vyb_rok, drh, ucex, umex, dokx);
 
     }
 

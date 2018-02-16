@@ -359,7 +359,7 @@ public class NewCashDocFragment extends Fragment {
         mSubscription = new CompositeSubscription();
 
         if(newdok.equals("0")) {
-            mSubscription.add(mViewModel.getMyInvoicesFromSqlServer("3")
+            mSubscription.add(mViewModel.getEditedInvoiceFromSqlServer("3")
                     .subscribeOn(Schedulers.computation())
                     .observeOn(rx.android.schedulers.AndroidSchedulers.mainThread())
                     .doOnError(throwable -> {

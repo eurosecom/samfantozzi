@@ -502,7 +502,7 @@ class CashListKtFragment : Fragment() {
         val extras = Bundle()
         extras.putString("drupoh", drupohx)
         extras.putString("newdok", "0")
-        extras.putString("edidok", "1")
+        extras.putString("edidok", invoice.dok)
         `is`.putExtras(extras)
         startActivity(`is`)
         //getActivity().startActivity<InvoiceListKtActivity>()

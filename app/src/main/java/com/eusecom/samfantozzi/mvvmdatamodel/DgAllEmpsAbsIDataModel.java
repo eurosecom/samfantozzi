@@ -54,7 +54,7 @@ public interface DgAllEmpsAbsIDataModel {
 
     @NonNull
     public Observable<List<Invoice>> getInvoicesFromMysqlServer(String userhash, String userid, String fromfir
-            , String vyb_rok, String drh, String ucex, String umex);
+            , String vyb_rok, String drh, String ucex, String umex, String dokx);
 
     //recyclerview method for CashListKtActivity
     @NonNull
