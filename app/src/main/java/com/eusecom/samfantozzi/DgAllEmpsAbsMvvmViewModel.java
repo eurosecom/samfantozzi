@@ -801,13 +801,14 @@ public class DgAllEmpsAbsMvvmViewModel {
         String firx = mSharedPreferences.getString("fir", "");
         String rokx = mSharedPreferences.getString("rok", "");
         String drh = "2";
+        String edidok = mSharedPreferences.getString("edidok", "");
 
         //Log.d("NewCashLog save fir ", firx);
         Log.d("NewCashedit ", firx);
 
         return mObservableInvoiceToServer
                 .observeOn(mSchedulerProvider.computation())
-                .flatMap(invx -> mDataModel.getObservableInvoiceToMysql(encrypted2, ds, firx, rokx, drh, invx ));
+                .flatMap(invx -> mDataModel.getObservableInvoiceToMysql(encrypted2, ds, firx, rokx, drh, invx, edidok ));
     }
 
     public void clearObservableInvoiceToServer() {

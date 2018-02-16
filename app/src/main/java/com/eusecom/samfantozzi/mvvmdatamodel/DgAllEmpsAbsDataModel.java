@@ -475,7 +475,7 @@ public class DgAllEmpsAbsDataModel implements DgAllEmpsAbsIDataModel {
 
     @NonNull
     public Observable<List<Invoice>> getObservableInvoiceToMysql(String userhash, String userid, String fromfir
-            , String vyb_rok, String drh, RealmInvoice invx){
+            , String vyb_rok, String drh, RealmInvoice invx, String edidok){
 
         List<IdCompanyKt> myidc = new ArrayList<>();
         IdCompanyKt newidc = new IdCompanyKt("31414466", "", "", "Firma xyz", "ulixyz",
@@ -503,7 +503,7 @@ public class DgAllEmpsAbsDataModel implements DgAllEmpsAbsIDataModel {
         System.out.println("invxstring " + invxstring);
 
         //POST API
-        return mAbsServerService.saveInvoiceToMysqlPost(userhash, userid, fromfir, vyb_rok, drh, invxstring);
+        return mAbsServerService.saveInvoiceToMysqlPost(userhash, userid, fromfir, vyb_rok, drh, invxstring, edidok);
     }
 
     //JSON from Invoice

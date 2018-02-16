@@ -33,7 +33,7 @@ public interface AbsServerService {
     Observable<List<Invoice>> saveInvoiceToMysqlPost(@Field("userhash") String userhash
             , @Field("userid") String userid, @Field("fromfir") String fromfir
             , @Field("vyb_rok") String vyb_rok, @Field("drh") String drh
-            , @Field("invx") String invx);
+            , @Field("invx") String invx, @Field("edidok") String edidok);
 
     @GET("/androidfantozzi/get_drhpohyby.php")
     Observable<List<Account>> getReceiptExpensesFromSqlServer(@Query("userhash") String userhash
