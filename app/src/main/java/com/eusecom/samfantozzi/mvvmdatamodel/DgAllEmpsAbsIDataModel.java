@@ -87,6 +87,13 @@ public interface DgAllEmpsAbsIDataModel {
             , String vyb_rok, String drh, String drupoh, String ucto);
 
     @NonNull
+    public Observable<List<Account>> getReceiptsExpensesFromRealm(String userhash, String userid, String fromfir
+            , String vyb_rok, String drh, String drupoh, String ucto);
+
+    @NonNull
+    public Observable<List<Account>> saveReceiptsExpensesToRealm(List<Account> recexp);
+
+    @NonNull
     public Observable<CalcVatKt> getObservableRecountFromRealm(CalcVatKt calcx);
 
     @NonNull

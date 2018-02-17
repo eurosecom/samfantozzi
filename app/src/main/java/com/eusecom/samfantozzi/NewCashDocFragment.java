@@ -542,7 +542,7 @@ public class NewCashDocFragment extends Fragment {
             ArrayList<Account> pohybys = new ArrayList<>();
 
             for (int i = 0; i < pohyby.size(); i++) {
-                pohybys.add(new Account(pohyby.get(i).getAccname(), pohyby.get(i).getAccnumber(), "", "", "", true));
+                pohybys.add(new Account(pohyby.get(i).getAccname(), pohyby.get(i).getAccnumber(), "", "", "", "true"));
             }
 
             mAdapter = new ArrayAdapter<Account>(getActivity(), android.R.layout.simple_spinner_item, pohybys);

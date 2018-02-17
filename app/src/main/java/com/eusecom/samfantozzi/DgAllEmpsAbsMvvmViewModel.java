@@ -546,7 +546,12 @@ public class DgAllEmpsAbsMvvmViewModel {
         String rokx = mSharedPreferences.getString("rok", "");
         String uctox = mSharedPreferences.getString("firduct", "");
 
-        return mDataModel.getReceiptsExpensesFromSql(encrypted, ds, firx, rokx, drh, drupoh, uctox);
+        //return mDataModel.getReceiptsExpensesFromSql(encrypted, ds, firx, rokx, drh, drupoh, uctox)
+        //        .observeOn(mSchedulerProvider.ui()) //switch to ui because of Realm is initialize in ui
+        //        .flatMap(listaccounts -> mDataModel.saveReceiptsExpensesToRealm(listaccounts));
+
+        return mDataModel.getReceiptsExpensesFromRealm(encrypted, ds, firx, rokx, drh, drupoh, uctox);
+
     }
     //end get get uct.pohyby from MySql server
 

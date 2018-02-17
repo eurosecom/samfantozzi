@@ -23,14 +23,14 @@ import com.eusecom.samfantozzi.Month;
 import com.eusecom.samfantozzi.R;
 import com.eusecom.samfantozzi.models.Attendance;
 import com.eusecom.samfantozzi.models.Employee;
-import com.eusecom.samfantozzi.realm.RealmEmployee;
+import com.eusecom.samfantozzi.realm.RealmAccount;
 import com.eusecom.samfantozzi.realm.RealmInvoice;
 import com.eusecom.samfantozzi.retrofit.AbsServerService;
 import com.eusecom.samfantozzi.rxfirebase2.database.RxFirebaseDatabase;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.Query;
-import com.google.gson.Gson;
+
 
 public class DgAllEmpsAbsDataModel implements DgAllEmpsAbsIDataModel {
 
@@ -167,7 +167,7 @@ public class DgAllEmpsAbsDataModel implements DgAllEmpsAbsIDataModel {
     public Observable<List<Account>> getAccounts(String rokx) {
 
         List<Account> mymonths = new ArrayList<>();
-        Account newmonth = new Account("Dodavatelia", "32100", "830001", "0", "2", true);
+        Account newmonth = new Account("Dodavatelia", "32100", "830001", "0", "2", "true");
         mymonths.add(newmonth);
 
 
@@ -310,6 +310,58 @@ public class DgAllEmpsAbsDataModel implements DgAllEmpsAbsIDataModel {
             , String vyb_rok, String drh, String drupoh, String ucto) {
 
         return mAbsServerService.getReceiptExpensesFromSqlServer(userhash, userid, fromfir, vyb_rok, drh, drupoh, ucto);
+
+    }
+
+    @NonNull
+    public Observable<List<Account>> saveReceiptsExpensesToRealm(List<Account> recexp){
+
+        String typex = recexp.get(0).getAcctype();
+        mRealm.executeTransaction(new Realm.Transaction() {
+            @Override
+            public void execute(Realm realm) {
+                RealmResults<RealmAccount> result = realm.where(RealmAccount.class).equalTo("acctype", typex).findAll();
+                result.clear();
+            }
+        });
+
+        for (Account b : recexp) {
+
+        RealmAccount realmacc = new RealmAccount();
+
+            realmacc.setAccname("rm " + b.getAccname());
+            realmacc.setAccnumber(b.getAccnumber());
+            realmacc.setAccdoc(b.getAccdoc());
+            realmacc.setAccdov(b.getAccdov());
+            realmacc.setAcctype(b.getAcctype());
+            realmacc.setLogprx(b.getLogprx());
+
+            System.out.println("RealmAccount " + b.getAccnumber() + " " + b.getAcctype());
+
+            mRealm.beginTransaction();
+            mRealm.copyToRealm(realmacc);
+            mRealm.commitTransaction();
+        }
+
+        return Observable.just(recexp);
+    }
+
+    @Override
+    public Observable<List<Account>> getReceiptsExpensesFromRealm(String userhash, String userid, String fromfir
+            , String vyb_rok, String drh, String drupoh, String ucto) {
+
+        List<RealmAccount> results = mRealm.where(RealmAccount.class).equalTo("acctype", drupoh).findAll();
+
+        List<Account> myaccounts = new ArrayList<>();
+        for (RealmAccount b : results) {
+
+            Account account = new Account(b.getAccname(), b.getAccnumber(), b.getAccdoc()
+                    ,b.getAccdov(), b.getAcctype(), b.getLogprx() );
+            myaccounts.add(account);
+
+        }
+
+        return Observable.just(myaccounts);
 
     }
 
