@@ -114,13 +114,36 @@ class NoSavedDocActivity : AppCompatActivity() {
 
     }
 
-    private fun savedInvoice(saveds: List<Invoice>) {
+    private fun savedInvoice(savedinv: List<Invoice>) {
 
         //System.out.println("savedinvoice " + saveds);
-        toast("${saveds.get(0).dok } saved ")
-        Log.d("invxstring saved ", saveds[0].dok)
-        Log.d("invxstring  ", saveds[0].nai)
-        Log.d("invxstring ", "saved ")
+        toast("${savedinv.get(0).dok } saved ")
+        val invoicex = RealmInvoice()
+        invoicex.drh = savedinv.get(0).drh
+        invoicex.uce = savedinv.get(0).uce
+        invoicex.dok = savedinv.get(0).dok
+        invoicex.ico = savedinv.get(0).ico
+        invoicex.nai = savedinv.get(0).nai
+        invoicex.fak = savedinv.get(0).fak
+        invoicex.ksy = savedinv.get(0).ksy
+        invoicex.ssy = savedinv.get(0).ssy
+        invoicex.ume = savedinv.get(0).ume
+        invoicex.dat = savedinv.get(0).dat
+        invoicex.daz = savedinv.get(0).daz
+        invoicex.das = savedinv.get(0).das
+        invoicex.poz = savedinv.get(0).poz
+        invoicex.hod = savedinv.get(0).hod
+        invoicex.zk0 = savedinv.get(0).zk0
+        invoicex.zk1 = savedinv.get(0).zk1
+        invoicex.dn1 = savedinv.get(0).dn1
+        invoicex.zk2 = savedinv.get(0).zk2
+        invoicex.dn2 = savedinv.get(0).dn2
+        invoicex.saved = "true"
+        invoicex.datm = ""
+        invoicex.uzid = savedinv.get(0).uzid
+        invoicex.kto = savedinv.get(0).kto
+        invoicex.poh = savedinv.get(0).poh
+        mViewModel.emitDeleteAllInvoicesFromRealm(invoicex);
 
     }
 
