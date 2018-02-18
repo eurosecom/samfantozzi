@@ -226,12 +226,16 @@
     //idclistktfragment
     <string name="idc">ID company</string>
     <string name="idcs">ID companies</string>
+    <string name="idcsandother">IDC and others</string>
     <string name="idcshort">IDC</string>
     <string name="dic">DIC</string>
     <string name="idvat">idVAT</string>
     <string name="telshort">Tel.</string>
     <string name="editidc">Edit IDC</string>
     <string name="chooseidc">Choose IDC</string>
+
+    //typesktactivity
+    <string name="autoacc">AutoAcc</string>
 
     //nosaveddocactivity
     <string name="action_nosaveddoc">Docs not saved to Server</string>

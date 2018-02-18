@@ -4,14 +4,9 @@ import android.content.res.Resources;
 import android.net.Uri;
 import android.support.annotation.NonNull;
 import android.util.Log;
-
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
-
-import io.reactivex.Flowable;
 import io.realm.Realm;
-import io.realm.RealmConfiguration;
 import io.realm.RealmResults;
 import rx.Observable;
 import com.eusecom.samfantozzi.Account;
@@ -167,7 +162,7 @@ public class DgAllEmpsAbsDataModel implements DgAllEmpsAbsIDataModel {
     public Observable<List<Account>> getAccounts(String rokx) {
 
         List<Account> mymonths = new ArrayList<>();
-        Account newmonth = new Account("Dodavatelia", "32100", "830001", "0", "2", "true");
+        Account newmonth = new Account("Dodavatelia", "32100", "830001", "0", "2", "0","true");
         mymonths.add(newmonth);
 
 
@@ -316,6 +311,11 @@ public class DgAllEmpsAbsDataModel implements DgAllEmpsAbsIDataModel {
     @NonNull
     public Observable<List<Account>> saveReceiptsExpensesToRealm(List<Account> recexp){
 
+        //clear all items in table
+        //mRealm.beginTransaction();
+        //mRealm.clear(RealmAccount.class);
+        //mRealm.commitTransaction();
+
         String typex = recexp.get(0).getAcctype();
         mRealm.executeTransaction(new Realm.Transaction() {
             @Override
@@ -329,11 +329,12 @@ public class DgAllEmpsAbsDataModel implements DgAllEmpsAbsIDataModel {
 
         RealmAccount realmacc = new RealmAccount();
 
-            realmacc.setAccname("rm " + b.getAccname());
+            realmacc.setAccname("rm " + b.getAccname() + b.getDatm());
             realmacc.setAccnumber(b.getAccnumber());
             realmacc.setAccdoc(b.getAccdoc());
             realmacc.setAccdov(b.getAccdov());
             realmacc.setAcctype(b.getAcctype());
+            realmacc.setDatm(b.getDatm());
             realmacc.setLogprx(b.getLogprx());
 
             System.out.println("RealmAccount " + b.getAccnumber() + " " + b.getAcctype());
@@ -356,7 +357,7 @@ public class DgAllEmpsAbsDataModel implements DgAllEmpsAbsIDataModel {
         for (RealmAccount b : results) {
 
             Account account = new Account(b.getAccname(), b.getAccnumber(), b.getAccdoc()
-                    ,b.getAccdov(), b.getAcctype(), b.getLogprx() );
+                    ,b.getAccdov(), b.getAcctype(), b.getDatm(), b.getLogprx() );
             myaccounts.add(account);
 
         }

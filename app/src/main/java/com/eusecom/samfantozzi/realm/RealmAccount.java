@@ -10,6 +10,7 @@ public class RealmAccount extends RealmObject {
     private String accdov;
     //acctype 1=receipt cash, 2=expense cash...
     private String acctype;
+    private String datm;
     private String logprx;
 
     public String getAccname() {
@@ -58,6 +59,14 @@ public class RealmAccount extends RealmObject {
 
     public void setLogprx(String logprx) {
         this.logprx = logprx;
+    }
+
+    public String getDatm() {
+        return datm;
+    }
+
+    public void setDatm(String datm) {
+        this.datm = datm;
     }
 }
 

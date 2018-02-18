@@ -48,24 +48,48 @@ class TypesKtActivity : AppCompatActivity() {
 
         supportActionBar!!.setTitle(getString(R.string.idcs))
 
-        // Create the adapter that will return a fragment for each section
-        mPagerAdapter = object : FragmentPagerAdapter(supportFragmentManager) {
-            private val mFragments = arrayOf(IdcListKtFragment(), EmptyKtFragment())
-            private val mFragmentNames = arrayOf(getString(R.string.idc), getString(R.string.empty))
+        if( fromact == "0" ) {
 
-            override fun getItem(position: Int): Fragment {
-                return mFragments[position]
+            // Create the adapter that will return a fragment for each section
+            mPagerAdapter = object : FragmentPagerAdapter(supportFragmentManager) {
+                private val mFragments = arrayOf(IdcListKtFragment(), AutopohListKtFragment(), EmptyKtFragment())
+                private val mFragmentNames = arrayOf(getString(R.string.idc), getString(R.string.autoacc), getString(R.string.empty))
+
+                override fun getItem(position: Int): Fragment {
+                    return mFragments[position]
+                }
+
+                override fun getCount(): Int {
+                    return mFragments.size
+                }
+
+                override fun getPageTitle(position: Int): CharSequence {
+                    return mFragmentNames[position]
+                }
             }
 
-            override fun getCount(): Int {
-                return mFragments.size
-            }
-
-            override fun getPageTitle(position: Int): CharSequence {
-                return mFragmentNames[position]
-            }
         }
+        if( fromact == "3" ) {
 
+            // Create the adapter that will return a fragment for each section
+            mPagerAdapter = object : FragmentPagerAdapter(supportFragmentManager) {
+                private val mFragments = arrayOf(IdcListKtFragment(), EmptyKtFragment())
+                private val mFragmentNames = arrayOf(getString(R.string.idc), getString(R.string.empty))
+
+                override fun getItem(position: Int): Fragment {
+                    return mFragments[position]
+                }
+
+                override fun getCount(): Int {
+                    return mFragments.size
+                }
+
+                override fun getPageTitle(position: Int): CharSequence {
+                    return mFragmentNames[position]
+                }
+            }
+
+        }
 
         // Set up the ViewPager with the sections adapter.
         mViewPager = findViewById<View>(R.id.container) as ViewPager
@@ -83,7 +107,19 @@ class TypesKtActivity : AppCompatActivity() {
                         fab.visibility = View.VISIBLE
                         supportActionBar!!.setTitle(getString(R.string.idcs))
                     }
-                    if (position == 1) {
+                    if (position == 1 && fromact == "3") {
+                        val fab = findViewById<View>(R.id.fab) as FloatingActionButton
+                        //fab.setVisibility(View.GONE);
+                        fab.visibility = View.GONE
+                        supportActionBar!!.setTitle(getString(R.string.empty))
+                    }
+                    if (position == 1 && fromact == "0") {
+                        val fab = findViewById<View>(R.id.fab) as FloatingActionButton
+                        //fab.setVisibility(View.GONE);
+                        fab.visibility = View.GONE
+                        supportActionBar!!.setTitle(getString(R.string.autoacc))
+                    }
+                    if (position == 2) {
                         val fab = findViewById<View>(R.id.fab) as FloatingActionButton
                         //fab.setVisibility(View.GONE);
                         fab.visibility = View.GONE

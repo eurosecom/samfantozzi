@@ -402,7 +402,7 @@ public class NewCashDocFragment extends Fragment {
                         Toast.makeText(getActivity(), "Server not connected", Toast.LENGTH_SHORT).show();
                     })
                     .onErrorResumeNext(throwable -> empty())
-                    .subscribe(this::setServerInvoices));
+                    .subscribe(this::setEditedInvoices));
 
             mSubscription.add(mViewModel.getMyObservableInvoiceToServer()
                     .subscribeOn(Schedulers.computation())
@@ -477,7 +477,7 @@ public class NewCashDocFragment extends Fragment {
 
     }
 
-    private void setServerInvoices(List<Invoice> invoices) {
+    private void setEditedInvoices(List<Invoice> invoices) {
 
         Log.d("invoices dok ", invoices.get(0).getDok());
         if (_inputDoc.getText().toString().equals("0")) {
@@ -503,6 +503,7 @@ public class NewCashDocFragment extends Fragment {
         if (_hod.getText().toString().equals("")) {
             _hod.setText(invoices.get(0).getHod());
         }
+        //i have not receipt and expense poh saved in dok on server_inputPoh.setText(invoices.get(0).getPoh());
         if (_inputZk0.getText().toString().equals("")) {
             _inputZk0.setText(invoices.get(0).getZk0());
         }
@@ -542,7 +543,7 @@ public class NewCashDocFragment extends Fragment {
             ArrayList<Account> pohybys = new ArrayList<>();
 
             for (int i = 0; i < pohyby.size(); i++) {
-                pohybys.add(new Account(pohyby.get(i).getAccname(), pohyby.get(i).getAccnumber(), "", "", "", "true"));
+                pohybys.add(new Account(pohyby.get(i).getAccname(), pohyby.get(i).getAccnumber(), "", "", "", "","true"));
             }
 
             mAdapter = new ArrayAdapter<Account>(getActivity(), android.R.layout.simple_spinner_item, pohybys);
