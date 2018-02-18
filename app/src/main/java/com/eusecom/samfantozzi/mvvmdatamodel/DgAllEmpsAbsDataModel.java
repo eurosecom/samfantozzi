@@ -4,7 +4,11 @@ import android.content.res.Resources;
 import android.net.Uri;
 import android.support.annotation.NonNull;
 import android.util.Log;
+
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import io.realm.Realm;
 import io.realm.RealmResults;
@@ -329,15 +333,20 @@ public class DgAllEmpsAbsDataModel implements DgAllEmpsAbsIDataModel {
 
         RealmAccount realmacc = new RealmAccount();
 
-            realmacc.setAccname("rm " + b.getAccname() + b.getDatm());
+            long unixTime = System.currentTimeMillis() / 1000L;
+            String unixTimes = unixTime + "";
+
+            realmacc.setAccname(b.getAccname());
             realmacc.setAccnumber(b.getAccnumber());
             realmacc.setAccdoc(b.getAccdoc());
             realmacc.setAccdov(b.getAccdov());
             realmacc.setAcctype(b.getAcctype());
-            realmacc.setDatm(b.getDatm());
+            // to get time from sql realmacc.setDatm(b.getDatm());
+            //to get current time
+            realmacc.setDatm(unixTimes);
             realmacc.setLogprx(b.getLogprx());
 
-            System.out.println("RealmAccount " + b.getAccnumber() + " " + b.getAcctype());
+            System.out.println("save RealmAccount " + b.getAccnumber() + " " + b.getAcctype() + " " + unixTimes);
 
             mRealm.beginTransaction();
             mRealm.copyToRealm(realmacc);
@@ -356,9 +365,11 @@ public class DgAllEmpsAbsDataModel implements DgAllEmpsAbsIDataModel {
         List<Account> myaccounts = new ArrayList<>();
         for (RealmAccount b : results) {
 
-            Account account = new Account(b.getAccname(), b.getAccnumber(), b.getAccdoc()
+            Account account = new Account("rm " + b.getDatm() + " " + b.getAccname(), b.getAccnumber(), b.getAccdoc()
                     ,b.getAccdov(), b.getAcctype(), b.getDatm(), b.getLogprx() );
             myaccounts.add(account);
+
+            System.out.println("get RealmAccount " + b.getAccnumber() + " " + b.getAcctype() + " " + b.getDatm());
 
         }
 

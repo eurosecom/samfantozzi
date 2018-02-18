@@ -545,12 +545,22 @@ public class DgAllEmpsAbsMvvmViewModel {
         String firx = mSharedPreferences.getString("fir", "");
         String rokx = mSharedPreferences.getString("rok", "");
         String uctox = mSharedPreferences.getString("firduct", "");
+        long unixTimel = System.currentTimeMillis() / 1000L;
+
+        return Observable.concatEager(
+                mDataModel.getReceiptsExpensesFromRealm(encrypted, ds, firx, rokx, drh, drupoh, uctox)
+                        .filter(x -> x.size() > 0 )
+                        .filter(x -> unixTimel - Long.valueOf(x.get(0).getDatm()) < 1800 ),
+                mDataModel.getReceiptsExpensesFromSql(encrypted, ds, firx, rokx, drh, drupoh, uctox)
+                        .observeOn(mSchedulerProvider.ui()) //switch to ui because of Realm is initialize in ui
+                        .flatMap(listaccounts -> mDataModel.saveReceiptsExpensesToRealm(listaccounts))
+                 ).first();
 
         //return mDataModel.getReceiptsExpensesFromSql(encrypted, ds, firx, rokx, drh, drupoh, uctox)
         //        .observeOn(mSchedulerProvider.ui()) //switch to ui because of Realm is initialize in ui
         //        .flatMap(listaccounts -> mDataModel.saveReceiptsExpensesToRealm(listaccounts));
 
-        return mDataModel.getReceiptsExpensesFromRealm(encrypted, ds, firx, rokx, drh, drupoh, uctox);
+        //return mDataModel.getReceiptsExpensesFromRealm(encrypted, ds, firx, rokx, drh, drupoh, uctox);
 
     }
     //end get get uct.pohyby from MySql server
