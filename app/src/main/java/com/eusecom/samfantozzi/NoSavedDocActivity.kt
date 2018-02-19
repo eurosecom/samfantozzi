@@ -143,7 +143,7 @@ class NoSavedDocActivity : AppCompatActivity() {
         invoicex.uzid = savedinv.get(0).uzid
         invoicex.kto = savedinv.get(0).kto
         invoicex.poh = savedinv.get(0).poh
-        mViewModel.emitDeleteAllInvoicesFromRealm(invoicex);
+        mViewModel.emitDeleteInvoiceFromRealm(invoicex);
 
     }
 
