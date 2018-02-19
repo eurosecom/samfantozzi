@@ -185,15 +185,16 @@ class CashListKtFragment : Fragment() {
     }
 
     private fun unBind() {
+
+        mViewModel.clearObservableAbsencesFromFB()
+        mViewModel.clearObservableCashListQuery()
+        mViewModel.clearObservableInvoiceDelFromServer()
         mSubscription?.unsubscribe()
         mSubscription?.clear()
         _disposables.dispose()
         if (mDisposable != null) {
             mDisposable?.dispose()
         }
-        mViewModel.clearObservableAbsencesFromFB()
-        mViewModel.clearObservableCashListQuery()
-        mViewModel.clearObservableInvoiceDelFromServer()
         hideProgressBar()
 
     }

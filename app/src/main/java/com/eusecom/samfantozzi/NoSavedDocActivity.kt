@@ -150,11 +150,12 @@ class NoSavedDocActivity : AppCompatActivity() {
 
     override fun onDestroy() {
         super.onDestroy()
-        mSubscription.unsubscribe()
-        mSubscription.clear()
         mViewModel.clearDeleteInvoiceRealm()
         mViewModel.clearDeleteAllInvoicesRealm()
         mViewModel.clearObservableInvoiceToServer()
+        mSubscription.unsubscribe()
+        mSubscription.clear()
+
     }
 
     fun getTodoNoSavedDocDialog(invoice: RealmInvoice) {

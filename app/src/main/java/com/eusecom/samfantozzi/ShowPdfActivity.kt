@@ -102,9 +102,10 @@ class ShowPdfActivity : AppCompatActivity() {
 
     override fun onDestroy() {
         super.onDestroy()
+        mViewModel.clearObservableDocPDF()
         mSubscription.unsubscribe()
         mSubscription.clear()
-        mViewModel.clearObservableDocPDF()
+
     }
 
 

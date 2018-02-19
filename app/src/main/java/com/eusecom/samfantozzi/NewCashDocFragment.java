@@ -375,13 +375,14 @@ public class NewCashDocFragment extends Fragment {
     public void onDestroy() {
         super.onDestroy();
         ButterKnife.unbind(this);
+        mViewModel.clearObservableIdModelCompany();
+        mViewModel.clearObservableRecount();
+        mViewModel.clearObservableInvoiceSaveToRealm();
         _disposableObserver.dispose();
         mSubscription.clear();
         _disposables.dispose();
         subscriptionSave.unsubscribe();
-        mViewModel.clearObservableIdModelCompany();
-        mViewModel.clearObservableRecount();
-        mViewModel.clearObservableInvoiceSaveToRealm();
+
 
     }
 

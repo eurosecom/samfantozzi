@@ -190,15 +190,15 @@ class IdcListKtFragment : Fragment() {
     }
 
     private fun unBind() {
+        mViewModel.clearObservableAbsencesFromFB()
+        mViewModel.clearObservableDocPDF()
+        mViewModel.clearObservableCashListQuery()
         mSubscription?.unsubscribe()
         mSubscription?.clear()
         _disposables.dispose()
         if (mDisposable != null) {
             mDisposable?.dispose()
         }
-        mViewModel.clearObservableAbsencesFromFB()
-        mViewModel.clearObservableDocPDF()
-        mViewModel.clearObservableCashListQuery()
         hideProgressBar()
 
     }
