@@ -6,6 +6,7 @@ import android.content.Intent
 import android.content.SharedPreferences
 import android.net.Uri
 import android.os.Bundle
+import android.support.annotation.NonNull
 import android.support.v4.app.ActivityCompat
 import android.support.v4.app.Fragment
 import android.support.v4.view.MenuItemCompat
@@ -65,7 +66,7 @@ class AutopohListKtFragment : Fragment() {
     private var searchView: SearchView? = null
     private var onQueryTextListener: SearchView.OnQueryTextListener? = null
     private var mDisposable: Disposable? = null
-    protected var mIdcSearchEngine: IdcSearchEngine? = null
+    protected var mAutopohSearchEngine: AutopohSearchEngine? = null
     var searchManager: SearchManager? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -79,7 +80,7 @@ class AutopohListKtFragment : Fragment() {
     override fun onCreateView(inflater: LayoutInflater?, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
         super.onCreateView(inflater, container, savedInstanceState)
-        val rootView = inflater!!.inflate(R.layout.fragment_idclistkt, container, false)
+        val rootView = inflater!!.inflate(R.layout.fragment_acclistkt, container, false)
 
         mRecycler = rootView.findViewById<View>(R.id.list) as RecyclerView
         mRecycler?.setHasFixedSize(true)
@@ -94,7 +95,7 @@ class AutopohListKtFragment : Fragment() {
 
         mAdapter = AutopohListAdapter(_rxBus)
         mAdapter?.setAbsserver(emptyList())
-        mIdcSearchEngine = IdcSearchEngine(emptyList())
+        mAutopohSearchEngine = AutopohSearchEngine(emptyList())
         // Set up Layout Manager, reverse layout
         mManager = LinearLayoutManager(context)
         mManager?.setReverseLayout(true)
@@ -114,15 +115,15 @@ class AutopohListKtFragment : Fragment() {
                 .add(tapEventEmitter.subscribe { event ->
                     if (event is IdcListKtFragment.ClickFobEvent) {
                         //Log.d("IdcListKtActivity  ", " fobClick ")
-                        newCashDocDialog().show()
+                        //newCashDocDialog().show()
 
                     }
-                    if (event is IdCompanyKt) {
+                    if (event is Account) {
 
-                        val usnamex = event.nai
+                        val usnamex = event.accname
 
                         //Log.d("CashListKtFragment ", usnamex)
-                        getTodoDialog(event)
+                        //getTodoDialog(event)
 
 
                     }
@@ -140,44 +141,22 @@ class AutopohListKtFragment : Fragment() {
         mSubscription = CompositeSubscription()
 
         showProgressBar()
-        mSubscription?.add(mViewModel.getMyInvoicesFromSqlServer("3")
+        mSubscription?.add(mViewModel.getMyPohybyFromSqlServer("100", "1", 10)
                 .subscribeOn(Schedulers.computation())
                 .observeOn(rx.android.schedulers.AndroidSchedulers.mainThread())
                 .doOnError { throwable ->
-                    Log.e("IdcListKtFragment", "Error Throwable " + throwable.message)
+                    Log.e("AutopohListKtFragment", "Error Throwable " + throwable.message)
                     hideProgressBar()
                     toast("Server not connected")
                 }
                 .onErrorResumeNext { throwable -> Observable.empty() }
-                .subscribe { it -> setServerInvoices(it) })
-
-        mSubscription?.add(mViewModel.getMyIdcFromSqlServer("2")
-                .subscribeOn(Schedulers.computation())
-                .observeOn(rx.android.schedulers.AndroidSchedulers.mainThread())
-                .doOnError { throwable ->
-                    Log.e("IdcListKtFragment", "Error Throwable " + throwable.message)
-                    hideProgressBar()
-                    toast("Server not connected")
-                }
-                .onErrorResumeNext { throwable -> Observable.empty() }
-                .subscribe { it -> setIdCompanies(it) })
-
-        mSubscription?.add(mViewModel.getObservableDocPdf()
-                .subscribeOn(Schedulers.computation())
-                .observeOn(rx.android.schedulers.AndroidSchedulers.mainThread())
-                .doOnError { throwable ->
-                    Log.e("IdcListKtFragment", "Error Throwable " + throwable.message)
-                    hideProgressBar()
-                    toast("Server not connected")
-                }
-                .onErrorResumeNext { throwable -> Observable.empty() }
-                .subscribe { it -> setUriPdf(it) })
+                .subscribe { it -> setPohyby(it) })
 
         mSubscription?.add(mViewModel.getMyObservableCashListQuery()
                 .subscribeOn(Schedulers.computation())
                 .observeOn(rx.android.schedulers.AndroidSchedulers.mainThread())
                 .doOnError { throwable ->
-                    Log.e("IdcListKtFragment", "Error Throwable " + throwable.message)
+                    Log.e("AutoPohListKtFragment", "Error Throwable " + throwable.message)
                     hideProgressBar()
                     toast("Server not connected")
                 }
@@ -190,15 +169,16 @@ class AutopohListKtFragment : Fragment() {
     }
 
     private fun unBind() {
+
+        mViewModel.clearObservableCashListQuery()
+
         mSubscription?.unsubscribe()
         mSubscription?.clear()
         _disposables.dispose()
         if (mDisposable != null) {
             mDisposable?.dispose()
         }
-        mViewModel.clearObservableAbsencesFromFB()
-        mViewModel.clearObservableDocPDF()
-        mViewModel.clearObservableCashListQuery()
+
         hideProgressBar()
 
     }
@@ -214,44 +194,29 @@ class AutopohListKtFragment : Fragment() {
 
     }
 
-    private fun setIdCompanies(idcs: List<IdCompanyKt>) {
 
-        //toast(" idcompanykt0 " + idcs.get(0).nai)
-        mAdapter?.setAbsserver(idcs)
-        nastavResultAs(idcs)
+    private fun setPohyby( pohyby: List<Account>) {
+        //toast(" pohyb0 " + pohyby.get(0).accname)
+        mAdapter?.setAbsserver(pohyby)
+        nastavResultAs(pohyby)
         hideProgressBar()
     }
 
-    private fun setServerInvoices(invoices: List<Invoice>) {
 
-        //toast(" nai0 " + invoices.get(0).nai)
-        //mAdapter?.setAbsserver(invoices)
-        //nastavResultAs(invoices)
-        //hideProgressBar()
-    }
-
-    protected fun showResultAs(resultAs: List<IdCompanyKt>) {
+    protected fun showResultAs(resultAs: List<Account>) {
 
         if (resultAs.isEmpty()) {
-            //Toast.makeText(getActivity(), R.string.nothing_found, Toast.LENGTH_SHORT).show();
-            mAdapter?.setAbsserver(emptyList<IdCompanyKt>())
+            mAdapter?.setAbsserver(emptyList<Account>())
         } else {
-            //Log.d("showResultAs ", resultAs.get(0).dmna);
             mAdapter?.setAbsserver(resultAs)
         }
     }
 
-    protected fun nastavResultAs(resultAs: List<IdCompanyKt>) {
-        mIdcSearchEngine = IdcSearchEngine(resultAs)
+    protected fun nastavResultAs(resultAs: List<Account>) {
+        mAutopohSearchEngine = AutopohSearchEngine(resultAs)
     }
 
-    private fun setUriPdf(uri: Uri) {
 
-        val intent = Intent(Intent.ACTION_VIEW, uri)
-        intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP
-        startActivity(intent)
-
-    }
 
     class ClickFobEvent
 
@@ -307,22 +272,6 @@ class AutopohListKtFragment : Fragment() {
             return true
         }
 
-        if (id == R.id.action_setmonth) {
-
-            val `is` = Intent(activity, ChooseMonthActivity::class.java)
-            startActivity(`is`)
-            return true
-        }
-
-        if (id == R.id.action_setaccount) {
-
-            val `is` = Intent(activity, ChooseAccountActivity::class.java)
-            val extras = Bundle()
-            extras.putString("fromact", "3")
-            `is`.putExtras(extras)
-            startActivity(`is`)
-            return true
-        }
 
         return super.onOptionsItemSelected(item)
     }
@@ -337,8 +286,8 @@ class AutopohListKtFragment : Fragment() {
                 .observeOn(AndroidSchedulers.mainThread())
                 .doOnNext { showProgressBar() }
                 .observeOn(io.reactivex.schedulers.Schedulers.io())
-                .map(Function<String, List<IdCompanyKt>> {
-                    query -> mIdcSearchEngine?.searchModel(query)
+                .map(Function<String, List<Account>> {
+                    query -> mAutopohSearchEngine?.searchModel(query)
                 })
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe { result ->
@@ -378,91 +327,6 @@ class AutopohListKtFragment : Fragment() {
         return searchViewTextChangeObservable
                 .filter { query -> query.length >= 3 || query == "" }.debounce(300, TimeUnit.MILLISECONDS)  // add this line
     }
-
-
-    fun getTodoDialog(idcompany: IdCompanyKt) {
-
-        val inflater = LayoutInflater.from(activity)
-        val textenter = inflater.inflate(R.layout.idcompany_edit_dialog, null)
-
-        val valuex = textenter.findViewById<View>(R.id.valuex) as TextView
-        valuex.text = idcompany.nai
-
-        val builder = AlertDialog.Builder(activity)
-        builder.setView(textenter).setTitle(getString(R.string.idc) + " " + idcompany.ico)
-
-        builder.setItems(arrayOf<CharSequence>(getString(R.string.chooseidc), getString(R.string.edit))
-        ) { dialog, which ->
-            // The 'which' argument contains the index position
-            // of the selected item
-            when (which) {
-                0 -> {
-                    //mViewModel.emitDocumentPdfUri(invoice)
-                    val i = activity.intent
-                    val extras = Bundle()
-                    extras.putString("akeico", idcompany.ico)
-                    i.putExtras(extras)
-
-                    activity.setResult(201, i)
-                    activity.finish()
-                }
-                1 -> {
-                    editDialog(idcompany).show()
-                }
-
-            }
-        }
-        val dialog = builder.create()
-        builder.show()
-
-    }
-
-    fun newCashDocDialog(): AlertDialogBuilder {
-
-        alert = alert() {
-            positiveButton(R.string.expense) { navigateToNewCashDocTest(2) }
-            neutralButton(R.string.receipt)  { navigateToNewCashDoc(1) }
-        }
-        val titlex: String = getString(R.string.createdoc)
-        alert.title(titlex)
-
-        return alert
-
-    }
-
-    fun navigateToNewCashDoc(drupoh: Int){
-
-        getActivity().startActivity<NewCashDocKtActivity>()
-
-    }
-
-    fun navigateToNewCashDocTest(drupoh: Int){
-
-        //getActivity().startActivity<InvoiceListKtActivity>()
-        //val intent = Intent(getActivity(), FormValidationActivity::class.java)
-        //startActivity(intent)
-
-    }
-
-    fun editDialog(idcompany: IdCompanyKt): AlertDialogBuilder {
-
-        alert = alert() {
-            positiveButton(R.string.edit) { navigateToEditDoc(idcompany) }
-            neutralButton(R.string.close)
-        }
-        val titlex: String = getString(R.string.editidc) + " " + idcompany.ico
-        alert.title(titlex)
-
-        return alert
-
-    }
-
-    fun navigateToEditDoc(idcompany: IdCompanyKt){
-
-        //getActivity().startActivity<InvoiceListKtActivity>()
-
-    }
-
 
 
 

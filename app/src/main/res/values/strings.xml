@@ -236,6 +236,9 @@
 
     //typesktactivity
     <string name="autoacc">AutoAcc</string>
+    <string name="numbershort">Num.</string>
+    <string name="akeuct">Accounting</string>
+    <string name="akydruh">Type</string>
 
     //nosaveddocactivity
     <string name="action_nosaveddoc">Docs not saved to Server</string>

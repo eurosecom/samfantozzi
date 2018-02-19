@@ -53,7 +53,7 @@ class TypesKtActivity : AppCompatActivity() {
             // Create the adapter that will return a fragment for each section
             mPagerAdapter = object : FragmentPagerAdapter(supportFragmentManager) {
                 private val mFragments = arrayOf(IdcListKtFragment(), AutopohListKtFragment(), EmptyKtFragment())
-                private val mFragmentNames = arrayOf(getString(R.string.idc), getString(R.string.autoacc), getString(R.string.empty))
+                private val mFragmentNames = arrayOf(getString(R.string.idcshort), getString(R.string.autoacc), getString(R.string.empty))
 
                 override fun getItem(position: Int): Fragment {
                     return mFragments[position]

@@ -32,13 +32,15 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import com.eusecom.samfantozzi.rxbus.RxBus;
 import com.squareup.picasso.Picasso;
+
+import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 
 public class AutopohListAdapter extends RecyclerView.Adapter<AutopohListAdapter.AutopohListViewHolder> {
 
-    private List<IdCompanyKt> mListabsserver;
+    private List<Account> mListabsserver;
     private RxBus _rxBus;
 
     AutopohListAdapter(RxBus bus){
@@ -48,7 +50,7 @@ public class AutopohListAdapter extends RecyclerView.Adapter<AutopohListAdapter.
 
   @Override
   public AutopohListViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-    View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_idclist,parent,false);
+    View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_acclist,parent,false);
 
     return new AutopohListViewHolder(view);
   }
@@ -56,27 +58,27 @@ public class AutopohListAdapter extends RecyclerView.Adapter<AutopohListAdapter.
   @Override
   public void onBindViewHolder(AutopohListViewHolder holder, int position) {
 
-      holder.invoice_name.setText(mListabsserver.get(position).getNai() + " " + mListabsserver.get(position).getMes());
-      Picasso.with(holder.mContext).load(R.drawable.ic_account_balance_black_24dp).resize(120, 120).into(holder.invoice_photo);
+      holder.accname.setText(mListabsserver.get(position).getAccname() );
+      Picasso.with(holder.mContext).load(R.drawable.ic_insert_drive_file_black_24dp).resize(120, 120).into(holder.accphoto);
 
-      holder.icox.setText(mListabsserver.get(position).getIco());
+      holder.accnumber.setText(mListabsserver.get(position).getAccnumber());
 
-      holder.dicx.setText(mListabsserver.get(position).getIcd());
+      holder.akeuct.setText(getDateTime(mListabsserver.get(position).getDatm()));
 
-      holder.telx.setText(mListabsserver.get(position).getTel());
+      holder.akypoh.setText(mListabsserver.get(position).getAcctype());
 
       holder.setClickListener(new AutopohListAdapter.AutopohListViewHolder.ClickListener() {
           public void onClick(View v, int pos, boolean isLongClick) {
               if (isLongClick) {
 
                   // View v at position pos is long-clicked.
-                  Log.d("onLongClickListener", mListabsserver.get(pos).getNai());
+                  //Log.d("onLongClickListener", mListabsserver.get(pos).getNai());
                   //getDialog(mListabsserver.get(position).longi, mListabsserver.get(position), holder.mContext);
 
 
               } else {
 
-                  Log.d("onShortClickListener", mListabsserver.get(pos).getNai());
+                  //Log.d("onShortClickListener", mListabsserver.get(pos).getNai());
                   _rxBus.send(mListabsserver.get(pos));
               }
           }
@@ -90,7 +92,7 @@ public class AutopohListAdapter extends RecyclerView.Adapter<AutopohListAdapter.
     }
 
 
-    public void setAbsserver(List<IdCompanyKt> listabsserver) {
+    public void setAbsserver(List<Account> listabsserver) {
         mListabsserver = listabsserver;
         //Log.d("setAbsserver ", mListabsserver.get(0).dmna);
         notifyDataSetChanged();
@@ -99,11 +101,11 @@ public class AutopohListAdapter extends RecyclerView.Adapter<AutopohListAdapter.
 
   public static class AutopohListViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener, View.OnLongClickListener{
 
-      public TextView invoice_name;
-      public ImageView invoice_photo;
-      public TextView icox;
-      public TextView dicx;
-      public TextView telx;
+      public TextView accname;
+      public ImageView accphoto;
+      public TextView accnumber;
+      public TextView akeuct;
+      public TextView akypoh;
 
       private ClickListener clickListener;
       Context mContext;
@@ -111,11 +113,11 @@ public class AutopohListAdapter extends RecyclerView.Adapter<AutopohListAdapter.
     public AutopohListViewHolder(View itemView) {
         super(itemView);
 
-        invoice_name = (TextView) itemView.findViewById(R.id.invoice_name);
-        invoice_photo = (ImageView) itemView.findViewById(R.id.invoice_photo);
-        icox = (TextView) itemView.findViewById(R.id.icox);
-        dicx = (TextView) itemView.findViewById(R.id.dicx);
-        telx = (TextView) itemView.findViewById(R.id.telx);
+        accname = (TextView) itemView.findViewById(R.id.accname);
+        accphoto = (ImageView) itemView.findViewById(R.id.accphoto);
+        accnumber = (TextView) itemView.findViewById(R.id.accnumber);
+        akeuct = (TextView) itemView.findViewById(R.id.akeuct);
+        akypoh = (TextView) itemView.findViewById(R.id.akypoh);
 
         mContext = itemView.getContext();
         itemView.setOnClickListener(this);
@@ -160,17 +162,13 @@ public class AutopohListAdapter extends RecyclerView.Adapter<AutopohListAdapter.
 
   }//end class viewholder
 
-    private String getDateString(String date){
+    private String getDateTime(String timeStamp10s){
 
+        long timeStamp = 1000 * Long.valueOf(timeStamp10s);
         try{
-            String strCurrentDate = date;
-            SimpleDateFormat format = new SimpleDateFormat("yyyy-mm-dd");
-            Date newDate = format.parse(strCurrentDate);
-
-            format = new SimpleDateFormat("dd.mm.yy");
-            String datenew = format.format(newDate);
-
-            return datenew;
+            DateFormat sdf = new SimpleDateFormat("dd.MM.yyyy HH:mm");
+            Date netDate = (new Date(timeStamp));
+            return sdf.format(netDate);
         }
         catch(Exception ex){
             return "xx";
