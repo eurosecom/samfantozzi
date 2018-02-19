@@ -521,7 +521,7 @@ public class DgAllEmpsAbsMvvmViewModel {
     //end emit Observable<CalcVatKt> recount
 
     //get uct.pohyby from MySql server
-    public Observable<List<Account>> getMyPohybyFromSqlServer(String drh, String drupoh) {
+    public Observable<List<Account>> getMyPohybyFromSqlServer(String drh, String drupoh, int interval) {
 
         Random r = new Random();
         double d = -10.0 + r.nextDouble() * 20.0;
@@ -550,10 +550,10 @@ public class DgAllEmpsAbsMvvmViewModel {
         return Observable.concatEager(
                 mDataModel.getReceiptsExpensesFromRealm(encrypted, ds, firx, rokx, drh, drupoh, uctox)
                         .filter(x -> x.size() > 0 )
-                        .filter(x -> unixTimel - Long.valueOf(x.get(0).getDatm()) < 1800 ),
+                        .filter(x -> unixTimel - Long.valueOf(x.get(0).getDatm()) < interval ),
                 mDataModel.getReceiptsExpensesFromSql(encrypted, ds, firx, rokx, drh, drupoh, uctox)
                         .observeOn(mSchedulerProvider.ui()) //switch to ui because of Realm is initialize in ui
-                        .flatMap(listaccounts -> mDataModel.saveReceiptsExpensesToRealm(listaccounts))
+                        .flatMap(listaccounts -> mDataModel.saveReceiptsExpensesToRealm(listaccounts, drh))
                  ).first();
 
         //return mDataModel.getReceiptsExpensesFromSql(encrypted, ds, firx, rokx, drh, drupoh, uctox)

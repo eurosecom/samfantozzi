@@ -313,7 +313,7 @@ public class DgAllEmpsAbsDataModel implements DgAllEmpsAbsIDataModel {
     }
 
     @NonNull
-    public Observable<List<Account>> saveReceiptsExpensesToRealm(List<Account> recexp){
+    public Observable<List<Account>> saveReceiptsExpensesToRealm(List<Account> recexp, String drh){
 
         //clear all items in table
         //mRealm.beginTransaction();
@@ -321,13 +321,23 @@ public class DgAllEmpsAbsDataModel implements DgAllEmpsAbsIDataModel {
         //mRealm.commitTransaction();
 
         String typex = recexp.get(0).getAcctype();
-        mRealm.executeTransaction(new Realm.Transaction() {
-            @Override
-            public void execute(Realm realm) {
-                RealmResults<RealmAccount> result = realm.where(RealmAccount.class).equalTo("acctype", typex).findAll();
-                result.clear();
-            }
-        });
+        if(drh.equals("100")) {
+            mRealm.executeTransaction(new Realm.Transaction() {
+                @Override
+                public void execute(Realm realm) {
+                    RealmResults<RealmAccount> result = realm.where(RealmAccount.class).equalTo("accdoc", "0").findAll();
+                    result.clear();
+                }
+            });
+        }else{
+            mRealm.executeTransaction(new Realm.Transaction() {
+                @Override
+                public void execute(Realm realm) {
+                    RealmResults<RealmAccount> result = realm.where(RealmAccount.class).equalTo("acctype", typex).findAll();
+                    result.clear();
+                }
+            });
+        }
 
         for (Account b : recexp) {
 
@@ -360,7 +370,12 @@ public class DgAllEmpsAbsDataModel implements DgAllEmpsAbsIDataModel {
     public Observable<List<Account>> getReceiptsExpensesFromRealm(String userhash, String userid, String fromfir
             , String vyb_rok, String drh, String drupoh, String ucto) {
 
-        List<RealmAccount> results = mRealm.where(RealmAccount.class).equalTo("acctype", drupoh).findAll();
+        List<RealmAccount> results = null;
+        if(drh.equals("100")) {
+            results = mRealm.where(RealmAccount.class).equalTo("accdoc", "0").findAll();
+        }else{
+            results = mRealm.where(RealmAccount.class).equalTo("acctype", drupoh).findAll();
+        }
 
         List<Account> myaccounts = new ArrayList<>();
         for (RealmAccount b : results) {

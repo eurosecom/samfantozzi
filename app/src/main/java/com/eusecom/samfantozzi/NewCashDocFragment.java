@@ -425,7 +425,7 @@ public class NewCashDocFragment extends Fragment {
 
         }
 
-        mSubscription.add(mViewModel.getMyPohybyFromSqlServer("3", drupoh)
+        mSubscription.add(mViewModel.getMyPohybyFromSqlServer("3", drupoh, 120)
                 .subscribeOn(Schedulers.computation())
                 .observeOn(rx.android.schedulers.AndroidSchedulers.mainThread())
                 .doOnError(throwable -> { Log.e(TAG, "Error NewCashDocFragment " + throwable.getMessage());
