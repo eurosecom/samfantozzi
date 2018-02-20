@@ -260,12 +260,42 @@ public class DgAllEmpsAbsDataModel implements DgAllEmpsAbsIDataModel {
             , @NonNull final String rokx, @NonNull final String serverx, @NonNull final String adresx
             , String encrypted) {
 
-        String drupoh = "1";
-        Log.d("dokx ", invx.getDok());
-        return Observable.just(Uri.parse("http://" + serverx +
-                "/ucto/vspk_pdf.php?cislo_dok=" + invx.getDok() + "&hladaj_dok=" + invx.getDok()
-                + "&sysx=UCT&rozuct=ANO&zandroidu=1&anduct=1&copern=20&drupoh="+ drupoh + "&page=1&serverx="
-                + adresx + "&userhash=" + encrypted + "&rokx=" + rokx + "&firx=" + firx + "&newfntz=1" ));
+
+            Log.d("dokx ", invx.getDok());
+            Log.d("drhx ", invx.getDrh());
+
+            Uri uri = null;
+            if (invx.getDrh().equals("31")){
+                String drupoh = "1";
+            uri = Uri.parse("http://" + serverx +
+                    "/ucto/vspk_pdf.php?cislo_dok=" + invx.getDok() + "&hladaj_dok=" + invx.getDok()
+                    + "&sysx=UCT&rozuct=ANO&zandroidu=1&anduct=1&copern=20&drupoh="+ drupoh + "&page=1&serverx="
+                    + adresx + "&userhash=" + encrypted + "&rokx=" + rokx + "&firx=" + firx + "&newfntz=1");
+            }
+            if (invx.getDrh().equals("32")){
+                String drupoh = "1";
+            uri = Uri.parse("http://" + serverx +
+                    "/ucto/vspk_pdf.php?cislo_dok=" + invx.getDok() + "&hladaj_dok=" + invx.getDok()
+                    + "&sysx=UCT&rozuct=ANO&zandroidu=1&anduct=1&copern=20&drupoh="+ drupoh + "&page=1&serverx="
+                    + adresx + "&userhash=" + encrypted + "&rokx=" + rokx + "&firx=" + firx + "&newfntz=1");
+            }
+            if (invx.getDrh().equals("1")){
+                String drupoh = "1";
+            uri = Uri.parse("http://" + serverx +
+                    "/faktury/vstf_pdf.php?cislo_dok=" + invx.getDok() + "&hladaj_dok=" + invx.getDok()
+                    + "&mini=1&tlacitR=1&sysx=UCT&rozuct=ANO&zandroidu=1&anduct=1&h_razitko=1&copern=20&drupoh=1&page=1&serverx="
+                    + adresx + "&userhash=" + encrypted + "&rokx=" + rokx + "&firx=" + firx + "&newfntz=1");
+            }
+            if (invx.getDrh().equals("2")){
+                String drupoh = "1";
+            uri = Uri.parse("http://" + serverx +
+                    "/faktury/vstf_pdf.php?cislo_dok=" + invx.getDok() + "&hladaj_dok=" + invx.getDok()
+                    + "&mini=1&tlacitR=1&sysx=UCT&rozuct=ANO&zandroidu=1&anduct=1&h_razitko=1&copern=20&drupoh=2&page=1&serverx="
+                    + adresx + "&userhash=" + encrypted + "&rokx=" + rokx + "&firx=" + firx + "&newfntz=1");
+            }
+
+            return Observable.just(uri);
+
     }
 
     @NonNull

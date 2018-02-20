@@ -359,6 +359,15 @@ public class InvoiceListFragment extends Fragment {
                         switch (which) {
                             case 0:
 
+                                Intent is = new Intent(getActivity(), ShowPdfActivity.class);
+                                Bundle extras = new Bundle();
+                                extras.putString("fromact", "1");
+                                extras.putString("drhx", invoice.getDrh());
+                                extras.putString("ucex", invoice.getUce());
+                                extras.putString("dokx", invoice.getDok());
+                                is.putExtras(extras);
+                                startActivity(is);
+
                                 break;
                             case 1:
 
