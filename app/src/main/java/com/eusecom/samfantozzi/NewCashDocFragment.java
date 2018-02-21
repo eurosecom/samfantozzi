@@ -592,9 +592,8 @@ public class NewCashDocFragment extends Fragment {
         //newdok
         if(newdok.equals("1")) {
 
-            Calendar c = Calendar.getInstance();
-            SimpleDateFormat df = new SimpleDateFormat("dd.MM.yyyy");
-            String formattedDate = df.format(c.getTime());
+            String formattedDate = mViewModel.getMaxDateOfMonth(mSharedPreferences.getString("ume", ""));
+
             if (_datex.getText().toString().equals("")) {
                 _datex.setText(formattedDate);
             }
@@ -701,12 +700,12 @@ public class NewCashDocFragment extends Fragment {
                                 _datex.setError("Invalid Date!");
                             }
 
-                            boolean personValid = !isEmpty(newPerson) && newPerson.length() > 3;
+                            boolean personValid = !isEmpty(newPerson) && newPerson.length() > 1;
                             if (!personValid) {
                                 _person.setError("Invalid Person!");
                             }
 
-                            boolean memoValid = !isEmpty(newMemo) && newMemo.length() > 3;
+                            boolean memoValid = !isEmpty(newMemo) && newMemo.length() > 1;
                             if (!memoValid) {
                                 _memo.setError("Invalid Memo!");
                             }

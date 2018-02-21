@@ -15,6 +15,7 @@ import com.eusecom.samfantozzi.mvvmschedulers.ISchedulerProvider;
 import com.eusecom.samfantozzi.realm.RealmEmployee;
 import com.eusecom.samfantozzi.realm.RealmInvoice;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
@@ -657,48 +658,6 @@ public class DgAllEmpsAbsMvvmViewModel {
 
     }
 
-
-    //DatePickerDialog
-    public DatePickerDialog getDatePickerFromMvvm(String datumx, String posbut, Context context) {
-
-        final Calendar calendar = Calendar.getInstance();
-        int yy = calendar.get(Calendar.YEAR);
-        int mm = calendar.get(Calendar.MONTH);
-        int dd = calendar.get(Calendar.DAY_OF_MONTH);
-        //dd = 38;
-
-        //String datumx = "12.12.2017";
-
-        String delims = "[.]+";
-        String[] datumxxx = datumx.split(delims);
-
-        String ddx = datumxxx[0];
-        String mmx = datumxxx[1];
-        String yyx = datumxxx[2];
-
-        int ddi = Integer.parseInt(ddx);
-        int mmi = Integer.parseInt(mmx);
-        int yyi = Integer.parseInt(yyx);
-        dd=ddi; mm=mmi-1; yy=yyi;
-
-        DatePickerDialog dpd = new DatePickerDialog(context, null, yy, mm, dd);
-        //dpd.setButton(DatePickerDialog.BUTTON_NEGATIVE, "Button Neg Text", dpd);
-        dpd.setButton(DialogInterface.BUTTON_POSITIVE, posbut, new DialogInterface.OnClickListener()
-        {
-            public void onClick(DialogInterface dialog, int which) {
-                if (which == DialogInterface.BUTTON_POSITIVE) {
-
-                }
-            }
-
-        });
-
-
-        return dpd;
-    }
-    //end DatePickerDialog
-
-
     //IdcKtFragment and TypesKtActivity
 
     //get IDC from MySql server
@@ -832,6 +791,68 @@ public class DgAllEmpsAbsMvvmViewModel {
 
     }
     //end save Invoice to Mysql
+
+    //date fun
+    //DatePickerDialog
+    public DatePickerDialog getDatePickerFromMvvm(String datumx, String posbut, Context context) {
+
+        final Calendar calendar = Calendar.getInstance();
+        int yy = calendar.get(Calendar.YEAR);
+        int mm = calendar.get(Calendar.MONTH);
+        int dd = calendar.get(Calendar.DAY_OF_MONTH);
+        //dd = 38;
+
+        //String datumx = "12.12.2017";
+
+        String delims = "[.]+";
+        String[] datumxxx = datumx.split(delims);
+
+        String ddx = datumxxx[0];
+        String mmx = datumxxx[1];
+        String yyx = datumxxx[2];
+
+        int ddi = Integer.parseInt(ddx);
+        int mmi = Integer.parseInt(mmx);
+        int yyi = Integer.parseInt(yyx);
+        dd=ddi; mm=mmi-1; yy=yyi;
+
+        DatePickerDialog dpd = new DatePickerDialog(context, null, yy, mm, dd);
+        //dpd.setButton(DatePickerDialog.BUTTON_NEGATIVE, "Button Neg Text", dpd);
+        dpd.setButton(DialogInterface.BUTTON_POSITIVE, posbut, new DialogInterface.OnClickListener()
+        {
+            public void onClick(DialogInterface dialog, int which) {
+                if (which == DialogInterface.BUTTON_POSITIVE) {
+
+                }
+            }
+
+        });
+
+
+        return dpd;
+    }
+    //end DatePickerDialog
+
+    // max date of month
+    public String getMaxDateOfMonth(String ume) {
+
+        String delims = "[.]+";
+        String[] datumxxx = ume.split(delims);
+        String mmx = datumxxx[0];
+        String rrx = datumxxx[1];
+        int mmi = Integer.parseInt(mmx);
+        int yyi = Integer.parseInt(rrx);
+
+        Calendar c = Calendar.getInstance();
+        c.set(yyi, mmi - 1, 1);
+        c.set(Calendar.DATE, c.getActualMaximum(Calendar.DATE));
+        SimpleDateFormat df = new SimpleDateFormat("dd.MM.yyyy");
+        String formattedDate = df.format(c.getTime());
+
+
+        return formattedDate;
+    }
+    //end max date of month
 
 
 }
