@@ -29,6 +29,8 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 import com.eusecom.samfantozzi.rxbus.RxBus;
+
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
@@ -81,6 +83,8 @@ public class SupplierListFragment extends Fragment {
     //searchview
     private SearchView searchView;
     private SearchView.OnQueryTextListener onQueryTextListener = null;
+
+    private List<Invoice> invoiceszal = Collections.<Invoice>emptyList();
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -197,12 +201,23 @@ public class SupplierListFragment extends Fragment {
                 .onErrorResumeNext(throwable -> empty())
                 .subscribe(this::setServerInvoices));
 
+        mSubscription.add(mViewModel.getMyInvoiceDelFromServer()
+                .subscribeOn(Schedulers.computation())
+                .observeOn(rx.android.schedulers.AndroidSchedulers.mainThread())
+                .doOnError(throwable -> { Log.e(TAG, "Error SupplierListFragment " + throwable.getMessage());
+                    Toast.makeText(getActivity(), "Server not connected", Toast.LENGTH_SHORT).show();
+                })
+                .onErrorResumeNext(throwable -> empty())
+                .subscribe(this::deletedInvoice));
+
         ActivityCompat.invalidateOptionsMenu(getActivity());
         ((AppCompatActivity)getActivity()).getSupportActionBar().setTitle(mSharedPreferences.getString("ume", "") + " "
                 + mSharedPreferences.getString("doduce", "") + " " +  getString(R.string.suppliers));
  }
 
     private void unBind() {
+
+        mViewModel.clearObservableInvoiceDelFromServer();
         mSubscription.unsubscribe();
         mSubscription.clear();
         if( mDisposable != null ) {mDisposable.dispose();}
@@ -221,10 +236,31 @@ public class SupplierListFragment extends Fragment {
 
     }
 
+    private void deletedInvoice(@NonNull final List<Invoice> invoice) {
+
+        //List<Invoice> invoiceszalnew = Collections.<Invoice>emptyList();
+        List<Invoice> invoiceszalnew = new ArrayList();
+
+        for (int i = 0; i < invoiceszal.size(); i++) {
+            if (!invoiceszal.get(i).getDok().contains(invoice.get(0).getDok())) {
+                invoiceszalnew.add(invoiceszal.get(i));
+                Log.d("undeleted dok ", invoiceszal.get(i).getDok());
+            }
+        }
+
+        invoiceszal = invoiceszalnew;
+        mAdapter.setAbsserver(invoiceszalnew);
+        nastavResultAs(invoiceszalnew);
+
+        Log.d("deleted dok ", invoice.get(0).getDok());
+        hideProgressBar();
+    }
+
 
     private void setServerInvoices(@NonNull final List<Invoice> invoices) {
         //String serverx = invoices.get(0).getNai();
         //Toast.makeText(getActivity(), serverx, Toast.LENGTH_SHORT).show();
+        invoiceszal = invoices;
         if (invoices.isEmpty()) {
             //Toast.makeText(getActivity(), R.string.nothing_found, Toast.LENGTH_SHORT).show();
             mAdapter.setAbsserver(Collections.<Invoice>emptyList());
@@ -374,7 +410,7 @@ public class SupplierListFragment extends Fragment {
 
                                 break;
                             case 2:
-
+                                deleteDialog(invoice);
                                 break;
                         }
                     }
@@ -426,6 +462,31 @@ public class SupplierListFragment extends Fragment {
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    private void deleteDialog(@NonNull final Invoice invoice){
+
+        new AlertDialog.Builder(getActivity())
+                .setTitle(getString(R.string.deletedoc) + " " + invoice.getDok())
+                .setPositiveButton(R.string.delete,
+                        new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog,
+                                                int whichButton) {
+                                showProgressBar();
+                                mViewModel.emitDelInvFromServer(invoice);
+
+                            }
+                        })
+                .setNegativeButton(R.string.close,
+                        new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog,
+                                                int whichButton) {
+
+
+                            }
+                        })
+                .show();
+
     }
 
 

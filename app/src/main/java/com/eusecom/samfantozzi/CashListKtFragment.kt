@@ -225,7 +225,7 @@ class CashListKtFragment : Fragment() {
         invoiceszal = invoiceszalnew
         mAdapter?.setAbsserver(invoiceszalnew)
         nastavResultAs(invoiceszalnew)
-
+        hideProgressBar()
 
     }
 
@@ -525,6 +525,7 @@ class CashListKtFragment : Fragment() {
 
     fun navigateToDeleteDoc(invoice: Invoice){
         //getActivity().startActivity<InvoiceListKtActivity>()
+        showProgressBar()
         mViewModel.emitDelInvFromServer(invoice)
 
     }
