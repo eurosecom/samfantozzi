@@ -158,8 +158,15 @@ public class SupplierListFragment extends Fragment {
                 .add(tapEventEmitter.subscribe(event -> {
                     if (event instanceof SupplierListFragment.ClickFobEvent) {
                         Log.d("SupplierListFragment  ", " fobClick ");
-                        //String serverx = "AbsServerListFragment fobclick";
-                        //Toast.makeText(getActivity(), serverx, Toast.LENGTH_SHORT).show();
+
+                        Intent is = new Intent(getActivity(), NewInvoiceDocKtActivity.class);
+                        Bundle extras = new Bundle();
+                        extras.putString("fromact", "1");
+                        extras.putString("drupoh", "2");
+                        extras.putString("newdok", "1");
+                        extras.putString("edidok", "0");
+                        is.putExtras(extras);
+                        startActivity(is);
 
 
                     }

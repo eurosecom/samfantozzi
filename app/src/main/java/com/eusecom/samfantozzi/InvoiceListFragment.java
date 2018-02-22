@@ -156,9 +156,15 @@ public class InvoiceListFragment extends Fragment {
                 .add(tapEventEmitter.subscribe(event -> {
                     if (event instanceof InvoiceListFragment.ClickFobEvent) {
                         Log.d("InvoiceListFragment  ", " fobClick ");
-                        //String serverx = "AbsServerListFragment fobclick";
-                        //Toast.makeText(getActivity(), serverx, Toast.LENGTH_SHORT).show();
 
+                        Intent is = new Intent(getActivity(), NewInvoiceDocKtActivity.class);
+                        Bundle extras = new Bundle();
+                        extras.putString("fromact", "1");
+                        extras.putString("drupoh", "1");
+                        extras.putString("newdok", "1");
+                        extras.putString("edidok", "0");
+                        is.putExtras(extras);
+                        startActivity(is);
 
                     }
                     if (event instanceof Invoice) {

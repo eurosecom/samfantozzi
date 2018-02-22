@@ -11,6 +11,8 @@ import com.eusecom.samfantozzi.InvoiceListFragment;
 import com.eusecom.samfantozzi.InvoiceListKtActivity;
 import com.eusecom.samfantozzi.NewCashDocFragment;
 import com.eusecom.samfantozzi.NewCashDocKtActivity;
+import com.eusecom.samfantozzi.NewInvoiceDocFragment;
+import com.eusecom.samfantozzi.NewInvoiceDocKtActivity;
 import com.eusecom.samfantozzi.NoSavedDocActivity;
 import com.eusecom.samfantozzi.ShowPdfActivity;
 import com.eusecom.samfantozzi.SupplierListActivity;
@@ -31,6 +33,8 @@ public interface DgAeaComponent {
   void inject(TypesKtActivity typestKtActivity);
   void inject(NewCashDocKtActivity newCashDocKtActivity);
   void inject(NewCashDocFragment newCashDocFragment);
+  void inject(NewInvoiceDocKtActivity newInvoiceDocKtActivity);
+  void inject(NewInvoiceDocFragment newInvoiceDocFragment);
   void inject(CashListKtFragment cashListKtFragment);
   void inject(IdcListKtFragment idcListKtFragment);
   void inject(AutopohListKtFragment autopohListKtFragment);
