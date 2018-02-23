@@ -222,6 +222,17 @@
         <item>801 Illness</item>
     </string-array>
 
+    //newinvoicedocactivity
+    <string name="newcustomer">New customer invoice</string>
+    <string name="newsupplier">New esupplier invoice</string>
+    <string name="editcustomer">Edit customer invoice</string>
+    <string name="editsupplier">Edit supplier invoice</string>
+    <string name="select_customerinv">Select type customer invoice</string>
+    <string name="select_supplierinv">Select type supplier invoice</string>
+    <string name="ksyshort">Ksy</string>
+    <string name="ssyshort">Ssy</string>
+    <string name="dasshort">Das</string>
+
 
     //idclistktfragment
     <string name="idc">ID company</string>

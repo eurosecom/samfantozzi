@@ -26,7 +26,6 @@ import com.eusecom.samfantozzi.realm.RealmInvoice;
 import com.eusecom.samfantozzi.rxbus.RxBus;
 import com.jakewharton.rxbinding.view.RxView;
 import com.jakewharton.rxbinding.widget.RxTextView;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
@@ -119,7 +118,7 @@ public class NewInvoiceDocFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater,
                              @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
-        View layout = inflater.inflate(R.layout.fragment_newcashdoc, container, false);
+        View layout = inflater.inflate(R.layout.fragment_newinvoicedoc, container, false);
         ButterKnife.bind(this, layout);
 
         datebutton = (Button) layout.findViewById(R.id.datebutton);
@@ -127,8 +126,6 @@ public class NewInvoiceDocFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 getDatePicker(_datex.getText().toString()).show();
-                //mViewModel.getDatePickerFromMvvm(_datex.getText().toString(), getString(R.string.datedialogpos), getActivity()).show();
-
 
             }
         });
@@ -139,7 +136,6 @@ public class NewInvoiceDocFragment extends Fragment {
             public void onClick(View v) {
 
                 Intent in = new Intent(getActivity(),TypesKtActivity.class);
-                //Intent in = new Intent(getActivity(),ChooseMonthActivity.class);
                 Bundle extras = new Bundle();
                 extras.putString("fromact", "3");
                 in.putExtras(extras);
@@ -191,7 +187,7 @@ public class NewInvoiceDocFragment extends Fragment {
                     @Override
                     public void onNext(Object o) {
 
-                        Log.d("NewCashDoc", "Clicked save ");
+                        Log.d("NewInvDoc", "Clicked save ");
                         Toast.makeText(getActivity(), "Clicked save", Toast.LENGTH_SHORT).show();
 
 
@@ -201,10 +197,12 @@ public class NewInvoiceDocFragment extends Fragment {
                             //save invoice to Realm
                             List<RealmInvoice> realminvoices = new ArrayList<>();
                             RealmInvoice realminvoice = new RealmInvoice();
-                            realminvoice.setUce(mSharedPreferences.getString("pokluce", ""));
+                            realminvoice.setUce(mSharedPreferences.getString("odbuce", ""));
+                            if( newdok.equals("2")) {
+                                realminvoice.setUce(mSharedPreferences.getString("doduce", ""));
+                            }
                             //1=customers invoice, 2=supliers invoice,
-                            //31=cash document receipt, 32=cash document expense, 4=bank document, 5=internal document
-                            realminvoice.setDrh("3" + drupoh);
+                            realminvoice.setDrh(drupoh);
                             realminvoice.setDok(_inputDoc.getText().toString());
                             realminvoice.setDat(_datex.getText().toString());
                             realminvoice.setIco(_companyid.getText().toString());
@@ -225,10 +223,12 @@ public class NewInvoiceDocFragment extends Fragment {
                         }else{
 
                             RealmInvoice realminvoice = new RealmInvoice();
-                            realminvoice.setUce(mSharedPreferences.getString("pokluce", ""));
+                            realminvoice.setUce(mSharedPreferences.getString("odbuce", ""));
+                            if( newdok.equals("2")) {
+                                realminvoice.setUce(mSharedPreferences.getString("doduce", ""));
+                            }
                             //1=customers invoice, 2=supliers invoice,
-                            //31=cash document receipt, 32=cash document expense, 4=bank document, 5=internal document
-                            realminvoice.setDrh("3" + drupoh);
+                            realminvoice.setDrh(drupoh);
                             realminvoice.setDok(_inputDoc.getText().toString());
                             realminvoice.setDat(_datex.getText().toString());
                             realminvoice.setIco(_companyid.getText().toString());
@@ -251,7 +251,7 @@ public class NewInvoiceDocFragment extends Fragment {
                             realminvoice.setSaved("false");
                             realminvoice.setDatm("");
                             realminvoice.setUzid("");
-                            Log.d("NewCashedit ", realminvoice.getDok());
+                            Log.d("NewInvedit ", realminvoice.getDok());
                             mViewModel.emitMyObservableInvoiceToServer(realminvoice);
                         }
 
@@ -266,7 +266,7 @@ public class NewInvoiceDocFragment extends Fragment {
                 .filter(charSequence -> charSequence.length() > 1)
                 .debounce(600, TimeUnit.MILLISECONDS)).map(charSequence -> charSequence.toString())
                 .subscribe(string -> {
-                    Log.d("NewCashLog frg2", "debounced " + string);
+                    Log.d("NewInvLog frg2", "debounced " + string);
                     //mViewModel.emitMyObservableIdCompany(string);
                     mViewModel.emitMyObservableIdModelCompany(string);
                 })
@@ -276,7 +276,7 @@ public class NewInvoiceDocFragment extends Fragment {
                 .filter(charSequence -> charSequence.length() > 0)
                 .debounce(600, TimeUnit.MILLISECONDS)).map(charSequence -> charSequence.toString())
                 .subscribe(string -> {
-                    Log.d("NewCashLog frg2", "debounced " + string);
+                    Log.d("NewInvLog frg2", "debounced " + string);
                     CalcVatKt calcvatx = getCalcVat(0);
                     mViewModel.emitMyObservableRecount(calcvatx);
                 })
@@ -286,7 +286,7 @@ public class NewInvoiceDocFragment extends Fragment {
                 .filter(charSequence -> charSequence.length() > 0)
                 .debounce(600, TimeUnit.MILLISECONDS)).map(charSequence -> charSequence.toString())
                 .subscribe(string -> {
-                    Log.d("NewCashLog frg2", "debounced " + string);
+                    Log.d("NewInvLog frg2", "debounced " + string);
                     CalcVatKt calcvatx = getCalcVat(2);
                     mViewModel.emitMyObservableRecount(calcvatx);
                 })
@@ -296,7 +296,7 @@ public class NewInvoiceDocFragment extends Fragment {
                 .filter(charSequence -> charSequence.length() > 0)
                 .debounce(600, TimeUnit.MILLISECONDS)).map(charSequence -> charSequence.toString())
                 .subscribe(string -> {
-                    Log.d("NewCashLog frg2", "debounced " + string);
+                    Log.d("NewInvLog frg2", "debounced " + string);
                     CalcVatKt calcvatx = getCalcVat(22);
                     mViewModel.emitMyObservableRecount(calcvatx);
                 })
@@ -306,7 +306,7 @@ public class NewInvoiceDocFragment extends Fragment {
                 .filter(charSequence -> charSequence.length() > 0)
                 .debounce(600, TimeUnit.MILLISECONDS)).map(charSequence -> charSequence.toString())
                 .subscribe(string -> {
-                    Log.d("NewCashLog frg2", "debounced " + string);
+                    Log.d("NewInvLog frg2", "debounced " + string);
                     CalcVatKt calcvatx = getCalcVat(1);
                     mViewModel.emitMyObservableRecount(calcvatx);
                 })
@@ -316,7 +316,7 @@ public class NewInvoiceDocFragment extends Fragment {
                 .filter(charSequence -> charSequence.length() > 0)
                 .debounce(600, TimeUnit.MILLISECONDS)).map(charSequence -> charSequence.toString())
                 .subscribe(string -> {
-                    Log.d("NewCashLog frg2", "debounced " + string);
+                    Log.d("NewInvLog frg2", "debounced " + string);
                     CalcVatKt calcvatx = getCalcVat(11);
                     mViewModel.emitMyObservableRecount(calcvatx);
                 })
@@ -326,7 +326,7 @@ public class NewInvoiceDocFragment extends Fragment {
         _disposables
                 .add(tapEventEmitter.subscribe(event -> {
 
-                    Log.d("NewCashLog frg2", "tapEventEmitter ");
+                    Log.d("NewInvLog frg2", "tapEventEmitter ");
 
                     if (event instanceof SupplierListFragment.ClickFobEvent) {
                         //Log.d("SupplierListFragment  ", " fobClick ");
@@ -349,13 +349,13 @@ public class NewInvoiceDocFragment extends Fragment {
 
         _combineLatestEvents();
 
-        Log.d("NewCashLog ", "onActivityCreated ");
+        Log.d("NewInvLog ", "onActivityCreated ");
     }
 
     protected void setIdCompanyKt(List<IdCompanyKt> resultAs) {
 
         if (resultAs.size() > 0) {
-            Log.d("NewCashLog Idc0 ", resultAs.get(0).getNai());
+            Log.d("NewInvLog Idc0 ", resultAs.get(0).getNai());
             Boolean icoValid = resultAs.get(0).getLogprx();
             //_disposableObserver.onNext(icoValid);
             if (!icoValid) {
@@ -398,7 +398,7 @@ public class NewInvoiceDocFragment extends Fragment {
                     .subscribeOn(Schedulers.computation())
                     .observeOn(rx.android.schedulers.AndroidSchedulers.mainThread())
                     .doOnError(throwable -> {
-                        Log.e(TAG, "Error NewCashDocFragment " + throwable.getMessage());
+                        Log.e(TAG, "Error NewInvDocFragment " + throwable.getMessage());
                         hideProgressBar();
                         Toast.makeText(getActivity(), "Server not connected", Toast.LENGTH_SHORT).show();
                     })
@@ -409,7 +409,7 @@ public class NewInvoiceDocFragment extends Fragment {
                     .subscribeOn(Schedulers.computation())
                     .observeOn(rx.android.schedulers.AndroidSchedulers.mainThread())
                     .doOnError(throwable -> {
-                        Log.e(TAG, "Error NewCashDocFragment " + throwable.getMessage());
+                        Log.e(TAG, "Error NewInvDocFragment " + throwable.getMessage());
                         hideProgressBar();
                         Toast.makeText(getActivity(), "Server not connected", Toast.LENGTH_SHORT).show();
                     })
@@ -426,10 +426,10 @@ public class NewInvoiceDocFragment extends Fragment {
 
         }
 
-        mSubscription.add(mViewModel.getMyPohybyFromSqlServer("3", drupoh, 120)
+        mSubscription.add(mViewModel.getMyPohybyFromSqlServer(drupoh, drupoh, 120)
                 .subscribeOn(Schedulers.computation())
                 .observeOn(rx.android.schedulers.AndroidSchedulers.mainThread())
-                .doOnError(throwable -> { Log.e(TAG, "Error NewCashDocFragment " + throwable.getMessage());
+                .doOnError(throwable -> { Log.e(TAG, "Error NewInvDocFragment " + throwable.getMessage());
                     hideProgressBar();
                     Toast.makeText(getActivity(), "Server not connected", Toast.LENGTH_SHORT).show();
                 })
@@ -439,7 +439,7 @@ public class NewInvoiceDocFragment extends Fragment {
         mSubscription.add(mViewModel.getMyObservableIdModelCompany()
                 .subscribeOn(Schedulers.computation())
                 .observeOn(rx.android.schedulers.AndroidSchedulers.mainThread())
-                .doOnError(throwable -> { Log.e(TAG, "Error NewCashDocFragment " + throwable.getMessage());
+                .doOnError(throwable -> { Log.e(TAG, "Error NewInvDocFragment " + throwable.getMessage());
                     hideProgressBar();
                     Toast.makeText(getActivity(), "Server not connected", Toast.LENGTH_SHORT).show();
                 })
@@ -449,7 +449,7 @@ public class NewInvoiceDocFragment extends Fragment {
         mSubscription.add(mViewModel.getMyObservableRecount()
                 .subscribeOn(Schedulers.computation())
                 .observeOn(rx.android.schedulers.AndroidSchedulers.mainThread())
-                .doOnError(throwable -> { Log.e(TAG, "Error NewCashDocFragment " + throwable.getMessage());
+                .doOnError(throwable -> { Log.e(TAG, "Error NewInvDocFragment " + throwable.getMessage());
                     hideProgressBar();
                     Toast.makeText(getActivity(), "Server not connected", Toast.LENGTH_SHORT).show();
                 })
@@ -504,7 +504,7 @@ public class NewInvoiceDocFragment extends Fragment {
         if (_hod.getText().toString().equals("")) {
             _hod.setText(invoices.get(0).getHod());
         }
-        //i have not receipt and expense poh saved in dok on server_inputPoh.setText(invoices.get(0).getPoh());
+        //i have not  poh saved in dok on server_inputPoh.setText(invoices.get(0).getPoh());
         if (_inputZk0.getText().toString().equals("")) {
             _inputZk0.setText(invoices.get(0).getZk0());
         }
@@ -574,10 +574,6 @@ public class NewInvoiceDocFragment extends Fragment {
         mViewModel.saveDocToPreferences(invoice);
 
         Toast.makeText(getActivity(), "Saved doc " + invoice.getDok(), Toast.LENGTH_SHORT).show();
-        //save invoice to Server to move to cashlist
-        //List<RealmInvoice> realminvoices = new ArrayList<>();
-        //realminvoices.add(invoice);
-        //mViewModel.emitRealmInvoicesToServer(invoice);
         getActivity().finish();
     }
 
@@ -602,19 +598,19 @@ public class NewInvoiceDocFragment extends Fragment {
                 _companyid.setText(mSharedPreferences.getString("usico", ""));
             }
             if(drupoh.equals("1")) {
-                ((AppCompatActivity)getActivity()).getSupportActionBar().setTitle(mSharedPreferences.getString("pokluce", "")
-                        + " " +  getString(R.string.newreceipt));
+                ((AppCompatActivity)getActivity()).getSupportActionBar().setTitle(mSharedPreferences.getString("odbuce", "")
+                        + " " +  getString(R.string.newcustomer));
             }else{
-                ((AppCompatActivity)getActivity()).getSupportActionBar().setTitle(mSharedPreferences.getString("pokluce", "")
-                        + " " +  getString(R.string.newexpense));
+                ((AppCompatActivity)getActivity()).getSupportActionBar().setTitle(mSharedPreferences.getString("doduce", "")
+                        + " " +  getString(R.string.newsupplier));
             }
 
             if(_inputPoh.getText().toString().equals("")) { _inputPoh.setText("0"); }
             if( _inputDoc.getText().toString().equals("0") ) {
                 if (drupoh.equals("1")) {
-                    _inputDoc.setText(mSharedPreferences.getString("pokldok", ""));
+                    _inputDoc.setText(mSharedPreferences.getString("odbdok", ""));
                 } else {
-                    _inputDoc.setText(mSharedPreferences.getString("pokldov", ""));
+                    _inputDoc.setText(mSharedPreferences.getString("doddok", ""));
                 }
             }else{
 
@@ -623,11 +619,11 @@ public class NewInvoiceDocFragment extends Fragment {
         }else{
 
             if(drupoh.equals("1")) {
-                ((AppCompatActivity)getActivity()).getSupportActionBar().setTitle(mSharedPreferences.getString("pokluce", "")
-                        + " " +  getString(R.string.editreceipt));
+                ((AppCompatActivity)getActivity()).getSupportActionBar().setTitle(mSharedPreferences.getString("odbuce", "")
+                        + " " +  getString(R.string.editcustomer));
             }else{
-                ((AppCompatActivity)getActivity()).getSupportActionBar().setTitle(mSharedPreferences.getString("pokluce", "")
-                        + " " +  getString(R.string.editexpense));
+                ((AppCompatActivity)getActivity()).getSupportActionBar().setTitle(mSharedPreferences.getString("doduce", "")
+                        + " " +  getString(R.string.editsupplier));
             }
 
         }
@@ -635,9 +631,9 @@ public class NewInvoiceDocFragment extends Fragment {
         ActivityCompat.invalidateOptionsMenu(getActivity());
 
         if( drupoh.equals("1") ) {
-            spinner.setPrompt(getString(R.string.select_receipt));
+            spinner.setPrompt(getString(R.string.select_customerinv));
         }else{
-            spinner.setPrompt(getString(R.string.select_expense));
+            spinner.setPrompt(getString(R.string.select_supplierinv));
         }
 
     }
@@ -667,13 +663,13 @@ public class NewInvoiceDocFragment extends Fragment {
                     //_btnsave.setBackgroundColor(getResources().getColor(R.color.material_light_blue_A200));
                     _btnsave.setEnabled(true);
                     _btnsave.setClickable(true);
-                    Log.d("NewCashDoc", "formvalid true ");
+                    Log.d("NewInvDoc", "formvalid true ");
                 }
                 else {
                     //_btnsave.setBackgroundColor(getResources().getColor(R.color.gray));
                     _btnsave.setEnabled(false);
                     _btnsave.setClickable(false);
-                    Log.d("NewCashDoc", "formvalid false ");
+                    Log.d("NewInvDoc", "formvalid false ");
                 }
             }
 
@@ -754,7 +750,7 @@ public class NewInvoiceDocFragment extends Fragment {
                     int yearx = dpd.getDatePicker().getYear();
                     int monthy = monthx + 1;
 
-                    Log.d("NewCashLog dayx ", dayx + "");
+                    Log.d("NewInvLog dayx ", dayx + "");
                     _datex.setText(dayx + "." + monthy + "." + yearx);
                 }
             }

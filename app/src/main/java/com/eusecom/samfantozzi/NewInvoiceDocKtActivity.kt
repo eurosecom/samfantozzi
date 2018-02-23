@@ -54,15 +54,15 @@ class NewInvoiceDocKtActivity : AppCompatActivity() {
 
         if( newdok == "1" ) {
             if (drupoh == "1") {
-                supportActionBar!!.setTitle(prefs.getString("pokluce", "") + " " + getString(R.string.newreceipt))
+                supportActionBar!!.setTitle(prefs.getString("pokluce", "") + " " + getString(R.string.newcustomer))
             } else {
-                supportActionBar!!.setTitle(prefs.getString("pokluce", "") + " " + getString(R.string.newexpense))
+                supportActionBar!!.setTitle(prefs.getString("pokluce", "") + " " + getString(R.string.newsupplier))
             }
         }else{
             if (drupoh == "1") {
-                supportActionBar!!.setTitle(prefs.getString("pokluce", "") + " " + getString(R.string.editreceipt))
+                supportActionBar!!.setTitle(prefs.getString("pokluce", "") + " " + getString(R.string.editcustomer))
             } else {
-                supportActionBar!!.setTitle(prefs.getString("pokluce", "") + " " + getString(R.string.editexpense))
+                supportActionBar!!.setTitle(prefs.getString("pokluce", "") + " " + getString(R.string.editsupplier))
             }
         }
 
@@ -74,7 +74,7 @@ class NewInvoiceDocKtActivity : AppCompatActivity() {
 
         // Create the adapter that will return a fragment for each section
         mPagerAdapter = object : FragmentPagerAdapter(supportFragmentManager) {
-            private val mFragments = arrayOf(NewCashDocFragment(), EmptyKtFragment())
+            private val mFragments = arrayOf(NewInvoiceDocFragment(), EmptyKtFragment())
             private val mFragmentNames = arrayOf(getString(R.string.newdoc), getString(R.string.empty))
 
             override fun getItem(position: Int): Fragment {
@@ -107,15 +107,15 @@ class NewInvoiceDocKtActivity : AppCompatActivity() {
                         fab.visibility = View.GONE
                         if( newdok == "1" ) {
                             if (drupoh == "1") {
-                                supportActionBar!!.setTitle(prefs.getString("pokluce", "") + " " + getString(R.string.newreceipt))
+                                supportActionBar!!.setTitle(prefs.getString("pokluce", "") + " " + getString(R.string.newcustomer))
                             } else {
-                                supportActionBar!!.setTitle(prefs.getString("pokluce", "") + " " + getString(R.string.newexpense))
+                                supportActionBar!!.setTitle(prefs.getString("pokluce", "") + " " + getString(R.string.newsupplier))
                             }
                         }else{
                             if (drupoh == "1") {
-                                supportActionBar!!.setTitle(prefs.getString("pokluce", "") + " " + getString(R.string.editreceipt))
+                                supportActionBar!!.setTitle(prefs.getString("pokluce", "") + " " + getString(R.string.editcustomer))
                             } else {
-                                supportActionBar!!.setTitle(prefs.getString("pokluce", "") + " " + getString(R.string.editexpense))
+                                supportActionBar!!.setTitle(prefs.getString("pokluce", "") + " " + getString(R.string.editsupplier))
                             }
                         }
                     }
