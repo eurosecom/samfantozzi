@@ -514,13 +514,8 @@ public class DgAllEmpsAbsDataModel implements DgAllEmpsAbsIDataModel {
 
         List<RealmInvoice> results = null;
         String drhx = fromact;
-        if (fromact.equals("3")) {
-            results = mRealm.where(RealmInvoice.class).equalTo("saved", "false").equalTo("drh", "31")
-                    .or().equalTo("saved", "false").equalTo("drh", "32").findAll();
-        }else{
-            results = mRealm.where(RealmInvoice.class).equalTo("saved", "false").equalTo("drh", drhx).findAll();
-        }
 
+        results = mRealm.where(RealmInvoice.class).equalTo("saved", "false").findAll();
 
         return Observable.just(results);
     }

@@ -74,7 +74,6 @@
                 android:layout_weight="1.5"
                 android:focusable="true"
                 android:inputType="number"
-                android:text="0"
                 android:textColor="@color/md_black_1000"
                 />
 
@@ -165,11 +164,11 @@
             />
 
         <EditText
-            android:id="@+id/person"
+            android:id="@+id/ssy"
             android:layout_weight="2.5"
             android:layout_height="wrap_content"
             android:layout_width="0dp"
-            android:inputType="text"
+            android:inputType="number"
             />
 
     </LinearLayout>

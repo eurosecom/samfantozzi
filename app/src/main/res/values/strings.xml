@@ -231,7 +231,7 @@
     <string name="select_supplierinv">Select type supplier invoice</string>
     <string name="ksyshort">Ksy</string>
     <string name="ssyshort">Ssy</string>
-    <string name="dasshort">Das</string>
+    <string name="dasshort">Due</string>
 
 
     //idclistktfragment

@@ -55,13 +55,14 @@ public class NewInvoiceDocFragment extends Fragment {
     }
 
     @Bind(R.id.datex) EditText _datex;
+    @Bind(R.id.dasx) EditText _das;
     @Bind(R.id.companyid) EditText _companyid;
     @Bind(R.id.idcexist) EditText _idcexist;
-    @Bind(R.id.person) EditText _person;
+    @Bind(R.id.ssy) EditText _ssy;
     @Bind(R.id.invoice) EditText _invoice;
     @Bind(R.id.memo) EditText _memo;
     @Bind(R.id.hod) EditText _hod;
-    Button datebutton, idbutton, _btnsave;
+    Button datebutton, idbutton, _btnsave, dasbutton;
     @Bind(R.id.textzakl2) TextView _textzakl2;
     @Bind(R.id.textdph2) TextView _textdph2;
     @Bind(R.id.textzakl1) TextView _textzakl1;
@@ -81,7 +82,7 @@ public class NewInvoiceDocFragment extends Fragment {
 
     private DisposableSubscriber<Boolean> _disposableObserver = null;
     private Flowable<CharSequence> _datexChangeObservable;
-    private Flowable<CharSequence> _personChangeObservable;
+    private Flowable<CharSequence> _invoiceChangeObservable;
     private Flowable<CharSequence> _memoChangeObservable;
     private Flowable<CharSequence> _icoChangeObservable;
     private Subscription subscriptionSave;
@@ -125,7 +126,16 @@ public class NewInvoiceDocFragment extends Fragment {
         datebutton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                getDatePicker(_datex.getText().toString()).show();
+                getDatePicker(_datex.getText().toString(), 1).show();
+
+            }
+        });
+
+        dasbutton = (Button) layout.findViewById(R.id.dasbutton);
+        dasbutton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                getDatePicker(_das.getText().toString(), 2).show();
 
             }
         });
@@ -159,8 +169,8 @@ public class NewInvoiceDocFragment extends Fragment {
         _datexChangeObservable = RxJavaInterop.toV2Flowable(RxTextView
                 .textChanges(_datex)
                 .skip(1));
-        _personChangeObservable = RxJavaInterop.toV2Flowable(RxTextView
-                .textChanges(_person)
+        _invoiceChangeObservable = RxJavaInterop.toV2Flowable(RxTextView
+                .textChanges(_invoice)
                 .skip(1));
         _memoChangeObservable = RxJavaInterop.toV2Flowable(RxTextView
                 .textChanges(_memo)
@@ -205,6 +215,7 @@ public class NewInvoiceDocFragment extends Fragment {
                             realminvoice.setDrh(drupoh);
                             realminvoice.setDok(_inputDoc.getText().toString());
                             realminvoice.setDat(_datex.getText().toString());
+                            realminvoice.setDas(_das.getText().toString());
                             realminvoice.setIco(_companyid.getText().toString());
                             realminvoice.setHod(_hod.getText().toString());
                             realminvoice.setZk0(_inputZk0.getText().toString());
@@ -214,7 +225,7 @@ public class NewInvoiceDocFragment extends Fragment {
                             realminvoice.setDn2(_inputDn2.getText().toString());
                             realminvoice.setPoz(_memo.getText().toString());
                             realminvoice.setFak(_invoice.getText().toString());
-                            realminvoice.setKto(_person.getText().toString());
+                            realminvoice.setSsy(_ssy.getText().toString());
                             realminvoice.setPoh(_inputPoh.getText().toString());
                             realminvoice.setSaved("false");
                             realminvoices.add(realminvoice);
@@ -231,6 +242,7 @@ public class NewInvoiceDocFragment extends Fragment {
                             realminvoice.setDrh(drupoh);
                             realminvoice.setDok(_inputDoc.getText().toString());
                             realminvoice.setDat(_datex.getText().toString());
+                            realminvoice.setDas(_das.getText().toString());
                             realminvoice.setIco(_companyid.getText().toString());
                             realminvoice.setNai("");
                             realminvoice.setHod(_hod.getText().toString());
@@ -246,7 +258,7 @@ public class NewInvoiceDocFragment extends Fragment {
                             realminvoice.setUme("");
                             realminvoice.setDaz("");
                             realminvoice.setDas("");
-                            realminvoice.setKto(_person.getText().toString());
+                            realminvoice.setSsy(_ssy.getText().toString());
                             realminvoice.setPoh(_inputPoh.getText().toString());
                             realminvoice.setSaved("false");
                             realminvoice.setDatm("");
@@ -489,11 +501,15 @@ public class NewInvoiceDocFragment extends Fragment {
             _datex.setText(invoices.get(0).getDat());
         }
         _datex.setEnabled(false);
+        if (_das.getText().toString().equals("")) {
+            _das.setText(invoices.get(0).getDas());
+        }
+        _das.setEnabled(false);
         if (_companyid.getText().toString().equals("")) {
             _companyid.setText(invoices.get(0).getIco());
         }
-        if (_person.getText().toString().equals("")) {
-            _person.setText(invoices.get(0).getKto());
+        if (_ssy.getText().toString().equals("")) {
+            _ssy.setText(invoices.get(0).getSsy());
         }
         if (_memo.getText().toString().equals("")) {
             _memo.setText(invoices.get(0).getPoz());
@@ -594,6 +610,10 @@ public class NewInvoiceDocFragment extends Fragment {
                 _datex.setText(formattedDate);
             }
             _datex.setEnabled(false);
+            if (_das.getText().toString().equals("")) {
+                _das.setText(formattedDate);
+            }
+            _das.setEnabled(false);
             if (_companyid.getText().toString().equals("")) {
                 _companyid.setText(mSharedPreferences.getString("usico", ""));
             }
@@ -685,20 +705,20 @@ public class NewInvoiceDocFragment extends Fragment {
         };
 
         Flowable
-                .combineLatest(_personChangeObservable,
+                .combineLatest(_invoiceChangeObservable,
                         _memoChangeObservable,
                         _datexChangeObservable,
                         _icoChangeObservable,
-                        (newPerson, newMemo, newDatex, newIco) -> {
+                        (newInvoice, newMemo, newDatex, newIco) -> {
 
                             boolean datexValid = !isEmpty(newDatex);
                             if (!datexValid) {
                                 _datex.setError("Invalid Date!");
                             }
 
-                            boolean personValid = !isEmpty(newPerson) && newPerson.length() > 1;
-                            if (!personValid) {
-                                _person.setError("Invalid Person!");
+                            boolean invoiceValid = !isEmpty(newInvoice) && newInvoice.length() > 0;
+                            if (!invoiceValid) {
+                                _invoice.setError("Invalid Invoice!");
                             }
 
                             boolean memoValid = !isEmpty(newMemo) && newMemo.length() > 1;
@@ -709,12 +729,12 @@ public class NewInvoiceDocFragment extends Fragment {
 
                             boolean icoxValid = newIco.toString().equals("true");
 
-                            return personValid && memoValid && datexValid && icoxValid;
+                            return invoiceValid && memoValid && datexValid && icoxValid;
                         })
                 .subscribe(_disposableObserver);
     }
 
-    private DatePickerDialog getDatePicker(String datumx) {
+    private DatePickerDialog getDatePicker(String datumx, int drdate) {
 
         String datumx2=datumx;
         if(datumx2.equals("")){ datumx2 = "01.01.2018";}
@@ -750,8 +770,9 @@ public class NewInvoiceDocFragment extends Fragment {
                     int yearx = dpd.getDatePicker().getYear();
                     int monthy = monthx + 1;
 
-                    Log.d("NewInvLog dayx ", dayx + "");
-                    _datex.setText(dayx + "." + monthy + "." + yearx);
+                    //Log.d("NewInvLog dayx ", dayx + "");
+                    if( drdate == 1 ) {_datex.setText(dayx + "." + monthy + "." + yearx); }
+                    if( drdate == 2 ) {_das.setText(dayx + "." + monthy + "." + yearx); }
                 }
             }
 
