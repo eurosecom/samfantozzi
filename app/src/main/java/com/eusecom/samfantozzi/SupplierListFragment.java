@@ -83,6 +83,7 @@ public class SupplierListFragment extends Fragment {
     //searchview
     private SearchView searchView;
     private SearchView.OnQueryTextListener onQueryTextListener = null;
+    SearchManager searchManager;
 
     private List<Invoice> invoiceszal = Collections.<Invoice>emptyList();
 
@@ -116,7 +117,7 @@ public class SupplierListFragment extends Fragment {
         String umex = mSharedPreferences.getString("ume", "");
         mAdapter = new SupplierAdapter(_rxBus);
         mAdapter.setAbsserver(Collections.<Invoice>emptyList());
-        mAdapter.setAbsserver(Collections.<Invoice>emptyList());
+        mSupplierSearchEngine = new SupplierSearchEngine(Collections.<Invoice>emptyList());
         // Set up Layout Manager, reverse layout
         mManager = new LinearLayoutManager(getActivity());
         mManager.setReverseLayout(true);
@@ -217,6 +218,15 @@ public class SupplierListFragment extends Fragment {
                 .onErrorResumeNext(throwable -> empty())
                 .subscribe(this::deletedInvoice));
 
+        mSubscription.add(mViewModel.getMyObservableCashListQuery()
+                .subscribeOn(Schedulers.computation())
+                .observeOn(rx.android.schedulers.AndroidSchedulers.mainThread())
+                .doOnError(throwable -> { Log.e(TAG, "Error InvoiceListFragment " + throwable.getMessage());
+                    Toast.makeText(getActivity(), "Server not connected", Toast.LENGTH_SHORT).show();
+                })
+                .onErrorResumeNext(throwable -> empty())
+                .subscribe(this::setQueryString));
+
         ActivityCompat.invalidateOptionsMenu(getActivity());
         ((AppCompatActivity)getActivity()).getSupportActionBar().setTitle(mSharedPreferences.getString("ume", "") + " "
                 + mSharedPreferences.getString("doduce", "") + " " +  getString(R.string.suppliers));
@@ -225,6 +235,7 @@ public class SupplierListFragment extends Fragment {
     private void unBind() {
 
         mViewModel.clearObservableInvoiceDelFromServer();
+        mViewModel.clearObservableCashListQuery();
         mSubscription.unsubscribe();
         mSubscription.clear();
         if( mDisposable != null ) {mDisposable.dispose();}
@@ -240,6 +251,16 @@ public class SupplierListFragment extends Fragment {
         }
 
         hideProgressBar();
+
+    }
+
+    private void setQueryString(String querystring) {
+
+        if( querystring.equals("")){
+
+        }else {
+            searchView.setQuery(querystring, false);
+        }
 
     }
 
@@ -353,6 +374,7 @@ public class SupplierListFragment extends Fragment {
                         // use this method for auto complete search process
                         //Toast.makeText(getActivity(), "change " + newText, Toast.LENGTH_SHORT).show();
                         emitter.onNext(newText.toString());
+                        mViewModel.emitMyObservableCashListQuery(newText.toString());
                         return false;
                     }
 
@@ -433,7 +455,7 @@ public class SupplierListFragment extends Fragment {
         // Retrieve the SearchView and plug it into SearchManager
         inflater.inflate(R.menu.menu_listdoc, menu);
         searchView = (SearchView) MenuItemCompat.getActionView(menu.findItem(R.id.action_search));
-        SearchManager searchManager = (SearchManager) getActivity().getSystemService(SEARCH_SERVICE);
+        searchManager = (SearchManager) getActivity().getSystemService(SEARCH_SERVICE);
         searchView.setSearchableInfo(searchManager.getSearchableInfo(getActivity().getComponentName()));
         getObservableSearchViewText();
     }

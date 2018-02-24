@@ -14,8 +14,6 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.SearchView;
-import android.text.Editable;
-import android.text.TextWatcher;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -23,13 +21,10 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
-import android.widget.EditText;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 import com.eusecom.samfantozzi.rxbus.RxBus;
-
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -83,7 +78,7 @@ public class InvoiceListFragment extends Fragment {
     //searchview
     private SearchView searchView;
     private SearchView.OnQueryTextListener onQueryTextListener = null;
-
+    SearchManager searchManager;
     private List<Invoice> invoiceszal = Collections.<Invoice>emptyList();
 
     @Override
@@ -115,6 +110,8 @@ public class InvoiceListFragment extends Fragment {
 
         String umex = mSharedPreferences.getString("ume", "");
         mAdapter = new SupplierAdapter(_rxBus);
+        mAdapter.setAbsserver(Collections.<Invoice>emptyList());
+        mSupplierSearchEngine = new SupplierSearchEngine(Collections.<Invoice>emptyList());
         // Set up Layout Manager, reverse layout
         mManager = new LinearLayoutManager(getActivity());
         mManager.setReverseLayout(true);
@@ -131,7 +128,7 @@ public class InvoiceListFragment extends Fragment {
     @Override
     public void onDestroy() {
         super.onDestroy();
-        //unBind();
+        unBind();
     }
 
     @Override
@@ -203,7 +200,7 @@ public class InvoiceListFragment extends Fragment {
                     Toast.makeText(getActivity(), "Server not connected", Toast.LENGTH_SHORT).show();
                 })
                 .onErrorResumeNext(throwable -> empty())
-                .subscribe(this::setServerInvoices));
+                .subscribe(it -> setServerInvoices(it)));
 
         mSubscription.add(mViewModel.getMyInvoiceDelFromServer()
                 .subscribeOn(Schedulers.computation())
@@ -214,6 +211,15 @@ public class InvoiceListFragment extends Fragment {
                 .onErrorResumeNext(throwable -> empty())
                 .subscribe(this::deletedInvoice));
 
+        mSubscription.add(mViewModel.getMyObservableCashListQuery()
+                .subscribeOn(Schedulers.computation())
+                .observeOn(rx.android.schedulers.AndroidSchedulers.mainThread())
+                .doOnError(throwable -> { Log.e(TAG, "Error InvoiceListFragment " + throwable.getMessage());
+                    Toast.makeText(getActivity(), "Server not connected", Toast.LENGTH_SHORT).show();
+                })
+                .onErrorResumeNext(throwable -> empty())
+                .subscribe(this::setQueryString));
+
         ActivityCompat.invalidateOptionsMenu(getActivity());
         ((AppCompatActivity)getActivity()).getSupportActionBar().setTitle(mSharedPreferences.getString("ume", "") + " "
                 + mSharedPreferences.getString("odbuce", "") + " " +  getString(R.string.customers));
@@ -222,6 +228,7 @@ public class InvoiceListFragment extends Fragment {
     private void unBind() {
 
         mViewModel.clearObservableInvoiceDelFromServer();
+        mViewModel.clearObservableCashListQuery();
         mSubscription.unsubscribe();
         mSubscription.clear();
         if( mDisposable != null ) {mDisposable.dispose();}
@@ -237,6 +244,16 @@ public class InvoiceListFragment extends Fragment {
         }
 
         hideProgressBar();
+
+    }
+
+    private void setQueryString(String querystring) {
+
+        if( querystring.equals("")){
+
+        }else {
+            searchView.setQuery(querystring, false);
+        }
 
     }
 
@@ -261,6 +278,8 @@ public class InvoiceListFragment extends Fragment {
     }
 
     private void setServerInvoices(@NonNull final List<Invoice> invoices) {
+
+        Log.d("searchModel ","in setServerInvoices");
         //String serverx = invoices.get(0).getNai();
         //Toast.makeText(getActivity(), serverx, Toast.LENGTH_SHORT).show();
         invoiceszal = invoices;
@@ -314,12 +333,7 @@ public class InvoiceListFragment extends Fragment {
                     }
                 })
                 .observeOn(io.reactivex.schedulers.Schedulers.io())
-                .map(new Function<String, List<Invoice>>() {
-                    @Override
-                    public List<Invoice> apply(String query) {
-                        return mSupplierSearchEngine.searchModel(query);
-                    }
-                })
+                .map(  query -> mSupplierSearchEngine.searchModel(query) )
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new Consumer<List<Invoice>>() {
                     @Override
@@ -349,6 +363,7 @@ public class InvoiceListFragment extends Fragment {
                         // use this method for auto complete search process
                         //Toast.makeText(getActivity(), "change " + newText, Toast.LENGTH_SHORT).show();
                         emitter.onNext(newText.toString());
+                        mViewModel.emitMyObservableCashListQuery(newText.toString());
                         return false;
                     }
 
@@ -429,7 +444,7 @@ public class InvoiceListFragment extends Fragment {
         // Retrieve the SearchView and plug it into SearchManager
         inflater.inflate(R.menu.menu_listdoc, menu);
         searchView = (SearchView) MenuItemCompat.getActionView(menu.findItem(R.id.action_search));
-        SearchManager searchManager = (SearchManager) getActivity().getSystemService(SEARCH_SERVICE);
+        searchManager = (SearchManager) getActivity().getSystemService(SEARCH_SERVICE);
         searchView.setSearchableInfo(searchManager.getSearchableInfo(getActivity().getComponentName()));
         getObservableSearchViewText();
     }

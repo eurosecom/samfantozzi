@@ -39,7 +39,7 @@ public class SupplierSearchEngine {
 
   public List<Invoice> searchModel(String query) {
     query = query.toLowerCase();
-    Log.d("searchModel", query);
+    //Log.d("searchModel", query);
 
     try {
       Thread.sleep(1000);
@@ -54,7 +54,7 @@ public class SupplierSearchEngine {
               mListabsserver.get(i).getDok().toLowerCase().contains(query) ||
               mListabsserver.get(i).getFak().toLowerCase().contains(query) ) {
         resultAs.add(mListabsserver.get(i));
-        Log.d("mListabs.get(i).dmna", mListabsserver.get(i).getNai());
+        //Log.d("mListabs.get(i).dmna", mListabsserver.get(i).getNai());
       }
     }
 

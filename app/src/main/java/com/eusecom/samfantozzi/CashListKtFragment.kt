@@ -252,6 +252,7 @@ class CashListKtFragment : Fragment() {
 
     private fun setServerInvoices(invoices: List<Invoice>) {
 
+        //Log.d("searchModel ", "in setServerInvoices")
         //toast(" nai0 " + invoices.get(0).nai)
         invoiceszal = invoices.toMutableList()
         mAdapter?.setAbsserver(invoices)
