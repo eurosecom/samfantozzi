@@ -437,6 +437,14 @@ public class SupplierListFragment extends Fragment {
                                 break;
                             case 1:
 
+                                Intent ie = new Intent(getActivity(), NewInvoiceDocKtActivity.class);
+                                Bundle extrase = new Bundle();
+                                extrase.putString("drupoh", "2");
+                                extrase.putString("newdok", "0");
+                                extrase.putString("edidok", invoice.getDok());
+                                ie.putExtras(extrase);
+                                startActivity(ie);
+
                                 break;
                             case 2:
                                 deleteDialog(invoice);

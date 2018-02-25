@@ -406,7 +406,7 @@ public class NewInvoiceDocFragment extends Fragment {
 
 
         if(newdok.equals("0")) {
-            mSubscription.add(mViewModel.getEditedInvoiceFromSqlServer("3")
+            mSubscription.add(mViewModel.getEditedInvoiceFromSqlServer(drupoh)
                     .subscribeOn(Schedulers.computation())
                     .observeOn(rx.android.schedulers.AndroidSchedulers.mainThread())
                     .doOnError(throwable -> {
