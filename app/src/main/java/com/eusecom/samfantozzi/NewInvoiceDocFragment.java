@@ -208,7 +208,7 @@ public class NewInvoiceDocFragment extends Fragment {
                             List<RealmInvoice> realminvoices = new ArrayList<>();
                             RealmInvoice realminvoice = new RealmInvoice();
                             realminvoice.setUce(mSharedPreferences.getString("odbuce", ""));
-                            if( newdok.equals("2")) {
+                            if( drupoh.equals("2")) {
                                 realminvoice.setUce(mSharedPreferences.getString("doduce", ""));
                             }
                             //1=customers invoice, 2=supliers invoice,
@@ -235,7 +235,7 @@ public class NewInvoiceDocFragment extends Fragment {
 
                             RealmInvoice realminvoice = new RealmInvoice();
                             realminvoice.setUce(mSharedPreferences.getString("odbuce", ""));
-                            if( newdok.equals("2")) {
+                            if( drupoh.equals("2")) {
                                 realminvoice.setUce(mSharedPreferences.getString("doduce", ""));
                             }
                             //1=customers invoice, 2=supliers invoice,
