@@ -47,6 +47,17 @@ import static android.content.ContentValues.TAG;
 import static android.text.TextUtils.isEmpty;
 import static rx.Observable.empty;
 
+/**
+ * Fragment for create new invoice and edit invoice from list
+ * @author – Adra on 25.02.2018.
+ * @version – when was it changed
+ * @param – describe method parameters
+ * @return – describe method return values
+ * @throws – describe exceptions thrown
+ * @see – link to other, related items (e.g. “See also…”)
+ * @since – describe when code was introduced (e.g. API Level)
+ * @deprecated - describe deprecated item and what alternative to use
+ */
 
 public class NewInvoiceDocFragment extends Fragment {
 
@@ -59,6 +70,7 @@ public class NewInvoiceDocFragment extends Fragment {
     @Bind(R.id.companyid) EditText _companyid;
     @Bind(R.id.idcexist) EditText _idcexist;
     @Bind(R.id.ssy) EditText _ssy;
+    @Bind(R.id.ksy) EditText _ksy;
     @Bind(R.id.invoice) EditText _invoice;
     @Bind(R.id.memo) EditText _memo;
     @Bind(R.id.hod) EditText _hod;
@@ -104,6 +116,9 @@ public class NewInvoiceDocFragment extends Fragment {
     Spinner spinner;
     protected ArrayAdapter<Account> mAdapter;
 
+    /**
+     * onCreate
+     */
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -225,6 +240,7 @@ public class NewInvoiceDocFragment extends Fragment {
                             realminvoice.setDn2(_inputDn2.getText().toString());
                             realminvoice.setPoz(_memo.getText().toString());
                             realminvoice.setFak(_invoice.getText().toString());
+                            realminvoice.setKsy(_ksy.getText().toString());
                             realminvoice.setSsy(_ssy.getText().toString());
                             realminvoice.setPoh(_inputPoh.getText().toString());
                             realminvoice.setSaved("false");
@@ -253,11 +269,9 @@ public class NewInvoiceDocFragment extends Fragment {
                             realminvoice.setDn2(_inputDn2.getText().toString());
                             realminvoice.setPoz(_memo.getText().toString());
                             realminvoice.setFak(_invoice.getText().toString());
-                            realminvoice.setKsy("");
-                            realminvoice.setSsy("");
                             realminvoice.setUme("");
                             realminvoice.setDaz("");
-                            realminvoice.setDas("");
+                            realminvoice.setKsy(_ksy.getText().toString());
                             realminvoice.setSsy(_ssy.getText().toString());
                             realminvoice.setPoh(_inputPoh.getText().toString());
                             realminvoice.setSaved("false");
@@ -507,6 +521,9 @@ public class NewInvoiceDocFragment extends Fragment {
         _das.setEnabled(false);
         if (_companyid.getText().toString().equals("")) {
             _companyid.setText(invoices.get(0).getIco());
+        }
+        if (_ksy.getText().toString().equals("")) {
+            _ksy.setText(invoices.get(0).getKsy());
         }
         if (_ssy.getText().toString().equals("")) {
             _ssy.setText(invoices.get(0).getSsy());
