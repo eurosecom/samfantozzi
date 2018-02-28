@@ -142,7 +142,7 @@ class MainFantozziActivity : AppCompatActivity() {
 
                 onClick { _ ->
                     //Log.d("DRAWER", "Click.")
-                    //navigateToCashList()
+                    navigateToIAccountReportsKt()
                     false
                 }
 
@@ -314,6 +314,24 @@ class MainFantozziActivity : AppCompatActivity() {
                 donotcompanyAlert().show()
             }else {
                 startActivity<InvoiceListKtActivity>()
+            }
+
+        }
+
+    }
+
+    fun navigateToIAccountReportsKt(){
+
+        val usuid = prefs.getString("usuid", "")
+        if (usuid == "0") {
+            donotcompanyAlert().show()
+        }else {
+
+            val usfir = prefs.getString("fir", "")
+            if (usfir == "") {
+                donotcompanyAlert().show()
+            }else {
+                startActivity<AccountReportsActivity>()
             }
 
         }

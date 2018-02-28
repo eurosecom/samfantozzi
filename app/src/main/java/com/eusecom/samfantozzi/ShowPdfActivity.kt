@@ -58,15 +58,11 @@ class ShowPdfActivity : AppCompatActivity() {
         ucex = extras!!.getString("ucex")
         dokx = extras!!.getString("dokx")
 
-        val adapter: NoSavedDocAdapter = NoSavedDocAdapter(ArrayList<RealmInvoice>()){
-            //toast("${it.nai + " " + it.dok } set")
-
-        }
-        ShowPdfActivityUI(adapter).setContentView(this)
+        ShowPdfActivityUI().setContentView(this)
 
         supportActionBar!!.setTitle(getString(R.string.showpdf))
 
-        bind(adapter)
+        bind()
 
         val invoicex = Invoice(drhx,ucex,dokx,"","","","","","","",""
                 ,"","","","","","","","",true,0,"","","")
@@ -75,7 +71,7 @@ class ShowPdfActivity : AppCompatActivity() {
 
     }
 
-    private fun bind(adapter: NoSavedDocAdapter) {
+    private fun bind() {
 
         mSubscription.add(mViewModel.getObservableDocPdf()
                 .subscribeOn(Schedulers.computation())

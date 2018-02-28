@@ -264,4 +264,10 @@
     //showpdfactivity
     <string name="showpdf">Show PDF</string>
 
+    //accountreportsactivity
+    <string name="accrep">Accounting Reports</string>
+    <string name="popisbtnpenden">Cash receipts journal</string>
+    <string name="popisbtnpenden2">Cash receipts journal sort 2</string>
+    <string name="popisbtnprivyd">Profit and Loss Statement</string>
+
 </resources>

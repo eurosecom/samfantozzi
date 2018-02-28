@@ -33,6 +33,7 @@
         <activity android:name=".NewInvoiceDocKtActivity"/>
         <activity android:name=".NoSavedDocActivity"/>
         <activity android:name=".ShowPdfActivity"/>
+        <activity android:name=".AccountReportsActivity"/>
 
         <activity android:name=".Detail2Activity"/>
     </application>
