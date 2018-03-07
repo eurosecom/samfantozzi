@@ -2,6 +2,7 @@ package com.eusecom.samfantozzi.dagger.components;
 
 import com.eusecom.samfantozzi.AccountReportsActivity;
 import com.eusecom.samfantozzi.AutopohListKtFragment;
+import com.eusecom.samfantozzi.BankMvpActivity;
 import com.eusecom.samfantozzi.CashListKtActivity;
 import com.eusecom.samfantozzi.CashListKtFragment;
 import com.eusecom.samfantozzi.ChooseAccountActivity;
@@ -47,6 +48,7 @@ public interface DgAeaComponent {
   void inject(NoSavedDocActivity noSavedDoctActivity);
   void inject(AccountReportsActivity accountReportsActivity);
   void inject(ShowPdfActivity showPdftActivity);
+  void inject(BankMvpActivity bankMvptActivity);
 
 
 

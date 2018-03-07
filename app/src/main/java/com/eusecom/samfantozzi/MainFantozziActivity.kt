@@ -63,8 +63,7 @@ class MainFantozziActivity : AppCompatActivity() {
         }
 
         button2.setOnClickListener {
-            //to remove _ -> navigateToAbsServer()
-            //to remove _ -> navigateToDgAeaActivity()
+            _ -> navigateToBankMvpList()
         }
 
         button3.setOnClickListener {
@@ -314,6 +313,24 @@ class MainFantozziActivity : AppCompatActivity() {
                 donotcompanyAlert().show()
             }else {
                 startActivity<InvoiceListKtActivity>()
+            }
+
+        }
+
+    }
+
+    fun navigateToBankMvpList(){
+
+        val usuid = prefs.getString("usuid", "")
+        if (usuid == "0") {
+            donotcompanyAlert().show()
+        }else {
+
+            val usfir = prefs.getString("fir", "")
+            if (usfir == "") {
+                donotcompanyAlert().show()
+            }else {
+                startActivity<BankMvpActivity>()
             }
 
         }

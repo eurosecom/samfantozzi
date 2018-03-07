@@ -71,5 +71,8 @@ public interface AbsServerService {
     @GET("/attendance/absserver.php")
     Observable<List<Attendance>> getInvoicesFromServer(@Query("fromfir") String fromfir);
 
+    @GET("/androidfantozzi/example.json")
+    Observable<List<Invoice>> getExample(@Query("fromfir") String fromfir);
+
 
 }
