@@ -20,24 +20,16 @@ package com.eusecom.samfantozzi;
 
 import android.os.Handler;
 import android.support.annotation.NonNull;
-import android.util.Log;
-import android.widget.Toast;
-
+import com.eusecom.samfantozzi.models.BankItem;
 import com.eusecom.samfantozzi.retrofit.AbsServerService;
-
 import java.util.Arrays;
 import java.util.List;
-
 import rx.Observable;
-import rx.schedulers.Schedulers;
 import rx.subscriptions.CompositeSubscription;
 
-import static android.content.ContentValues.TAG;
-import static rx.Observable.empty;
 
 public class BankFindItemsInteractorImpl implements BankFindItemsInteractor {
 
-    private CompositeSubscription mSubscription;
     AbsServerService mAbsServerService;
 
     public BankFindItemsInteractorImpl (@NonNull final AbsServerService absServerService ) {
@@ -46,10 +38,16 @@ public class BankFindItemsInteractorImpl implements BankFindItemsInteractor {
 
     @Override public Observable<List<Invoice>> findCompanies() {
 
-                return mAbsServerService.getExample("301");
+        return mAbsServerService.getExample("301");
 
     }
 
+    @Override public Observable<List<BankItem>> findBankItems(String userhash, String userid, String fromfir
+            , String vyb_rok, String drh, String uce, String ume, String dokx) {
+
+        return mAbsServerService.getBankItemsFromSqlServer(userhash, userid, fromfir, vyb_rok, drh, uce, ume, dokx);
+
+    }
 
     @Override public void findItems(final OnFinishedListener listener) {
         new Handler().postDelayed(new Runnable() {

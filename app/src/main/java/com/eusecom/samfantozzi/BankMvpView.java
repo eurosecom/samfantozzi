@@ -18,6 +18,8 @@
 
 package com.eusecom.samfantozzi;
 
+import com.eusecom.samfantozzi.models.BankItem;
+
 import java.util.List;
 
 public interface BankMvpView {
@@ -29,6 +31,8 @@ public interface BankMvpView {
     void setItems(List<String> items);
 
     void setInvoiceItems(List<Invoice> items);
+
+    void setBankItems(List<BankItem> items);
 
     void showMessage(String message);
 }

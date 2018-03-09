@@ -18,6 +18,8 @@
 
 package com.eusecom.samfantozzi;
 
+import com.eusecom.samfantozzi.models.BankItem;
+
 import java.util.List;
 
 import rx.Observable;
@@ -27,9 +29,13 @@ public interface BankFindItemsInteractor {
     interface OnFinishedListener {
         void onFinished(List<String> items);
         void onFinishedInvoice(List<Invoice> items);
+        void onFinishedBankItems(List<BankItem> items);
     }
 
     void findItems(OnFinishedListener listener);
 
     Observable<List<Invoice>> findCompanies();
+
+    Observable<List<BankItem>> findBankItems(String userhash, String userid, String fromfir
+            , String vyb_rok, String drh, String uce, String ume, String dokx);
 }

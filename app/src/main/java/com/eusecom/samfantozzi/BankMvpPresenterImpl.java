@@ -18,14 +18,13 @@
 
 package com.eusecom.samfantozzi;
 
+import android.content.SharedPreferences;
 import android.util.Log;
-import android.widget.Toast;
-
+import com.eusecom.samfantozzi.models.BankItem;
 import java.util.List;
-import rx.Subscription;
+import java.util.Random;
 import rx.schedulers.Schedulers;
 import rx.subscriptions.CompositeSubscription;
-
 import static android.content.ContentValues.TAG;
 import static rx.Observable.empty;
 
@@ -34,9 +33,12 @@ public class BankMvpPresenterImpl implements BankMvpPresenter, BankFindItemsInte
     private BankMvpView mainView;
     private BankFindItemsInteractor findItemsInteractor;
     private CompositeSubscription mSubscription;
+    private SharedPreferences mSharedPreferences;
 
-    public BankMvpPresenterImpl(BankMvpView mainView, BankFindItemsInteractor findItemsInteractor) {
+    public BankMvpPresenterImpl(BankMvpView mainView, SharedPreferences sharedPreferences,
+                                BankFindItemsInteractor findItemsInteractor) {
         this.mainView = mainView;
+        this.mSharedPreferences = sharedPreferences;
         this.findItemsInteractor = findItemsInteractor;
     }
 
@@ -73,6 +75,57 @@ public class BankMvpPresenterImpl implements BankMvpPresenter, BankFindItemsInte
                 .onErrorResumeNext(throwable -> empty())
                 .subscribe(this::onFinishedInvoice));
         }
+
+        //http://www.eshoptest.sk/androidfantozzi/get_accountitem.php?userhash=7d074740465344b6cb3cd1eea75d88c73664d4ea912e15d5c7d851d328046849cd0325dd6778ae40da3c4d73ac441e34f03ad6ff3cd7f926df466e3a660c8740
+        // &userid=6.49580023480085&vyb_rok=2017&fromfir=301&drh=2&uce=32100&ume=1.2017
+        //String userhash, String userid, String fromfir, String vyb_rok, String drh, String uce, String ume, String dokx
+        Random r = new Random();
+        double d = 10.0 + r.nextDouble() * 20.0;
+        String ds = String.valueOf(d);
+
+        String usuidx = mSharedPreferences.getString("usuid", "");
+        String userxplus =  ds + "/" + usuidx + "/" + ds;
+
+        MCrypt mcrypt = new MCrypt();
+        String encrypted2 = "";
+        try {
+            encrypted2 = mcrypt.bytesToHex( mcrypt.encrypt(userxplus) );
+        } catch (Exception e1) {
+            // TODO Auto-generated catch block
+            e1.printStackTrace();
+        }
+
+        String firx = mSharedPreferences.getString("fir", "");
+        String rokx = mSharedPreferences.getString("rok", "");
+        String drh = "4";
+        String dodx = mSharedPreferences.getString("doduce", "");
+        if (drh.equals("1")) {
+            dodx = mSharedPreferences.getString("odbuce", "");
+        }
+        if (drh.equals("3")) {
+            dodx = mSharedPreferences.getString("pokluce", "");
+        }
+        if (drh.equals("4")) {
+            dodx = mSharedPreferences.getString("bankuce", "");
+        }
+        String umex = mSharedPreferences.getString("ume", "");
+        String edidok = mSharedPreferences.getString("edidok", "");
+
+        //mSubscription.add(findItemsInteractor.findBankItems("7d074740465344b6cb3cd1eea75d88c73664d4ea912e15d5c7d851d328046849cd0325dd6778ae40da3c4d73ac441e34f03ad6ff3cd7f926df466e3a660c8740"
+        //        , "6.49580023480085", "301"
+        //        , "2017", "4"
+        //        , "22100", "01.2017", "0")
+
+        mSubscription.add(findItemsInteractor.findBankItems(encrypted2, ds, firx, rokx, drh, dodx, umex, edidok)
+                .subscribeOn(Schedulers.computation())
+                .observeOn(rx.android.schedulers.AndroidSchedulers.mainThread())
+                .doOnError(throwable -> { Log.e(TAG, "Error InvoiceListFragment " + throwable.getMessage());
+                    mainView.hideProgress();
+                    mainView.showMessage("Server not connected");
+                })
+                .onErrorResumeNext(throwable -> empty())
+                .subscribe(this::onFinishedBankItems));
+
     }
 
 
@@ -93,7 +146,15 @@ public class BankMvpPresenterImpl implements BankMvpPresenter, BankFindItemsInte
     @Override public void onFinishedInvoice(List<Invoice> invoices) {
         if (mainView != null) {
             //Log.d("BankMvpPresenter ", items.get(0).getDok());
-            mainView.setInvoiceItems(invoices);
+            //mainView.setInvoiceItems(invoices);
+            mainView.hideProgress();
+        }
+    }
+
+    @Override public void onFinishedBankItems(List<BankItem> bankitems) {
+        if (mainView != null) {
+            //Log.d("BankMvpPresenter ", bankitems.get(0).getDok());
+            mainView.setBankItems(bankitems);
             mainView.hideProgress();
         }
     }

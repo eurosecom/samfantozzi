@@ -19,6 +19,7 @@
 package com.eusecom.samfantozzi;
 
 import android.app.Activity;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -28,6 +29,8 @@ import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.ProgressBar;
 import android.widget.Toast;
+
+import com.eusecom.samfantozzi.models.BankItem;
 import com.eusecom.samfantozzi.retrofit.AbsServerService;
 import java.util.List;
 import javax.inject.Inject;
@@ -45,6 +48,8 @@ public class BankMvpActivity extends Activity implements BankMvpView, AdapterVie
 
     @Inject
     AbsServerService mAbsServerService;
+    @Inject
+    SharedPreferences mSharedPreferences;
 
     @Override protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -55,7 +60,7 @@ public class BankMvpActivity extends Activity implements BankMvpView, AdapterVie
         listView = (ListView) findViewById(R.id.list);
         listView.setOnItemClickListener(this);
         progressBar = (ProgressBar) findViewById(R.id.progress);
-        presenter = new BankMvpPresenterImpl(this, new BankFindItemsInteractorImpl(mAbsServerService));
+        presenter = new BankMvpPresenterImpl(this, mSharedPreferences, new BankFindItemsInteractorImpl(mAbsServerService));
     }
 
 
@@ -91,6 +96,10 @@ public class BankMvpActivity extends Activity implements BankMvpView, AdapterVie
     }
 
     @Override public void setInvoiceItems(List<Invoice> items) {
+        listView.setAdapter(new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, items));
+    }
+
+    @Override public void setBankItems(List<BankItem> items) {
         listView.setAdapter(new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, items));
     }
 
