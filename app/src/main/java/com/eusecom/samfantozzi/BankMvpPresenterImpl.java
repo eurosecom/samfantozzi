@@ -21,6 +21,8 @@ package com.eusecom.samfantozzi;
 import android.content.SharedPreferences;
 import android.util.Log;
 import com.eusecom.samfantozzi.models.BankItem;
+
+import java.util.Collections;
 import java.util.List;
 import java.util.Random;
 import rx.schedulers.Schedulers;
@@ -28,12 +30,13 @@ import rx.subscriptions.CompositeSubscription;
 import static android.content.ContentValues.TAG;
 import static rx.Observable.empty;
 
-public class BankMvpPresenterImpl implements BankMvpPresenter, BankFindItemsInteractor.OnFinishedListener {
+public class BankMvpPresenterImpl implements BankMvpPresenter, BankFindItemsInteractor.OnFinishedListener, AccountItemAdapter.KlikaciListener {
 
     private BankMvpView mainView;
     private BankFindItemsInteractor findItemsInteractor;
     private CompositeSubscription mSubscription;
     private SharedPreferences mSharedPreferences;
+    private AccountItemAdapter mAdapter;
 
     public BankMvpPresenterImpl(BankMvpView mainView, SharedPreferences sharedPreferences,
                                 BankFindItemsInteractor findItemsInteractor) {
@@ -147,19 +150,24 @@ public class BankMvpPresenterImpl implements BankMvpPresenter, BankFindItemsInte
         if (mainView != null) {
             //Log.d("BankMvpPresenter ", items.get(0).getDok());
             //mainView.setInvoiceItems(invoices);
-            mainView.hideProgress();
+            //mainView.hideProgress();
         }
     }
 
     @Override public void onFinishedBankItems(List<BankItem> bankitems) {
         if (mainView != null) {
             //Log.d("BankMvpPresenter ", bankitems.get(0).getDok());
-            mainView.setBankItems(bankitems);
+            mAdapter = new AccountItemAdapter(this);
+            mainView.setBankItems(mAdapter, bankitems);
             mainView.hideProgress();
         }
     }
 
     public BankMvpView getMainView() {
         return mainView;
+    }
+
+    public void klikolSomItem(BankItem item){
+        Log.d("onShortClickListAdapt", item.getHod());
     }
 }

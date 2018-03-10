@@ -21,6 +21,8 @@ package com.eusecom.samfantozzi;
 import android.app.Activity;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -29,7 +31,6 @@ import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.ProgressBar;
 import android.widget.Toast;
-
 import com.eusecom.samfantozzi.models.BankItem;
 import com.eusecom.samfantozzi.retrofit.AbsServerService;
 import java.util.List;
@@ -45,6 +46,8 @@ public class BankMvpActivity extends Activity implements BankMvpView, AdapterVie
     private ListView listView;
     private ProgressBar progressBar;
     private BankMvpPresenter presenter;
+    private RecyclerView mRecycler;
+    private LinearLayoutManager mManager;
 
     @Inject
     AbsServerService mAbsServerService;
@@ -59,6 +62,14 @@ public class BankMvpActivity extends Activity implements BankMvpView, AdapterVie
         setContentView(R.layout.bankmvp_activity);
         listView = (ListView) findViewById(R.id.list);
         listView.setOnItemClickListener(this);
+
+        mRecycler = (RecyclerView) findViewById(R.id.rvlist);
+        mRecycler.setHasFixedSize(true);
+        mManager = new LinearLayoutManager(this);
+        mManager.setReverseLayout(true);
+        mManager.setStackFromEnd(true);
+        mRecycler.setLayoutManager(mManager);
+
         progressBar = (ProgressBar) findViewById(R.id.progress);
         presenter = new BankMvpPresenterImpl(this, mSharedPreferences, new BankFindItemsInteractorImpl(mAbsServerService));
     }
@@ -99,8 +110,10 @@ public class BankMvpActivity extends Activity implements BankMvpView, AdapterVie
         listView.setAdapter(new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, items));
     }
 
-    @Override public void setBankItems(List<BankItem> items) {
-        listView.setAdapter(new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, items));
+    @Override public void setBankItems(AccountItemAdapter mAdapter, List<BankItem> bankitems) {
+        //listView.setAdapter(new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, items));
+        mAdapter.setBankItems(bankitems);
+        mRecycler.setAdapter(mAdapter);
     }
 
     @Override public void showMessage(String message) {

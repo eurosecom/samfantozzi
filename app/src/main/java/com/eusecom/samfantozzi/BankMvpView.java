@@ -32,7 +32,7 @@ public interface BankMvpView {
 
     void setInvoiceItems(List<Invoice> items);
 
-    void setBankItems(List<BankItem> items);
+    void setBankItems(AccountItemAdapter mAdapter, List<BankItem> items);
 
     void showMessage(String message);
 }
