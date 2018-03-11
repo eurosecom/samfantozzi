@@ -19,8 +19,10 @@
 package com.eusecom.samfantozzi;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.Menu;
@@ -41,7 +43,7 @@ import javax.inject.Inject;
 * by https://github.com/antoniolg/androidmvp
 */
 
-public class BankMvpActivity extends Activity implements BankMvpView, AdapterView.OnItemClickListener {
+public class BankMvpActivity extends AppCompatActivity implements BankMvpView, AdapterView.OnItemClickListener {
 
     private ListView listView;
     private ProgressBar progressBar;
@@ -72,6 +74,7 @@ public class BankMvpActivity extends Activity implements BankMvpView, AdapterVie
 
         progressBar = (ProgressBar) findViewById(R.id.progress);
         presenter = new BankMvpPresenterImpl(this, mSharedPreferences, new BankFindItemsInteractorImpl(mAbsServerService));
+
     }
 
 
@@ -82,6 +85,8 @@ public class BankMvpActivity extends Activity implements BankMvpView, AdapterVie
 
     @Override protected void onResume() {
         super.onResume();
+        getSupportActionBar().setTitle(mSharedPreferences.getString("ume", "") + " "
+                + mSharedPreferences.getString("bankuce", "") + " " +  getString(R.string.suppliers));
         //presenter.onResume();
         presenter.onStart();
     }
@@ -127,12 +132,44 @@ public class BankMvpActivity extends Activity implements BankMvpView, AdapterVie
     }
 
     @Override public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()) {
-            case R.id.action_settings:
-                return true;
-            default:
-                return super.onOptionsItemSelected(item);
+        int id = item.getItemId();
+
+        if (id == R.id.action_settings) {
+
+            Intent is = new Intent(this, SettingsActivity.class);
+            startActivity(is);
+            return true;
         }
+
+        if (id == R.id.action_setmonth) {
+
+            Intent is = new Intent(this, ChooseMonthActivity.class);
+            startActivity(is);
+            return true;
+        }
+
+        if (id == R.id.action_setaccount) {
+
+            Intent is = new Intent(this, ChooseAccountActivity.class);
+            Bundle extras = new Bundle();
+            extras.putString("fromact", "4");
+            is.putExtras(extras);
+            startActivity(is);
+            return true;
+        }
+
+        if (id == R.id.action_nosaveddoc) {
+
+            Intent is = new Intent(this, NoSavedDocActivity.class);
+            Bundle extras = new Bundle();
+            extras.putString("fromact", "3");
+            is.putExtras(extras);
+            startActivity(is);
+
+            return true;
+        }
+
+        return super.onOptionsItemSelected(item);
     }
 
 

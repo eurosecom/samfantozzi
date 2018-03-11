@@ -2,6 +2,7 @@ package com.eusecom.samfantozzi.models;
 
 public class UniItem extends AccountItem {
 
+	private String drh;
 	private String cpl;
 	private String dok;
 	private String dat;
@@ -13,8 +14,9 @@ public class UniItem extends AccountItem {
 	private String hod;
 	private String pop;
 
-	public UniItem(String cpl, String dok, String dat, String ucm, String ucd,
+	public UniItem(String drh, String cpl, String dok, String dat, String ucm, String ucd,
 					String rdp, String ico, String fak, String hod, String pop){
+		this.drh=drh;
 		this.cpl=cpl;
 		this.dok=dok;
 		this.dat=dat;
@@ -25,6 +27,11 @@ public class UniItem extends AccountItem {
 		this.fak=fak;
 		this.hod=hod;
 		this.pop=pop;
+	}
+
+	@Override
+	public String getDrh() {
+		return drh;
 	}
 
 	@Override

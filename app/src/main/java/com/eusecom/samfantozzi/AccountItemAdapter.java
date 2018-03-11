@@ -61,10 +61,10 @@ public class AccountItemAdapter extends RecyclerView.Adapter<AccountItemAdapter.
   @Override
   public void onBindViewHolder(AccountItemViewHolder holder, int position) {
 
-      holder.invoice_name.setText(mListabsserver.get(position).getDok());
+      holder.invoice_name.setText(mListabsserver.get(position).getPop());
       Picasso.with(holder.mContext).load(R.drawable.ic_call_made_black_24dp).resize(120, 120).into(holder.invoice_photo);
-      if( mListabsserver.get(position).getHod().equals("2")) {
-          Picasso.with(holder.mContext).load(R.drawable.ic_call_received_black_24dp).resize(120, 120).into(holder.invoice_photo);
+      if( mListabsserver.get(position).getDrh().equals("4")) {
+          Picasso.with(holder.mContext).load(R.drawable.ic_account_balance_black_24dp).resize(120, 120).into(holder.invoice_photo);
       }
 
       holder.docx.setText(mListabsserver.get(position).getDok());
@@ -82,7 +82,7 @@ public class AccountItemAdapter extends RecyclerView.Adapter<AccountItemAdapter.
 
                   // View v at position pos is long-clicked.
                   Log.d("onLongClickListener", mListabsserver.get(pos).getHod());
-                  
+
               } else {
 
                   Log.d("onShortClickListener", mListabsserver.get(pos).getHod());
