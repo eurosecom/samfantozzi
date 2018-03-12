@@ -10,6 +10,7 @@ public abstract class AccountItem {
 	public abstract String getUcd();
 	public abstract String getRdp();
 	public abstract String getIco();
+	public abstract String getNai();
 	public abstract String getFak();
 	public abstract String getHod();
 	public abstract String getPop();
@@ -18,7 +19,7 @@ public abstract class AccountItem {
 	public String toString(){
 		return "DRH= "+this.getDrh()+"CPL= "+this.getCpl()+", DOK= "+this.getDok()+", DAT="+this.getDat()+
 				", UCM="+this.getUcm()+", UCD="+this.getUcd()+", RDP="+this.getRdp()+
-				", ICO="+this.getIco()+", FAK="+this.getFak()+", HOD="+this.getHod()+
+				", ICO="+this.getIco()+", NAI="+this.getNai()+", FAK="+this.getFak()+", HOD="+this.getHod()+
 				", POP="+this.getPop();
 	}
 }

@@ -22,6 +22,8 @@ import android.app.Activity;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.support.design.widget.FloatingActionButton;
+import android.support.design.widget.TabLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -75,6 +77,20 @@ public class BankMvpActivity extends AppCompatActivity implements BankMvpView, A
         progressBar = (ProgressBar) findViewById(R.id.progress);
         presenter = new BankMvpPresenterImpl(this, mSharedPreferences, new BankFindItemsInteractorImpl(mAbsServerService));
 
+        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
+        fab.setOnClickListener(v -> {
+
+            Intent is = new Intent(this, NewCashDocKtActivity.class);
+            Bundle extras = new Bundle();
+            extras.putString("fromact", "1");
+            extras.putString("drupoh", "2");
+            extras.putString("newdok", "1");
+            extras.putString("edidok", "0");
+            is.putExtras(extras);
+            startActivity(is);
+
+                }
+        );
     }
 
 
@@ -86,7 +102,7 @@ public class BankMvpActivity extends AppCompatActivity implements BankMvpView, A
     @Override protected void onResume() {
         super.onResume();
         getSupportActionBar().setTitle(mSharedPreferences.getString("ume", "") + " "
-                + mSharedPreferences.getString("bankuce", "") + " " +  getString(R.string.suppliers));
+                + mSharedPreferences.getString("bankuce", "") + " " +  getString(R.string.bank));
         //presenter.onResume();
         presenter.onStart();
     }

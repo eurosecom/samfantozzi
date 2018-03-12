@@ -10,12 +10,13 @@ public class UniItem extends AccountItem {
 	private String ucd;
 	private String rdp;
 	private String ico;
+	private String nai;
 	private String fak;
 	private String hod;
 	private String pop;
 
 	public UniItem(String drh, String cpl, String dok, String dat, String ucm, String ucd,
-					String rdp, String ico, String fak, String hod, String pop){
+					String rdp, String ico, String nai, String fak, String hod, String pop){
 		this.drh=drh;
 		this.cpl=cpl;
 		this.dok=dok;
@@ -24,6 +25,7 @@ public class UniItem extends AccountItem {
 		this.ucd=ucd;
 		this.rdp=rdp;
 		this.ico=ico;
+		this.nai=nai;
 		this.fak=fak;
 		this.hod=hod;
 		this.pop=pop;
@@ -67,6 +69,11 @@ public class UniItem extends AccountItem {
 	@Override
 	public String getIco() {
 		return ico;
+	}
+
+	@Override
+	public String getNai() {
+		return nai;
 	}
 
 	@Override

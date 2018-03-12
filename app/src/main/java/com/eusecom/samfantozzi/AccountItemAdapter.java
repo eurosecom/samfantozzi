@@ -61,11 +61,33 @@ public class AccountItemAdapter extends RecyclerView.Adapter<AccountItemAdapter.
   @Override
   public void onBindViewHolder(AccountItemViewHolder holder, int position) {
 
-      holder.invoice_name.setText(mListabsserver.get(position).getPop());
+      holder.invoice_name.setText(mListabsserver.get(position).getUcm() + " / "
+              + mListabsserver.get(position).getUcd() + " "
+              + mListabsserver.get(position).getNai() + " "
+              + mListabsserver.get(position).getPop());
+      String ucm = mListabsserver.get(position).getUcm();
+      String ucm3 = "";
+      if( ucm.length() >= 3 ) {ucm3 = ucm.substring(0, 3);}
+
       Picasso.with(holder.mContext).load(R.drawable.ic_call_made_black_24dp).resize(120, 120).into(holder.invoice_photo);
       if( mListabsserver.get(position).getDrh().equals("4")) {
           Picasso.with(holder.mContext).load(R.drawable.ic_account_balance_black_24dp).resize(120, 120).into(holder.invoice_photo);
+
+          String receipt = "1";
+          if( ucm.length() < 3 ) { receipt = "0"; }
+          if( ucm.length() >= 3 ) {
+              if (!ucm3.equals("221")) {
+                  receipt = "0";
+              }
+          }
+          if( receipt.equals("1")) {
+              Picasso.with(holder.mContext).load(R.drawable.ic_account_balance_blue_24dp).resize(120, 120).into(holder.invoice_photo);
+          }else{
+              Picasso.with(holder.mContext).load(R.drawable.ic_account_balance_red_24dp).resize(120, 120).into(holder.invoice_photo);
+          }
+
       }
+
 
       holder.docx.setText(mListabsserver.get(position).getDok());
 
