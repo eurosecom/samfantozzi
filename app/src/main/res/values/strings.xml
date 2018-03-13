@@ -170,7 +170,9 @@
     <string name="empty">Empty</string>
     <string name="close">Close</string>
     <string name="deletedoc">Delete document</string>
+    <string name="deleteitem">Delete item</string>
     <string name="deletealldoc">Delete all docs</string>
+    <string name="deletewholedoc">Delete whole doc</string>
     <string name="editdoc">Edit document</string>
     <string name="createdoc">Create document</string>
     <string name="expense">Expense</string>

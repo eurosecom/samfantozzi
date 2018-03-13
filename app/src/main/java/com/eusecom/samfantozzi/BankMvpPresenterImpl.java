@@ -169,5 +169,8 @@ public class BankMvpPresenterImpl implements BankMvpPresenter, BankFindItemsInte
 
     public void klikolSomItem(BankItem item){
         Log.d("onShortClickListAdapt", item.getHod());
+        if (mainView != null) {
+            mainView.showItemDialog(item);
+        }
     }
 }

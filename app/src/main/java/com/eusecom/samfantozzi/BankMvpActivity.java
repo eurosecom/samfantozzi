@@ -18,15 +18,17 @@
 
 package com.eusecom.samfantozzi;
 
-import android.app.Activity;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.TabLayout;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -34,6 +36,7 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.ProgressBar;
+import android.widget.TextView;
 import android.widget.Toast;
 import com.eusecom.samfantozzi.models.BankItem;
 import com.eusecom.samfantozzi.retrofit.AbsServerService;
@@ -139,6 +142,99 @@ public class BankMvpActivity extends AppCompatActivity implements BankMvpView, A
 
     @Override public void showMessage(String message) {
         Toast.makeText(this, message, Toast.LENGTH_LONG).show();
+    }
+
+    @Override public void showItemDialog(BankItem invoice) {
+
+        getItemDialog(invoice);
+    }
+
+    private void getItemDialog(@NonNull final BankItem invoice) {
+
+        LayoutInflater inflater = LayoutInflater.from(BankMvpActivity.this);
+        final View textenter = inflater.inflate(R.layout.invoice_edit_dialog, null);
+
+        final TextView valuex = (TextView) textenter.findViewById(R.id.valuex);
+        valuex.setText(invoice.getHod());
+
+        final AlertDialog.Builder builder = new AlertDialog.Builder(BankMvpActivity.this);
+        builder.setView(textenter).setTitle(getString(R.string.document) + " " + invoice.getDok());
+
+        builder.setItems(new CharSequence[]
+                        {getString(R.string.pdf), getString(R.string.edit), getString(R.string.deleteitem)
+                        , getString(R.string.deletedoc)},
+                new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int which) {
+                        // The 'which' argument contains the index position
+                        // of the selected item
+                        switch (which) {
+                            case 0:
+
+                                Intent is = new Intent(BankMvpActivity.this, ShowPdfActivity.class);
+                                Bundle extras = new Bundle();
+                                extras.putString("fromact", "1");
+                                extras.putString("drhx", invoice.getDrh());
+                                extras.putString("ucex", mSharedPreferences.getString("bankuce", ""));
+                                extras.putString("dokx", invoice.getDok());
+                                is.putExtras(extras);
+                                startActivity(is);
+
+                                break;
+                            case 1:
+
+                                Intent ie = new Intent(BankMvpActivity.this, NewInvoiceDocKtActivity.class);
+                                Bundle extrase = new Bundle();
+                                extrase.putString("drupoh", "1");
+                                extrase.putString("newdok", "0");
+                                extrase.putString("edidok", invoice.getDok());
+                                ie.putExtras(extrase);
+                                startActivity(ie);
+
+                                break;
+                            case 2:
+                                deleteItemDialog(invoice, 0);
+                                break;
+                            case 3:
+                                deleteItemDialog(invoice, 1);
+                                break;
+                        }
+                    }
+                });
+        AlertDialog dialog = builder.create();
+        builder.show();
+
+    }
+
+    private void deleteItemDialog(@NonNull final BankItem invoice, int all){
+
+        String title = "";
+        if( all == 0 ) {
+            title = getString(R.string.deletedoc) + " " + invoice.getDok()
+                    + " " + getString(R.string.value) + " " + invoice.getHod();
+        }else{
+            title = getString(R.string.deletewholedoc) + " " + invoice.getDok();
+        }
+        new AlertDialog.Builder(BankMvpActivity.this)
+                .setTitle(title)
+                .setPositiveButton(R.string.delete,
+                        new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog,
+                                                int whichButton) {
+                                //showProgressBar();
+                                //mViewModel.emitDelInvFromServer(invoice);
+
+                            }
+                        })
+                .setNegativeButton(R.string.close,
+                        new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog,
+                                                int whichButton) {
+
+
+                            }
+                        })
+                .show();
+
     }
 
     //option menu
