@@ -293,6 +293,14 @@ public class DgAllEmpsAbsDataModel implements DgAllEmpsAbsIDataModel {
                     + "&mini=1&tlacitR=1&sysx=UCT&rozuct=ANO&zandroidu=1&anduct=1&h_razitko=1&copern=20&drupoh=2&page=1&serverx="
                     + adresx + "&userhash=" + encrypted + "&rokx=" + rokx + "&firx=" + firx + "&newfntz=1");
             }
+            if (invx.getDrh().equals("4")){
+            String drupoh = "4";
+            uri = Uri.parse("http://" + serverx +
+                    "/ucto/vspk_pdf.php?cislo_dok=" + invx.getDok() + "&hladaj_dok=" + invx.getDok()
+                    + "&sysx=UCT&rozuct=ANO&zandroidu=1&anduct=1&copern=20&drupoh="+ drupoh + "&page=1&serverx="
+                    + adresx + "&userhash=" + encrypted + "&rokx=" + rokx + "&firx=" + firx + "&newfntz=1");
+            }
+
 
             return Observable.just(uri);
 
