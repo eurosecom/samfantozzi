@@ -83,10 +83,10 @@ public class BankMvpActivity extends AppCompatActivity implements BankMvpView, A
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(v -> {
 
-            Intent is = new Intent(this, NewCashDocKtActivity.class);
+            Intent is = new Intent(this, NewBankDocKtActivity.class);
             Bundle extras = new Bundle();
             extras.putString("fromact", "1");
-            extras.putString("drupoh", "2");
+            extras.putString("drupoh", "1");
             extras.putString("newdok", "1");
             extras.putString("edidok", "0");
             is.putExtras(extras);
@@ -182,7 +182,7 @@ public class BankMvpActivity extends AppCompatActivity implements BankMvpView, A
                                 break;
                             case 1:
 
-                                Intent ie = new Intent(BankMvpActivity.this, NewInvoiceDocKtActivity.class);
+                                Intent ie = new Intent(BankMvpActivity.this, NewBankDocKtActivity.class);
                                 Bundle extrase = new Bundle();
                                 extrase.putString("drupoh", "1");
                                 extrase.putString("newdok", "0");

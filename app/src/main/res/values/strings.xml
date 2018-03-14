@@ -272,8 +272,12 @@
     <string name="popisbtnpenden2">Cash receipts journal sort 2</string>
     <string name="popisbtnprivyd">Profit and Loss Statement</string>
 
-    //bankmvpactivity
+    //bankmvpactivity and newbankdocKtactivity and fragment
     <string name="bank">Bank</string>
+    <string name="newbank">New Bank doc</string>
+    <string name="newuni">New Uni doc</string>
+    <string name="editbank">Edit Bank doc</string>
+    <string name="edituni">Edit Uni doc</string>
     <string name="user_name">username</string>
     <string name="password">password</string>
     <string name="log_in">Log in</string>
