@@ -58,7 +58,6 @@ public class NewBankDocFragment extends Fragment {
     @Bind(R.id.datex) EditText _datex;
     @Bind(R.id.companyid) EditText _companyid;
     @Bind(R.id.idcexist) EditText _idcexist;
-    @Bind(R.id.person) EditText _person;
     @Bind(R.id.invoice) EditText _invoice;
     @Bind(R.id.memo) EditText _memo;
     @Bind(R.id.hod) EditText _hod;
@@ -82,7 +81,6 @@ public class NewBankDocFragment extends Fragment {
 
     private DisposableSubscriber<Boolean> _disposableObserver = null;
     private Flowable<CharSequence> _datexChangeObservable;
-    private Flowable<CharSequence> _personChangeObservable;
     private Flowable<CharSequence> _memoChangeObservable;
     private Flowable<CharSequence> _icoChangeObservable;
     private Subscription subscriptionSave;
@@ -119,7 +117,7 @@ public class NewBankDocFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater,
                              @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
-        View layout = inflater.inflate(R.layout.fragment_newcashdoc, container, false);
+        View layout = inflater.inflate(R.layout.fragment_newbankdoc, container, false);
         ButterKnife.bind(this, layout);
 
         datebutton = (Button) layout.findViewById(R.id.datebutton);
@@ -162,9 +160,6 @@ public class NewBankDocFragment extends Fragment {
 
         _datexChangeObservable = RxJavaInterop.toV2Flowable(RxTextView
                 .textChanges(_datex)
-                .skip(1));
-        _personChangeObservable = RxJavaInterop.toV2Flowable(RxTextView
-                .textChanges(_person)
                 .skip(1));
         _memoChangeObservable = RxJavaInterop.toV2Flowable(RxTextView
                 .textChanges(_memo)
@@ -216,7 +211,7 @@ public class NewBankDocFragment extends Fragment {
                             realminvoice.setDn2(_inputDn2.getText().toString());
                             realminvoice.setPoz(_memo.getText().toString());
                             realminvoice.setFak(_invoice.getText().toString());
-                            realminvoice.setKto(_person.getText().toString());
+                            realminvoice.setKto("");
                             realminvoice.setPoh(_inputPoh.getText().toString());
                             realminvoice.setSaved("false");
                             realminvoices.add(realminvoice);
@@ -246,7 +241,7 @@ public class NewBankDocFragment extends Fragment {
                             realminvoice.setUme("");
                             realminvoice.setDaz("");
                             realminvoice.setDas("");
-                            realminvoice.setKto(_person.getText().toString());
+                            realminvoice.setKto("");
                             realminvoice.setPoh(_inputPoh.getText().toString());
                             realminvoice.setSaved("false");
                             realminvoice.setDatm("");
@@ -426,7 +421,7 @@ public class NewBankDocFragment extends Fragment {
 
         }
 
-        mSubscription.add(mViewModel.getMyPohybyFromSqlServer("3", drupoh, 120)
+        mSubscription.add(mViewModel.getMyPohybyFromSqlServer("4", "4", 120)
                 .subscribeOn(Schedulers.computation())
                 .observeOn(rx.android.schedulers.AndroidSchedulers.mainThread())
                 .doOnError(throwable -> { Log.e(TAG, "Error NewCashDocFragment " + throwable.getMessage());
@@ -491,9 +486,6 @@ public class NewBankDocFragment extends Fragment {
         _datex.setEnabled(false);
         if (_companyid.getText().toString().equals("")) {
             _companyid.setText(invoices.get(0).getIco());
-        }
-        if (_person.getText().toString().equals("")) {
-            _person.setText(invoices.get(0).getKto());
         }
         if (_memo.getText().toString().equals("")) {
             _memo.setText(invoices.get(0).getPoz());
@@ -689,21 +681,16 @@ public class NewBankDocFragment extends Fragment {
         };
 
         Flowable
-                .combineLatest(_personChangeObservable,
-                        _memoChangeObservable,
+                .combineLatest(_memoChangeObservable,
                         _datexChangeObservable,
                         _icoChangeObservable,
-                        (newPerson, newMemo, newDatex, newIco) -> {
+                        (newMemo, newDatex, newIco) -> {
 
                             boolean datexValid = !isEmpty(newDatex);
                             if (!datexValid) {
                                 _datex.setError("Invalid Date!");
                             }
 
-                            boolean personValid = !isEmpty(newPerson) && newPerson.length() > 1;
-                            if (!personValid) {
-                                _person.setError("Invalid Person!");
-                            }
 
                             boolean memoValid = !isEmpty(newMemo) && newMemo.length() > 1;
                             if (!memoValid) {
@@ -713,7 +700,7 @@ public class NewBankDocFragment extends Fragment {
 
                             boolean icoxValid = newIco.toString().equals("true");
 
-                            return personValid && memoValid && datexValid && icoxValid;
+                            return memoValid && datexValid && icoxValid;
                         })
                 .subscribe(_disposableObserver);
     }
