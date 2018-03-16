@@ -107,7 +107,7 @@
     <string name="drupoh_title">Default type for cash register 1=receipt, 2=expense.</string>
     <string name="pokldok_title">Receipt cash document.</string>
     <string name="pokldok_summary">The following number of receipt cash document.</string>
-    <string name="pokldov_title">Expense cash dokument.</string>
+    <string name="pokldov_title">Expense cash document.</string>
     <string name="pokldov_summary">The following number of expense cash document.</string>
     <string name="bankuce_title">Bank account.</string>
     <string name="bankuce_summary">Default account for the bank 22100,22101 etc.</string>

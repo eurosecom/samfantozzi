@@ -196,10 +196,10 @@ public class NewBankDocFragment extends Fragment {
                             //save invoice to Realm
                             List<RealmInvoice> realminvoices = new ArrayList<>();
                             RealmInvoice realminvoice = new RealmInvoice();
-                            realminvoice.setUce(mSharedPreferences.getString("pokluce", ""));
+                            realminvoice.setUce(mSharedPreferences.getString("bankuce", ""));
                             //1=customers invoice, 2=supliers invoice,
                             //31=cash document receipt, 32=cash document expense, 4=bank document, 5=internal document
-                            realminvoice.setDrh("3" + drupoh);
+                            realminvoice.setDrh("4");
                             realminvoice.setDok(_inputDoc.getText().toString());
                             realminvoice.setDat(_datex.getText().toString());
                             realminvoice.setIco(_companyid.getText().toString());
@@ -220,10 +220,10 @@ public class NewBankDocFragment extends Fragment {
                         }else{
 
                             RealmInvoice realminvoice = new RealmInvoice();
-                            realminvoice.setUce(mSharedPreferences.getString("pokluce", ""));
+                            realminvoice.setUce(mSharedPreferences.getString("bankuce", ""));
                             //1=customers invoice, 2=supliers invoice,
                             //31=cash document receipt, 32=cash document expense, 4=bank document, 5=internal document
-                            realminvoice.setDrh("3" + drupoh);
+                            realminvoice.setDrh("4");
                             realminvoice.setDok(_inputDoc.getText().toString());
                             realminvoice.setDat(_datex.getText().toString());
                             realminvoice.setIco(_companyid.getText().toString());
@@ -597,7 +597,7 @@ public class NewBankDocFragment extends Fragment {
                 ((AppCompatActivity)getActivity()).getSupportActionBar().setTitle(mSharedPreferences.getString("bankuce", "")
                         + " " +  getString(R.string.newbank));
             }else{
-                ((AppCompatActivity)getActivity()).getSupportActionBar().setTitle(mSharedPreferences.getString("pokluce", "")
+                ((AppCompatActivity)getActivity()).getSupportActionBar().setTitle(mSharedPreferences.getString("bankuce", "")
                         + " " +  getString(R.string.newuni));
             }
 

@@ -454,6 +454,7 @@ public class DgAllEmpsAbsDataModel implements DgAllEmpsAbsIDataModel {
 
         if(invoiceexists != null){
             //System.out.println("existRealmInvoice " + true);
+            //System.out.println("existRealmInvoice " + true);
             deleteRealmInvoiceData( invoices );
         }else{
             //System.out.println("existRealmInvoice " + false);
