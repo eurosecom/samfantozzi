@@ -19,13 +19,17 @@
 package com.eusecom.samfantozzi;
 
 import android.content.SharedPreferences;
+import android.support.annotation.NonNull;
 import android.util.Log;
 import com.eusecom.samfantozzi.models.BankItem;
 
 import java.util.Collections;
 import java.util.List;
 import java.util.Random;
+
+import rx.Observable;
 import rx.schedulers.Schedulers;
+import rx.subjects.BehaviorSubject;
 import rx.subscriptions.CompositeSubscription;
 import static android.content.ContentValues.TAG;
 import static rx.Observable.empty;
@@ -58,6 +62,7 @@ public class BankMvpPresenterImpl implements BankMvpPresenter, BankFindItemsInte
     @Override public void onDestroy() {
 
         mainView = null;
+        clearObservableItemDelFromServer();
         mSubscription.unsubscribe();
         mSubscription.clear();
     }
@@ -66,6 +71,12 @@ public class BankMvpPresenterImpl implements BankMvpPresenter, BankFindItemsInte
     public void onStart(){
         if (mainView != null) {
             mainView.showProgress();
+
+            SharedPreferences.Editor editor = mSharedPreferences.edit();
+            editor.putString("drupoh", "1").apply();
+            editor.putString("newdok", "1").apply();
+            editor.putString("edidok", "0").apply();
+            editor.commit();
 
         mSubscription = new CompositeSubscription();
         mSubscription.add(findItemsInteractor.findCompanies()
@@ -173,4 +184,86 @@ public class BankMvpPresenterImpl implements BankMvpPresenter, BankFindItemsInte
             mainView.showItemDialog(item);
         }
     }
+
+    public void deleteDoc(BankItem item){
+        Log.d("deleteDoc", item.getHod());
+        mSubscription.add(getMyItemDelFromServer()
+                .subscribeOn(Schedulers.computation())
+                .observeOn(rx.android.schedulers.AndroidSchedulers.mainThread())
+                .doOnError(throwable -> { Log.e(TAG, "Error InvoiceListFragment " + throwable.getMessage());
+                    mainView.hideProgress();
+                    mainView.showMessage("Server not connected");
+                })
+                .onErrorResumeNext(throwable -> empty())
+                .subscribe(this::deletedInvoice));
+
+        emitDelItemFromServer(item);
+
+    }
+
+    //emit delete Item from Mysql
+    public void emitDelItemFromServer(BankItem invx) {
+
+        mObservableItemDelFromServer.onNext(invx);
+    }
+
+    @NonNull
+    private BehaviorSubject<BankItem> mObservableItemDelFromServer = BehaviorSubject.create();
+
+    @NonNull
+    public Observable<List<BankItem>> getMyItemDelFromServer() {
+
+        Random r = new Random();
+        double d = -10.0 + r.nextDouble() * 20.0;
+        String ds = String.valueOf(d);
+
+        String usuidx = mSharedPreferences.getString("usuid", "");
+        String userxplus =  ds + "/" + usuidx + "/" + ds;
+
+        MCrypt mcrypt = new MCrypt();
+        String encrypted2 = "";
+        try {
+            encrypted2 = mcrypt.bytesToHex( mcrypt.encrypt(userxplus) );
+        } catch (Exception e1) {
+            // TODO Auto-generated catch block
+            e1.printStackTrace();
+        }
+
+        String firx = mSharedPreferences.getString("fir", "");
+        String rokx = mSharedPreferences.getString("rok", "");
+        String drh = "4";
+        String dodx = mSharedPreferences.getString("doduce", "");
+        if (drh.equals("1")) {
+            dodx = mSharedPreferences.getString("odbuce", "");
+        }
+        if (drh.equals("3")) {
+            dodx = mSharedPreferences.getString("pokluce", "");
+        }
+        if (drh.equals("4")) {
+            dodx = mSharedPreferences.getString("bankuce", "");
+        }
+        String umex = mSharedPreferences.getString("ume", "");
+
+        Log.d("NewCashLog del fir ", firx);
+
+        final String encryptedf=encrypted2;
+        final String dodxf=dodx;
+
+        return mObservableItemDelFromServer
+                .observeOn(Schedulers.computation())
+                .flatMap(invx -> findItemsInteractor.getMyDocDelFromServer(encryptedf, ds, firx, rokx, drh, dodxf, umex, invx.getDok() ));
+    }
+
+    public void clearObservableItemDelFromServer() {
+
+        mObservableItemDelFromServer = BehaviorSubject.create();
+
+    }
+    //end delete Invoice from Mysql
+
+    private void deletedInvoice(List<BankItem> item) {
+        //Log.d("deleted Item", item.get(0).getDok());
+    }
+
+
 }

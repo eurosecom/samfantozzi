@@ -18,6 +18,8 @@
 
 package com.eusecom.samfantozzi;
 
+import com.eusecom.samfantozzi.models.BankItem;
+
 public interface BankMvpPresenter {
 
     void onResume();
@@ -27,4 +29,7 @@ public interface BankMvpPresenter {
     void onItemClicked(int position);
 
     void onStart();
+
+    void deleteDoc(BankItem invoice);
+
 }

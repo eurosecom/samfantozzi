@@ -389,7 +389,7 @@ public class NewBankDocFragment extends Fragment {
 
 
         if(newdok.equals("0")) {
-            mSubscription.add(mViewModel.getEditedInvoiceFromSqlServer("3")
+            mSubscription.add(mViewModel.getEditedInvoiceFromSqlServer("4")
                     .subscribeOn(Schedulers.computation())
                     .observeOn(rx.android.schedulers.AndroidSchedulers.mainThread())
                     .doOnError(throwable -> {

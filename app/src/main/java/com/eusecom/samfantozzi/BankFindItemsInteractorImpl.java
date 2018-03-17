@@ -42,12 +42,30 @@ public class BankFindItemsInteractorImpl implements BankFindItemsInteractor {
 
     }
 
+    //find Bank Docs from Mysql
     @Override public Observable<List<BankItem>> findBankItems(String userhash, String userid, String fromfir
             , String vyb_rok, String drh, String uce, String ume, String dokx) {
 
         return mAbsServerService.getBankItemsFromSqlServer(userhash, userid, fromfir, vyb_rok, drh, uce, ume, dokx);
 
     }
+    //end find Bank Docs from Mysql
+
+    //delete Bank Doc from Mysql
+    @Override public Observable<List<BankItem>> getMyDocDelFromServer(String userhash, String userid, String fromfir
+            , String vyb_rok, String drh, String uce, String ume, String dokx) {
+
+        System.out.println("invxstring userhash " + userhash);
+        System.out.println("invxstring userid " + userid);
+        System.out.println("invxstring fromfir " + fromfir);
+        System.out.println("invxstring vyb_rok " + vyb_rok);
+        System.out.println("invxstring drh " + drh);
+        System.out.println("invxstring dok " + dokx);
+
+        return mAbsServerService.deleteBankDocFromSqlServer(userhash, userid, fromfir, vyb_rok, drh, uce, ume, dokx);
+
+    }
+    //end delete Bank Doc from Mysql
 
     @Override public void findItems(final OnFinishedListener listener) {
         new Handler().postDelayed(new Runnable() {

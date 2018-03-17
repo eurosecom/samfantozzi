@@ -38,4 +38,9 @@ public interface BankFindItemsInteractor {
 
     Observable<List<BankItem>> findBankItems(String userhash, String userid, String fromfir
             , String vyb_rok, String drh, String uce, String ume, String dokx);
+
+    Observable<List<BankItem>> getMyDocDelFromServer(String userhash, String userid, String fromfir
+            , String vyb_rok, String drh, String uce, String ume, String dokx);
+
+
 }

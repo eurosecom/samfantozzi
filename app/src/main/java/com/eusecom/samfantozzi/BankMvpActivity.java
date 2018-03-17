@@ -94,6 +94,7 @@ public class BankMvpActivity extends AppCompatActivity implements BankMvpView, A
 
                 }
         );
+
     }
 
 
@@ -161,8 +162,7 @@ public class BankMvpActivity extends AppCompatActivity implements BankMvpView, A
         builder.setView(textenter).setTitle(getString(R.string.document) + " " + invoice.getDok());
 
         builder.setItems(new CharSequence[]
-                        {getString(R.string.pdf), getString(R.string.edit), getString(R.string.deleteitem)
-                        , getString(R.string.deletedoc)},
+                        {getString(R.string.pdf), getString(R.string.edit), getString(R.string.deletedoc)},
                 new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int which) {
                         // The 'which' argument contains the index position
@@ -192,9 +192,6 @@ public class BankMvpActivity extends AppCompatActivity implements BankMvpView, A
 
                                 break;
                             case 2:
-                                deleteItemDialog(invoice, 0);
-                                break;
-                            case 3:
                                 deleteItemDialog(invoice, 1);
                                 break;
                         }
@@ -222,6 +219,7 @@ public class BankMvpActivity extends AppCompatActivity implements BankMvpView, A
                                                 int whichButton) {
                                 //showProgressBar();
                                 //mViewModel.emitDelInvFromServer(invoice);
+                                presenter.deleteDoc(invoice);
 
                             }
                         })
