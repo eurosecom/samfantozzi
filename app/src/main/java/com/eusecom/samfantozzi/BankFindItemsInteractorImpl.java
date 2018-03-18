@@ -62,7 +62,7 @@ public class BankFindItemsInteractorImpl implements BankFindItemsInteractor {
     //end find BankItemsList from Mysql
 
     //delete Bank Doc from Mysql
-    @Override public Observable<List<BankItem>> getMyDocDelFromServer(String userhash, String userid, String fromfir
+    @Override public Observable<BankItemList> getMyDocDelFromServer(String userhash, String userid, String fromfir
             , String vyb_rok, String drh, String uce, String ume, String dokx) {
 
         System.out.println("invxstring userhash " + userhash);

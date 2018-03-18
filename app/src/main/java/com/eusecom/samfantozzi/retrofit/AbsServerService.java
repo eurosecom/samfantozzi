@@ -91,8 +91,8 @@ public interface AbsServerService {
             , @Query("vyb_rok") String vyb_rok, @Query("drh") String drh
             , @Query("uce") String uce, @Query("ume") String ume, @Query("dokx") String dokx);
 
-    @GET("/androidfantozzi/delete_accountitem.php")
-    Observable<List<BankItem>> deleteBankDocFromSqlServer(@Query("userhash") String userhash
+    @GET("/androidfantozzi/delete_accountitem_withbalance.php")
+    Observable<BankItemList> deleteBankDocFromSqlServer(@Query("userhash") String userhash
             , @Query("userid") String userid, @Query("fromfir") String fromfir
             , @Query("vyb_rok") String vyb_rok, @Query("drh") String drh
             , @Query("uce") String uce, @Query("ume") String ume, @Query("dokx") String dokx);

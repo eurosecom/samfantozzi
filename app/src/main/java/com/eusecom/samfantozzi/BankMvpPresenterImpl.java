@@ -187,7 +187,7 @@ public class BankMvpPresenterImpl implements BankMvpPresenter, BankFindItemsInte
     }
 
     @Override public void onFinishedBankItemList(BankItemList bankitems) {
-        Log.d("Presenter bankitems", bankitems.getBalance());
+        //Log.d("Presenter bankitems", bankitems.getBalance());
         if (mainView != null) {
             //Log.d("BankMvpPresenter ", bankitems.get(0).getDok());
             mAdapter = new AccountItemAdapter(this);
@@ -238,7 +238,7 @@ public class BankMvpPresenterImpl implements BankMvpPresenter, BankFindItemsInte
     private BehaviorSubject<BankItem> mObservableItemDelFromServer = BehaviorSubject.create();
 
     @NonNull
-    public Observable<List<BankItem>> getMyItemDelFromServer() {
+    public Observable<BankItemList> getMyItemDelFromServer() {
 
         Random r = new Random();
         double d = -10.0 + r.nextDouble() * 20.0;
@@ -288,12 +288,12 @@ public class BankMvpPresenterImpl implements BankMvpPresenter, BankFindItemsInte
     }
     //end delete Invoice from Mysql
 
-    private void deletedInvoice(List<BankItem> item) {
+    private void deletedInvoice(BankItemList item) {
         //Log.d("deleted Item", item.get(0).getDok());
         if (mainView != null) {
-            mainView.setBankItems(mAdapter, item);
+            mainView.setBankItems(mAdapter, item.getBankitem());
             mainView.hideProgress();
-            mainView.setBalance(item.get(0).getBal());
+            mainView.setBalance(item.getBalance());
         }
     }
 
