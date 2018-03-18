@@ -191,12 +191,16 @@ public class BankMvpPresenterImpl implements BankMvpPresenter, BankFindItemsInte
                 .subscribeOn(Schedulers.computation())
                 .observeOn(rx.android.schedulers.AndroidSchedulers.mainThread())
                 .doOnError(throwable -> { Log.e(TAG, "Error InvoiceListFragment " + throwable.getMessage());
+                    if (mainView != null) {
                     mainView.hideProgress();
                     mainView.showMessage("Server not connected");
+                    }
                 })
                 .onErrorResumeNext(throwable -> empty())
                 .subscribe(this::deletedInvoice));
-
+        if (mainView != null) {
+            mainView.showProgress();
+        }
         emitDelItemFromServer(item);
 
     }
@@ -263,6 +267,10 @@ public class BankMvpPresenterImpl implements BankMvpPresenter, BankFindItemsInte
 
     private void deletedInvoice(List<BankItem> item) {
         //Log.d("deleted Item", item.get(0).getDok());
+        if (mainView != null) {
+            mainView.setBankItems(mAdapter, item);
+            mainView.hideProgress();
+        }
     }
 
 
