@@ -19,6 +19,7 @@
 package com.eusecom.samfantozzi;
 
 import com.eusecom.samfantozzi.models.BankItem;
+import com.eusecom.samfantozzi.models.BankItemList;
 
 import java.util.List;
 
@@ -30,6 +31,7 @@ public interface BankFindItemsInteractor {
         void onFinished(List<String> items);
         void onFinishedInvoice(List<Invoice> items);
         void onFinishedBankItems(List<BankItem> items);
+        void onFinishedBankItemList(BankItemList items);
     }
 
     void findItems(OnFinishedListener listener);
@@ -37,6 +39,9 @@ public interface BankFindItemsInteractor {
     Observable<List<Invoice>> findCompanies();
 
     Observable<List<BankItem>> findBankItems(String userhash, String userid, String fromfir
+            , String vyb_rok, String drh, String uce, String ume, String dokx);
+
+    Observable<BankItemList> findBankItemsWithBalance(String userhash, String userid, String fromfir
             , String vyb_rok, String drh, String uce, String ume, String dokx);
 
     Observable<List<BankItem>> getMyDocDelFromServer(String userhash, String userid, String fromfir

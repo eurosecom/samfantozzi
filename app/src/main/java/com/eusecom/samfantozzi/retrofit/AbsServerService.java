@@ -6,6 +6,7 @@ import com.eusecom.samfantozzi.IdCompanyKt;
 import com.eusecom.samfantozzi.Invoice;
 import com.eusecom.samfantozzi.models.Attendance;
 import com.eusecom.samfantozzi.models.BankItem;
+import com.eusecom.samfantozzi.models.BankItemList;
 import com.eusecom.samfantozzi.realm.RealmInvoice;
 
 import java.util.List;
@@ -80,6 +81,12 @@ public interface AbsServerService {
 
     @GET("/androidfantozzi/get_accountitem.php")
     Observable<List<BankItem>> getBankItemsFromSqlServer(@Query("userhash") String userhash
+            , @Query("userid") String userid, @Query("fromfir") String fromfir
+            , @Query("vyb_rok") String vyb_rok, @Query("drh") String drh
+            , @Query("uce") String uce, @Query("ume") String ume, @Query("dokx") String dokx);
+
+    @GET("/androidfantozzi/get_accountitem_withbalance.php")
+    Observable<BankItemList> getBankItemsFromSqlServerWithBalance(@Query("userhash") String userhash
             , @Query("userid") String userid, @Query("fromfir") String fromfir
             , @Query("vyb_rok") String vyb_rok, @Query("drh") String drh
             , @Query("uce") String uce, @Query("ume") String ume, @Query("dokx") String dokx);

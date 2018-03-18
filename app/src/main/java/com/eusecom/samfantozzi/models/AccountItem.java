@@ -14,12 +14,14 @@ public abstract class AccountItem {
 	public abstract String getFak();
 	public abstract String getHod();
 	public abstract String getPop();
+	public abstract String getBal();
 
 	@Override
 	public String toString(){
 		return "DRH= "+this.getDrh()+"CPL= "+this.getCpl()+", DOK= "+this.getDok()+", DAT="+this.getDat()+
 				", UCM="+this.getUcm()+", UCD="+this.getUcd()+", RDP="+this.getRdp()+
 				", ICO="+this.getIco()+", NAI="+this.getNai()+", FAK="+this.getFak()+", HOD="+this.getHod()+
-				", POP="+this.getPop();
+				", POP="+this.getPop()+
+				", BAL="+this.getBal();
 	}
 }

@@ -55,6 +55,7 @@ public class BankMvpActivity extends AppCompatActivity implements BankMvpView, A
     private BankMvpPresenter presenter;
     private RecyclerView mRecycler;
     private LinearLayoutManager mManager;
+    private TextView balance;
 
     @Inject
     AbsServerService mAbsServerService;
@@ -70,6 +71,7 @@ public class BankMvpActivity extends AppCompatActivity implements BankMvpView, A
         listView = (ListView) findViewById(R.id.list);
         listView.setOnItemClickListener(this);
 
+        balance = (TextView) findViewById(R.id.balance);
         mRecycler = (RecyclerView) findViewById(R.id.rvlist);
         mRecycler.setHasFixedSize(true);
         mManager = new LinearLayoutManager(this);
@@ -148,6 +150,11 @@ public class BankMvpActivity extends AppCompatActivity implements BankMvpView, A
     @Override public void showItemDialog(BankItem invoice) {
 
         getItemDialog(invoice);
+    }
+
+    @Override public void setBalance(String statebalance) {
+
+        balance.setText(statebalance);
     }
 
     private void getItemDialog(@NonNull final BankItem invoice) {

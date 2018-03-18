@@ -21,6 +21,7 @@ package com.eusecom.samfantozzi;
 import android.os.Handler;
 import android.support.annotation.NonNull;
 import com.eusecom.samfantozzi.models.BankItem;
+import com.eusecom.samfantozzi.models.BankItemList;
 import com.eusecom.samfantozzi.retrofit.AbsServerService;
 import java.util.Arrays;
 import java.util.List;
@@ -50,6 +51,15 @@ public class BankFindItemsInteractorImpl implements BankFindItemsInteractor {
 
     }
     //end find Bank Docs from Mysql
+
+    //find BankItemsList rom Mysql
+    @Override public Observable<BankItemList> findBankItemsWithBalance(String userhash, String userid, String fromfir
+            , String vyb_rok, String drh, String uce, String ume, String dokx) {
+
+        return mAbsServerService.getBankItemsFromSqlServerWithBalance(userhash, userid, fromfir, vyb_rok, drh, uce, ume, dokx);
+
+    }
+    //end find BankItemsList from Mysql
 
     //delete Bank Doc from Mysql
     @Override public Observable<List<BankItem>> getMyDocDelFromServer(String userhash, String userid, String fromfir

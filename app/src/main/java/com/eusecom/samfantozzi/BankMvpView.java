@@ -37,4 +37,6 @@ public interface BankMvpView {
     void showMessage(String message);
 
     void showItemDialog(BankItem invoice);
+
+    void setBalance(String statebalance);
 }

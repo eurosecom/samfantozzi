@@ -14,9 +14,10 @@ public class BankItem extends AccountItem {
 	private String fak;
 	private String hod;
 	private String pop;
+	private String bal;
 	
 	public BankItem(String drh, String cpl, String dok, String dat, String ucm, String ucd,
-			String rdp, String ico, String nai, String fak, String hod, String pop){
+			String rdp, String ico, String nai, String fak, String hod, String pop, String bal){
 		this.drh=drh;
 		this.cpl=cpl;
 		this.dok=dok;
@@ -29,6 +30,7 @@ public class BankItem extends AccountItem {
 		this.fak=fak;
 		this.hod=hod;
 		this.pop=pop;
+		this.bal=bal;
 	}
 
 	@Override
@@ -89,5 +91,10 @@ public class BankItem extends AccountItem {
 	@Override
 	public String getPop() {
 		return pop;
+	}
+
+	@Override
+	public String getBal() {
+		return bal;
 	}
 }

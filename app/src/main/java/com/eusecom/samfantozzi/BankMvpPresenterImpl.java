@@ -22,6 +22,7 @@ import android.content.SharedPreferences;
 import android.support.annotation.NonNull;
 import android.util.Log;
 import com.eusecom.samfantozzi.models.BankItem;
+import com.eusecom.samfantozzi.models.BankItemList;
 
 import java.util.Collections;
 import java.util.List;
@@ -130,15 +131,25 @@ public class BankMvpPresenterImpl implements BankMvpPresenter, BankFindItemsInte
         //        , "2017", "4"
         //        , "22100", "01.2017", "0")
 
-        mSubscription.add(findItemsInteractor.findBankItems(encrypted2, ds, firx, rokx, drh, dodx, umex, edidok)
+        //mSubscription.add(findItemsInteractor.findBankItems(encrypted2, ds, firx, rokx, drh, dodx, umex, edidok)
+        //        .subscribeOn(Schedulers.computation())
+        //        .observeOn(rx.android.schedulers.AndroidSchedulers.mainThread())
+        //        .doOnError(throwable -> { Log.e(TAG, "Error BankMvpPresenter " + throwable.getMessage());
+        //            mainView.hideProgress();
+        //            mainView.showMessage("Server not connected");
+        //        })
+        //       .onErrorResumeNext(throwable -> empty())
+        //        .subscribe(this::onFinishedBankItems));
+
+        mSubscription.add(findItemsInteractor.findBankItemsWithBalance(encrypted2, ds, firx, rokx, drh, dodx, umex, edidok)
                 .subscribeOn(Schedulers.computation())
                 .observeOn(rx.android.schedulers.AndroidSchedulers.mainThread())
-                .doOnError(throwable -> { Log.e(TAG, "Error InvoiceListFragment " + throwable.getMessage());
+                .doOnError(throwable -> { Log.e(TAG, "Error BankMvpPresenter " + throwable.getMessage());
                     mainView.hideProgress();
                     mainView.showMessage("Server not connected");
                 })
                 .onErrorResumeNext(throwable -> empty())
-                .subscribe(this::onFinishedBankItems));
+                .subscribe(this::onFinishedBankItemList));
 
     }
 
@@ -166,10 +177,22 @@ public class BankMvpPresenterImpl implements BankMvpPresenter, BankFindItemsInte
     }
 
     @Override public void onFinishedBankItems(List<BankItem> bankitems) {
+        //if (mainView != null) {
+        //    //Log.d("BankMvpPresenter ", bankitems.get(0).getDok());
+        //    mAdapter = new AccountItemAdapter(this);
+        //    mainView.setBankItems(mAdapter, bankitems);
+        //    mainView.setBalance(bankitems.get(0).getBal());
+        //    mainView.hideProgress();
+        //}
+    }
+
+    @Override public void onFinishedBankItemList(BankItemList bankitems) {
+        Log.d("Presenter bankitems", bankitems.getBalance());
         if (mainView != null) {
             //Log.d("BankMvpPresenter ", bankitems.get(0).getDok());
             mAdapter = new AccountItemAdapter(this);
-            mainView.setBankItems(mAdapter, bankitems);
+            mainView.setBankItems(mAdapter, bankitems.getBankitem());
+            mainView.setBalance(bankitems.getBalance());
             mainView.hideProgress();
         }
     }
@@ -190,7 +213,7 @@ public class BankMvpPresenterImpl implements BankMvpPresenter, BankFindItemsInte
         mSubscription.add(getMyItemDelFromServer()
                 .subscribeOn(Schedulers.computation())
                 .observeOn(rx.android.schedulers.AndroidSchedulers.mainThread())
-                .doOnError(throwable -> { Log.e(TAG, "Error InvoiceListFragment " + throwable.getMessage());
+                .doOnError(throwable -> { Log.e(TAG, "Error BankMvpPresenter " + throwable.getMessage());
                     if (mainView != null) {
                     mainView.hideProgress();
                     mainView.showMessage("Server not connected");
@@ -270,6 +293,7 @@ public class BankMvpPresenterImpl implements BankMvpPresenter, BankFindItemsInte
         if (mainView != null) {
             mainView.setBankItems(mAdapter, item);
             mainView.hideProgress();
+            mainView.setBalance(item.get(0).getBal());
         }
     }
 
