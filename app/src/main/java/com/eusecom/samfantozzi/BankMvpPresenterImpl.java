@@ -291,6 +291,7 @@ public class BankMvpPresenterImpl implements BankMvpPresenter, BankFindItemsInte
     private void deletedInvoice(BankItemList item) {
         //Log.d("deleted Item", item.get(0).getDok());
         if (mainView != null) {
+            //mAdapter = new AccountItemAdapter(this);
             mainView.setBankItems(mAdapter, item.getBankitem());
             mainView.hideProgress();
             mainView.setBalance(item.getBalance());
