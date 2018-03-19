@@ -23,6 +23,7 @@ import com.eusecom.samfantozzi.R;
 import com.eusecom.samfantozzi.models.Attendance;
 import com.eusecom.samfantozzi.models.Employee;
 import com.eusecom.samfantozzi.realm.RealmAccount;
+import com.eusecom.samfantozzi.realm.RealmIdCompany;
 import com.eusecom.samfantozzi.realm.RealmInvoice;
 import com.eusecom.samfantozzi.retrofit.AbsServerService;
 import com.eusecom.samfantozzi.rxfirebase2.database.RxFirebaseDatabase;
@@ -198,7 +199,7 @@ public class DgAllEmpsAbsDataModel implements DgAllEmpsAbsIDataModel {
 
         List<IdCompanyKt> myidc = new ArrayList<>();
         IdCompanyKt newidc = new IdCompanyKt("31414466", "", "", "Firma xyz", "ulixyz",
-                "Mesto", "", "", true);
+                "Mesto", "", "", true, "");
         myidc.add(newidc);
 
         //Log.d("userhash ", userhash);
@@ -328,7 +329,7 @@ public class DgAllEmpsAbsDataModel implements DgAllEmpsAbsIDataModel {
 
         List<IdCompanyKt> myidc = new ArrayList<>();
         IdCompanyKt newidc = new IdCompanyKt("31414466", "", "", "Firma xyz", "ulixyz",
-                "Mesto", "", "", true);
+                "Mesto", "", "", true, "");
         myidc.add(newidc);
 
         //Log.d("userhash ", userhash);
@@ -379,7 +380,7 @@ public class DgAllEmpsAbsDataModel implements DgAllEmpsAbsIDataModel {
 
         for (Account b : recexp) {
 
-        RealmAccount realmacc = new RealmAccount();
+            RealmAccount realmacc = new RealmAccount();
 
             long unixTime = System.currentTimeMillis() / 1000L;
             String unixTimes = unixTime + "";
@@ -504,7 +505,7 @@ public class DgAllEmpsAbsDataModel implements DgAllEmpsAbsIDataModel {
     }
 
 
-    //method for TypesKtActivity
+    //andrejko methods for TypesKtActivity
     @Override
     public Observable<List<IdCompanyKt>> getAllIdcFromMysqlServer(String userhash, String userid, String fromfir
             , String vyb_rok, String drh) {
@@ -513,6 +514,77 @@ public class DgAllEmpsAbsDataModel implements DgAllEmpsAbsIDataModel {
 
     }
 
+    @NonNull
+    public Observable<List<IdCompanyKt>> saveIdCompaniesToRealm(List<IdCompanyKt> companies, String drh){
+
+            mRealm.executeTransaction(new Realm.Transaction() {
+                @Override
+                public void execute(Realm realm) {
+                    RealmResults<RealmIdCompany> result = realm.where(RealmIdCompany.class).findAll();
+                    result.clear();
+                }
+            });
+
+
+        for (IdCompanyKt b : companies) {
+
+            RealmIdCompany realmacc = new RealmIdCompany();
+
+            long unixTime = System.currentTimeMillis() / 1000L;
+            String unixTimes = unixTime + "";
+
+            realmacc.setIco(b.getIco());
+            realmacc.setDic(b.getDic());
+            realmacc.setIcd(b.getIcd());
+            realmacc.setNai(b.getNai());
+            realmacc.setUli(b.getUli());
+            realmacc.setMes(b.getMes());
+            realmacc.setPsc(b.getPsc());
+            realmacc.setTel(b.getTel());
+            realmacc.setLogprx(String.valueOf(b.getLogprx()));
+            realmacc.setDatm(unixTimes);
+
+            System.out.println("save RealmIdCompany " + b.getIco() + " " + b.getNai() + " " + unixTimes);
+
+            mRealm.beginTransaction();
+            mRealm.copyToRealm(realmacc);
+            mRealm.commitTransaction();
+        }
+
+        return Observable.just(companies);
+    }
+
+    @Override
+    public Observable<List<IdCompanyKt>> getIdCompaniesFromRealm(String userhash, String userid, String fromfir
+            , String vyb_rok, String drh, String drupoh, String ucto) {
+
+        List<RealmIdCompany> results =  mRealm.where(RealmIdCompany.class).findAll();
+
+
+        List<IdCompanyKt> myaccounts = new ArrayList<>();
+        for (RealmIdCompany b : results) {
+
+            //data class IdCompanyKt(var ico : String, var dic : String, var icd : String,  var nai: String
+            //        , var uli: String, var mes: String, var psc: String, var tel: String
+            //        , var logprx: Boolean, var datm: String )
+
+            IdCompanyKt account = new IdCompanyKt(b.getIco(), b.getDic(), b.getIcd(), "rm " + b.getDatm() + " " + b.getNai()
+                    ,b.getUli(), b.getMes(), b.getPsc()
+                    ,b.getTel(), true, b.getDatm() );
+            myaccounts.add(account);
+
+            long unixTime = System.currentTimeMillis() / 1000L;
+            String unixTimes = unixTime + "";
+            System.out.println("get RealmIdCompany " + b.getIco() + " " + b.getNai() + " " + b.getDatm() + " " + unixTimes);
+
+        }
+
+        return Observable.just(myaccounts);
+
+    }
+
+
+    //end methods for TypesKtActivity
 
 
     //recyclerview method for NoSavedDocActivity
@@ -577,7 +649,7 @@ public class DgAllEmpsAbsDataModel implements DgAllEmpsAbsIDataModel {
 
         List<IdCompanyKt> myidc = new ArrayList<>();
         IdCompanyKt newidc = new IdCompanyKt("31414466", "", "", "Firma xyz", "ulixyz",
-                "Mesto", "", "", true);
+                "Mesto", "", "", true, "");
         myidc.add(newidc);
 
         //Log.d("userhash ", userhash);

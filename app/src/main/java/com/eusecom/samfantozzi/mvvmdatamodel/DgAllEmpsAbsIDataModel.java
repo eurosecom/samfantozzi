@@ -108,6 +108,13 @@ public interface DgAllEmpsAbsIDataModel {
     public Observable<List<IdCompanyKt>> getAllIdcFromMysqlServer(String userhash, String userid, String fromfir
             , String vyb_rok, String drh);
 
+    @NonNull
+    public Observable<List<IdCompanyKt>> saveIdCompaniesToRealm(List<IdCompanyKt> companies, String drh);
+
+    @NonNull
+    public Observable<List<IdCompanyKt>> getIdCompaniesFromRealm(String userhash, String userid, String fromfir
+            , String vyb_rok, String drh, String drupoh, String ucto);
+
 
     //recyclerview method for NoSavedDocActivity
 

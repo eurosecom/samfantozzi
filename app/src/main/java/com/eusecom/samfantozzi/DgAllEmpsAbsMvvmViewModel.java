@@ -685,7 +685,18 @@ public class DgAllEmpsAbsMvvmViewModel {
         String firx = mSharedPreferences.getString("fir", "");
         String rokx = mSharedPreferences.getString("rok", "");
 
-        return mDataModel.getAllIdcFromMysqlServer(encrypted, ds, firx, rokx, drh);
+        long unixTimel = System.currentTimeMillis() / 1000L;
+        int interval = 120;
+
+        return Observable.concatEager(
+                mDataModel.getIdCompaniesFromRealm(encrypted, ds, firx, rokx, drh, "0", "9")
+                        .filter(x -> x.size() > 0 )
+                        .filter(x -> unixTimel - Long.valueOf(x.get(0).getDatm()) < interval ),
+                mDataModel.getAllIdcFromMysqlServer(encrypted, ds, firx, rokx, drh)
+                        .observeOn(mSchedulerProvider.ui()) //switch to ui because of Realm is initialize in ui
+                        .flatMap(listaccounts -> mDataModel.saveIdCompaniesToRealm(listaccounts, drh))
+        ).first();
+
     }
     //end get IDC from MySql server
 
