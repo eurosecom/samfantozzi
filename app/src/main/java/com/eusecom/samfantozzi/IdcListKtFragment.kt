@@ -6,6 +6,7 @@ import android.content.Intent
 import android.content.SharedPreferences
 import android.net.Uri
 import android.os.Bundle
+import android.support.design.widget.FloatingActionButton
 import android.support.v4.app.ActivityCompat
 import android.support.v4.app.Fragment
 import android.support.v4.view.MenuItemCompat
@@ -24,6 +25,7 @@ import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.disposables.Disposable
 import io.reactivex.functions.Function
+import kotlinx.android.synthetic.main.activity_mainfantozzi.*
 import org.jetbrains.anko.AlertDialogBuilder
 import org.jetbrains.anko.startActivity
 import org.jetbrains.anko.support.v4.alert
@@ -106,6 +108,7 @@ class IdcListKtFragment : Fragment() {
 
     private fun bind() {
 
+        mViewModel.getBooleanServerIsConnected()
         _disposables = CompositeDisposable()
 
         val tapEventEmitter = _rxBus.asFlowable().publish()
@@ -114,15 +117,21 @@ class IdcListKtFragment : Fragment() {
                 .add(tapEventEmitter.subscribe { event ->
                     if (event is IdcListKtFragment.ClickFobEvent) {
                         //Log.d("IdcListKtActivity  ", " fobClick ")
-                        newCashDocDialog().show()
+                        //mViewModel.emitServerIsConnected("xxx")
+                        mViewModel.getBooleanServerIsConnected()
+                        newIdCompanyDialog().show()
+
+
 
                     }
                     if (event is IdCompanyKt) {
 
-                        val usnamex = event.nai
-
+                        //val usnamex = event.nai
                         //Log.d("CashListKtFragment ", usnamex)
+                        mViewModel.getBooleanServerIsConnected()
                         getTodoDialog(event)
+
+
 
 
                     }
@@ -140,17 +149,6 @@ class IdcListKtFragment : Fragment() {
         mSubscription = CompositeSubscription()
 
         showProgressBar()
-        mSubscription?.add(mViewModel.getMyInvoicesFromSqlServer("3")
-                .subscribeOn(Schedulers.computation())
-                .observeOn(rx.android.schedulers.AndroidSchedulers.mainThread())
-                .doOnError { throwable ->
-                    Log.e("IdcListKtFragment", "Error Throwable " + throwable.message)
-                    hideProgressBar()
-                    toast("Server not connected")
-                }
-                .onErrorResumeNext { throwable -> Observable.empty() }
-                .subscribe { it -> setServerInvoices(it) })
-
         mSubscription?.add(mViewModel.getMyIdcFromSqlServer("2")
                 .subscribeOn(Schedulers.computation())
                 .observeOn(rx.android.schedulers.AndroidSchedulers.mainThread())
@@ -161,17 +159,6 @@ class IdcListKtFragment : Fragment() {
                 }
                 .onErrorResumeNext { throwable -> Observable.empty() }
                 .subscribe { it -> setIdCompanies(it) })
-
-        mSubscription?.add(mViewModel.getObservableDocPdf()
-                .subscribeOn(Schedulers.computation())
-                .observeOn(rx.android.schedulers.AndroidSchedulers.mainThread())
-                .doOnError { throwable ->
-                    Log.e("IdcListKtFragment", "Error Throwable " + throwable.message)
-                    hideProgressBar()
-                    toast("Server not connected")
-                }
-                .onErrorResumeNext { throwable -> Observable.empty() }
-                .subscribe { it -> setUriPdf(it) })
 
         mSubscription?.add(mViewModel.getMyObservableCashListQuery()
                 .subscribeOn(Schedulers.computation())
@@ -184,15 +171,26 @@ class IdcListKtFragment : Fragment() {
                 .onErrorResumeNext { throwable -> Observable.empty() }
                 .subscribe { it -> setQueryString(it) })
 
+        mSubscription?.add(mViewModel.getObservableServerIsConnected()
+                .subscribeOn(Schedulers.computation())
+                .observeOn(rx.android.schedulers.AndroidSchedulers.mainThread())
+                .doOnError { throwable ->
+                    Log.e("IdcListKtFragment", "Error Throwable " + throwable.message)
+                    hideProgressBar()
+                    toast("Server not connected")
+                }
+                .onErrorResumeNext { throwable -> Observable.just(false) }
+                .subscribe { it -> setConnectState(it) })
+
 
         ActivityCompat.invalidateOptionsMenu(activity)
         (activity as AppCompatActivity).supportActionBar!!.setTitle(getString(R.string.idcs))
+
     }
 
     private fun unBind() {
-        mViewModel.clearObservableAbsencesFromFB()
-        mViewModel.clearObservableDocPDF()
         mViewModel.clearObservableCashListQuery()
+        mViewModel.clearObservableServerIsConnectedy()
         mSubscription?.unsubscribe()
         mSubscription?.clear()
         _disposables.dispose()
@@ -222,12 +220,10 @@ class IdcListKtFragment : Fragment() {
         hideProgressBar()
     }
 
-    private fun setServerInvoices(invoices: List<Invoice>) {
+    private fun setConnectState(constate: Boolean) {
 
-        //toast(" nai0 " + invoices.get(0).nai)
-        //mAdapter?.setAbsserver(invoices)
-        //nastavResultAs(invoices)
-        //hideProgressBar()
+        toast(" Connect state " + constate)
+
     }
 
     protected fun showResultAs(resultAs: List<IdCompanyKt>) {
@@ -243,14 +239,6 @@ class IdcListKtFragment : Fragment() {
 
     protected fun nastavResultAs(resultAs: List<IdCompanyKt>) {
         mIdcSearchEngine = IdcSearchEngine(resultAs)
-    }
-
-    private fun setUriPdf(uri: Uri) {
-
-        val intent = Intent(Intent.ACTION_VIEW, uri)
-        intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP
-        startActivity(intent)
-
     }
 
     class ClickFobEvent
@@ -417,32 +405,25 @@ class IdcListKtFragment : Fragment() {
 
     }
 
-    fun newCashDocDialog(): AlertDialogBuilder {
+    fun newIdCompanyDialog(): AlertDialogBuilder {
 
         alert = alert() {
-            positiveButton(R.string.expense) { navigateToNewCashDocTest(2) }
-            neutralButton(R.string.receipt)  { navigateToNewCashDoc(1) }
+            positiveButton(R.string.create) { navigateToNewIdCompany(2) }
+            neutralButton(R.string.close)  {  }
         }
-        val titlex: String = getString(R.string.createdoc)
+        val titlex: String = getString(R.string.createnewidc)
         alert.title(titlex)
 
         return alert
 
     }
 
-    fun navigateToNewCashDoc(drupoh: Int){
+    fun navigateToNewIdCompany(drupoh: Int){
 
-        getActivity().startActivity<NewCashDocKtActivity>()
-
-    }
-
-    fun navigateToNewCashDocTest(drupoh: Int){
-
-        //getActivity().startActivity<InvoiceListKtActivity>()
-        //val intent = Intent(getActivity(), FormValidationActivity::class.java)
-        //startActivity(intent)
+        //getActivity().startActivity<NewCashDocKtActivity>()
 
     }
+
 
     fun editDialog(idcompany: IdCompanyKt): AlertDialogBuilder {
 

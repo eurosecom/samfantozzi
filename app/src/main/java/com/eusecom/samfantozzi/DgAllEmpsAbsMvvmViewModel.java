@@ -8,6 +8,8 @@ import android.content.SharedPreferences;
 import android.net.Uri;
 import android.support.annotation.NonNull;
 import android.util.Log;
+import android.widget.Toast;
+
 import com.eusecom.samfantozzi.models.Attendance;
 import com.eusecom.samfantozzi.models.Employee;
 import com.eusecom.samfantozzi.mvvmdatamodel.DgAllEmpsAbsIDataModel;
@@ -24,7 +26,12 @@ import java.util.Random;
 import javax.inject.Inject;
 
 import rx.Observable;
+import rx.Subscriber;
+import rx.schedulers.Schedulers;
 import rx.subjects.BehaviorSubject;
+
+import static android.content.ContentValues.TAG;
+import static rx.Observable.empty;
 
 /**
  * View model for the CompaniesMvvmActivity.
@@ -45,6 +52,8 @@ public class DgAllEmpsAbsMvvmViewModel {
     MCrypt mMcrypt;
     String encrypted, encrypted2;
 
+    private Boolean isConectedServer;
+
     //@Inject only by Base constructor injection
     public DgAllEmpsAbsMvvmViewModel(@NonNull final DgAllEmpsAbsIDataModel dataModel,
                                      @NonNull final ISchedulerProvider schedulerProvider,
@@ -54,6 +63,7 @@ public class DgAllEmpsAbsMvvmViewModel {
         mSchedulerProvider = schedulerProvider;
         mSharedPreferences = sharedPreferences;
         mMcrypt = mcrypt;
+        this.isConectedServer = false;
     }
 
 
@@ -691,7 +701,7 @@ public class DgAllEmpsAbsMvvmViewModel {
         return Observable.concatEager(
                 mDataModel.getIdCompaniesFromRealm(encrypted, ds, firx, rokx, drh, "0", "9")
                         .filter(x -> x.size() > 0 )
-                        .filter(x -> unixTimel - Long.valueOf(x.get(0).getDatm()) < interval ),
+                        .filter(x -> ( unixTimel - Long.valueOf(x.get(0).getDatm()) < interval || mDataModel.getBooleanConnectedServer("xxx") ) ),
                 mDataModel.getAllIdcFromMysqlServer(encrypted, ds, firx, rokx, drh)
                         .observeOn(mSchedulerProvider.ui()) //switch to ui because of Realm is initialize in ui
                         .flatMap(listaccounts -> mDataModel.saveIdCompaniesToRealm(listaccounts, drh))
@@ -865,5 +875,70 @@ public class DgAllEmpsAbsMvvmViewModel {
     }
     //end max date of month
 
+
+    //control if server is connected
+    //emit Observable<Boolean> control Server connected
+    public void emitServerIsConnected(String queryx) {
+        mObservableServerIsConnected.onNext(queryx);
+    }
+
+    @NonNull
+    private BehaviorSubject<String> mObservableServerIsConnected = BehaviorSubject.create();
+
+    @NonNull
+    public Observable<Boolean> getObservableServerIsConnected() {
+
+        return mObservableServerIsConnected
+                .observeOn(mSchedulerProvider.computation())
+                .flatMap(queryx -> mDataModel.getObservableConnectedServer( queryx ));
+    }
+
+    public void clearObservableServerIsConnectedy() {
+
+        mObservableServerIsConnected = BehaviorSubject.create();
+
+    }
+    //emit Observable<Boolean> control Server connected
+
+    //get Boolean connect state
+    @NonNull
+    public void getBooleanServerIsConnected() {
+
+        final Boolean vrat = false;
+        mDataModel.getObservableConnectedServer("xxx")
+                .subscribeOn(Schedulers.computation())
+                .observeOn(rx.android.schedulers.AndroidSchedulers.mainThread())
+                .doOnError(throwable -> { Log.e(TAG, "Error InvoiceListFragment " + throwable.getMessage());
+                })
+                .onErrorResumeNext(throwable -> Observable.just(false))
+                //.subscribe(this::setQueryString);
+                .subscribe(new Subscriber<Boolean>() {
+                    @Override
+                    public void onCompleted() {
+
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+                        isConectedServer = false;
+                    }
+
+                    @Override
+                    public void onNext(Boolean constate) {
+                        System.out.println("Server connected " + constate);
+                        isConectedServer = constate;
+
+                    }
+                });
+
+
+    }
+
+    @NonNull
+    public Boolean getIsConectedServer(){
+        return this.isConectedServer;
+    }
+
+    //control if server is connected
 
 }

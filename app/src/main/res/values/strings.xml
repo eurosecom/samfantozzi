@@ -247,6 +247,8 @@
     <string name="telshort">Tel.</string>
     <string name="editidc">Edit IDC</string>
     <string name="chooseidc">Choose IDC</string>
+    <string name="createnewidc">Create new IDC</string>
+    <string name="create">Create</string>
 
     //typesktactivity
     <string name="autoacc">AutoAcc</string>

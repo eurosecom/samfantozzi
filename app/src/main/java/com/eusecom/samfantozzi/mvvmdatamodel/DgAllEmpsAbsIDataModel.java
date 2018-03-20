@@ -6,6 +6,7 @@ import android.support.annotation.NonNull;
 import com.eusecom.samfantozzi.Account;
 import com.eusecom.samfantozzi.CalcVatKt;
 import com.eusecom.samfantozzi.CompanyKt;
+import com.eusecom.samfantozzi.Connected;
 import com.eusecom.samfantozzi.IdCompanyKt;
 import com.eusecom.samfantozzi.Invoice;
 import com.eusecom.samfantozzi.Month;
@@ -131,5 +132,11 @@ public interface DgAllEmpsAbsIDataModel {
     public Observable<List<Invoice>> getObservableInvoiceToMysql(String userhash, String userid, String fromfir
             , String vyb_rok, String drh, RealmInvoice invx, String edidok);
 
+    //control if server is connected
+    @NonNull
+    public Observable<Boolean> getObservableConnectedServer(String queryx );
+
+    @NonNull
+    public Boolean getBooleanConnectedServer( String queryx );
 
 }

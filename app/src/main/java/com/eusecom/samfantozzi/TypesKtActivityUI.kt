@@ -47,7 +47,7 @@ class TypesKtActivityUI (val _rxBus: RxBus): AnkoComponent<TypesKtActivity>{
                 imageResource = android.R.drawable.ic_input_add
                 id = R.id.fab
                 onClick{
-                    _rxBus.send(CashListKtFragment.ClickFobEvent())
+                    _rxBus.send(IdcListKtFragment.ClickFobEvent())
 
                 }
 
