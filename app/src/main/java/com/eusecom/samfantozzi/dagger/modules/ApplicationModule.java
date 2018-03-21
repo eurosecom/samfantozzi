@@ -1,7 +1,9 @@
 package com.eusecom.samfantozzi.dagger.modules;
 
 import android.app.Application;
+import android.content.Context;
 import android.content.SharedPreferences;
+import android.net.ConnectivityManager;
 import android.preference.PreferenceManager;
 import com.eusecom.samfantozzi.SamfantozziApp;
 import com.eusecom.samfantozzi.realm.RealmController;
@@ -27,6 +29,10 @@ public class ApplicationModule {
         return mApplication;
     }
 
+    @Provides
+    Context provideContext(){
+        return mApplication;
+    }
 
     @Provides
     @Singleton
@@ -52,6 +58,11 @@ public class ApplicationModule {
         return realmcontroller.getRealm();
     }
 
+    @Provides
+    @Singleton
+    ConnectivityManager provideConnectivityManager() {
+        return (ConnectivityManager) mApplication.getSystemService(Context.CONNECTIVITY_SERVICE);
+    }
 
 
 

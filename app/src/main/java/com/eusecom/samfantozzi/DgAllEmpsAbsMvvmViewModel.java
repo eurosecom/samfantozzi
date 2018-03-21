@@ -1,37 +1,31 @@
 package com.eusecom.samfantozzi;
 
-import android.app.Application;
 import android.app.DatePickerDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.SharedPreferences;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.net.Uri;
 import android.support.annotation.NonNull;
 import android.util.Log;
-import android.widget.Toast;
-
 import com.eusecom.samfantozzi.models.Attendance;
 import com.eusecom.samfantozzi.models.Employee;
 import com.eusecom.samfantozzi.mvvmdatamodel.DgAllEmpsAbsIDataModel;
 import com.eusecom.samfantozzi.mvvmschedulers.ISchedulerProvider;
-import com.eusecom.samfantozzi.realm.RealmEmployee;
 import com.eusecom.samfantozzi.realm.RealmInvoice;
-
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 import java.util.Random;
-
-import javax.inject.Inject;
-
 import rx.Observable;
 import rx.Subscriber;
 import rx.schedulers.Schedulers;
 import rx.subjects.BehaviorSubject;
+import rx.subscriptions.CompositeSubscription;
 
 import static android.content.ContentValues.TAG;
-import static rx.Observable.empty;
+
 
 /**
  * View model for the CompaniesMvvmActivity.
@@ -52,18 +46,22 @@ public class DgAllEmpsAbsMvvmViewModel {
     MCrypt mMcrypt;
     String encrypted, encrypted2;
 
-    private Boolean isConectedServer;
+    @NonNull
+    private CompositeSubscription mSubscription;
+    @NonNull
+    private ConnectivityManager mConnectivityManager;
 
     //@Inject only by Base constructor injection
     public DgAllEmpsAbsMvvmViewModel(@NonNull final DgAllEmpsAbsIDataModel dataModel,
                                      @NonNull final ISchedulerProvider schedulerProvider,
                                      @NonNull final SharedPreferences sharedPreferences,
-                                     @NonNull final MCrypt mcrypt) {
+                                     @NonNull final MCrypt mcrypt,
+                                     @NonNull final ConnectivityManager connectivityManager) {
         mDataModel = dataModel;
         mSchedulerProvider = schedulerProvider;
         mSharedPreferences = sharedPreferences;
         mMcrypt = mcrypt;
-        this.isConectedServer = false;
+        mConnectivityManager = connectivityManager;
     }
 
 
@@ -561,7 +559,7 @@ public class DgAllEmpsAbsMvvmViewModel {
         return Observable.concatEager(
                 mDataModel.getReceiptsExpensesFromRealm(encrypted, ds, firx, rokx, drh, drupoh, uctox)
                         .filter(x -> x.size() > 0 )
-                        .filter(x -> unixTimel - Long.valueOf(x.get(0).getDatm()) < interval ),
+                        .filter(x -> ( unixTimel - Long.valueOf(x.get(0).getDatm()) < interval || !isConnectedServer() ) ),
                 mDataModel.getReceiptsExpensesFromSql(encrypted, ds, firx, rokx, drh, drupoh, uctox)
                         .observeOn(mSchedulerProvider.ui()) //switch to ui because of Realm is initialize in ui
                         .flatMap(listaccounts -> mDataModel.saveReceiptsExpensesToRealm(listaccounts, drh))
@@ -701,7 +699,7 @@ public class DgAllEmpsAbsMvvmViewModel {
         return Observable.concatEager(
                 mDataModel.getIdCompaniesFromRealm(encrypted, ds, firx, rokx, drh, "0", "9")
                         .filter(x -> x.size() > 0 )
-                        .filter(x -> ( unixTimel - Long.valueOf(x.get(0).getDatm()) < interval || mDataModel.getBooleanConnectedServer("xxx") ) ),
+                        .filter(x -> ( unixTimel - Long.valueOf(x.get(0).getDatm()) < interval || !isConnectedServer() ) ),
                 mDataModel.getAllIdcFromMysqlServer(encrypted, ds, firx, rokx, drh)
                         .observeOn(mSchedulerProvider.ui()) //switch to ui because of Realm is initialize in ui
                         .flatMap(listaccounts -> mDataModel.saveIdCompaniesToRealm(listaccounts, drh))
@@ -877,68 +875,16 @@ public class DgAllEmpsAbsMvvmViewModel {
 
 
     //control if server is connected
-    //emit Observable<Boolean> control Server connected
-    public void emitServerIsConnected(String queryx) {
-        mObservableServerIsConnected.onNext(queryx);
-    }
 
     @NonNull
-    private BehaviorSubject<String> mObservableServerIsConnected = BehaviorSubject.create();
+    public Boolean isConnectedServer(){
 
-    @NonNull
-    public Observable<Boolean> getObservableServerIsConnected() {
-
-        return mObservableServerIsConnected
-                .observeOn(mSchedulerProvider.computation())
-                .flatMap(queryx -> mDataModel.getObservableConnectedServer( queryx ));
-    }
-
-    public void clearObservableServerIsConnectedy() {
-
-        mObservableServerIsConnected = BehaviorSubject.create();
-
-    }
-    //emit Observable<Boolean> control Server connected
-
-    //get Boolean connect state
-    @NonNull
-    public void getBooleanServerIsConnected() {
-
-        final Boolean vrat = false;
-        mDataModel.getObservableConnectedServer("xxx")
-                .subscribeOn(Schedulers.computation())
-                .observeOn(rx.android.schedulers.AndroidSchedulers.mainThread())
-                .doOnError(throwable -> { Log.e(TAG, "Error InvoiceListFragment " + throwable.getMessage());
-                })
-                .onErrorResumeNext(throwable -> Observable.just(false))
-                //.subscribe(this::setQueryString);
-                .subscribe(new Subscriber<Boolean>() {
-                    @Override
-                    public void onCompleted() {
-
-                    }
-
-                    @Override
-                    public void onError(Throwable e) {
-                        isConectedServer = false;
-                    }
-
-                    @Override
-                    public void onNext(Boolean constate) {
-                        System.out.println("Server connected " + constate);
-                        isConectedServer = constate;
-
-                    }
-                });
-
+        //ConnectivityManager cm = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
+        NetworkInfo netInfo = mConnectivityManager.getActiveNetworkInfo();
+        return netInfo != null && netInfo.isConnectedOrConnecting();
 
     }
 
-    @NonNull
-    public Boolean getIsConectedServer(){
-        return this.isConectedServer;
-    }
-
-    //control if server is connected
+    //end control if server is connected
 
 }

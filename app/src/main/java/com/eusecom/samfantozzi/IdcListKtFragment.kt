@@ -108,7 +108,6 @@ class IdcListKtFragment : Fragment() {
 
     private fun bind() {
 
-        mViewModel.getBooleanServerIsConnected()
         _disposables = CompositeDisposable()
 
         val tapEventEmitter = _rxBus.asFlowable().publish()
@@ -118,7 +117,7 @@ class IdcListKtFragment : Fragment() {
                     if (event is IdcListKtFragment.ClickFobEvent) {
                         //Log.d("IdcListKtActivity  ", " fobClick ")
                         //mViewModel.emitServerIsConnected("xxx")
-                        mViewModel.getBooleanServerIsConnected()
+                        //mViewModel.getBooleanServerIsConnected()
                         newIdCompanyDialog().show()
 
 
@@ -128,7 +127,7 @@ class IdcListKtFragment : Fragment() {
 
                         //val usnamex = event.nai
                         //Log.d("CashListKtFragment ", usnamex)
-                        mViewModel.getBooleanServerIsConnected()
+                        //mViewModel.getBooleanServerIsConnected()
                         getTodoDialog(event)
 
 
@@ -171,17 +170,6 @@ class IdcListKtFragment : Fragment() {
                 .onErrorResumeNext { throwable -> Observable.empty() }
                 .subscribe { it -> setQueryString(it) })
 
-        mSubscription?.add(mViewModel.getObservableServerIsConnected()
-                .subscribeOn(Schedulers.computation())
-                .observeOn(rx.android.schedulers.AndroidSchedulers.mainThread())
-                .doOnError { throwable ->
-                    Log.e("IdcListKtFragment", "Error Throwable " + throwable.message)
-                    hideProgressBar()
-                    toast("Server not connected")
-                }
-                .onErrorResumeNext { throwable -> Observable.just(false) }
-                .subscribe { it -> setConnectState(it) })
-
 
         ActivityCompat.invalidateOptionsMenu(activity)
         (activity as AppCompatActivity).supportActionBar!!.setTitle(getString(R.string.idcs))
@@ -190,7 +178,6 @@ class IdcListKtFragment : Fragment() {
 
     private fun unBind() {
         mViewModel.clearObservableCashListQuery()
-        mViewModel.clearObservableServerIsConnectedy()
         mSubscription?.unsubscribe()
         mSubscription?.clear()
         _disposables.dispose()
@@ -220,11 +207,6 @@ class IdcListKtFragment : Fragment() {
         hideProgressBar()
     }
 
-    private fun setConnectState(constate: Boolean) {
-
-        toast(" Connect state " + constate)
-
-    }
 
     protected fun showResultAs(resultAs: List<IdCompanyKt>) {
 

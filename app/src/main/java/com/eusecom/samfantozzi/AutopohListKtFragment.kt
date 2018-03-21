@@ -141,7 +141,7 @@ class AutopohListKtFragment : Fragment() {
         mSubscription = CompositeSubscription()
 
         showProgressBar()
-        mSubscription?.add(mViewModel.getMyPohybyFromSqlServer("100", "1", 10)
+        mSubscription?.add(mViewModel.getMyPohybyFromSqlServer("100", "1", 120)
                 .subscribeOn(Schedulers.computation())
                 .observeOn(rx.android.schedulers.AndroidSchedulers.mainThread())
                 .doOnError { throwable ->
@@ -171,7 +171,6 @@ class AutopohListKtFragment : Fragment() {
     private fun unBind() {
 
         mViewModel.clearObservableCashListQuery()
-
         mSubscription?.unsubscribe()
         mSubscription?.clear()
         _disposables.dispose()

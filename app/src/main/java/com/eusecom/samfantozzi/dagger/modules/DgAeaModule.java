@@ -3,6 +3,8 @@ package com.eusecom.samfantozzi.dagger.modules;
 import android.app.Application;
 import android.content.SharedPreferences;
 import android.content.res.Resources;
+import android.net.ConnectivityManager;
+
 import com.eusecom.samfantozzi.DgAllEmpsAbsMvvmViewModel;
 import com.eusecom.samfantozzi.MCrypt;
 import com.eusecom.samfantozzi.SamfantozziApp;
@@ -124,11 +126,11 @@ public class DgAeaModule {
 
     @Provides
     @Singleton
-    public DgAllEmpsAbsMvvmViewModel providesDgAllEmpsAbsMvvmViewModel(DgAllEmpsAbsIDataModel dataModel,
-                                                                       ISchedulerProvider schedulerProvider,
-                                                                       SharedPreferences sharedPreferences,
-                                                                       MCrypt mcrypt) {
-        return new DgAllEmpsAbsMvvmViewModel(dataModel, schedulerProvider, sharedPreferences, mcrypt);
+    public DgAllEmpsAbsMvvmViewModel providesDgAllEmpsAbsMvvmViewModel(DgAllEmpsAbsIDataModel dataModel
+            , ISchedulerProvider schedulerProvider,SharedPreferences sharedPreferences, MCrypt mcrypt
+            ,ConnectivityManager connectivityManager) {
+        return new DgAllEmpsAbsMvvmViewModel(dataModel, schedulerProvider
+                , sharedPreferences, mcrypt, connectivityManager);
     }
 
 
