@@ -424,7 +424,7 @@ public class DgAllEmpsAbsDataModel implements DgAllEmpsAbsIDataModel {
                     ,b.getAccdov(), b.getAcctype(), b.getDatm(), b.getLogprx() );
             myaccounts.add(account);
 
-            System.out.println("get RealmAccount " + b.getAccnumber() + " " + b.getAcctype() + " " + b.getDatm());
+            System.out.println("get RealmAccount " + drh + " " + b.getAccnumber() + " " + b.getAcctype() + " " + b.getDatm());
 
         }
 

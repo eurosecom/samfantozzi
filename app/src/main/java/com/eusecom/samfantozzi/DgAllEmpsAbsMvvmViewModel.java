@@ -556,8 +556,12 @@ public class DgAllEmpsAbsMvvmViewModel {
         String uctox = mSharedPreferences.getString("firduct", "");
         long unixTimel = System.currentTimeMillis() / 1000L;
 
+        String drupohx = drupoh;
+        if( drh.equals("1")){ drupohx = "11"; }
+        if( drh.equals("2")){ drupohx = "12"; }
+
         return Observable.concatEager(
-                mDataModel.getReceiptsExpensesFromRealm(encrypted, ds, firx, rokx, drh, drupoh, uctox)
+                mDataModel.getReceiptsExpensesFromRealm(encrypted, ds, firx, rokx, drh, drupohx, uctox)
                         .filter(x -> x.size() > 0 )
                         .filter(x -> ( unixTimel - Long.valueOf(x.get(0).getDatm()) < interval || !isConnectedServer() ) ),
                 mDataModel.getReceiptsExpensesFromSql(encrypted, ds, firx, rokx, drh, drupoh, uctox)

@@ -452,7 +452,7 @@ public class NewInvoiceDocFragment extends Fragment {
 
         }
 
-        mSubscription.add(mViewModel.getMyPohybyFromSqlServer(drupoh, drupoh, 120)
+        mSubscription.add(mViewModel.getMyPohybyFromSqlServer(drupoh, drupoh, 1800)
                 .subscribeOn(Schedulers.computation())
                 .observeOn(rx.android.schedulers.AndroidSchedulers.mainThread())
                 .doOnError(throwable -> { Log.e(TAG, "Error NewInvDocFragment " + throwable.getMessage());
