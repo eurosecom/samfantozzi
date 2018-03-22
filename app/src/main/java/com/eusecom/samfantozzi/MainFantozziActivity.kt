@@ -1,13 +1,12 @@
 package com.eusecom.samfantozzi
 
-import android.content.Intent
+import android.content.*
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
 import android.view.Menu
 import android.view.MenuItem
 import dagger.android.AndroidInjection
 import kotlinx.android.synthetic.main.activity_mainfantozzi.*
-import android.content.SharedPreferences
 import android.net.ConnectivityManager
 import android.util.Log
 import co.zsmb.materialdrawerkt.builders.accountHeader
@@ -24,6 +23,7 @@ import com.mikepenz.materialdrawer.model.ProfileDrawerItem
 import kotlinx.android.synthetic.main.content_mainfantozzi.*
 import org.jetbrains.anko.*
 import javax.inject.Inject
+
 
 /**
  * SamFantozzi Main activity
@@ -50,6 +50,14 @@ class MainFantozziActivity : AppCompatActivity() {
         setSupportActionBar(toolbar)
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
         supportActionBar?.setHomeButtonEnabled(false)
+
+        constlay.onClick { view ->
+
+            Log.e("Trigger", " onclick")
+            updateUI()
+        }
+
+
 
         fab.setOnClickListener {
 
@@ -170,6 +178,10 @@ class MainFantozziActivity : AppCompatActivity() {
         super.onResume()
         updateUI()
 
+    }
+
+    public override fun onPause() {
+        super.onPause()
     }
 
     override fun onSaveInstanceState(outState: Bundle?) {
@@ -390,10 +402,12 @@ class MainFantozziActivity : AppCompatActivity() {
 
         if( isConnectedServer() ) {
             imageView2.setImageResource(R.drawable.web2);
+            Log.e("Trigger", " web")
         }else{
             imageView2.setImageResource(R.drawable.sdkarta);
+            Log.e("Trigger", " sdcard")
         }
-        
+
         Log.d("updateUI ", "is going.")
         buttonFir.setText(getString(R.string.company) + " " + prefs.getString("fir", "") +
                 " " + prefs.getString("firnaz", ""))
@@ -425,5 +439,6 @@ class MainFantozziActivity : AppCompatActivity() {
         return netInfo != null && netInfo!!.isConnectedOrConnecting()
 
     }
+
 
 }
