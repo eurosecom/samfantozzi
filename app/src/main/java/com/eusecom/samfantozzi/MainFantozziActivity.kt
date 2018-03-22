@@ -8,6 +8,7 @@ import android.view.MenuItem
 import dagger.android.AndroidInjection
 import kotlinx.android.synthetic.main.activity_mainfantozzi.*
 import android.content.SharedPreferences
+import android.net.ConnectivityManager
 import android.util.Log
 import co.zsmb.materialdrawerkt.builders.accountHeader
 import co.zsmb.materialdrawerkt.builders.drawer
@@ -39,6 +40,9 @@ class MainFantozziActivity : AppCompatActivity() {
     @Inject
     lateinit var prefs: SharedPreferences
 
+    @Inject
+    lateinit var connectivityManager: ConnectivityManager
+
     override fun onCreate(savedInstanceState: Bundle?) {
         AndroidInjection.inject(this);
         super.onCreate(savedInstanceState)
@@ -46,10 +50,6 @@ class MainFantozziActivity : AppCompatActivity() {
         setSupportActionBar(toolbar)
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
         supportActionBar?.setHomeButtonEnabled(false)
-
-        //val serverx = prefs.getString("servername", "")
-        //Toast.makeText(this, serverx, Toast.LENGTH_SHORT).show()
-
 
         fab.setOnClickListener {
 
@@ -388,6 +388,12 @@ class MainFantozziActivity : AppCompatActivity() {
 
     fun updateUI(){
 
+        if( isConnectedServer() ) {
+            imageView2.setImageResource(R.drawable.web2);
+        }else{
+            imageView2.setImageResource(R.drawable.sdkarta);
+        }
+        
         Log.d("updateUI ", "is going.")
         buttonFir.setText(getString(R.string.company) + " " + prefs.getString("fir", "") +
                 " " + prefs.getString("firnaz", ""))
@@ -412,5 +418,12 @@ class MainFantozziActivity : AppCompatActivity() {
     }
 
 
+    fun isConnectedServer(): Boolean {
+
+        //ConnectivityManager cm = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
+        val netInfo = connectivityManager.getActiveNetworkInfo()
+        return netInfo != null && netInfo!!.isConnectedOrConnecting()
+
+    }
 
 }

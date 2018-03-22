@@ -745,20 +745,5 @@ public class DgAllEmpsAbsDataModel implements DgAllEmpsAbsIDataModel {
     }
     //end JSON from RealmInvoice
 
-    //control if server is connected
-    @NonNull
-    public Observable<Boolean> getObservableConnectedServer(String queryx ){
-
-        return mAbsServerService.getConnectedSqlServer(queryx);
-    }
-
-    @NonNull
-    public Boolean getBooleanConnectedServer( String queryx ){
-
-        return true;
-
-    }
-
-
 
 }

@@ -132,11 +132,5 @@ public interface DgAllEmpsAbsIDataModel {
     public Observable<List<Invoice>> getObservableInvoiceToMysql(String userhash, String userid, String fromfir
             , String vyb_rok, String drh, RealmInvoice invx, String edidok);
 
-    //control if server is connected
-    @NonNull
-    public Observable<Boolean> getObservableConnectedServer(String queryx );
-
-    @NonNull
-    public Boolean getBooleanConnectedServer( String queryx );
 
 }
