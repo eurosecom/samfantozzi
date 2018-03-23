@@ -289,4 +289,18 @@
     <string name="password_error">Password cannot be empty</string>
     <string name="accbalance">Account balance</string>
 
+    //newidcactivity
+    <string name="popisIco">Company ID</string>
+    <string name="popisDic">Tax ID</string>
+    <string name="popisIcd">VAT Number</string>
+    <string name="popisNai">Name</string>
+    <string name="popisUli">Street, number</string>
+    <string name="popisMes">City</string>
+    <string name="popisTel">Phone number</string>
+    <string name="popisMail">E-mail</string>
+    <string name="popisWww">WWW</string>
+    <string name="popisPsc">Postal code</string>
+    <string name="newico">New Company ID</string>
+    <string name="editico">Edit Company ID</string>
+
 </resources>

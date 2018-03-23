@@ -54,6 +54,9 @@ class NoSavedDocAdapter(var mList: MutableList<RealmInvoice>, val listener: (Rea
             if( invoice.drh.equals("5")){
                 Picasso.with(itemView.context).load(R.drawable.ic_insert_drive_file_black_24dp).resize(120, 120).into(accImage)
             }
+            if( invoice.drh.equals("99")){
+                Picasso.with(itemView.context).load(R.drawable.ic_action_person).resize(120, 120).into(accImage)
+            }
             itemView.setOnClickListener{listener(invoice)}
 
         }

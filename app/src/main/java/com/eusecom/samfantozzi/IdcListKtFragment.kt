@@ -294,6 +294,16 @@ class IdcListKtFragment : Fragment() {
             return true
         }
 
+        if (id == R.id.action_nosaveddoc) {
+
+            val `is` = Intent(activity, NoSavedDocActivity::class.java)
+            val extras = Bundle()
+            extras.putString("fromact", "3")
+            `is`.putExtras(extras)
+            startActivity(`is`)
+            return true
+        }
+
         return super.onOptionsItemSelected(item)
     }
 
@@ -402,7 +412,13 @@ class IdcListKtFragment : Fragment() {
 
     fun navigateToNewIdCompany(drupoh: Int){
 
-        //getActivity().startActivity<NewCashDocKtActivity>()
+        //getActivity().startActivity<NewIdcActivity>()
+        val `is` = Intent(getActivity(), NewIdcActivity::class.java)
+        val extras = Bundle()
+        extras.putString("newx", "1")
+        extras.putString("icox", "0")
+        `is`.putExtras(extras)
+        startActivity(`is`)
 
     }
 
@@ -423,6 +439,12 @@ class IdcListKtFragment : Fragment() {
     fun navigateToEditDoc(idcompany: IdCompanyKt){
 
         //getActivity().startActivity<InvoiceListKtActivity>()
+        val `is` = Intent(getActivity(), NewIdcActivity::class.java)
+        val extras = Bundle()
+        extras.putString("newx", "0")
+        extras.putString("icox", idcompany.ico)
+        `is`.putExtras(extras)
+        startActivity(`is`)
 
     }
 

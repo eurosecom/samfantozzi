@@ -30,6 +30,7 @@
         <activity android:name=".InvoiceListKtActivity"/>
         <activity android:name=".CashListKtActivity"/>
         <activity android:name=".TypesKtActivity"/>
+        <activity android:name=".NewIdcActivity"/>
         <activity android:name=".NewCashDocKtActivity"/>
         <activity android:name=".NewBankDocKtActivity"/>
         <activity android:name=".NewInvoiceDocKtActivity"/>
@@ -39,6 +40,7 @@
         <activity android:name=".BankMvpActivity"/>
 
         <activity android:name=".Detail2Activity"/>
+
     </application>
 
 </manifest>
