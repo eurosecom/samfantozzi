@@ -27,7 +27,7 @@ import rx.Observable
  * github https://github.com/prajakta05/recyclerviewKotlin
  */
 
-class NoSavedDocActivity : AppCompatActivity() {
+class NoSavedDocActivity : BaseListActivity() {
 
     @Inject
     lateinit var prefs: SharedPreferences
@@ -70,6 +70,7 @@ class NoSavedDocActivity : AppCompatActivity() {
 
     private fun bind(adapter: NoSavedDocAdapter) {
 
+            showProgressDialog()
             mSubscription.add(mViewModel.getNoSavedDocFromRealm(fromact)
                     .subscribeOn(Schedulers.computation())
                     .observeOn(rx.android.schedulers.AndroidSchedulers.mainThread())
@@ -106,11 +107,13 @@ class NoSavedDocActivity : AppCompatActivity() {
 
         //toast("${nosaveds.get(0).dok } realminvoicedoc0")
         adapter.setdata(nosaveds)
+        hideProgressDialog()
     }
 
     private fun deletedInvoice(nosaveds: List<RealmInvoice>, adapter: NoSavedDocAdapter) {
 
         adapter.setdata(nosaveds)
+        hideProgressDialog()
 
     }
 
@@ -203,12 +206,15 @@ class NoSavedDocActivity : AppCompatActivity() {
                     invoicex.kto = invoice.kto
                     invoicex.poh = invoice.poh
 
+                    showProgressDialog()
                     mViewModel.emitMyObservableInvoiceToServer(invoicex)
                 }
                 1 -> {
+                    showProgressDialog()
                     mViewModel.emitDeleteInvoiceFromRealm(invoice)
                 }
                 2 -> {
+                    showProgressDialog()
                     mViewModel.emitDeleteAllInvoicesFromRealm(invoice)
                 }
 

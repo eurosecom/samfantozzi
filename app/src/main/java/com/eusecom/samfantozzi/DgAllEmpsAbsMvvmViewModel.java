@@ -953,7 +953,7 @@ public class DgAllEmpsAbsMvvmViewModel {
     public Observable<RealmInvoice> getDataIdcSavedToRealm() {
         return mIdcSaveToRealm
                 .observeOn(mSchedulerProvider.ui())
-                .flatMap(list -> mDataModel.getInvoiceSavingToRealm(list));
+                .flatMap(list -> mDataModel.getIdcSavingToRealm(list));
     }
 
     public void clearObservableIdcSaveToRealm() {
