@@ -135,4 +135,7 @@ public interface DgAllEmpsAbsIDataModel {
     @NonNull
     public Observable<RealmInvoice> getIdcSavingToRealm(@NonNull final List<RealmInvoice> invoices);
 
+    @NonNull
+    public Observable<RealmInvoice> saveRealmOneIdcData(@NonNull final RealmInvoice invoices);
+
 }

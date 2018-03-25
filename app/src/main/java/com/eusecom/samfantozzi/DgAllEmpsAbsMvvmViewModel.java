@@ -804,6 +804,8 @@ public class DgAllEmpsAbsMvvmViewModel {
         Log.d("NewCashedit ", firx);
 
         return mObservableInvoiceToServer
+                .observeOn(mSchedulerProvider.ui())
+                .flatMap(invx -> mDataModel.saveRealmOneIdcData(invx) )
                 .observeOn(mSchedulerProvider.computation())
                 .flatMap(invx -> mDataModel.getObservableInvoiceToMysql(encrypted2, ds, firx, rokx, drh, invx, edidok ));
     }
@@ -930,6 +932,8 @@ public class DgAllEmpsAbsMvvmViewModel {
         Log.d("NewCashedit ", firx);
 
         return mObservableIdcToServer
+                .observeOn(mSchedulerProvider.ui())
+                .flatMap(invx -> mDataModel.saveRealmOneIdcData(invx) )
                 .observeOn(mSchedulerProvider.computation())
                 .flatMap(invx -> mDataModel.getObservableInvoiceToMysql(encrypted2, ds, firx, rokx, drh, invx, edidok ));
     }

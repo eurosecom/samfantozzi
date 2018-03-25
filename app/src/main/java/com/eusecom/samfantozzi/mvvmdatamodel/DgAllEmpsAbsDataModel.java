@@ -647,6 +647,11 @@ public class DgAllEmpsAbsDataModel implements DgAllEmpsAbsIDataModel {
     public Observable<List<Invoice>> getObservableInvoiceToMysql(String userhash, String userid, String fromfir
             , String vyb_rok, String drh, RealmInvoice invx, String edidok){
 
+        if(invx.getDrh().toString().equals("99999")){
+            //andrejko
+            saveRealmOneIdcData(invx);
+        }
+
         //Log.d("userhash ", userhash);
         System.out.println("invx.dok " + invx.getDok());
         System.out.println("invx.hod " + invx.getHod());
@@ -740,22 +745,7 @@ public class DgAllEmpsAbsDataModel implements DgAllEmpsAbsIDataModel {
     public Observable<RealmInvoice> getIdcSavingToRealm(@NonNull final List<RealmInvoice> invoices) {
 
         if(invoices.get(0).getDrh().toString().equals("99")){
-            //andrejko
-
-            List<IdCompanyKt> myidc = new ArrayList<>();
-            //{  "drh":"99", "uce":"", "dok":"12345678", "ico":"12345678", "nai":"JUCTO F301 xo",
-            // "kto":"email@email.com", "fak":"0", "ksy":"null", "ssy":"null", "ume":"null", "dat":"JUCTO F301 xo",
-            // "daz":"null", "das":"null", "poz":"0999/123457", "poh":"0", "zk0":"", "zk1":"1077135345", "dn1":"90501",
-            // "zk2":"Dlha 23", "dn2":"Senica", "saved":"false", "datm":"null", "uzid":"null" }
-            IdCompanyKt newidc = new IdCompanyKt(invoices.get(0).getIco(), invoices.get(0).getZk1(), invoices.get(0).getZk0()
-                    , invoices.get(0).getNai(), invoices.get(0).getZk2(),
-                    invoices.get(0).getDn2(), invoices.get(0).getDn1(), invoices.get(0).getPoz()
-                    , true, "", invoices.get(0).getKto());
-            myidc.add(newidc);
-
-            System.out.println("save OneRealmIdCompany ");
-            saveRealmOneIdcData(myidc);
-
+            saveRealmOneIdcData(invoices.get(0));
         }
 
         //does exist invoice in Realm?
@@ -812,42 +802,59 @@ public class DgAllEmpsAbsDataModel implements DgAllEmpsAbsIDataModel {
 
     }
 
-    private void saveRealmOneIdcData(@NonNull final List<IdCompanyKt> companies) {
+    public Observable<RealmInvoice> saveRealmOneIdcData(@NonNull final RealmInvoice invoices) {
 
-        mRealm.executeTransaction(new Realm.Transaction() {
-            @Override
-            public void execute(Realm realm) {
-                RealmResults<RealmIdCompany> result = realm.where(RealmIdCompany.class).equalTo("ico", companies.get(0).getIco()).findAll();
-                result.clear();
+        if(invoices.getDrh().equals("99")) {
+
+            List<IdCompanyKt> companies = new ArrayList<>();
+            //{  "drh":"99", "uce":"", "dok":"12345678", "ico":"12345678", "nai":"JUCTO F301 xo",
+            // "kto":"email@email.com", "fak":"0", "ksy":"null", "ssy":"null", "ume":"null", "dat":"JUCTO F301 xo",
+            // "daz":"null", "das":"null", "poz":"0999/123457", "poh":"0", "zk0":"", "zk1":"1077135345", "dn1":"90501",
+            // "zk2":"Dlha 23", "dn2":"Senica", "saved":"false", "datm":"null", "uzid":"null" }
+            IdCompanyKt newidc = new IdCompanyKt(invoices.getIco(), invoices.getZk1(), invoices.getZk0()
+                    , invoices.getNai(), invoices.getZk2(),
+                    invoices.getDn2(), invoices.getDn1(), invoices.getPoz()
+                    , true, "", invoices.getKto());
+            companies.add(newidc);
+
+
+            mRealm.executeTransaction(new Realm.Transaction() {
+                @Override
+                public void execute(Realm realm) {
+                    RealmResults<RealmIdCompany> result = realm.where(RealmIdCompany.class).equalTo("ico", companies.get(0).getIco()).findAll();
+                    result.clear();
+                }
+            });
+
+
+            for (IdCompanyKt b : companies) {
+
+                RealmIdCompany realmacc = new RealmIdCompany();
+
+                long unixTime = System.currentTimeMillis() / 1000L;
+                String unixTimes = unixTime + "";
+
+                realmacc.setIco(b.getIco());
+                realmacc.setDic(b.getDic());
+                realmacc.setIcd(b.getIcd());
+                realmacc.setNai(b.getNai());
+                realmacc.setUli(b.getUli());
+                realmacc.setMes(b.getMes());
+                realmacc.setPsc(b.getPsc());
+                realmacc.setTel(b.getTel());
+                realmacc.setLogprx(String.valueOf(b.getLogprx()));
+                realmacc.setDatm(unixTimes);
+
+                System.out.println("save OneRealmIdCompany " + b.getIco() + " " + b.getNai() + " " + unixTimes);
+
+                mRealm.beginTransaction();
+                mRealm.copyToRealm(realmacc);
+                mRealm.commitTransaction();
             }
-        });
 
-
-        for (IdCompanyKt b : companies) {
-
-            RealmIdCompany realmacc = new RealmIdCompany();
-
-            long unixTime = System.currentTimeMillis() / 1000L;
-            String unixTimes = unixTime + "";
-
-            realmacc.setIco(b.getIco());
-            realmacc.setDic(b.getDic());
-            realmacc.setIcd(b.getIcd());
-            realmacc.setNai(b.getNai());
-            realmacc.setUli(b.getUli());
-            realmacc.setMes(b.getMes());
-            realmacc.setPsc(b.getPsc());
-            realmacc.setTel(b.getTel());
-            realmacc.setLogprx(String.valueOf(b.getLogprx()));
-            realmacc.setDatm(unixTimes);
-
-            System.out.println("save OneRealmIdCompany " + b.getIco() + " " + b.getNai() + " " + unixTimes);
-
-            mRealm.beginTransaction();
-            mRealm.copyToRealm(realmacc);
-            mRealm.commitTransaction();
         }
 
+        return Observable.just(invoices);
 
     }
 
