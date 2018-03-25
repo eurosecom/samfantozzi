@@ -16,7 +16,6 @@ import rx.Observable;
 import com.eusecom.samfantozzi.Account;
 import com.eusecom.samfantozzi.CalcVatKt;
 import com.eusecom.samfantozzi.CompanyKt;
-import com.eusecom.samfantozzi.Connected;
 import com.eusecom.samfantozzi.IdCompanyKt;
 import com.eusecom.samfantozzi.Invoice;
 import com.eusecom.samfantozzi.Month;
@@ -506,7 +505,7 @@ public class DgAllEmpsAbsDataModel implements DgAllEmpsAbsIDataModel {
     }
 
 
-    //andrejko methods for TypesKtActivity
+    //methods for TypesKtActivity
     @Override
     public Observable<List<IdCompanyKt>> getAllIdcFromMysqlServer(String userhash, String userid, String fromfir
             , String vyb_rok, String drh) {
@@ -648,23 +647,27 @@ public class DgAllEmpsAbsDataModel implements DgAllEmpsAbsIDataModel {
     public Observable<List<Invoice>> getObservableInvoiceToMysql(String userhash, String userid, String fromfir
             , String vyb_rok, String drh, RealmInvoice invx, String edidok){
 
-        List<IdCompanyKt> myidc = new ArrayList<>();
-        IdCompanyKt newidc = new IdCompanyKt("31414466", "", "", "Firma xyz", "ulixyz",
-                "Mesto", "", "", true, "", "");
-        myidc.add(newidc);
+        if(drh.equals("99")){
+            //andrejko
+
+            List<IdCompanyKt> myidc = new ArrayList<>();
+            //{  "drh":"99", "uce":"", "dok":"12345678", "ico":"12345678", "nai":"JUCTO F301 xo",
+            // "kto":"email@email.com", "fak":"0", "ksy":"null", "ssy":"null", "ume":"null", "dat":"JUCTO F301 xo",
+            // "daz":"null", "das":"null", "poz":"0999/123457", "poh":"0", "zk0":"", "zk1":"1077135345", "dn1":"90501",
+            // "zk2":"Dlha 23", "dn2":"Senica", "saved":"false", "datm":"null", "uzid":"null" }
+            IdCompanyKt newidc = new IdCompanyKt(invx.getIco(), invx.getZk1(), invx.getZk0(), invx.getNai(), invx.getZk2(),
+                    invx.getDn2(), invx.getDn1(), invx.getPoz(), true, "", invx.getKto());
+            myidc.add(newidc);
+
+            //saveIdCompaniesToRealm(myidc, "99");
+
+        }
 
         //Log.d("userhash ", userhash);
         System.out.println("invx.dok " + invx.getDok());
         System.out.println("invx.hod " + invx.getHod());
 
-        //data class Invoice(var drh : String, var uce : String, var dok : String, var ico: String, var nai: String
-//        , var fak: String, var ksy: String, var ssy: String
-//        , var ume: String, var dat: String, var daz: String, var das: String, var poz: String
-//        , var hod: String, var zk0: String, var zk1: String, var dn1: String, var zk2: String, var dn2: String
-//        , var saved: Boolean, var datm: Long, var uzid: String)
-
         String invxstring = JSsonFromRealmInvoice(invx);
-
 
         System.out.println("invxstring userhash " + userhash);
         System.out.println("invxstring userid " + userid);
@@ -744,6 +747,67 @@ public class DgAllEmpsAbsDataModel implements DgAllEmpsAbsIDataModel {
         return jsonstring;
     }
     //end JSON from RealmInvoice
+
+
+    //NewIdcActivity
+    //save idc to realm
+    @NonNull
+    @Override
+    public Observable<RealmInvoice> getIdcSavingToRealm(@NonNull final List<RealmInvoice> invoices) {
+
+        //does exist invoice in Realm?
+        RealmInvoice invoiceexists = existRealmInvoice( invoices );
+
+        if(invoiceexists != null){
+            //System.out.println("existRealmInvoice " + true);
+            //System.out.println("existRealmInvoice " + true);
+            deleteRealmIdcData( invoices );
+        }else{
+            //System.out.println("existRealmInvoice " + false);
+        }
+        //save to realm and get String OK or ERROR
+        setRealmIdcData( invoices );
+
+        return Observable.just(invoices.get(0));
+
+    }
+
+    public RealmInvoice existRealmIdc(@NonNull final List<RealmInvoice> invoices) {
+
+        String dokx = invoices.get(0).getDok();
+        return mRealm.where(RealmInvoice.class).equalTo("dok", dokx).findFirst();
+    }
+
+    private void setRealmIdcData(@NonNull final List<RealmInvoice> invoices) {
+
+        //clear all items in table
+        //mRealm.beginTransaction();
+        //mRealm.clear(RealmInvoice.class);
+        //mRealm.commitTransaction();
+
+
+        for (RealmInvoice b : invoices) {
+            // Persist your data easily
+            mRealm.beginTransaction();
+            mRealm.copyToRealm(b);
+            mRealm.commitTransaction();
+        }
+
+    }
+
+    private void deleteRealmIdcData(@NonNull final List<RealmInvoice> invoices) {
+
+        String dokx = invoices.get(0).getDok();
+
+        mRealm.executeTransaction(new Realm.Transaction() {
+            @Override
+            public void execute(Realm realm) {
+                RealmResults<RealmInvoice> result = realm.where(RealmInvoice.class).equalTo("dok", dokx).findAll();
+                result.clear();
+            }
+        });
+
+    }
 
 
 }

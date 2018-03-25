@@ -132,5 +132,7 @@ public interface DgAllEmpsAbsIDataModel {
     public Observable<List<Invoice>> getObservableInvoiceToMysql(String userhash, String userid, String fromfir
             , String vyb_rok, String drh, RealmInvoice invx, String edidok);
 
+    @NonNull
+    public Observable<RealmInvoice> getIdcSavingToRealm(@NonNull final List<RealmInvoice> invoices);
 
 }

@@ -166,6 +166,8 @@ public class NewIdcActivity extends BaseListActivity {
     private void unBind() {
 
         mViewModel.clearObservableIdModelCompany();
+        mViewModel.clearObservableIdcSaveToServer();
+        mViewModel.clearObservableIdcSaveToRealm();
         mSubscription.clear();
         subscriptionSave.unsubscribe();
 
@@ -180,18 +182,29 @@ public class NewIdcActivity extends BaseListActivity {
             mSubscription.add(mViewModel.getMyObservableIdModelCompany()
                     .subscribeOn(Schedulers.computation())
                     .observeOn(rx.android.schedulers.AndroidSchedulers.mainThread())
-                    .doOnError(throwable -> { Log.e(TAG, "Error SupplierListFragment " + throwable.getMessage());
+                    .doOnError(throwable -> { Log.e(TAG, "Error NewIdcActivity " + throwable.getMessage());
                         showProgressDialog();
                         Toast.makeText(this, "Server not connected", Toast.LENGTH_SHORT).show();
                     })
                     .onErrorResumeNext(throwable -> empty())
                     .subscribe(this::setEditedIco));
 
+            mSubscription.add(mViewModel.getMyObservableIdcToServer()
+                    .subscribeOn(Schedulers.computation())
+                    .observeOn(rx.android.schedulers.AndroidSchedulers.mainThread())
+                    .doOnError(throwable -> {
+                        Log.e(TAG, "Error NewIdcActivity " + throwable.getMessage());
+                        showProgressDialog();
+                        Toast.makeText(this, "Server not connected", Toast.LENGTH_SHORT).show();
+                    })
+                    .onErrorResumeNext(throwable -> empty())
+                    .subscribe(this::savedInvoiceToServer));
+
             mViewModel.emitMyObservableIdModelCompany(icox);
 
         }else{
 
-            mSubscription.add(mViewModel.getDataInvoiceSavedToRealm()
+            mSubscription.add(mViewModel.getDataIdcSavedToRealm()
                     .subscribeOn(Schedulers.computation())
                     .observeOn(rx.android.schedulers.AndroidSchedulers.mainThread())
                     .subscribe(this::dataSavedToRealm));
@@ -221,13 +234,6 @@ public class NewIdcActivity extends BaseListActivity {
 
                         if( newx.equals("1")) {
 
-                            //save invoice to Realm
-                            //data class Invoice(var drh : String, var uce : String, var dok : String, var ico: String, var nai: String
-//        , var fak: String, var ksy: String, var ssy: String
-//        , var ume: String, var dat: String, var daz: String, var das: String, var poz: String
-//        , var hod: String, var zk0: String, var zk1: String, var dn1: String, var zk2: String, var dn2: String
-//        , var saved: Boolean, var datm: Long, var uzid: String)
-
                             List<RealmInvoice> realminvoices = new ArrayList<>();
                             RealmInvoice realminvoice = new RealmInvoice();
                             realminvoice.setDrh("99");
@@ -250,7 +256,7 @@ public class NewIdcActivity extends BaseListActivity {
                             realminvoices.add(realminvoice);
 
                             Log.d("NewIdc ", realminvoice.getDok());
-                            mViewModel.emitRealmInvoicesToRealm(realminvoices);
+                            mViewModel.emitRealmIdcToRealm(realminvoices);
                         }else{
 
                             List<RealmInvoice> realminvoices = new ArrayList<>();
@@ -275,7 +281,7 @@ public class NewIdcActivity extends BaseListActivity {
                             realminvoices.add(realminvoice);
 
                             Log.d("EditedIdc ", realminvoice.getDok());
-                            //mViewModel.emitMyObservableInvoiceToServer(realminvoice);
+                            mViewModel.emitMyObservableIdcToServer(realminvoice);
                         }
 
                     }
@@ -300,10 +306,21 @@ public class NewIdcActivity extends BaseListActivity {
     }
 
     private void dataSavedToRealm(@NonNull final RealmInvoice invoice) {
-        mViewModel.clearObservableInvoiceSaveToRealm();
+        mViewModel.clearObservableIdcSaveToRealm();
 
         Toast.makeText(this, "Saved doc " + invoice.getDok(), Toast.LENGTH_SHORT).show();
         finish();
+    }
+
+    private void savedInvoiceToServer(List<Invoice> saveds) {
+
+        Log.d("invxstring saved ", saveds.get(0).getDok());
+        Log.d("invxstring  ", saveds.get(0).getNai());
+        mViewModel.clearObservableIdcSaveToServer();
+
+        Log.d("invxstring ", "saved ");
+        finish();
+
     }
 
 

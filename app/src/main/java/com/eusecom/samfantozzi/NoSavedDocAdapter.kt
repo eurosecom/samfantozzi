@@ -32,9 +32,14 @@ class NoSavedDocAdapter(var mList: MutableList<RealmInvoice>, val listener: (Rea
 
         fun bindItem(invoice: RealmInvoice, listener: (RealmInvoice) -> Unit) = with(itemView) {
 
-            accName?.setText(invoice.uce + " Doc " + invoice.dok + " Date " + invoice.dat)
+            if( invoice.drh.equals("99")) {
+                accName?.setText("IDC " + invoice.dok + " Name " + invoice.dat)
+                accNumber?.setText("City " + invoice.hod)
+            }else{
+                accName?.setText(invoice.uce + " Doc " + invoice.dok + " Date " + invoice.dat)
+                accNumber?.setText("Value " + invoice.hod)
+            }
 
-            accNumber?.setText("Value " + invoice.hod)
             Picasso.with(itemView.context).load(R.drawable.ic_call_made_black_24dp).resize(120, 120).into(accImage)
             if( invoice.drh.equals("2")){
                 Picasso.with(itemView.context).load(R.drawable.ic_call_received_black_24dp).resize(120, 120).into(accImage)

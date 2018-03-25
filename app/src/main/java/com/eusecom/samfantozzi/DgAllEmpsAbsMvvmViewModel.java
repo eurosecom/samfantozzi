@@ -891,4 +891,76 @@ public class DgAllEmpsAbsMvvmViewModel {
 
     //end control if server is connected
 
+
+    //NewIdcActivity
+    //emit save Idc to Mysql
+    public void emitMyObservableIdcToServer(RealmInvoice invx) {
+
+        mObservableIdcToServer.onNext(invx);
+    }
+
+    @NonNull
+    private BehaviorSubject<RealmInvoice> mObservableIdcToServer = BehaviorSubject.create();
+
+    @NonNull
+    public Observable<List<Invoice>> getMyObservableIdcToServer() {
+
+        Random r = new Random();
+        double d = 10.0 + r.nextDouble() * 20.0;
+        String ds = String.valueOf(d);
+
+        String usuidx = mSharedPreferences.getString("usuid", "");
+        String userxplus =  ds + "/" + usuidx + "/" + ds;
+        encrypted2 = "";
+
+
+        try {
+            encrypted2 = mMcrypt.bytesToHex( mMcrypt.encrypt(userxplus) );
+        } catch (Exception e1) {
+            // TODO Auto-generated catch block
+            e1.printStackTrace();
+        }
+
+        String firx = mSharedPreferences.getString("fir", "");
+        String rokx = mSharedPreferences.getString("rok", "");
+        String drh = "2";
+        String edidok = mSharedPreferences.getString("edidok", "");
+
+        //Log.d("NewCashLog save fir ", firx);
+        Log.d("NewCashedit ", firx);
+
+        return mObservableIdcToServer
+                .observeOn(mSchedulerProvider.computation())
+                .flatMap(invx -> mDataModel.getObservableInvoiceToMysql(encrypted2, ds, firx, rokx, drh, invx, edidok ));
+    }
+
+    public void clearObservableIdcSaveToServer() {
+
+        mObservableIdcToServer = BehaviorSubject.create();
+
+    }
+    //end save Idc to Mysql
+
+    //save idc to realm
+    public void emitRealmIdcToRealm(List<RealmInvoice> invoice) {
+        mIdcSaveToRealm.onNext(invoice);
+    }
+
+    @NonNull
+    private BehaviorSubject<List<RealmInvoice>> mIdcSaveToRealm = BehaviorSubject.create();
+
+    @NonNull
+    public Observable<RealmInvoice> getDataIdcSavedToRealm() {
+        return mIdcSaveToRealm
+                .observeOn(mSchedulerProvider.ui())
+                .flatMap(list -> mDataModel.getInvoiceSavingToRealm(list));
+    }
+
+    public void clearObservableIdcSaveToRealm() {
+
+        mIdcSaveToRealm = BehaviorSubject.create();
+
+    }
+    //end save idc to realm
+
 }
