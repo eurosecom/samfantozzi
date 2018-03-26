@@ -18,6 +18,7 @@ import android.widget.TextView
 import android.widget.Toast
 import com.eusecom.samfantozzi.realm.RealmEmployee
 import com.eusecom.samfantozzi.realm.RealmInvoice
+import com.eusecom.samfantozzi.retrofit.AbsServerService
 import io.realm.annotations.PrimaryKey
 import org.jetbrains.anko.support.v4.toast
 import rx.Observable
@@ -35,10 +36,21 @@ class AccountReportsActivity : AppCompatActivity() {
     @Inject
     lateinit var prefs: SharedPreferences
 
+    @Inject
+    lateinit var mAbsServerService: AbsServerService
+
+    var reports: String = "0"
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         (application as SamfantozziApp).dgaeacomponent().inject(this)
-        AccountReportsActivityUI().setContentView(this)
+
+        val i = intent
+        val extras = i.extras
+        //0 accounting, 1 vat, 2 income, 3 mixed
+        reports = extras!!.getString("reports")
+
+        AccountReportsActivityUI(reports, mAbsServerService).setContentView(this)
 
 
     }
@@ -47,7 +59,9 @@ class AccountReportsActivity : AppCompatActivity() {
         super.onResume()
 
         val umex = prefs.getString("ume", "0")
-        supportActionBar!!.setTitle(umex + " " + getString(R.string.accrep))
+        if( reports.equals("0")) { supportActionBar!!.setTitle(umex + " " + getString(R.string.accrep)) }
+        if( reports.equals("1")) { supportActionBar!!.setTitle(umex + " " + getString(R.string.action_taxreports)) }
+        if( reports.equals("2")) { supportActionBar!!.setTitle(umex + " " + getString(R.string.mixedreports)) }
     }
 
     override fun onDestroy() {

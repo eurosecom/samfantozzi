@@ -149,21 +149,28 @@ class MainFantozziActivity : AppCompatActivity() {
 
                 onClick { _ ->
                     //Log.d("DRAWER", "Click.")
-                    navigateToIAccountReportsKt()
+                    navigateToAccountReportsKt()
                     false
                 }
 
             }
             divider {}
-            primaryItem(getString(R.string.action_vatreports)) {}
-            divider {}
-            primaryItem(getString(R.string.action_incometaxreports)) {}
-            divider {}
-            secondaryItem(getString(R.string.action_settings)) {
+            primaryItem(getString(R.string.action_taxreports)) {
 
                 onClick { _ ->
                     //Log.d("DRAWER", "Click.")
-                    navigateToSettings()
+                    navigateToTaxReportsKt()
+                    false
+                }
+
+            }
+
+            divider {}
+            secondaryItem(getString(R.string.mixedreports)) {
+
+                onClick { _ ->
+                    //Log.d("DRAWER", "Click.")
+                    navigateToMixedReportsKt()
                     false
                 }
             }
@@ -349,7 +356,7 @@ class MainFantozziActivity : AppCompatActivity() {
 
     }
 
-    fun navigateToIAccountReportsKt(){
+    fun navigateToAccountReportsKt(){
 
         val usuid = prefs.getString("usuid", "")
         if (usuid == "0") {
@@ -360,7 +367,59 @@ class MainFantozziActivity : AppCompatActivity() {
             if (usfir == "") {
                 donotcompanyAlert().show()
             }else {
-                startActivity<AccountReportsActivity>()
+
+                val `is` = Intent(this, AccountReportsActivity::class.java)
+                val extras = Bundle()
+                extras.putString("reports", "0")
+                `is`.putExtras(extras)
+                startActivity(`is`)
+                //startActivity<AccountReportsActivity>()
+            }
+
+        }
+
+    }
+
+    fun navigateToTaxReportsKt(){
+
+        val usuid = prefs.getString("usuid", "")
+        if (usuid == "0") {
+            donotcompanyAlert().show()
+        }else {
+
+            val usfir = prefs.getString("fir", "")
+            if (usfir == "") {
+                donotcompanyAlert().show()
+            }else {
+                val `is` = Intent(this, AccountReportsActivity::class.java)
+                val extras = Bundle()
+                extras.putString("reports", "1")
+                `is`.putExtras(extras)
+                startActivity(`is`)
+                //startActivity<AccountReportsActivity>()
+            }
+
+        }
+
+    }
+
+    fun navigateToMixedReportsKt(){
+
+        val usuid = prefs.getString("usuid", "")
+        if (usuid == "0") {
+            donotcompanyAlert().show()
+        }else {
+
+            val usfir = prefs.getString("fir", "")
+            if (usfir == "") {
+                donotcompanyAlert().show()
+            }else {
+                val `is` = Intent(this, AccountReportsActivity::class.java)
+                val extras = Bundle()
+                extras.putString("reports", "2")
+                `is`.putExtras(extras)
+                startActivity(`is`)
+                //startActivity<AccountReportsActivity>()
             }
 
         }

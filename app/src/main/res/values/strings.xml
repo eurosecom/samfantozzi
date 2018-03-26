@@ -8,8 +8,7 @@
     <string name="action_loginout">Login / Logout</string>
     <string name="action_login">Login</string>
     <string name="action_accountreports">Accounting reports</string>
-    <string name="action_vatreports">VAT reports</string>
-    <string name="action_incometaxreports">Income tax reports</string>
+    <string name="action_taxreports">TAX reports</string>
     <string name="action_setmonth">Set month</string>
     <string name="popisbtnpokl">Cash</string>
     <string name="popisbtnpoklsd">Cash SD</string>
@@ -30,6 +29,7 @@
     <string name="donotcompany">You have to choose your company</string>
     <string name="didnotcompany">You did not choose company</string>
     <string name="descimg">Desc</string>
+    <string name="mixedreports">Mixed reports</string>
 
 
     //firebase auth
@@ -274,6 +274,16 @@
     <string name="popisbtnpenden">Cash receipts journal</string>
     <string name="popisbtnpenden2">Cash receipts journal sort 2</string>
     <string name="popisbtnprivyd">Profit and Loss Statement</string>
+    <string name="popisbtnmajzav">Assets and Liabilities reports</string>
+    <string name="popisbtnkniodb">Book of Accounts receivable</string>
+    <string name="popisbtnknidod">Book of Accounts payable</string>
+
+    <string name="popisbtndph">VAT</string>
+    <string name="popisbtnfob">Taxes on personal income sort B</string>
+    <string name="popisbtnplatbystatu">Income tax payments and social and health insurance charges</string>
+
+    <string name="popisbtnvyppoh">Transfer report</string>
+    <string name="popisbtnhladok">Search documents</string>
 
     //bankmvpactivity and newbankdocKtactivity and fragment
     <string name="bank">Bank</string>
