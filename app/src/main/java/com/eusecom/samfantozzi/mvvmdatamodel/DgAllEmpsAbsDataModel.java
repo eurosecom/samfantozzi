@@ -255,51 +255,90 @@ public class DgAllEmpsAbsDataModel implements DgAllEmpsAbsIDataModel {
     @Override
     public Observable<Uri> getObservableUriDocPdf(Invoice invx, @NonNull final String firx
             , @NonNull final String rokx, @NonNull final String serverx, @NonNull final String adresx
-            , String encrypted) {
+            , String encrypted, @NonNull final String umex) {
 
 
-            Log.d("dokx ", invx.getDok());
-            Log.d("drhx ", invx.getDrh());
+        Log.d("dokx ", invx.getDok());
+        Log.d("drhx ", invx.getDrh());
 
-            Uri uri = null;
-            if (invx.getDrh().equals("31")){
-                String drupoh = "1";
+        Uri uri = null;
+        if (invx.getDrh().equals("31")){
+            String drupoh = "1";
             uri = Uri.parse("http://" + serverx +
                     "/ucto/vspk_pdf.php?cislo_dok=" + invx.getDok() + "&hladaj_dok=" + invx.getDok()
                     + "&sysx=UCT&rozuct=ANO&zandroidu=1&anduct=1&copern=20&drupoh="+ drupoh + "&page=1&serverx="
                     + adresx + "&userhash=" + encrypted + "&rokx=" + rokx + "&firx=" + firx + "&newfntz=1");
-            }
-            if (invx.getDrh().equals("32")){
-                String drupoh = "1";
+        }
+        if (invx.getDrh().equals("32")){
+            String drupoh = "1";
             uri = Uri.parse("http://" + serverx +
                     "/ucto/vspk_pdf.php?cislo_dok=" + invx.getDok() + "&hladaj_dok=" + invx.getDok()
                     + "&sysx=UCT&rozuct=ANO&zandroidu=1&anduct=1&copern=20&drupoh="+ drupoh + "&page=1&serverx="
                     + adresx + "&userhash=" + encrypted + "&rokx=" + rokx + "&firx=" + firx + "&newfntz=1");
-            }
-            if (invx.getDrh().equals("1")){
-                String drupoh = "1";
+        }
+        if (invx.getDrh().equals("1")){
+            String drupoh = "1";
             uri = Uri.parse("http://" + serverx +
                     "/faktury/vstf_pdf.php?cislo_dok=" + invx.getDok() + "&hladaj_dok=" + invx.getDok()
                     + "&mini=1&tlacitR=1&sysx=UCT&rozuct=ANO&zandroidu=1&anduct=1&h_razitko=1&copern=20&drupoh=1&page=1&serverx="
                     + adresx + "&userhash=" + encrypted + "&rokx=" + rokx + "&firx=" + firx + "&newfntz=1");
-            }
-            if (invx.getDrh().equals("2")){
-                String drupoh = "1";
+        }
+        if (invx.getDrh().equals("2")){
+            String drupoh = "1";
             uri = Uri.parse("http://" + serverx +
                     "/faktury/vstf_pdf.php?cislo_dok=" + invx.getDok() + "&hladaj_dok=" + invx.getDok()
                     + "&mini=1&tlacitR=1&sysx=UCT&rozuct=ANO&zandroidu=1&anduct=1&h_razitko=1&copern=20&drupoh=2&page=1&serverx="
                     + adresx + "&userhash=" + encrypted + "&rokx=" + rokx + "&firx=" + firx + "&newfntz=1");
-            }
-            if (invx.getDrh().equals("4")){
+        }
+        if (invx.getDrh().equals("4")){
             String drupoh = "4";
             uri = Uri.parse("http://" + serverx +
                     "/ucto/vspk_pdf.php?cislo_dok=" + invx.getDok() + "&hladaj_dok=" + invx.getDok()
                     + "&sysx=UCT&rozuct=ANO&zandroidu=1&anduct=1&copern=20&drupoh="+ drupoh + "&page=1&serverx="
                     + adresx + "&userhash=" + encrypted + "&rokx=" + rokx + "&firx=" + firx + "&newfntz=1");
-            }
+        }
+        if (invx.getDrh().equals("41")) {
+            String drupoh = "1";
+            //String umex = "1.2017";
+
+            uri = Uri.parse("http://" + serverx +
+                    "/ucto/penden.php?copern=10&drupoh="+ drupoh + "&page=1&typ=PDF&zandroidu=1&anduct=1&kli_vume="+ umex
+                    + "&serverx=" + adresx + "&userhash=" + encrypted + "&rokx=" + rokx + "&firx=" + firx + "&newfntz=1" );
+
+        }
+
+        if (invx.getDrh().equals("42")) {
+            String drupoh = "1";
+            //String umex = "1.2017";
+
+            uri = Uri.parse("http://" + serverx +
+                    "/ucto/penden2013.php?copern=10&drupoh="+ drupoh + "&page=1&typ=PDF&zandroidu=1&anduct=1&kli_vume="+ umex
+                    + "&serverx=" + adresx + "&userhash=" + encrypted + "&rokx=" + rokx + "&firx=" + firx + "&newfntz=1" );
+
+        }
+
+        if (invx.getDrh().equals("43")) {
+            String drupoh = "1";
+            //String umex = "1.2017";
+
+            uri = Uri.parse("http://" + serverx +
+                    "/ucto/vprivyd2014.php?copern=10&drupoh="+ drupoh + "&page=1&typ=PDF&zandroidu=1&anduct=1&kli_vume="+ umex
+                    + "&serverx=" + adresx + "&userhash=" + encrypted + "&rokx=" + rokx + "&firx=" + firx + "&newfntz=1" );
+
+        }
+
+        if (invx.getDrh().equals("44")) {
+            String drupoh = "1";
+            //String umex = "1.2017";
+
+            uri = Uri.parse("http://" + serverx +
+                    "/ucto/vmajzav2014.php?copern=10&drupoh="+ drupoh + "&page=1&typ=PDF&zandroidu=1&anduct=1&kli_vume="+ umex
+                    + "&serverx=" + adresx + "&userhash=" + encrypted + "&rokx=" + rokx + "&firx=" + firx + "&newfntz=1" );
+
+        }
 
 
-            return Observable.just(uri);
+        return Observable.just(uri);
 
     }
 

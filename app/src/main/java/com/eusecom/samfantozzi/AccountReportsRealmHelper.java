@@ -9,24 +9,25 @@ public class AccountReportsRealmHelper {
 		return null;
 	}
 	
-	public void generateRealmPDFReport(String tableName, Realm con){
+	public void generateRealmPDFReport(AccountReportsHelperFacade.ReportName tableName, Realm con){
 		//get data from table and generate pdf report
 		System.out.println("RealmHelper " + "PDF");
 	}
 	
-	public void generateRealmHTMLReport(String tableName, Realm con){
+	public void generateRealmHTMLReport(AccountReportsHelperFacade.ReportName tableName, Realm con){
 		//get data from table and generate pdf report
 		System.out.println("RealmHelper " + "HTML");
 	}
 
-	public void generateRealmCSVReport(String tableName, Realm con){
+	public void generateRealmCSVReport(AccountReportsHelperFacade.ReportName tableName, Realm con){
 		//get data from table and generate csv report
 		System.out.println("RealmHelper " + "CSV");
 	}
 
-	public void generateRealmJSONReport(String tableName, Realm con){
+	public void generateRealmJSONReport(AccountReportsHelperFacade.ReportName tableName, Realm con){
 		//get data from table and generate json report
 		System.out.println("RealmHelper " + "JSON");
 	}
+
 	
 }

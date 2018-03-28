@@ -52,6 +52,7 @@ class ShowPdfActivity : AppCompatActivity() {
         val i = intent
 
         //1=customers invoice, 2=supliers invoice, 3=cash document, 4=bank document, 5=internal document
+        //41=penden, 42=penden2
         val extras = i.extras
         fromact = extras!!.getString("fromact")
         drhx = extras!!.getString("drhx")

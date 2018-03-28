@@ -1,5 +1,7 @@
 package com.eusecom.samfantozzi
 
+import android.content.Intent
+import android.os.Bundle
 import android.view.View
 import com.eusecom.samfantozzi.retrofit.AbsServerService
 import org.jetbrains.anko.*
@@ -32,9 +34,14 @@ class AccountReportsActivityUI (val mReport: String, val mAbsServerService: AbsS
                     textResource = R.string.popisbtnpenden
                     onClick {
                         //generating MySql PDF report without using Facade
-                        val con = AccountReportsMySqlHelper.getMySqlDBConnection()
-                        val mySqlHelper = AccountReportsMySqlHelper()
-                        mySqlHelper.generateMySqlPDFReport("penden", mAbsServerService)
+                        //val con = AccountReportsMySqlHelper.getMySqlDBConnection()
+                        //val mySqlHelper = AccountReportsMySqlHelper()
+                        //mySqlHelper.generateMySqlPDFReport("penden", mAbsServerService)
+
+                        //generating MySql PDF report with using Facade
+                        AccountReportsHelperFacade.generateReport(AccountReportsHelperFacade.DBTypes.MYSQL
+                                , AccountReportsHelperFacade.ReportTypes.PDF
+                                , AccountReportsHelperFacade.ReportName.PENDEN, context);
                     }
                 }
 
@@ -45,9 +52,11 @@ class AccountReportsActivityUI (val mReport: String, val mAbsServerService: AbsS
                     }
                     textResource = R.string.popisbtnpenden2
                     onClick {
+
                         //generating MySql PDF report with using Facade
                         AccountReportsHelperFacade.generateReport(AccountReportsHelperFacade.DBTypes.MYSQL
-                                , AccountReportsHelperFacade.ReportTypes.PDF, "penden2");
+                                , AccountReportsHelperFacade.ReportTypes.PDF
+                                , AccountReportsHelperFacade.ReportName.PENDEN2, context);
                     }
                 }
 
@@ -58,9 +67,11 @@ class AccountReportsActivityUI (val mReport: String, val mAbsServerService: AbsS
                     }
                     textResource = R.string.popisbtnprivyd
                     onClick {
-                        //generating Realm JSON report with using Facade
-                        AccountReportsHelperFacade.generateReport(AccountReportsHelperFacade.DBTypes.REALM
-                                , AccountReportsHelperFacade.ReportTypes.JSON, "privyd");
+
+                        AccountReportsHelperFacade.generateReport(AccountReportsHelperFacade.DBTypes.MYSQL
+                                , AccountReportsHelperFacade.ReportTypes.PDF
+                                , AccountReportsHelperFacade.ReportName.PRIVYD, context);
+
                     }
                 }
 
@@ -70,7 +81,11 @@ class AccountReportsActivityUI (val mReport: String, val mAbsServerService: AbsS
                         height = wrapContent
                     }
                     textResource = R.string.popisbtnmajzav
-                    onClick { /* Todo on click */ }
+                    onClick {
+                        AccountReportsHelperFacade.generateReport(AccountReportsHelperFacade.DBTypes.MYSQL
+                                , AccountReportsHelperFacade.ReportTypes.PDF
+                                , AccountReportsHelperFacade.ReportName.MAJZAV, context);
+                    }
                 }
 
                 button() {
@@ -179,7 +194,9 @@ class AccountReportsActivityUI (val mReport: String, val mAbsServerService: AbsS
                         height = wrapContent
                     }
                     textResource = R.string.suppliers
-                    onClick { /* Todo on click */ }
+                    onClick {
+
+                    }
                 }
 
 

@@ -312,6 +312,8 @@ public class DgAllEmpsAbsMvvmViewModel {
 
         String usuidx = mSharedPreferences.getString("usuid", "");
 
+        String umex = mSharedPreferences.getString("ume", "");
+
         Random r = new Random();
         double d = -10.0 + r.nextDouble() * 20.0;
         String ds = String.valueOf(d);
@@ -332,7 +334,7 @@ public class DgAllEmpsAbsMvvmViewModel {
         return mObservableDocPDF
                 .observeOn(mSchedulerProvider.ui())
                 .flatMap(invx ->
-                        mDataModel.getObservableUriDocPdf(invx, firx, rokx, serverx, adresx, encrypted));
+                        mDataModel.getObservableUriDocPdf(invx, firx, rokx, serverx, adresx, encrypted, umex));
     }
 
     public void clearObservableDocPDF() {

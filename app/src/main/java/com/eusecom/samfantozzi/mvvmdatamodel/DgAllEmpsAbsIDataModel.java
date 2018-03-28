@@ -69,7 +69,7 @@ public interface DgAllEmpsAbsIDataModel {
 
     Observable<Uri> getObservableUriDocPdf(Invoice invx, @NonNull final String firx
             , @NonNull final String rokx, @NonNull final String serverx, @NonNull final String adresx
-            , String encrypted);
+            , String encrypted, @NonNull final String umex);
 
     @NonNull
     public Observable<String> getObservableCashListQuery(String queryx);

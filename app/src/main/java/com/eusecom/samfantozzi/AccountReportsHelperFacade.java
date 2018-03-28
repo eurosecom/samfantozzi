@@ -1,13 +1,13 @@
 package com.eusecom.samfantozzi;
 
 
+import android.content.Context;
 import com.eusecom.samfantozzi.retrofit.AbsServerService;
-
 import io.realm.Realm;
 
 public class AccountReportsHelperFacade {
 
-	public static void generateReport(DBTypes dbType, ReportTypes reportType, String tableName){
+	public static void generateReport(DBTypes dbType, ReportTypes reportType, ReportName tableName, Context context){
 		switch (dbType){
 		case MYSQL:
 			AbsServerService con = AccountReportsMySqlHelper.getMySqlDBConnection();
@@ -17,7 +17,7 @@ public class AccountReportsHelperFacade {
 				mySqlHelper.generateMySqlHTMLReport(tableName, con);
 				break;
 			case PDF:
-				mySqlHelper.generateMySqlPDFReport(tableName, con);
+				mySqlHelper.generateMySqlPDFReport(tableName, con, context);
 				break;
 			case CSV:
 				mySqlHelper.generateMySqlCSVReport(tableName, con);
@@ -57,5 +57,9 @@ public class AccountReportsHelperFacade {
 	
 	public static enum ReportTypes{
 		HTML,PDF,CSV,JSON;
+	}
+
+	public static enum ReportName{
+		PENDEN, PENDEN2, PRIVYD, MAJZAV;
 	}
 }
