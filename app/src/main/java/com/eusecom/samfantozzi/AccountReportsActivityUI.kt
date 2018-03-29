@@ -125,17 +125,12 @@ class AccountReportsActivityUI (val mReport: String, val mAbsServerService: AbsS
                         width = matchParent
                         height = wrapContent
                     }
-                    textResource = R.string.popisbtnprivyd
-                    onClick { /* Todo on click */ }
-                }
-
-                button() {
-                    lparams {
-                        width = matchParent
-                        height = wrapContent
+                    textResource = R.string.popisbtnfinsta
+                    onClick {
+                        AccountReportsHelperFacade.generateReport(AccountReportsHelperFacade.DBTypes.MYSQL
+                                , AccountReportsHelperFacade.ReportTypes.PDF
+                                , AccountReportsHelperFacade.ReportName.FINSTA, context);
                     }
-                    textResource = R.string.popisbtnmajzav
-                    onClick { /* Todo on click */ }
                 }
 
                 button() {

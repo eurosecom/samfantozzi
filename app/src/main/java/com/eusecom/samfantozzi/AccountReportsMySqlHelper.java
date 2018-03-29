@@ -67,6 +67,18 @@ public class AccountReportsMySqlHelper {
 				is4.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
 				break;
 
+			case FINSTA:
+				Intent is5 = new Intent(context, ShowPdfActivity.class);
+				Bundle extras5 = new Bundle();
+				extras5.putString("fromact", "51");
+				extras5.putString("drhx", "51");
+				extras5.putString("ucex", "0");
+				extras5.putString("dokx", "0");
+				is5.putExtras(extras5);
+				context.startActivity(is5);
+				is5.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+				break;
+
 		}
 
 	}

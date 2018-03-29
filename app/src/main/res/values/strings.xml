@@ -277,13 +277,14 @@
     <string name="popisbtnmajzav">Assets and Liabilities reports</string>
     <string name="popisbtnkniodb">Book of Accounts receivable</string>
     <string name="popisbtnknidod">Book of Accounts payable</string>
-
+    <string name="popisbtnfinsta">Financial Statements</string>
     <string name="popisbtndph">VAT</string>
     <string name="popisbtnfob">Taxes on personal income sort B</string>
     <string name="popisbtnplatbystatu">Income tax payments and social and health insurance charges</string>
 
     <string name="popisbtnvyppoh">Transfer report</string>
     <string name="popisbtnhladok">Search documents</string>
+
 
     //bankmvpactivity and newbankdocKtactivity and fragment
     <string name="bank">Bank</string>
