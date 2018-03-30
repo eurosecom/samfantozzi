@@ -18,6 +18,7 @@ import android.view.*
 import android.widget.ProgressBar
 import android.widget.TextView
 import com.eusecom.samfantozzi.models.Attendance
+import com.eusecom.samfantozzi.models.InvoiceList
 import com.eusecom.samfantozzi.realm.RealmInvoice
 import com.eusecom.samfantozzi.rxbus.RxBus
 import io.reactivex.ObservableOnSubscribe
@@ -44,6 +45,7 @@ class CashListKtFragment : Fragment() {
     private var mAdapter: CashListAdapter? = null
     private var mRecycler: RecyclerView? = null
     private var mManager: LinearLayoutManager? = null
+    private var balance: TextView? = null
 
     private var mProgressBar: ProgressBar? = null
 
@@ -82,6 +84,7 @@ class CashListKtFragment : Fragment() {
         super.onCreateView(inflater, container, savedInstanceState)
         val rootView = inflater!!.inflate(R.layout.fragment_cashlistkt, container, false)
 
+        balance = rootView.findViewById<View>(R.id.balance) as TextView
         mRecycler = rootView.findViewById<View>(R.id.list) as RecyclerView
         mRecycler?.setHasFixedSize(true)
         mProgressBar = rootView.findViewById<View>(R.id.progress_bar) as ProgressBar
@@ -141,7 +144,7 @@ class CashListKtFragment : Fragment() {
         mSubscription = CompositeSubscription()
 
         showProgressBar()
-        mSubscription?.add(mViewModel.getMyInvoicesFromSqlServer("3")
+        mSubscription?.add(mViewModel.getMyCashDocsFromSqlServer("3")
                 .subscribeOn(Schedulers.computation())
                 .observeOn(rx.android.schedulers.AndroidSchedulers.mainThread())
                 .doOnError { throwable ->
@@ -150,7 +153,7 @@ class CashListKtFragment : Fragment() {
                     toast("Server not connected")
                 }
                 .onErrorResumeNext { throwable -> Observable.empty() }
-                .subscribe { it -> setServerInvoices(it) })
+                .subscribe { it -> setServerCashDocs(it) })
 
         mSubscription?.add(mViewModel.getMyInvoiceDelFromServer()
                 .subscribeOn(Schedulers.computation())
@@ -203,6 +206,7 @@ class CashListKtFragment : Fragment() {
 
         //System.out.println("savedinvoice " + saveds);
         toast("${saveds.get(0).dok } deleted pos. ${saveds.get(0).poh }")
+        balance?.setText(saveds.get(0).hod)
 
         val pohx: String = saveds.get(0).poh
         //invoiceszal.removeAt(posx)
@@ -249,7 +253,6 @@ class CashListKtFragment : Fragment() {
 
     }
 
-
     private fun setServerInvoices(invoices: List<Invoice>) {
 
         //Log.d("searchModel ", "in setServerInvoices")
@@ -257,6 +260,17 @@ class CashListKtFragment : Fragment() {
         invoiceszal = invoices.toMutableList()
         mAdapter?.setAbsserver(invoices)
         nastavResultAs(invoices)
+        hideProgressBar()
+    }
+
+    private fun setServerCashDocs(invoices: InvoiceList) {
+
+        //Log.d("searchModel ", "in setServerInvoices")
+        //toast(" nai0 " + invoices.get(0).nai)
+        invoiceszal = invoices.getInvoice().toMutableList()
+        mAdapter?.setAbsserver(invoices.getInvoice())
+        nastavResultAs(invoices.getInvoice())
+        balance?.setText(invoices.getBalance())
         hideProgressBar()
     }
 

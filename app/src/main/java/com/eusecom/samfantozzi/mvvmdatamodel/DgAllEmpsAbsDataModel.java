@@ -18,6 +18,7 @@ import com.eusecom.samfantozzi.Month;
 import com.eusecom.samfantozzi.R;
 import com.eusecom.samfantozzi.models.Attendance;
 import com.eusecom.samfantozzi.models.Employee;
+import com.eusecom.samfantozzi.models.InvoiceList;
 import com.eusecom.samfantozzi.realm.RealmAccount;
 import com.eusecom.samfantozzi.realm.RealmIdCompany;
 import com.eusecom.samfantozzi.realm.RealmInvoice;
@@ -189,6 +190,14 @@ public class DgAllEmpsAbsDataModel implements DgAllEmpsAbsIDataModel {
     }
 
     //recyclerview method for CashListKtActivity
+    @Override
+    public Observable<InvoiceList> getCashDocsFromMysqlServer(String userhash, String userid, String fromfir
+            , String vyb_rok, String drh, String ucex, String umex, String dokx) {
+
+        return mAbsServerService.getCashDocsFromSqlServer(userhash, userid, fromfir, vyb_rok, drh, ucex, umex, dokx);
+
+    }
+
     @NonNull
     public Observable<List<Invoice>> getObservableInvoiceDelFromMysql(String userhash, String userid, String fromfir
             , String vyb_rok, String drh, Invoice invx){

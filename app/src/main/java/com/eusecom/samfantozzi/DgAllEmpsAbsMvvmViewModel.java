@@ -11,6 +11,7 @@ import android.support.annotation.NonNull;
 import android.util.Log;
 import com.eusecom.samfantozzi.models.Attendance;
 import com.eusecom.samfantozzi.models.Employee;
+import com.eusecom.samfantozzi.models.InvoiceList;
 import com.eusecom.samfantozzi.mvvmdatamodel.DgAllEmpsAbsIDataModel;
 import com.eusecom.samfantozzi.mvvmschedulers.ISchedulerProvider;
 import com.eusecom.samfantozzi.realm.RealmInvoice;
@@ -246,6 +247,46 @@ public class DgAllEmpsAbsMvvmViewModel {
 
 
     //recyclerview method for CashListKtFragment
+    //get cashdocs from MySql server
+    public Observable<InvoiceList> getMyCashDocsFromSqlServer(String drh) {
+
+        Random r = new Random();
+        double d = -10.0 + r.nextDouble() * 20.0;
+        String ds = String.valueOf(d);
+
+        String usuidx = mSharedPreferences.getString("usuid", "");
+        String userxplus =  ds + "/" + usuidx + "/" + ds;
+        encrypted = "";
+
+
+        try {
+            encrypted = mMcrypt.bytesToHex( mMcrypt.encrypt(userxplus) );
+        } catch (Exception e1) {
+            // TODO Auto-generated catch block
+            e1.printStackTrace();
+        }
+        Log.d("userxplus ", encrypted + " " + ds);
+        	/* Decrypt */
+        //String decrypted = new String( mMcrypt.decrypt( encrypted ) );
+
+        String firx = mSharedPreferences.getString("fir", "");
+        String rokx = mSharedPreferences.getString("rok", "");
+        String dodx = mSharedPreferences.getString("doduce", "");
+        if (drh.equals("1")) {
+            dodx = mSharedPreferences.getString("odbuce", "");
+        }
+        if (drh.equals("3")) {
+            dodx = mSharedPreferences.getString("pokluce", "");
+        }
+        if (drh.equals("4")) {
+            dodx = mSharedPreferences.getString("bankuce", "");
+        }
+        String umex = mSharedPreferences.getString("ume", "");
+
+        return mDataModel.getCashDocsFromMysqlServer(encrypted, ds, firx, rokx, drh, dodx, umex, "0");
+    }
+    //end get cashdocs from MySql server
+
     //emit delete Invoice from Mysql
     public void emitDelInvFromServer(Invoice invx) {
 

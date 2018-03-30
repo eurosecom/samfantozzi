@@ -12,6 +12,7 @@ import com.eusecom.samfantozzi.Invoice;
 import com.eusecom.samfantozzi.Month;
 import com.eusecom.samfantozzi.models.Attendance;
 import com.eusecom.samfantozzi.models.Employee;
+import com.eusecom.samfantozzi.models.InvoiceList;
 import com.eusecom.samfantozzi.realm.RealmEmployee;
 import com.eusecom.samfantozzi.realm.RealmInvoice;
 
@@ -58,6 +59,10 @@ public interface DgAllEmpsAbsIDataModel {
             , String vyb_rok, String drh, String ucex, String umex, String dokx);
 
     //recyclerview method for CashListKtActivity
+    @NonNull
+    public Observable<InvoiceList> getCashDocsFromMysqlServer(String userhash, String userid, String fromfir
+            , String vyb_rok, String drh, String ucex, String umex, String dokx);
+
     @NonNull
     public Observable<List<Invoice>> getObservableInvoiceDelFromMysql(String userhash, String userid, String fromfir
             , String vyb_rok, String drh, Invoice invx);
