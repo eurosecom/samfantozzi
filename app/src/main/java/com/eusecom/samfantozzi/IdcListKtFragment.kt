@@ -2,11 +2,10 @@ package com.eusecom.samfantozzi
 
 import android.app.SearchManager
 import android.content.Context
+import android.content.DialogInterface
 import android.content.Intent
 import android.content.SharedPreferences
-import android.net.Uri
 import android.os.Bundle
-import android.support.design.widget.FloatingActionButton
 import android.support.v4.app.ActivityCompat
 import android.support.v4.app.Fragment
 import android.support.v4.view.MenuItemCompat
@@ -25,9 +24,7 @@ import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.disposables.Disposable
 import io.reactivex.functions.Function
-import kotlinx.android.synthetic.main.activity_mainfantozzi.*
-import org.jetbrains.anko.AlertDialogBuilder
-import org.jetbrains.anko.startActivity
+import org.jetbrains.anko.*
 import org.jetbrains.anko.support.v4.alert
 import org.jetbrains.anko.support.v4.toast
 import rx.Observable
@@ -61,7 +58,7 @@ class IdcListKtFragment : Fragment() {
     @Inject
     lateinit var  _rxBus: RxBus
 
-    private lateinit var alert: AlertDialogBuilder
+    private lateinit var alert: AlertBuilder<DialogInterface>
 
     //searchview
     private var searchView: SearchView? = null
@@ -118,7 +115,7 @@ class IdcListKtFragment : Fragment() {
                         //Log.d("IdcListKtActivity  ", " fobClick ")
                         //mViewModel.emitServerIsConnected("xxx")
                         //mViewModel.getBooleanServerIsConnected()
-                        newIdCompanyDialog().show()
+                        showNewIdCompanyDialog()
 
 
 
@@ -387,7 +384,7 @@ class IdcListKtFragment : Fragment() {
                     activity.finish()
                 }
                 1 -> {
-                    editDialog(idcompany).show()
+                    showEditDialog(idcompany)
                 }
 
             }
@@ -397,16 +394,13 @@ class IdcListKtFragment : Fragment() {
 
     }
 
-    fun newIdCompanyDialog(): AlertDialogBuilder {
+    fun showNewIdCompanyDialog() {
 
-        alert = alert() {
-            positiveButton(R.string.create) { navigateToNewIdCompany(2) }
-            neutralButton(R.string.close)  {  }
-        }
-        val titlex: String = getString(R.string.createnewidc)
-        alert.title(titlex)
+        alert("Hi, I'm Roy", "Have you tried turning it off and on again?") {
+            yesButton { toast("Oh…") }
+            noButton {}
+        }.show()
 
-        return alert
 
     }
 
@@ -423,16 +417,12 @@ class IdcListKtFragment : Fragment() {
     }
 
 
-    fun editDialog(idcompany: IdCompanyKt): AlertDialogBuilder {
+    fun showEditDialog(idcompany: IdCompanyKt)  {
 
-        alert = alert() {
-            positiveButton(R.string.edit) { navigateToEditDoc(idcompany) }
-            neutralButton(R.string.close)
-        }
-        val titlex: String = getString(R.string.editidc) + " " + idcompany.ico
-        alert.title(titlex)
-
-        return alert
+        alert("Hi, I'm Roy", "Have you tried turning it off and on again?") {
+            yesButton { toast("Oh…") }
+            noButton {}
+        }.show()
 
     }
 

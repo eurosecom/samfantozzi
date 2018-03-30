@@ -1,10 +1,11 @@
 package com.eusecom.samfantozzi
 
-import android.content.Intent
-import android.os.Bundle
+
 import android.view.View
 import com.eusecom.samfantozzi.retrofit.AbsServerService
 import org.jetbrains.anko.*
+import org.jetbrains.anko.design.bottomNavigationView
+import org.jetbrains.anko.sdk25.listeners.onClick
 
 
 class AccountReportsActivityUI (val mReport: String, val mAbsServerService: AbsServerService): AnkoComponent<AccountReportsActivity>{
@@ -189,13 +190,15 @@ class AccountReportsActivityUI (val mReport: String, val mAbsServerService: AbsS
                         height = wrapContent
                     }
                     textResource = R.string.suppliers
-                    onClick {
-
-                    }
+                    onClick { /* Todo on click */ }
                 }
 
 
             }//report 2
+
+            bottomNavigationView({
+
+            })
 
 
 

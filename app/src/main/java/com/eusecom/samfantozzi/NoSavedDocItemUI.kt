@@ -22,37 +22,35 @@ class NoSavedDocItemUI : AnkoComponent<Context> {
             //}
 
             imageView{
-                lparams{
-                    width = dip(35)
-                    height = dip(35)
-                    setMargins(0, 0, dip(15), 0)
-                }
                 id = R.id.accimg
 
+            }.lparams{
+                width = dip(35)
+                height = dip(35)
+                setMargins(0, 0, dip(15), 0)
             }
 
             textView{
-                lparams{
-                    width = matchParent
-                    height = wrapContent
-                    rightOf(R.id.accimg)
-                }
                 textSize = sp(6).toFloat()
                 id = R.id.accname
 
+            }.lparams{
+                width = matchParent
+                height = wrapContent
+                rightOf(R.id.accimg)
             }
+
             textView{
-                lparams {
-                    width = wrapContent
-                    height = wrapContent
-                    rightOf(R.id.accimg)
-                    below(R.id.accname)
-                }
                     textSize = sp(7).toFloat()
                     id = R.id.accnumber
-                }
-
+            }.lparams {
+                width = wrapContent
+                height = wrapContent
+                rightOf(R.id.accimg)
+                below(R.id.accname)
             }
+
+        }
 
 
     }

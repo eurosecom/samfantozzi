@@ -7,6 +7,7 @@ import com.eusecom.samfantozzi.rxbus.RxBus
 import org.jetbrains.anko.*
 import org.jetbrains.anko.design.floatingActionButton
 import org.jetbrains.anko.design.tabLayout
+import org.jetbrains.anko.sdk25.listeners.onClick
 import org.jetbrains.anko.support.v4.viewPager
 
 
@@ -46,20 +47,19 @@ class InvoiceListKtActivityUI (val _rxBus: RxBus): AnkoComponent<InvoiceListKtAc
             }
 
             floatingActionButton{
-                lparams {
-                    width = wrapContent
-                    height = wrapContent
-                    rightMargin = 40
-                    bottomMargin = 40
-                    alignParentBottom()
-                    alignParentRight()
-                }
                 imageResource = android.R.drawable.ic_input_add
                 id = R.id.fabinvoice
                 onClick{
                     _rxBus.send(InvoiceListFragment.ClickFobEvent())
                 }
 
+            }.lparams {
+                width = wrapContent
+                height = wrapContent
+                rightMargin = 40
+                bottomMargin = 40
+                alignParentBottom()
+                alignParentRight()
             }
 
         }

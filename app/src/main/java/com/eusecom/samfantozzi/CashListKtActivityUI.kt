@@ -7,6 +7,7 @@ import com.eusecom.samfantozzi.rxbus.RxBus
 import org.jetbrains.anko.*
 import org.jetbrains.anko.design.floatingActionButton
 import org.jetbrains.anko.design.tabLayout
+import org.jetbrains.anko.sdk25.listeners.onClick
 import org.jetbrains.anko.support.v4.viewPager
 
 
@@ -41,12 +42,7 @@ class CashListKtActivityUI (val _rxBus: RxBus): AnkoComponent<CashListKtActivity
             }
 
             floatingActionButton{
-                lparams {
-                    width = wrapContent
-                    height = wrapContent
-                    alignParentBottom()
-                    alignParentRight()
-                }
+
                 imageResource = android.R.drawable.ic_input_add
                 id = R.id.fab
                 onClick{
@@ -54,6 +50,11 @@ class CashListKtActivityUI (val _rxBus: RxBus): AnkoComponent<CashListKtActivity
 
                 }
 
+            }.lparams {
+                width = wrapContent
+                height = wrapContent
+                alignParentBottom()
+                alignParentRight()
             }
 
         }

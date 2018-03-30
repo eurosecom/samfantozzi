@@ -22,37 +22,37 @@ class ChooseMonthItemUI : AnkoComponent<Context> {
             //}
 
             imageView{
-                lparams{
-                    width = dip(35)
-                    height = dip(35)
-                    setMargins(0, 0, dip(15), 0)
-                }
                 id = R.id.mnimg
 
+            }.lparams{
+                width = dip(35)
+                height = dip(35)
+                setMargins(0, 0, dip(15), 0)
             }
 
             textView{
-                lparams{
-                    width = matchParent
-                    height = wrapContent
-                    rightOf(R.id.mnimg)
-                }
+
                 textSize = sp(9).toFloat()
                 id = R.id.mnname
 
+            }.lparams{
+                width = matchParent
+                height = wrapContent
+                rightOf(R.id.mnimg)
             }
+
             textView{
-                lparams {
-                    width = wrapContent
-                    height = wrapContent
-                    rightOf(R.id.mnimg)
-                    below(R.id.mnname)
-                }
+
                     textSize = sp(7).toFloat()
                     id = R.id.mnnumber
-                }
-
+                }.lparams {
+                width = wrapContent
+                height = wrapContent
+                rightOf(R.id.mnimg)
+                below(R.id.mnname)
             }
+
+        }
 
 
     }

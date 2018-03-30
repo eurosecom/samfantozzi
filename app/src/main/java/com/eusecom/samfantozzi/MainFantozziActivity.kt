@@ -22,6 +22,7 @@ import com.mikepenz.materialdrawer.Drawer
 import com.mikepenz.materialdrawer.model.ProfileDrawerItem
 import kotlinx.android.synthetic.main.content_mainfantozzi.*
 import org.jetbrains.anko.*
+import org.jetbrains.anko.sdk25.listeners.onClick
 import javax.inject.Inject
 
 
@@ -35,7 +36,7 @@ class MainFantozziActivity : AppCompatActivity() {
     private lateinit var result: Drawer
     private lateinit var headerResult: AccountHeader
     private lateinit var headerProfil: ProfileDrawerItem
-    private lateinit var alert: AlertDialogBuilder
+    private lateinit var alert: AlertBuilder<DialogInterface>
 
     @Inject
     lateinit var prefs: SharedPreferences
@@ -222,7 +223,7 @@ class MainFantozziActivity : AppCompatActivity() {
     fun navigateToGetCompany(){
         val usuid = prefs.getString("usuid", "")
         if (usuid == "0") {
-            donotloginAlert().show()
+            showDonotloginAlert()
         }else {
             startActivityForResult(intentFor<ChooseCompanyActivity>(), 101)
         }
@@ -252,12 +253,12 @@ class MainFantozziActivity : AppCompatActivity() {
 
         val usuid = prefs.getString("usuid", "")
         if (usuid == "0") {
-            donotloginAlert().show()
+            showDonotloginAlert()
         }else {
 
             val usfir = prefs.getString("fir", "")
             if (usfir == "") {
-                donotcompanyAlert().show()
+                showDonotcompanyAlert()
             }else {
 
                 val `is` = Intent(this, TypesKtActivity::class.java)
@@ -287,12 +288,12 @@ class MainFantozziActivity : AppCompatActivity() {
 
         val usuid = prefs.getString("usuid", "")
         if (usuid == "0") {
-            donotloginAlert().show()
+            showDonotloginAlert()
         }else {
 
             val usfir = prefs.getString("fir", "")
             if (usfir == "") {
-                donotcompanyAlert().show()
+                showDonotcompanyAlert()
             }else {
                 val intent = Intent(this, SupplierListActivity::class.java)
                 startActivity(intent)
@@ -306,12 +307,12 @@ class MainFantozziActivity : AppCompatActivity() {
 
         val usuid = prefs.getString("usuid", "")
         if (usuid == "0") {
-            donotloginAlert().show()
+            showDonotloginAlert()
         }else {
 
             val usfir = prefs.getString("fir", "")
             if (usfir == "") {
-                donotcompanyAlert().show()
+                showDonotcompanyAlert()
             }else {
                 startActivity<CashListKtActivity>()
             }
@@ -324,12 +325,12 @@ class MainFantozziActivity : AppCompatActivity() {
 
         val usuid = prefs.getString("usuid", "")
         if (usuid == "0") {
-            donotcompanyAlert().show()
+            showDonotcompanyAlert()
         }else {
 
             val usfir = prefs.getString("fir", "")
             if (usfir == "") {
-                donotcompanyAlert().show()
+                showDonotcompanyAlert()
             }else {
                 startActivity<InvoiceListKtActivity>()
             }
@@ -342,12 +343,12 @@ class MainFantozziActivity : AppCompatActivity() {
 
         val usuid = prefs.getString("usuid", "")
         if (usuid == "0") {
-            donotcompanyAlert().show()
+            showDonotcompanyAlert()
         }else {
 
             val usfir = prefs.getString("fir", "")
             if (usfir == "") {
-                donotcompanyAlert().show()
+                showDonotcompanyAlert()
             }else {
                 startActivity<BankMvpActivity>()
             }
@@ -360,12 +361,12 @@ class MainFantozziActivity : AppCompatActivity() {
 
         val usuid = prefs.getString("usuid", "")
         if (usuid == "0") {
-            donotcompanyAlert().show()
+            showDonotcompanyAlert()
         }else {
 
             val usfir = prefs.getString("fir", "")
             if (usfir == "") {
-                donotcompanyAlert().show()
+                showDonotcompanyAlert()
             }else {
 
                 val `is` = Intent(this, AccountReportsActivity::class.java)
@@ -384,12 +385,12 @@ class MainFantozziActivity : AppCompatActivity() {
 
         val usuid = prefs.getString("usuid", "")
         if (usuid == "0") {
-            donotcompanyAlert().show()
+            showDonotcompanyAlert()
         }else {
 
             val usfir = prefs.getString("fir", "")
             if (usfir == "") {
-                donotcompanyAlert().show()
+                showDonotcompanyAlert()
             }else {
                 val `is` = Intent(this, AccountReportsActivity::class.java)
                 val extras = Bundle()
@@ -407,12 +408,12 @@ class MainFantozziActivity : AppCompatActivity() {
 
         val usuid = prefs.getString("usuid", "")
         if (usuid == "0") {
-            donotcompanyAlert().show()
+            showDonotcompanyAlert()
         }else {
 
             val usfir = prefs.getString("fir", "")
             if (usfir == "") {
-                donotcompanyAlert().show()
+                showDonotcompanyAlert()
             }else {
                 val `is` = Intent(this, AccountReportsActivity::class.java)
                 val extras = Bundle()
@@ -427,33 +428,22 @@ class MainFantozziActivity : AppCompatActivity() {
     }
 
 
-    fun donotloginAlert(): AlertDialogBuilder {
+    fun showDonotloginAlert() {
 
-        alert = alert(R.string.donotlogin) {
-            //title = getString(R.string.donotlogin).toString()
-            //title = "jhdsh"
-            positiveButton(R.string.action_login) { navigateToLogin() }
-            //negativeButton("Never Ever") { }
-            neutralButton(R.string.textok)
-        }
-        alert.title(R.string.didnotlogin)
+        alert("Hi, I'm Roy", "Have you tried turning it off and on again?") {
+            yesButton { toast("Oh…") }
+            noButton {}
+        }.show()
 
-        return alert
 
     }
 
-    fun donotcompanyAlert(): AlertDialogBuilder {
+    fun showDonotcompanyAlert() {
 
-        alert = alert(R.string.donotcompany) {
-            //title = getString(R.string.donotlogin).toString()
-            //title = "jhdsh"
-            positiveButton(R.string.getcompany) { navigateToGetCompany() }
-            //negativeButton("Never Ever") { }
-            neutralButton(R.string.textok)
-        }
-        alert.title(R.string.didnotcompany)
-
-        return alert
+        alert("Hi, I'm Roy", "Have you tried turning it off and on again?") {
+            yesButton { toast("Oh…") }
+            noButton {}
+        }.show()
 
     }
 

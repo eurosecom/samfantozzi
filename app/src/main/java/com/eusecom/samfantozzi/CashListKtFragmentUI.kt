@@ -16,13 +16,12 @@ class CashListKtFragmentUI() : AnkoComponent<Fragment> {
                 }
 
                 editText {
-                    lparams {
-                        width = matchParent
-                        height = wrapContent
-                    }
                     id = R.id.query_edit_text
                     textSize = sp(10).toFloat()
 
+                }.lparams {
+                    width = matchParent
+                    height = wrapContent
                 }
 
                 recyclerView{
@@ -39,13 +38,12 @@ class CashListKtFragmentUI() : AnkoComponent<Fragment> {
                 }
 
                 textView{
-                    lparams {
-                        width = wrapContent
-                        height = wrapContent
-                        below(R.id.query_edit_text)
-                    }
                     text = "xxxxxxxxx"
                     textSize = sp(10).toFloat()
+                }.lparams {
+                    width = wrapContent
+                    height = wrapContent
+                    below(R.id.query_edit_text)
                 }
             }
         }

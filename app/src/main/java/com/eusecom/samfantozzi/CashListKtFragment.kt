@@ -2,6 +2,7 @@ package com.eusecom.samfantozzi
 
 import android.app.SearchManager
 import android.content.Context
+import android.content.DialogInterface
 import android.content.Intent
 import android.content.SharedPreferences
 import android.os.Bundle
@@ -26,9 +27,12 @@ import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.disposables.Disposable
 import io.reactivex.functions.Function
+import org.jetbrains.anko.AlertBuilder
 import org.jetbrains.anko.AlertDialogBuilder
+import org.jetbrains.anko.noButton
 import org.jetbrains.anko.support.v4.alert
 import org.jetbrains.anko.support.v4.toast
+import org.jetbrains.anko.yesButton
 import rx.Observable
 import rx.schedulers.Schedulers
 import rx.subscriptions.CompositeSubscription
@@ -61,7 +65,7 @@ class CashListKtFragment : Fragment() {
     @Inject
     lateinit var  _rxBus: RxBus
 
-    private lateinit var alert: AlertDialogBuilder
+    private lateinit var alert: AlertBuilder<DialogInterface>
 
     //searchview
     private var searchView: SearchView? = null
@@ -118,7 +122,7 @@ class CashListKtFragment : Fragment() {
                 .add(tapEventEmitter.subscribe { event ->
                     if (event is CashListKtFragment.ClickFobEvent) {
                         //Log.d("CashListKtActivity  ", " fobClick ")
-                        newCashDocDialog().show()
+                        showNewCashDocDialog()
 
                     }
                     if (event is Invoice) {
@@ -458,7 +462,7 @@ class CashListKtFragment : Fragment() {
                     //editDialog(invoice).show()
                 }
                 2 -> {
-                    deleteDialog(invoice).show()
+                    showDeleteDialog(invoice)
                 }
             }
         }
@@ -467,16 +471,12 @@ class CashListKtFragment : Fragment() {
 
     }
 
-    fun newCashDocDialog(): AlertDialogBuilder {
+    fun showNewCashDocDialog() {
 
-        alert = alert() {
-            positiveButton(R.string.expense) { navigateToNewCashDoc(2) }
-            neutralButton(R.string.receipt)  { navigateToNewCashDoc(1) }
-        }
-        val titlex: String = getString(R.string.createdoc)
-        alert.title(titlex)
-
-        return alert
+        alert("Hi, I'm Roy", "Have you tried turning it off and on again?") {
+            yesButton { toast("Oh…") }
+            noButton {}
+        }.show()
 
     }
 
@@ -496,16 +496,12 @@ class CashListKtFragment : Fragment() {
     }
 
 
-    fun editDialog(invoice: Invoice): AlertDialogBuilder {
+    fun showEditDialog(invoice: Invoice) {
 
-        alert = alert() {
-            positiveButton(R.string.edit) { navigateToEditDoc(invoice) }
-            neutralButton(R.string.close)
-        }
-        val titlex: String = getString(R.string.editdoc) + " " + invoice.dok
-        alert.title(titlex)
-
-        return alert
+        alert("Hi, I'm Roy", "Have you tried turning it off and on again?") {
+            yesButton { toast("Oh…") }
+            noButton {}
+        }.show()
 
     }
 
@@ -525,16 +521,12 @@ class CashListKtFragment : Fragment() {
 
     }
 
-    fun deleteDialog(invoice: Invoice): AlertDialogBuilder {
+    fun showDeleteDialog(invoice: Invoice) {
 
-        alert = alert() {
-            positiveButton(R.string.delete) { navigateToDeleteDoc(invoice) }
-            neutralButton(R.string.close)
-        }
-        val titlex: String = getString(R.string.deletedoc) + " " + invoice.dok
-        alert.title(titlex)
-
-        return alert
+        alert("Hi, I'm Roy", "Have you tried turning it off and on again?") {
+            yesButton { toast("Oh…") }
+            noButton {}
+        }.show()
 
     }
 
