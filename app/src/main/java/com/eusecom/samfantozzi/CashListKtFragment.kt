@@ -473,9 +473,11 @@ class CashListKtFragment : Fragment() {
 
     fun showNewCashDocDialog() {
 
-        alert("Hi, I'm Roy", "Have you tried turning it off and on again?") {
-            yesButton { toast("Oh…") }
-            noButton {}
+        alert(getString(R.string.receipt), getString(R.string.createdoc)) {
+            //yesButton { navigateToNewCashDoc(1) }
+            //noButton { navigateToNewCashDoc(2) }
+            positiveButton(getString(R.string.expense), { _ -> navigateToNewCashDoc(2) } )
+            negativeButton(getString(R.string.receipt), { _ -> navigateToNewCashDoc(1) } )
         }.show()
 
     }
@@ -498,8 +500,8 @@ class CashListKtFragment : Fragment() {
 
     fun showEditDialog(invoice: Invoice) {
 
-        alert("Hi, I'm Roy", "Have you tried turning it off and on again?") {
-            yesButton { toast("Oh…") }
+        alert("", getString(R.string.createdoc) + " " + invoice.dok) {
+            yesButton { navigateToEditDoc(invoice) }
             noButton {}
         }.show()
 
@@ -523,8 +525,8 @@ class CashListKtFragment : Fragment() {
 
     fun showDeleteDialog(invoice: Invoice) {
 
-        alert("Hi, I'm Roy", "Have you tried turning it off and on again?") {
-            yesButton { toast("Oh…") }
+        alert("", getString(R.string.deletedoc) + " " + invoice.dok) {
+            yesButton { navigateToDeleteDoc(invoice)  }
             noButton {}
         }.show()
 

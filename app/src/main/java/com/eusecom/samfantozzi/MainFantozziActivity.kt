@@ -430,8 +430,8 @@ class MainFantozziActivity : AppCompatActivity() {
 
     fun showDonotloginAlert() {
 
-        alert("Hi, I'm Roy", "Have you tried turning it off and on again?") {
-            yesButton { toast("Oh…") }
+        alert(getString(R.string.donotlogin), getString(R.string.action_login)) {
+            yesButton { navigateToLogin() }
             noButton {}
         }.show()
 
@@ -440,8 +440,8 @@ class MainFantozziActivity : AppCompatActivity() {
 
     fun showDonotcompanyAlert() {
 
-        alert("Hi, I'm Roy", "Have you tried turning it off and on again?") {
-            yesButton { toast("Oh…") }
+        alert(getString(R.string.donotcompany), getString(R.string.getcompany)) {
+            yesButton { navigateToGetCompany() }
             noButton {}
         }.show()
 

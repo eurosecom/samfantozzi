@@ -396,8 +396,8 @@ class IdcListKtFragment : Fragment() {
 
     fun showNewIdCompanyDialog() {
 
-        alert("Hi, I'm Roy", "Have you tried turning it off and on again?") {
-            yesButton { toast("Oh…") }
+        alert("", getString(R.string.createnewidc)) {
+            yesButton { navigateToNewIdCompany(2) }
             noButton {}
         }.show()
 
@@ -419,8 +419,8 @@ class IdcListKtFragment : Fragment() {
 
     fun showEditDialog(idcompany: IdCompanyKt)  {
 
-        alert("Hi, I'm Roy", "Have you tried turning it off and on again?") {
-            yesButton { toast("Oh…") }
+        alert("", getString(R.string.editidc) + " " + idcompany.ico) {
+            yesButton { navigateToEditDoc(idcompany) }
             noButton {}
         }.show()
 
