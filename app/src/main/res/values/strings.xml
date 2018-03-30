@@ -286,6 +286,10 @@
     <string name="popisbtnvyppoh">Transfer report</string>
     <string name="popisbtnhladok">Search documents</string>
 
+    <string name="text_accounts">Accounts</string>
+    <string name="text_tax">Tax</string>
+    <string name="text_mixed">Mixed</string>
+
 
     //bankmvpactivity and newbankdocKtactivity and fragment
     <string name="bank">Bank</string>

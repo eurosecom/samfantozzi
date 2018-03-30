@@ -1,6 +1,9 @@
 package com.eusecom.samfantozzi
 
 
+import android.app.Activity
+import android.content.Intent
+import android.os.Bundle
 import android.view.View
 import com.eusecom.samfantozzi.retrofit.AbsServerService
 import org.jetbrains.anko.*
@@ -19,7 +22,7 @@ class AccountReportsActivityUI (val mReport: String, val mAbsServerService: AbsS
             button() {
                 lparams {
                     width = matchParent
-                    height = wrapContent
+                    height = matchParent
                 }
                 textResource = R.string.action_setmonth
                 onClick { startActivity<ChooseMonthActivity>() }
@@ -196,14 +199,31 @@ class AccountReportsActivityUI (val mReport: String, val mAbsServerService: AbsS
 
             }//report 2
 
-            bottomNavigationView({
+            bottomNavigationView {
+                inflateMenu(R.menu.reports_menu)
+                itemBackgroundResource = R.color.colorPrimaryLight
+                //itemIconTintList = resources.getColorStateList(R.drawable.bottom_navigation_selector, theme)
+                //itemTextColor = resources.getColorStateList(R.drawable.bottom_navigation_selector, theme)
+            }.setOnNavigationItemSelectedListener { item ->
+                when (item.itemId) {
+                    R.id.action_accounts -> {
+                        ui.owner.finishActivity("0")
+                    }
+                    R.id.action_tax -> {
+                        ui.owner.finishActivity("1")
+                    }
+                    R.id.action_mixed -> {
+                        ui.owner.finishActivity("2")
+                    }
+                }
 
-            })
-
-
+                false
+            }
 
         }
 
     }
+
+
 
 }

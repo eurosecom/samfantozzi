@@ -70,6 +70,15 @@ class AccountReportsActivity : AppCompatActivity() {
 
     }
 
+    fun finishActivity(reports: String) {
+        val `is` = Intent(this, AccountReportsActivity::class.java)
+        val extras = Bundle()
+        extras.putString("reports", reports)
+        `is`.putExtras(extras)
+        startActivity(`is`)
+        finish()
+    }
+
 
 
 }
