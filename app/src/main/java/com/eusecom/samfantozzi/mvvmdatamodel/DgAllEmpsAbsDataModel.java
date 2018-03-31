@@ -360,6 +360,36 @@ public class DgAllEmpsAbsDataModel implements DgAllEmpsAbsIDataModel {
 
         }
 
+        if (invx.getDrh().equals("52")) {
+            String drupoh = "1";
+            //String umex = "1.2017";
+
+            //uri = Uri.parse("http://" + serverxxx[0] +
+            //"/ucto/kniha_faktur.php?copern=1&drupoh=1&page=1&zandroidu=1&anduct=1&h_drp=3&kli_vume=" + kli_vume + "&serverx="
+            //+ serverx + "&userhash=" + encrypted + "&rokx=" + allxxx[3] + "&firx=" + allxxx[1] );
+
+            uri = Uri.parse("http://" + serverx +
+                    "/ucto/kniha_faktur.php?copern=1&drupoh="+ drupoh + "&page=1&zandroidu=1&anduct=1&kli_vume="+ umex
+                    + "&serverx=" + adresx + "&userhash=" + encrypted + "&rokx=" + rokx + "&firx=" + firx
+                    + "&newfntz=1&h_drp=3" );
+
+        }
+
+        if (invx.getDrh().equals("53")) {
+            String drupoh = "1";
+            //String umex = "1.2017";
+
+            //uri = Uri.parse("http://" + serverxxx[0] +
+            //"/ucto/kniha_faktur.php?copern=1&drupoh=1&page=1&zandroidu=1&anduct=1&h_drp=3&kli_vume=" + kli_vume + "&serverx="
+            //+ serverx + "&userhash=" + encrypted + "&rokx=" + allxxx[3] + "&firx=" + allxxx[1] );
+
+            uri = Uri.parse("http://" + serverx +
+                    "/ucto/kniha_faktur.php?copern=1&drupoh="+ drupoh + "&page=1&zandroidu=1&anduct=1&kli_vume="+ umex
+                    + "&serverx=" + adresx + "&userhash=" + encrypted + "&rokx=" + rokx + "&firx=" + firx
+                    + "&newfntz=1&h_drp=4" );
+
+        }
+
 
         return Observable.just(uri);
 

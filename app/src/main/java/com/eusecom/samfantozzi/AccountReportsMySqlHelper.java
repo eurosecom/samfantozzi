@@ -79,6 +79,31 @@ public class AccountReportsMySqlHelper {
 				is5.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
 				break;
 
+			case KNIODB:
+				Intent is6 = new Intent(context, ShowPdfActivity.class);
+				Bundle extras6 = new Bundle();
+				extras6.putString("fromact", "52");
+				extras6.putString("drhx", "52");
+				extras6.putString("ucex", "0");
+				extras6.putString("dokx", "0");
+				is6.putExtras(extras6);
+				context.startActivity(is6);
+				is6.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+				break;
+
+			case KNIDOD:
+				Intent is7 = new Intent(context, ShowPdfActivity.class);
+				Bundle extras7 = new Bundle();
+				extras7.putString("fromact", "53");
+				extras7.putString("drhx", "53");
+				extras7.putString("ucex", "0");
+				extras7.putString("dokx", "0");
+				is7.putExtras(extras7);
+				context.startActivity(is7);
+				is7.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+				break;
+
+
 		}
 
 	}

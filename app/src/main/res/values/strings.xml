@@ -276,8 +276,8 @@
     <string name="popisbtnpenden2">Cash receipts journal sort 2</string>
     <string name="popisbtnprivyd">Profit and Loss Statement</string>
     <string name="popisbtnmajzav">Assets and Liabilities reports</string>
-    <string name="popisbtnkniodb">Book of Accounts receivable</string>
-    <string name="popisbtnknidod">Book of Accounts payable</string>
+    <string name="popisbtnkniodb">Customers Invoices book</string>
+    <string name="popisbtnknidod">Suppliers Invoices book</string>
     <string name="popisbtnfinsta">Financial Statements</string>
     <string name="popisbtndph">VAT</string>
     <string name="popisbtnfob">Taxes on personal income sort B</string>
