@@ -1,9 +1,6 @@
 package com.eusecom.samfantozzi
 
-
-import android.app.Activity
-import android.content.Intent
-import android.os.Bundle
+import android.view.Gravity
 import android.view.View
 import com.eusecom.samfantozzi.retrofit.AbsServerService
 import org.jetbrains.anko.*
@@ -17,12 +14,12 @@ class AccountReportsActivityUI (val mReport: String, val mAbsServerService: AbsS
 
         return verticalLayout{
             padding = dip(10)
-            lparams (width = matchParent, height = wrapContent)
+            lparams (width = matchParent, height = matchParent)
 
             button() {
                 lparams {
                     width = matchParent
-                    height = matchParent
+                    height = wrapContent
                 }
                 textResource = R.string.action_setmonth
                 onClick { startActivity<ChooseMonthActivity>() }
@@ -200,6 +197,12 @@ class AccountReportsActivityUI (val mReport: String, val mAbsServerService: AbsS
             }//report 2
 
             bottomNavigationView {
+                lparams {
+                    width = matchParent
+                    height = wrapContent
+                    gravity = Gravity.BOTTOM
+                    //android:layout_gravity="bottom"
+                }
                 inflateMenu(R.menu.reports_menu)
                 itemBackgroundResource = R.color.colorPrimaryLight
                 //itemIconTintList = resources.getColorStateList(R.drawable.bottom_navigation_selector, theme)

@@ -26,7 +26,6 @@ import com.eusecom.samfantozzi.realm.RealmInvoice;
 import com.eusecom.samfantozzi.rxbus.RxBus;
 import com.jakewharton.rxbinding.view.RxView;
 import com.jakewharton.rxbinding.widget.RxTextView;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
