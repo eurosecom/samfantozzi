@@ -36,8 +36,6 @@ class AccountReportsActivity : AppCompatActivity() {
     @Inject
     lateinit var prefs: SharedPreferences
 
-    @Inject
-    lateinit var mAbsServerService: AbsServerService
 
     var reports: String = "0"
 
@@ -50,7 +48,7 @@ class AccountReportsActivity : AppCompatActivity() {
         //0 accounting, 1 vat, 2 income, 3 mixed
         reports = extras!!.getString("reports")
 
-        AccountReportsActivityUI(reports, mAbsServerService).setContentView(this)
+        AccountReportsActivityUI(reports, prefs).setContentView(this)
 
 
     }

@@ -1,5 +1,6 @@
 package com.eusecom.samfantozzi
 
+import android.content.SharedPreferences
 import android.view.Gravity
 import android.view.View
 import com.eusecom.samfantozzi.retrofit.AbsServerService
@@ -8,7 +9,7 @@ import org.jetbrains.anko.design.bottomNavigationView
 import org.jetbrains.anko.sdk25.listeners.onClick
 
 
-class AccountReportsActivityUI (val mReport: String, val mAbsServerService: AbsServerService): AnkoComponent<AccountReportsActivity>{
+class AccountReportsActivityUI (val mReport: String, val prefs: SharedPreferences): AnkoComponent<AccountReportsActivity>{
 
     override fun createView(ui: AnkoContext<AccountReportsActivity>): View = with(ui){
 
@@ -179,7 +180,17 @@ class AccountReportsActivityUI (val mReport: String, val mAbsServerService: AbsS
                 button() {
                     id = R.id.rep21
                     textResource = R.string.popisbtnvyppoh
-                    onClick { /* Todo on click */ }
+                    onClick {
+                        val executor = CommandExecutorProxy(prefs.getString("usuid", "0")
+                                , prefs.getString("fir", "0"), prefs.getString("usadmin", "0"))
+                        try {
+                            executor.runCommand("ls -ltr")
+                            executor.runCommand(" rm -rf abc.pdf")
+                        } catch (e: Exception) {
+                            println("Exception Message::" + e.message)
+                        }
+
+                    }
                 }.lparams {
                     width = matchParent
                     height = wrapContent

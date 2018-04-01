@@ -2,18 +2,18 @@ package com.eusecom.samfantozzi;
 
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 
-import com.eusecom.samfantozzi.retrofit.AbsServerService;
 
 public class AccountReportsMySqlHelper {
 	
-	public static AbsServerService getMySqlDBConnection(){
+	public static SharedPreferences getMySqlDBConnection(){
 		//get MySql DB connection using connection parameters
 		return null;
 	}
 	
-	public void generateMySqlPDFReport(AccountReportsHelperFacade.ReportName tableName, AbsServerService con, Context context){
+	public void generateMySqlPDFReport(AccountReportsHelperFacade.ReportName tableName, SharedPreferences con, Context context){
 		//get data from table and generate pdf report
 		System.out.println("MySqlHelper " + "PDF");
 
@@ -108,17 +108,17 @@ public class AccountReportsMySqlHelper {
 
 	}
 	
-	public void generateMySqlHTMLReport(AccountReportsHelperFacade.ReportName tableName, AbsServerService con){
+	public void generateMySqlHTMLReport(AccountReportsHelperFacade.ReportName tableName, SharedPreferences con){
 		//get data from table and generate pdf report
 		System.out.println("MySqlHelper " + "HTML");
 	}
 
-	public void generateMySqlCSVReport(AccountReportsHelperFacade.ReportName tableName, AbsServerService con){
+	public void generateMySqlCSVReport(AccountReportsHelperFacade.ReportName tableName, SharedPreferences con){
 		//get data from table and generate csv report
 		System.out.println("MySqlHelper " + "CSV");
 	}
 
-	public void generateMySqlJSONReport(AccountReportsHelperFacade.ReportName tableName, AbsServerService con){
+	public void generateMySqlJSONReport(AccountReportsHelperFacade.ReportName tableName, SharedPreferences con){
 		//get data from table and generate json report
 		System.out.println("MySqlHelper " + "JSON");
 	}

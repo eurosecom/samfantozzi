@@ -2,6 +2,8 @@ package com.eusecom.samfantozzi;
 
 
 import android.content.Context;
+import android.content.SharedPreferences;
+
 import com.eusecom.samfantozzi.retrofit.AbsServerService;
 import io.realm.Realm;
 
@@ -10,7 +12,7 @@ public class AccountReportsHelperFacade {
 	public static void generateReport(DBTypes dbType, ReportTypes reportType, ReportName tableName, Context context){
 		switch (dbType){
 		case MYSQL:
-			AbsServerService con = AccountReportsMySqlHelper.getMySqlDBConnection();
+			SharedPreferences con = AccountReportsMySqlHelper.getMySqlDBConnection();
 			AccountReportsMySqlHelper mySqlHelper = new AccountReportsMySqlHelper();
 			switch(reportType){
 			case HTML:

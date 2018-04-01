@@ -87,6 +87,9 @@ class MainFantozziActivity : AppCompatActivity() {
             _ -> navigateToGetCompany()
         }
 
+        imageView.setOnClickListener {
+            _ -> navigateToAccountReportsKt()
+        }
 
         //kotlin drawer by https://github.com/zsmb13/MaterialDrawerKt
         result = drawer {
