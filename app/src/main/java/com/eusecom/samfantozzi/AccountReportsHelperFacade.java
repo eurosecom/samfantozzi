@@ -62,6 +62,6 @@ public class AccountReportsHelperFacade {
 	}
 
 	public static enum ReportName{
-		PENDEN, PENDEN2, PRIVYD, MAJZAV, FINSTA, KNIODB, KNIDOD;
+		PENDEN, PENDEN2, PRIVYD, MAJZAV, FINSTA, KNIODB, KNIDOD, UCTPOH;
 	}
 }

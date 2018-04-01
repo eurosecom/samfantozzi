@@ -104,6 +104,19 @@ public class AccountReportsMySqlHelper {
 				break;
 
 
+			case UCTPOH:
+				Intent is8 = new Intent(context, ShowPdfActivity.class);
+				Bundle extras8 = new Bundle();
+				extras8.putString("fromact", "61");
+				extras8.putString("drhx", "61");
+				extras8.putString("ucex", "0");
+				extras8.putString("dokx", "0");
+				is8.putExtras(extras8);
+				context.startActivity(is8);
+				is8.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+				break;
+
+
 		}
 
 	}

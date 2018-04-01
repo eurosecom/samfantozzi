@@ -1,14 +1,18 @@
 package com.eusecom.samfantozzi;
 
+import android.content.Context;
+
 import java.io.IOException;
 
 public class CommandExecutorImpl implements CommandExecutor {
 
 	@Override
-	public void runCommand(String cmd) throws IOException {
+	public void runCommand(String perm, AccountReportsHelperFacade.DBTypes dbType
+			, AccountReportsHelperFacade.ReportTypes reportType, AccountReportsHelperFacade.ReportName tableName
+			, Context context) throws IOException {
         //some heavy implementation
-		//Runtime.getRuntime().exec(cmd);
-		System.out.println("'" + cmd + "' command executed.");
+		AccountReportsHelperFacade.generateReport(dbType, reportType, tableName, context);
+		System.out.println("'" + perm + "' command executed.");
 	}
 
 }

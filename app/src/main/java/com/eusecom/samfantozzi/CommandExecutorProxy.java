@@ -1,5 +1,7 @@
 package com.eusecom.samfantozzi;
 
+import android.content.Context;
+
 public class CommandExecutorProxy implements CommandExecutor {
 
 	private boolean isAdmin;
@@ -11,14 +13,16 @@ public class CommandExecutorProxy implements CommandExecutor {
 	}
 	
 	@Override
-	public void runCommand(String cmd) throws Exception {
+	public void runCommand(String perm, AccountReportsHelperFacade.DBTypes dbType
+			, AccountReportsHelperFacade.ReportTypes reportType, AccountReportsHelperFacade.ReportName tableName
+			, Context context) throws Exception {
 		if(isAdmin){
-			executor.runCommand(cmd);
+			executor.runCommand(perm, dbType, reportType, tableName, context );
 		}else{
-			if(cmd.trim().startsWith("rm")){
+			if(perm.trim().startsWith("rm")){
 				throw new Exception("rm command is not allowed for non-admin users.");
 			}else{
-				executor.runCommand(cmd);
+				executor.runCommand(perm, dbType, reportType, tableName, context );
 			}
 		}
 	}

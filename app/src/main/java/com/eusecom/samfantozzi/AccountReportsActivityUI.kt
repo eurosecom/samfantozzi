@@ -181,11 +181,15 @@ class AccountReportsActivityUI (val mReport: String, val prefs: SharedPreference
                     id = R.id.rep21
                     textResource = R.string.popisbtnvyppoh
                     onClick {
+
+                        //http@ //www.eshoptest.sk/ucto/juknihapoh.php?h_obdp=1&h_obdk=1&copern=11&drupoh=2&page=1&typ=HTML#
+
                         val executor = CommandExecutorProxy(prefs.getString("usuid", "0")
                                 , prefs.getString("fir", "0"), prefs.getString("usadmin", "0"))
                         try {
-                            executor.runCommand("ls -ltr")
-                            executor.runCommand(" rm -rf abc.pdf")
+                            executor.runCommand("rm", AccountReportsHelperFacade.DBTypes.MYSQL
+                                    , AccountReportsHelperFacade.ReportTypes.PDF
+                                    , AccountReportsHelperFacade.ReportName.UCTPOH, context)
                         } catch (e: Exception) {
                             println("Exception Message::" + e.message)
                         }
