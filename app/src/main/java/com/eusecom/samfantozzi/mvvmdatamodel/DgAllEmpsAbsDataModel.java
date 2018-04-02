@@ -391,6 +391,32 @@ public class DgAllEmpsAbsDataModel implements DgAllEmpsAbsIDataModel {
         }
 
 
+        if (invx.getDrh().equals("54")) {
+            String drupoh = "1";
+
+            uri = Uri.parse("http://" + serverx +
+                    "/ucto/prizdph2018.php?copern=10&pdfand=1&drupoh=1&page=1&zandroidu=1&anduct=1&kli_vume="+ umex
+                    + "&fir_uctx01=1&h_drp=1&h_arch=0&anduct=1&kli_vduj=9"
+                    + "&serverx=" + adresx + "&userhash=" + encrypted + "&rokx=" + rokx + "&firx=" + firx
+                    + "&newfntz=1" );
+
+        }
+
+        if (invx.getDrh().equals("55")) {
+            String drupoh = "1";
+
+            //uri = Uri.parse("http://" + serverxxx[0] +
+            //"/ucto/priznanie_fob2015.php?copern=10&drupoh=1&page=1&zandroidu=1&anduct=1
+            //&kli_vume=" + kli_vume + "&serverx="
+            //+ serverx + "&userhash=" + encrypted + "&rokx=" + allxxx[3] + "&firx=" + allxxx[1] );
+
+            uri = Uri.parse("http://" + serverx +
+                    "/ucto/priznanie_fob2017_pdf.php?copern=11&drupoh=1&page=1&zandroidu=1&anduct=1&kli_vume="+ umex
+                    + "&serverx=" + adresx + "&userhash=" + encrypted + "&rokx=" + rokx + "&firx=" + firx
+                    + "&newfntz=1" );
+
+        }
+
         if (invx.getDrh().equals("61")) {
             String drupoh = "2";
             String delims = "[.]+";

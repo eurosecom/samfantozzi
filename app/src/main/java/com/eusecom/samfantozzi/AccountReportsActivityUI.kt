@@ -146,7 +146,12 @@ class AccountReportsActivityUI (val mReport: String, val prefs: SharedPreference
                 button() {
                     id = R.id.rep11
                     textResource = R.string.popisbtndph
-                    onClick { /* Todo on click */ }
+                    onClick {
+                        //generating MySql PDF report with using CommandExecutorProxy and Facade
+                        callCommandExecutorProxy("lgn", AccountReportsHelperFacade.DBTypes.MYSQL
+                                , AccountReportsHelperFacade.ReportTypes.PDF
+                                , AccountReportsHelperFacade.ReportName.DPHPRZ, context)
+                    }
                 }.lparams {
                     width = matchParent
                     height = wrapContent
@@ -170,7 +175,12 @@ class AccountReportsActivityUI (val mReport: String, val prefs: SharedPreference
                 button() {
                     id = R.id.rep13
                     textResource = R.string.popisbtnfob
-                    onClick { /* Todo on click */ }
+                    onClick {
+                        //generating MySql PDF report with using CommandExecutorProxy and Facade
+                        callCommandExecutorProxy("lgn", AccountReportsHelperFacade.DBTypes.MYSQL
+                                , AccountReportsHelperFacade.ReportTypes.PDF
+                                , AccountReportsHelperFacade.ReportName.FOBPRZ, context)
+                    }
                 }.lparams {
                     width = matchParent
                     height = wrapContent
