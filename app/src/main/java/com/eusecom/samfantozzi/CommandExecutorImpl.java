@@ -1,7 +1,6 @@
 package com.eusecom.samfantozzi;
 
 import android.content.Context;
-
 import java.io.IOException;
 
 public class CommandExecutorImpl implements CommandExecutor {

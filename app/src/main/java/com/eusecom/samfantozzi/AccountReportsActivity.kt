@@ -6,8 +6,6 @@ import android.net.Uri
 import android.os.Bundle
 import android.support.v7.app.AlertDialog
 import android.support.v7.app.AppCompatActivity
-import org.jetbrains.anko.setContentView
-import org.jetbrains.anko.toast
 import javax.inject.Inject
 import rx.schedulers.Schedulers
 import rx.subscriptions.CompositeSubscription
@@ -20,6 +18,7 @@ import com.eusecom.samfantozzi.realm.RealmEmployee
 import com.eusecom.samfantozzi.realm.RealmInvoice
 import com.eusecom.samfantozzi.retrofit.AbsServerService
 import io.realm.annotations.PrimaryKey
+import org.jetbrains.anko.*
 import org.jetbrains.anko.support.v4.toast
 import rx.Observable
 
@@ -77,6 +76,54 @@ class AccountReportsActivity : AppCompatActivity() {
         finish()
     }
 
+    fun showDonotadminAlert() {
 
+        alert(getString(R.string.donotadmin), getString(R.string.action_loginadmin)) {
+            yesButton {
+                navigateToLogin()
+            }
+            noButton {}
+        }.show()
+
+
+    }
+
+    fun showDonotloginAlert() {
+
+        alert(getString(R.string.donotlogin), getString(R.string.action_login)) {
+            yesButton {
+                navigateToLogin()
+            }
+            noButton {}
+        }.show()
+
+
+    }
+
+    fun showDonotcompanyAlert() {
+
+        alert(getString(R.string.donotcompany), getString(R.string.getcompany)) {
+            yesButton {
+                navigateToGetCompany()
+            }
+            noButton {}
+        }.show()
+
+    }
+
+    fun navigateToLogin(){
+        val intent = Intent(this, EmailPasswordActivity::class.java)
+        startActivity(intent)
+    }
+
+    fun navigateToGetCompany(){
+        val usuid = prefs.getString("usuid", "")
+        if (usuid == "0") {
+            showDonotloginAlert()
+        }else {
+            startActivityForResult(intentFor<ChooseCompanyActivity>(), 101)
+        }
+
+    }
 
 }

@@ -1,9 +1,8 @@
 package com.eusecom.samfantozzi
 
+import android.content.Context
 import android.content.SharedPreferences
-import android.view.Gravity
 import android.view.View
-import com.eusecom.samfantozzi.retrofit.AbsServerService
 import org.jetbrains.anko.*
 import org.jetbrains.anko.design.bottomNavigationView
 import org.jetbrains.anko.sdk25.listeners.onClick
@@ -12,6 +11,22 @@ import org.jetbrains.anko.sdk25.listeners.onClick
 class AccountReportsActivityUI (val mReport: String, val prefs: SharedPreferences): AnkoComponent<AccountReportsActivity>{
 
     override fun createView(ui: AnkoContext<AccountReportsActivity>): View = with(ui){
+
+        fun callCommandExecutorProxy(perm: String , dbType: AccountReportsHelperFacade.DBTypes
+                                     , reportType :AccountReportsHelperFacade.ReportTypes
+                                     , tableName : AccountReportsHelperFacade.ReportName
+                                     , context: Context ) {
+            val executor = CommandExecutorProxy(prefs.getString("usuid", "0")
+                    , prefs.getString("fir", "0"), prefs.getString("usadmin", "0"))
+            try {
+                executor.runCommand(perm, dbType, reportType, tableName, context)
+            } catch (e: Exception) {
+                println("Exception Message::" + e.message)
+                if(e.message.equals("adm")) { ui.owner.showDonotadminAlert() }
+                if(e.message.equals("lgn")) { ui.owner.showDonotloginAlert() }
+                if(e.message.equals("cmp")) { ui.owner.showDonotcompanyAlert() }
+            }
+        }
 
         return relativeLayout{
             padding = dip(10)
@@ -182,17 +197,11 @@ class AccountReportsActivityUI (val mReport: String, val prefs: SharedPreference
                     textResource = R.string.popisbtnvyppoh
                     onClick {
 
-                        //http@ //www.eshoptest.sk/ucto/juknihapoh.php?h_obdp=1&h_obdk=1&copern=11&drupoh=2&page=1&typ=HTML#
+                        //generating MySql PDF report with using CommandExecutorProxy and Facade
+                        callCommandExecutorProxy("lgn", AccountReportsHelperFacade.DBTypes.MYSQL
+                                , AccountReportsHelperFacade.ReportTypes.PDF
+                                , AccountReportsHelperFacade.ReportName.UCTPOH, context)
 
-                        val executor = CommandExecutorProxy(prefs.getString("usuid", "0")
-                                , prefs.getString("fir", "0"), prefs.getString("usadmin", "0"))
-                        try {
-                            executor.runCommand("rm", AccountReportsHelperFacade.DBTypes.MYSQL
-                                    , AccountReportsHelperFacade.ReportTypes.PDF
-                                    , AccountReportsHelperFacade.ReportName.UCTPOH, context)
-                        } catch (e: Exception) {
-                            println("Exception Message::" + e.message)
-                        }
 
                     }
                 }.lparams {
@@ -266,7 +275,6 @@ class AccountReportsActivityUI (val mReport: String, val prefs: SharedPreference
         }
 
     }
-
 
 
 }

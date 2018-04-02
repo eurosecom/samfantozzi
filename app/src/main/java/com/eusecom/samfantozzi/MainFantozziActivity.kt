@@ -88,6 +88,7 @@ class MainFantozziActivity : AppCompatActivity() {
         }
 
         imageView.setOnClickListener {
+            //_ -> navigateToAccountReportsKtnocontrol()
             _ -> navigateToAccountReportsKt()
         }
 
@@ -381,6 +382,16 @@ class MainFantozziActivity : AppCompatActivity() {
             }
 
         }
+
+    }
+
+    fun navigateToAccountReportsKtnocontrol(){
+
+                val `is` = Intent(this, AccountReportsActivity::class.java)
+                val extras = Bundle()
+                extras.putString("reports", "0")
+                `is`.putExtras(extras)
+                startActivity(`is`)
 
     }
 

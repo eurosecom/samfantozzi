@@ -7,6 +7,7 @@
     <string name="action_settings">Settings</string>
     <string name="action_loginout">Login / Logout</string>
     <string name="action_login">Login</string>
+    <string name="action_loginadmin">Login admin</string>
     <string name="action_accountreports">Accounting reports</string>
     <string name="action_taxreports">TAX reports</string>
     <string name="action_setmonth">Set month</string>
@@ -28,6 +29,8 @@
     <string name="didnotlogin">You did not login</string>
     <string name="donotcompany">You have to choose your company.</string>
     <string name="didnotcompany">You did not choose company</string>
+    <string name="donotadmin">Command is allowed only for Admin user.</string>
+    <string name="didnotadmin">You are not the Admin user</string>
     <string name="descimg">Desc</string>
     <string name="mixedreports">Mixed reports</string>
 
@@ -36,13 +39,13 @@
     <string name="emailpassword_title_text">Email and Password</string>
     <string name="hint_user_id">User ID</string>
     <string name="get_custom_token">Get Token</string>
-    <string name="sign_in">Sign In</string>
+    <string name="sign_in">Log In</string>
     <string name="create_account">Create Account</string>
-    <string name="sign_out">Sign Out</string>
+    <string name="sign_out">Log Out</string>
     <string name="disconnect">Disconnect</string>
     <string name="loading">Loading…</string>
     <string name="custom_token">Custom Token</string>
-    <string name="signed_out">Signed Out</string>
+    <string name="signed_out">Logged Out</string>
     <string name="token_null" translatable="false">Token: null</string>
     <string name="hint_email" translatable="false">Email</string>
     <string name="hint_password">Password</string>
