@@ -32,7 +32,7 @@ class SaldoKtActivity : AppCompatActivity() {
     private var mPagerAdapter: FragmentPagerAdapter? = null
     private var mViewPager: ViewPager? = null
 
-    var fromact: String = "0"
+    var saltype: Int = 0
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -41,7 +41,7 @@ class SaldoKtActivity : AppCompatActivity() {
         val i = intent
         //0=mainfantozzi, 1=customers invoice, 2=supliers invoice, 3=cash document, 4=bank document, 5=internal document
         val extras = i.extras
-        fromact = extras!!.getString("fromact")
+        saltype = extras!!.getInt("saltype")
 
         //setContentView(R.layout.activity_cashlist)
         SaldoKtActivityUI(_rxBus).setContentView(this)
@@ -50,7 +50,7 @@ class SaldoKtActivity : AppCompatActivity() {
 
             // Create the adapter that will return a fragment for each section
             mPagerAdapter = object : FragmentPagerAdapter(supportFragmentManager) {
-                private val mFragments = arrayOf(SaldoListKtFragment(), SaldoListKtFragment() )
+                private val mFragments = arrayOf(SaldoCustomersFragment(), SaldoSuppliersFragment() )
                 private val mFragmentNames = arrayOf(getString(R.string.customers), getString(R.string.suppliers))
 
                 override fun getItem(position: Int): Fragment {
@@ -88,18 +88,14 @@ class SaldoKtActivity : AppCompatActivity() {
                         fab.visibility = View.GONE
                         supportActionBar!!.setTitle(getString(R.string.saldosup))
                     }
-                    if (position == 2) {
-                        val fab = findViewById<View>(R.id.fab) as FloatingActionButton
-                        //fab.setVisibility(View.GONE);
-                        fab.visibility = View.GONE
-                        supportActionBar!!.setTitle(getString(R.string.empty))
-                    }
 
                 }
             })
 
         val tabLayout = findViewById<View>(R.id.tabs) as TabLayout
         tabLayout.setupWithViewPager(mViewPager)
+        mViewPager?.setCurrentItem( saltype )
+
 
     }
 

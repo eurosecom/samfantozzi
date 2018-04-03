@@ -238,7 +238,7 @@ class AccountReportsActivityUI (val mReport: String, val prefs: SharedPreference
                     onClick {
                         val `is` = Intent(context, SaldoKtActivity::class.java)
                         val extras = Bundle()
-                        extras.putString("fromact", "0")
+                        extras.putInt("saltype", 0)
                         `is`.putExtras(extras)
                         context.startActivity(`is`)
                     }
@@ -254,7 +254,7 @@ class AccountReportsActivityUI (val mReport: String, val prefs: SharedPreference
                     onClick {
                         val `is` = Intent(context, SaldoKtActivity::class.java)
                         val extras = Bundle()
-                        extras.putString("fromact", "1")
+                        extras.putInt("saltype", 1)
                         `is`.putExtras(extras)
                         context.startActivity(`is`)
                     }

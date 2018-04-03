@@ -40,7 +40,7 @@ import javax.inject.Inject
 
  */
 
-class SaldoListKtFragment : Fragment() {
+abstract class SaldoListKtFragment : Fragment() {
 
     private var mAdapter: AutopohListAdapter? = null
     private var mRecycler: RecyclerView? = null
@@ -68,14 +68,19 @@ class SaldoListKtFragment : Fragment() {
     private var mDisposable: Disposable? = null
     protected var mAutopohSearchEngine: AutopohSearchEngine? = null
     var searchManager: SearchManager? = null
+    var saltype: Int = 0;
 
-    override fun onCreate(savedInstanceState: Bundle?) {
+            override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
         (activity.application as SamfantozziApp).dgaeacomponent().inject(this)
         setHasOptionsMenu(true)
 
+        saltype= getSaldoType("xxx")
+
     }
+
+    abstract fun getSaldoType(drh: String): Int
 
     override fun onCreateView(inflater: LayoutInflater?, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
@@ -164,8 +169,13 @@ class SaldoListKtFragment : Fragment() {
                 .subscribe { it -> setQueryString(it) })
 
 
-        ActivityCompat.invalidateOptionsMenu(activity)
-        (activity as AppCompatActivity).supportActionBar!!.setTitle(getString(R.string.saldocus))
+        if( saltype == 0 ) {
+            ActivityCompat.invalidateOptionsMenu(activity)
+            (activity as AppCompatActivity).supportActionBar!!.setTitle(getString(R.string.saldocus))
+        }else{
+            ActivityCompat.invalidateOptionsMenu(activity)
+            (activity as AppCompatActivity).supportActionBar!!.setTitle(getString(R.string.saldosup))
+        }
     }
 
     private fun unBind() {
