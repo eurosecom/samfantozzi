@@ -322,4 +322,9 @@
     <string name="newico">New Company ID</string>
     <string name="editico">Edit Company ID</string>
 
+    //saldoktactivity
+    <string name="saldocus">Customers saldo</string>
+    <string name="saldosup">Suppliers saldo</string>
+
+
 </resources>

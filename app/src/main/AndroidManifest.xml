@@ -38,6 +38,7 @@
         <activity android:name=".ShowPdfActivity"/>
         <activity android:name=".AccountReportsActivity"/>
         <activity android:name=".BankMvpActivity"/>
+        <activity android:name=".SaldoKtActivity"/>
 
         <activity android:name=".Detail2Activity"/>
 

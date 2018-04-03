@@ -1,7 +1,9 @@
 package com.eusecom.samfantozzi
 
 import android.content.Context
+import android.content.Intent
 import android.content.SharedPreferences
+import android.os.Bundle
 import android.view.View
 import org.jetbrains.anko.*
 import org.jetbrains.anko.design.bottomNavigationView
@@ -233,7 +235,13 @@ class AccountReportsActivityUI (val mReport: String, val prefs: SharedPreference
                 button() {
                     id = R.id.rep23
                     textResource = R.string.customers
-                    onClick { /* Todo on click */ }
+                    onClick {
+                        val `is` = Intent(context, SaldoKtActivity::class.java)
+                        val extras = Bundle()
+                        extras.putString("fromact", "0")
+                        `is`.putExtras(extras)
+                        context.startActivity(`is`)
+                    }
                 }.lparams {
                     width = matchParent
                     height = wrapContent
@@ -243,7 +251,13 @@ class AccountReportsActivityUI (val mReport: String, val prefs: SharedPreference
                 button() {
                     id = R.id.rep24
                     textResource = R.string.suppliers
-                    onClick { /* Todo on click */ }
+                    onClick {
+                        val `is` = Intent(context, SaldoKtActivity::class.java)
+                        val extras = Bundle()
+                        extras.putString("fromact", "1")
+                        `is`.putExtras(extras)
+                        context.startActivity(`is`)
+                    }
                 }.lparams {
                     width = matchParent
                     height = wrapContent
