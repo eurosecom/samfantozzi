@@ -1010,4 +1010,44 @@ public class DgAllEmpsAbsMvvmViewModel {
     }
     //end save idc to realm
 
+
+    //SaldoListKtFragment
+
+    //get saldo from MySql server
+    public Observable<List<Invoice>> getMySaldoFromSqlServer(int drh) {
+
+        Random r = new Random();
+        double d = -10.0 + r.nextDouble() * 20.0;
+        String ds = String.valueOf(d);
+
+        String usuidx = mSharedPreferences.getString("usuid", "");
+        String userxplus =  ds + "/" + usuidx + "/" + ds;
+        encrypted = "";
+
+
+        try {
+            encrypted = mMcrypt.bytesToHex( mMcrypt.encrypt(userxplus) );
+        } catch (Exception e1) {
+            // TODO Auto-generated catch block
+            e1.printStackTrace();
+        }
+        Log.d("userxplus ", encrypted + " " + ds);
+        	/* Decrypt */
+        //String decrypted = new String( mMcrypt.decrypt( encrypted ) );
+
+        String firx = mSharedPreferences.getString("fir", "");
+        String rokx = mSharedPreferences.getString("rok", "");
+        String uctox = mSharedPreferences.getString("firduct", "");
+        String ucex = mSharedPreferences.getString("odbuce", "");
+        if (drh == 1) {
+            ucex = mSharedPreferences.getString("doduce", "");
+        }
+
+        Log.d("ucex ", ucex);
+        return mDataModel.getSaldoFromSql(encrypted, ds, firx, rokx, drh, ucex, uctox);
+
+
+    }
+    //end get get saldo from MySql server
+
 }

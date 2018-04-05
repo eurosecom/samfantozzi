@@ -990,6 +990,17 @@ public class DgAllEmpsAbsDataModel implements DgAllEmpsAbsIDataModel {
     }
 
 
+    //SaldoListKtFragment
+
+    @Override
+    public Observable<List<Invoice>> getSaldoFromSql(String userhash, String userid, String fromfir
+            , String vyb_rok, int drh, String ucex, String ucto) {
+
+        return mAbsServerService.getSaldoFromSqlServer(userhash, userid, fromfir, vyb_rok, drh, ucex, ucto);
+
+    }
+
+
 
 
 }

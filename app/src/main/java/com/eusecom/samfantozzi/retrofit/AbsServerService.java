@@ -111,4 +111,10 @@ public interface AbsServerService {
     @GET("/androidfantozzi/connected.json")
     Observable<List<Connected>> getConnectedSqlServerJSON(@Query("query") String queryx);
 
+    @GET("/androidfantozzi/get_saldo.php")
+    Observable<List<Invoice>> getSaldoFromSqlServer(@Query("userhash") String userhash
+            , @Query("userid") String userid, @Query("fromfir") String fromfir
+            , @Query("vyb_rok") String vyb_rok, @Query("drh") int drh
+            , @Query("ucex") String ucex, @Query("ucto") String ucto);
+
 }

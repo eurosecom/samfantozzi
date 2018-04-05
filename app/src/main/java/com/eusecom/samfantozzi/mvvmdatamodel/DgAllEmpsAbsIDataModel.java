@@ -143,4 +143,10 @@ public interface DgAllEmpsAbsIDataModel {
     @NonNull
     public Observable<RealmInvoice> saveRealmOneIdcData(@NonNull final RealmInvoice invoices);
 
+    //SaldoListKtFragment
+
+    @NonNull
+    public Observable<List<Invoice>> getSaldoFromSql(String userhash, String userid, String fromfir
+            , String vyb_rok, int drh, String ucex, String ucto);
+
 }

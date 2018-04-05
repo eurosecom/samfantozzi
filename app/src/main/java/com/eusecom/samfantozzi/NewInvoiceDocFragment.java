@@ -56,7 +56,7 @@ import static rx.Observable.empty;
  * @throws – describe exceptions thrown
  * @see – link to other, related items (e.g. “See also…”)
  * @since – describe when code was introduced (e.g. API Level)
- * @deprecated - describe deprecated item and what alternative to use
+ * //@deprecated - describe deprecated item and what alternative to use
  */
 
 public class NewInvoiceDocFragment extends Fragment {
@@ -137,7 +137,7 @@ public class NewInvoiceDocFragment extends Fragment {
         View layout = inflater.inflate(R.layout.fragment_newinvoicedoc, container, false);
         ButterKnife.bind(this, layout);
 
-        datebutton = (Button) layout.findViewById(R.id.datebutton);
+        datebutton = layout.findViewById(R.id.datebutton);
         datebutton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -146,7 +146,7 @@ public class NewInvoiceDocFragment extends Fragment {
             }
         });
 
-        dasbutton = (Button) layout.findViewById(R.id.dasbutton);
+        dasbutton = layout.findViewById(R.id.dasbutton);
         dasbutton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -155,7 +155,7 @@ public class NewInvoiceDocFragment extends Fragment {
             }
         });
 
-        idbutton = (Button) layout.findViewById(R.id.idbutton);
+        idbutton = layout.findViewById(R.id.idbutton);
         idbutton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -170,9 +170,9 @@ public class NewInvoiceDocFragment extends Fragment {
             }
         });
 
-        _btnsave = (Button) layout.findViewById(R.id.btnsave);
+        _btnsave = layout.findViewById(R.id.btnsave);
 
-        spinner = (Spinner) layout.findViewById(R.id.spinnerPoh);
+        spinner = layout.findViewById(R.id.spinnerPoh);
 
         return layout;
     }

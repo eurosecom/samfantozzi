@@ -1,5 +1,6 @@
 package com.eusecom.samfantozzi
 
+import android.content.Intent
 import android.content.SharedPreferences
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
@@ -8,6 +9,8 @@ import android.support.design.widget.TabLayout
 import android.support.v4.app.Fragment
 import android.support.v4.app.FragmentPagerAdapter
 import android.support.v4.view.ViewPager
+import android.view.Menu
+import android.view.MenuItem
 import android.view.View
 import com.eusecom.samfantozzi.rxbus.RxBus
 import org.jetbrains.anko.setContentView
@@ -46,12 +49,18 @@ class SaldoKtActivity : AppCompatActivity() {
         //setContentView(R.layout.activity_cashlist)
         SaldoKtActivityUI(_rxBus).setContentView(this)
 
-        supportActionBar!!.setTitle(getString(R.string.saldocus))
 
-            // Create the adapter that will return a fragment for each section
+        if (saltype == 0) {
+            supportActionBar!!.setTitle(prefs.getString("odbuce", "") + " " + getString(R.string.saldocus))
+        } else {
+            supportActionBar!!.setTitle(prefs.getString("doduce", "") + " " + getString(R.string.saldosup))
+        }
+
+        if (saltype == 0) {
+
             mPagerAdapter = object : FragmentPagerAdapter(supportFragmentManager) {
-                private val mFragments = arrayOf(SaldoCustomersFragment(), SaldoSuppliersFragment() )
-                private val mFragmentNames = arrayOf(getString(R.string.customers), getString(R.string.suppliers))
+                private val mFragments = arrayOf(SaldoCustomersFragment())
+                private val mFragmentNames = arrayOf(getString(R.string.customers))
 
                 override fun getItem(position: Int): Fragment {
                     return mFragments[position]
@@ -66,6 +75,27 @@ class SaldoKtActivity : AppCompatActivity() {
                 }
             }
 
+        } else{
+
+            mPagerAdapter = object : FragmentPagerAdapter(supportFragmentManager) {
+                private val mFragments = arrayOf(SaldoSuppliersFragment())
+                private val mFragmentNames = arrayOf(getString(R.string.suppliers))
+
+                override fun getItem(position: Int): Fragment {
+                    return mFragments[position]
+                }
+
+                override fun getCount(): Int {
+                    return mFragments.size
+                }
+
+                override fun getPageTitle(position: Int): CharSequence {
+                    return mFragmentNames[position]
+                }
+            }
+
+        }
+
         // Set up the ViewPager with the sections adapter.
         mViewPager = findViewById<View>(R.id.container) as ViewPager
         //mViewPager.setAdapter(mPagerAdapter) kotlin smart cast to ViewPager is impossible mPagerAdapter = null from other thread
@@ -79,14 +109,7 @@ class SaldoKtActivity : AppCompatActivity() {
                     // Check if this is the page you want.
                     if (position == 0) {
                         val fab = findViewById<View>(R.id.fab) as FloatingActionButton
-                        fab.visibility = View.VISIBLE
-                        supportActionBar!!.setTitle(getString(R.string.saldocus))
-                    }
-                    if (position == 1 ) {
-                        val fab = findViewById<View>(R.id.fab) as FloatingActionButton
-                        //fab.setVisibility(View.GONE);
-                        fab.visibility = View.GONE
-                        supportActionBar!!.setTitle(getString(R.string.saldosup))
+                        fab.visibility = View.INVISIBLE
                     }
 
                 }
@@ -94,11 +117,10 @@ class SaldoKtActivity : AppCompatActivity() {
 
         val tabLayout = findViewById<View>(R.id.tabs) as TabLayout
         tabLayout.setupWithViewPager(mViewPager)
-        mViewPager?.setCurrentItem( saltype )
+        //mViewPager?.setCurrentItem( saltype )
 
 
     }
-
 
     override fun onDestroy() {
         super.onDestroy()
