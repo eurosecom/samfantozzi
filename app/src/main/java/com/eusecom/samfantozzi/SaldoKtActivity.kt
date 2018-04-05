@@ -126,5 +126,15 @@ class SaldoKtActivity : AppCompatActivity() {
         super.onDestroy()
     }
 
+    fun finishActivity(reports: String) {
+        val `is` = Intent(this, SaldoKtActivity::class.java)
+        val extras = Bundle()
+        if (saltype == 0) { extras.putInt("saltype", 1) }
+        if (saltype == 1) { extras.putInt("saltype", 0) }
+        `is`.putExtras(extras)
+        startActivity(`is`)
+        finish()
+    }
+
 
 }
