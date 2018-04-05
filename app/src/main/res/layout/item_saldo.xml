@@ -26,16 +26,16 @@
             android:src="@drawable/ic_action_account_circle_40" />
 
          <TextView
-             android:id="@+id/doc"
+             android:id="@+id/idc"
              android:layout_width="wrap_content"
              android:layout_height="wrap_content"
              android:layout_marginLeft="5dp"
              android:gravity="center_vertical"
-             android:text="@string/docshort"
+             android:text="@string/idcshort"
              />
 
          <TextView
-             android:id="@+id/docx"
+             android:id="@+id/idcx"
              android:layout_width="wrap_content"
              android:layout_height="wrap_content"
              android:layout_marginLeft="5dp"
@@ -62,33 +62,10 @@
             android:layout_marginTop="5dp"
             >
 
-
-            <TextView
-                android:id="@+id/date"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentLeft="true"
-                android:layout_marginLeft="5dp"
-                android:layout_marginTop="5dp"
-                android:text="@string/date" />
-
-            <TextView
-                android:id="@+id/datex"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignBaseline="@+id/date"
-                android:layout_toRightOf="@+id/date"
-                android:layout_marginLeft="5dp"
-                android:layout_marginTop="5dp"
-                android:textStyle="bold"
-                />
-
             <TextView
                 android:id="@+id/invoice"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_alignBaseline="@+id/date"
-                android:layout_toRightOf="@+id/datex"
                 android:layout_marginLeft="5dp"
                 android:layout_marginTop="5dp"
                 android:text="@string/fakshort" />
@@ -97,7 +74,7 @@
                 android:id="@+id/invoicex"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_alignBaseline="@+id/date"
+                android:layout_alignBaseline="@+id/invoice"
                 android:layout_toRightOf="@+id/invoice"
                 android:layout_marginLeft="5dp"
                 android:layout_marginTop="5dp"
@@ -105,26 +82,68 @@
                 />
 
             <TextView
-                android:id="@+id/value"
+                android:id="@+id/hod"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_alignBaseline="@+id/date"
-                android:layout_toLeftOf="@+id/valuex"
-                android:layout_marginRight="5dp"
+                android:layout_alignBaseline="@+id/invoice"
+                android:layout_toRightOf="@+id/invoicex"
+                android:layout_marginLeft="5dp"
                 android:layout_marginTop="5dp"
-                android:text="@string/value" />
+                android:text="@string/hod" />
 
             <TextView
-                android:id="@+id/valuex"
+                android:id="@+id/hodx"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_alignBaseline="@+id/date"
-                android:layout_alignParentRight="true"
-                android:layout_marginRight="5dp"
+                android:layout_alignBaseline="@+id/invoice"
+                android:layout_toRightOf="@+id/hod"
+                android:layout_marginLeft="5dp"
                 android:layout_marginTop="5dp"
                 android:textStyle="bold"
                 />
 
+            <TextView
+                android:id="@+id/paid"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignBaseline="@+id/invoice"
+                android:layout_centerHorizontal="true"
+                android:gravity="center|center_vertical"
+                android:layout_marginLeft="5dp"
+                android:layout_marginTop="5dp"
+                android:text="@string/paid" />
+
+            <TextView
+                android:id="@+id/paidx"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignBaseline="@+id/invoice"
+                android:layout_toRightOf="@+id/paid"
+                android:layout_marginLeft="5dp"
+                android:layout_marginTop="5dp"
+                android:textStyle="bold"
+                />
+
+            <TextView
+                android:id="@+id/bal"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignBaseline="@+id/invoice"
+                android:layout_toLeftOf="@+id/balx"
+                android:layout_marginLeft="5dp"
+                android:layout_marginTop="5dp"
+                android:text="@string/balshort" />
+
+            <TextView
+                android:id="@+id/balx"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignBaseline="@+id/invoice"
+                android:layout_alignParentRight="true"
+                android:layout_marginLeft="5dp"
+                android:layout_marginTop="5dp"
+                android:textStyle="bold"
+                />
 
         </RelativeLayout>
 

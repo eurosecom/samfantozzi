@@ -325,6 +325,9 @@
     //saldoktactivity
     <string name="saldocus">Customers saldo</string>
     <string name="saldosup">Suppliers saldo</string>
+    <string name="hod">Total</string>
+    <string name="paid">Paid</string>
+    <string name="balshort">Bal</string>
 
 
 </resources>

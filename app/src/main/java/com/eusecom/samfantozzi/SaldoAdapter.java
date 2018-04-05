@@ -64,14 +64,17 @@ public class SaldoAdapter extends RecyclerView.Adapter<SaldoAdapter.SaldoViewHol
           Picasso.with(holder.mContext).load(R.drawable.ic_call_received_black_24dp).resize(120, 120).into(holder.invoice_photo);
       }
 
-      holder.docx.setText(mListabsserver.get(position).getDok());
-
-      //holder.datex.setText(getDateString(mListabsserver.get(position).getDat()));
-      holder.datex.setText(mListabsserver.get(position).getDat());
+      holder.idcx.setText(mListabsserver.get(position).getIco());
 
       holder.invoicex.setText(mListabsserver.get(position).getFak());
+      holder.invoicex.setVisibility(View.GONE);
+      holder.invoice.setVisibility(View.GONE);
 
-      holder.valuex.setText(mListabsserver.get(position).getHod());
+      holder.hodx.setText(mListabsserver.get(position).getHod());
+
+      holder.paidx.setText(mListabsserver.get(position).getZk0());
+
+      holder.balx.setText(mListabsserver.get(position).getZk1());
 
       holder.setClickListener(new SaldoAdapter.SaldoViewHolder.ClickListener() {
           public void onClick(View v, int pos, boolean isLongClick) {
@@ -109,10 +112,12 @@ public class SaldoAdapter extends RecyclerView.Adapter<SaldoAdapter.SaldoViewHol
 
       public TextView invoice_name;
       public ImageView invoice_photo;
-      public TextView datex;
+      public TextView invoice;
       public TextView invoicex;
-      public TextView valuex;
-      public TextView docx;
+      public TextView idcx;
+      public TextView hodx;
+      public TextView paidx;
+      public TextView balx;
       private ClickListener clickListener;
       Context mContext;
 
@@ -121,10 +126,12 @@ public class SaldoAdapter extends RecyclerView.Adapter<SaldoAdapter.SaldoViewHol
 
         invoice_name = (TextView) itemView.findViewById(R.id.invoice_name);
         invoice_photo = (ImageView) itemView.findViewById(R.id.invoice_photo);
-        datex = (TextView) itemView.findViewById(R.id.datex);
+        invoice = (TextView) itemView.findViewById(R.id.invoice);
         invoicex = (TextView) itemView.findViewById(R.id.invoicex);
-        valuex = (TextView) itemView.findViewById(R.id.valuex);
-        docx = (TextView) itemView.findViewById(R.id.docx);
+        idcx = (TextView) itemView.findViewById(R.id.idcx);
+        hodx = (TextView) itemView.findViewById(R.id.hodx);
+        paidx = (TextView) itemView.findViewById(R.id.paidx);
+        balx = (TextView) itemView.findViewById(R.id.balx);
         mContext = itemView.getContext();
         itemView.setOnClickListener(this);
         itemView.setOnLongClickListener(this);
