@@ -169,13 +169,33 @@ class MainFantozziActivity : AppCompatActivity() {
                 }
 
             }
-
             divider {}
-            secondaryItem(getString(R.string.mixedreports)) {
+            primaryItem(getString(R.string.mixedreports)) {
 
                 onClick { _ ->
                     //Log.d("DRAWER", "Click.")
                     navigateToMixedReportsKt()
+                    false
+                }
+
+            }
+
+            divider {}
+            secondaryItem(getString(R.string.saldocus)) {
+
+                onClick { _ ->
+                    //Log.d("DRAWER", "Click.")
+                    navigateToSaldoCustomerKt()
+                    false
+                }
+            }
+
+            divider {}
+            secondaryItem(getString(R.string.saldosup)) {
+
+                onClick { _ ->
+                    //Log.d("DRAWER", "Click.")
+                    navigateToSaldoSupplierKt()
                     false
                 }
             }
@@ -246,6 +266,22 @@ class MainFantozziActivity : AppCompatActivity() {
 
             //toast("Returned 201 IdCompany " + akeico)
         }
+    }
+
+    fun navigateToSaldoCustomerKt(){
+        val `is` = Intent(this, SaldoKtActivity::class.java)
+        val extras = Bundle()
+        extras.putInt("saltype", 0)
+        `is`.putExtras(extras)
+        startActivity(`is`)
+    }
+
+    fun navigateToSaldoSupplierKt(){
+        val `is` = Intent(this, SaldoKtActivity::class.java)
+        val extras = Bundle()
+        extras.putInt("saltype", 1)
+        `is`.putExtras(extras)
+        startActivity(`is`)
     }
 
     fun navigateToSetMonth(){

@@ -328,8 +328,8 @@
     <string name="hod">Total</string>
     <string name="paid">Paid</string>
     <string name="balshort">Bal</string>
-    <string name="action_saldopdf1">PDF 1</string>
-    <string name="action_saldopdf2">PDF 2</string>
+    <string name="action_saldopdf1">PDF IDC</string>
+    <string name="action_saldopdf2">PDF items</string>
     <string name="action_toothersaldo">Customer/Supplier</string>
 
 

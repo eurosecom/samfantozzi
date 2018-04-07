@@ -13,7 +13,7 @@ import android.view.Menu
 import android.view.MenuItem
 import android.view.View
 import com.eusecom.samfantozzi.rxbus.RxBus
-import org.jetbrains.anko.setContentView
+import org.jetbrains.anko.*
 import javax.inject.Inject
 
 /**
@@ -47,7 +47,7 @@ class SaldoKtActivity : AppCompatActivity() {
         saltype = extras!!.getInt("saltype")
 
         //setContentView(R.layout.activity_cashlist)
-        SaldoKtActivityUI(_rxBus).setContentView(this)
+        SaldoKtActivityUI(_rxBus, prefs, saltype).setContentView(this)
 
 
         if (saltype == 0) {
@@ -136,5 +136,54 @@ class SaldoKtActivity : AppCompatActivity() {
         finish()
     }
 
+    fun showDonotadminAlert() {
+
+        alert(getString(R.string.donotadmin), getString(R.string.action_loginadmin)) {
+            yesButton {
+                navigateToLogin()
+            }
+            noButton {}
+        }.show()
+
+
+    }
+
+    fun showDonotloginAlert() {
+
+        alert(getString(R.string.donotlogin), getString(R.string.action_login)) {
+            yesButton {
+                navigateToLogin()
+            }
+            noButton {}
+        }.show()
+
+
+    }
+
+    fun showDonotcompanyAlert() {
+
+        alert(getString(R.string.donotcompany), getString(R.string.getcompany)) {
+            yesButton {
+                navigateToGetCompany()
+            }
+            noButton {}
+        }.show()
+
+    }
+
+    fun navigateToLogin(){
+        val intent = Intent(this, EmailPasswordActivity::class.java)
+        startActivity(intent)
+    }
+
+    fun navigateToGetCompany(){
+        val usuid = prefs.getString("usuid", "")
+        if (usuid == "0") {
+            showDonotloginAlert()
+        }else {
+            startActivityForResult(intentFor<ChooseCompanyActivity>(), 101)
+        }
+
+    }
 
 }

@@ -139,6 +139,30 @@ public class AccountReportsMySqlHelper {
 				context.startActivity(is10);
 				is10.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
 				break;
+
+			case SALIDC0:
+				Intent is11 = new Intent(context, ShowPdfActivity.class);
+				Bundle extras11 = new Bundle();
+				extras11.putString("fromact", "71");
+				extras11.putString("drhx", "71");
+				extras11.putString("ucex", "0");
+				extras11.putString("dokx", "0");
+				is11.putExtras(extras11);
+				context.startActivity(is11);
+				is11.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+				break;
+
+			case SALIDC1:
+				Intent is12 = new Intent(context, ShowPdfActivity.class);
+				Bundle extras12 = new Bundle();
+				extras12.putString("fromact", "72");
+				extras12.putString("drhx", "72");
+				extras12.putString("ucex", "0");
+				extras12.putString("dokx", "0");
+				is12.putExtras(extras12);
+				context.startActivity(is12);
+				is12.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+				break;
 		}
 
 	}
