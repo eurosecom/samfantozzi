@@ -105,7 +105,16 @@ class SaldoKtActivityUI (val _rxBus: RxBus, val prefs: SharedPreferences, val sa
                         }
                     }
                     R.id.action_saldopdf2 -> {
-                        //ui.owner.finishActivity("2")
+                        if(saltype == 0 ) {
+                            //generating MySql PDF report with using CommandExecutorProxy and Facade
+                            callCommandExecutorProxy("lgn", AccountReportsHelperFacade.DBTypes.MYSQL
+                                    , AccountReportsHelperFacade.ReportTypes.PDF
+                                    , AccountReportsHelperFacade.ReportName.SALITM0, context)
+                        }else{
+                            callCommandExecutorProxy("lgn", AccountReportsHelperFacade.DBTypes.MYSQL
+                                    , AccountReportsHelperFacade.ReportTypes.PDF
+                                    , AccountReportsHelperFacade.ReportName.SALITM1, context)
+                        }
                     }
                 }
 
