@@ -50,7 +50,7 @@ class SaldoKtActivityUI (val _rxBus: RxBus, val prefs: SharedPreferences
                 id = R.id.fab
 
                 onClick{
-                    _rxBus.send(IdcListKtFragment.ClickFobEvent())
+                    //_rxBus.send(SaldoListKtFragment.ClickFobEvent())
 
                 }
 

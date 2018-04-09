@@ -115,6 +115,6 @@ public interface AbsServerService {
     Observable<List<Invoice>> getSaldoFromSqlServer(@Query("userhash") String userhash
             , @Query("userid") String userid, @Query("fromfir") String fromfir
             , @Query("vyb_rok") String vyb_rok, @Query("drh") int drh
-            , @Query("ucex") String ucex, @Query("ucto") String ucto);
+            , @Query("ucex") String ucex, @Query("ucto") String ucto, @Query("salico") int salico);
 
 }

@@ -48,9 +48,7 @@ class SaldoKtActivity : AppCompatActivity() {
         saltype = extras!!.getInt("saltype")
         salico = extras!!.getInt("salico")
 
-        //setContentView(R.layout.activity_cashlist)
         SaldoKtActivityUI(_rxBus, prefs, saltype, salico).setContentView(this)
-
 
         if (saltype == 0) {
             supportActionBar!!.setTitle(prefs.getString("odbuce", "") + " " + getString(R.string.saldocus))
@@ -137,12 +135,19 @@ class SaldoKtActivity : AppCompatActivity() {
         tabLayout.setupWithViewPager(mViewPager)
         //mViewPager?.setCurrentItem( saltype )
 
-
     }
 
     override fun onDestroy() {
         super.onDestroy()
     }
+
+    override fun onResume() {
+        super.onResume()
+        val editor = prefs.edit()
+        editor.putString("edidok", salico.toString()).apply();
+        editor.commit();
+    }
+
 
     fun finishActivity(reports: String) {
         val `is` = Intent(this, SaldoKtActivity::class.java)

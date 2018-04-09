@@ -147,6 +147,6 @@ public interface DgAllEmpsAbsIDataModel {
 
     @NonNull
     public Observable<List<Invoice>> getSaldoFromSql(String userhash, String userid, String fromfir
-            , String vyb_rok, int drh, String ucex, String ucto);
+            , String vyb_rok, int drh, String ucex, String ucto, int salico);
 
 }

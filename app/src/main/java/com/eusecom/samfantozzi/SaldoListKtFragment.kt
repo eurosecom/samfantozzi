@@ -63,8 +63,9 @@ abstract class SaldoListKtFragment : Fragment() {
     protected var mSaldoSearchEngine: SaldoSearchEngine? = null
     var searchManager: SearchManager? = null
     var saltype: Int = 0;
+    var salico: Int = 0;
 
-            override fun onCreate(savedInstanceState: Bundle?) {
+    override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
         (activity.application as SamfantozziApp).dgaeacomponent().inject(this)
@@ -101,6 +102,8 @@ abstract class SaldoListKtFragment : Fragment() {
         mRecycler?.setLayoutManager(mManager)
         mRecycler?.setAdapter(mAdapter)
 
+        salico = mSharedPreferences.getString("edidok", "").toInt()
+
     }//end of onActivityCreated
 
     private fun bind() {
@@ -111,8 +114,8 @@ abstract class SaldoListKtFragment : Fragment() {
 
         _disposables
                 .add(tapEventEmitter.subscribe { event ->
-                    if (event is IdcListKtFragment.ClickFobEvent) {
-                        //Log.d("IdcListKtActivity  ", " fobClick ")
+                    if (event is SaldoListKtFragment.ClickFobEvent) {
+                        Log.d("SaldoListKtKtActivity  ", " fobClick ")
                         //newCashDocDialog().show()
 
                     }
@@ -139,7 +142,7 @@ abstract class SaldoListKtFragment : Fragment() {
         mSubscription = CompositeSubscription()
 
         showProgressBar()
-        mSubscription?.add(mViewModel.getMySaldoFromSqlServer(getSaldoType("xxx"))
+        mSubscription?.add(mViewModel.getMySaldoFromSqlServer(getSaldoType("xxx"), salico)
                 .subscribeOn(Schedulers.computation())
                 .observeOn(rx.android.schedulers.AndroidSchedulers.mainThread())
                 .doOnError { throwable ->

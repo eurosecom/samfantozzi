@@ -1014,7 +1014,7 @@ public class DgAllEmpsAbsMvvmViewModel {
     //SaldoListKtFragment
 
     //get saldo from MySql server
-    public Observable<List<Invoice>> getMySaldoFromSqlServer(int drh) {
+    public Observable<List<Invoice>> getMySaldoFromSqlServer(int drh, int salico) {
 
         Random r = new Random();
         double d = -10.0 + r.nextDouble() * 20.0;
@@ -1044,7 +1044,7 @@ public class DgAllEmpsAbsMvvmViewModel {
         }
 
         Log.d("ucex ", ucex);
-        return mDataModel.getSaldoFromSql(encrypted, ds, firx, rokx, drh, ucex, uctox);
+        return mDataModel.getSaldoFromSql(encrypted, ds, firx, rokx, drh, ucex, uctox, salico);
 
 
     }
