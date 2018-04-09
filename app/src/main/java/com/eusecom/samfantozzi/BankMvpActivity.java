@@ -183,6 +183,7 @@ public class BankMvpActivity extends AppCompatActivity implements BankMvpView, A
                                 extras.putString("drhx", invoice.getDrh());
                                 extras.putString("ucex", mSharedPreferences.getString("bankuce", ""));
                                 extras.putString("dokx", invoice.getDok());
+                                extras.putString("icox", invoice.getIco());
                                 is.putExtras(extras);
                                 startActivity(is);
 

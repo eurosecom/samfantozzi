@@ -44,6 +44,7 @@ class ShowPdfActivity : AppCompatActivity() {
     var drhx: String = "0"
     var ucex: String = "0"
     var dokx: String = "0"
+    var icox: String = "0"
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -58,6 +59,7 @@ class ShowPdfActivity : AppCompatActivity() {
         drhx = extras!!.getString("drhx")
         ucex = extras!!.getString("ucex")
         dokx = extras!!.getString("dokx")
+        icox = extras!!.getString("icox")
 
         ShowPdfActivityUI().setContentView(this)
 
@@ -65,7 +67,7 @@ class ShowPdfActivity : AppCompatActivity() {
 
         bind()
 
-        val invoicex = Invoice(drhx,ucex,dokx,"","","","","","","",""
+        val invoicex = Invoice(drhx,ucex,dokx,icox,"","","","","","",""
                 ,"","","","","","","","",true,0,"","","")
 
         mViewModel.emitDocumentPdfUri(invoicex)

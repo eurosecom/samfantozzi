@@ -7,12 +7,14 @@ import android.content.SharedPreferences
 import android.os.Bundle
 import android.support.v4.app.Fragment
 import android.support.v4.view.MenuItemCompat
+import android.support.v7.app.AlertDialog
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
 import android.support.v7.widget.SearchView
 import android.util.Log
 import android.view.*
 import android.widget.ProgressBar
+import android.widget.TextView
 import com.eusecom.samfantozzi.rxbus.RxBus
 import io.reactivex.ObservableOnSubscribe
 import io.reactivex.android.schedulers.AndroidSchedulers
@@ -114,12 +116,12 @@ abstract class SaldoListKtFragment : Fragment() {
                         //newCashDocDialog().show()
 
                     }
-                    if (event is Account) {
+                    if (event is Invoice) {
 
-                        val usnamex = event.accname
+                        val usnamex = event.nai
 
-                        //Log.d("SaldoListKtFragment ", usnamex)
-                        //getTodoDialog(event)
+                        Log.d("SaldoListKtFragment ", usnamex)
+                        getTodoDialog(event)
 
 
                     }
@@ -331,6 +333,83 @@ abstract class SaldoListKtFragment : Fragment() {
                 .filter { query -> query.length >= 3 || query == "" }.debounce(300, TimeUnit.MILLISECONDS)  // add this line
     }
 
+    fun getTodoDialog(invoice: Invoice) {
+
+        val inflater = LayoutInflater.from(activity)
+        val textenter = inflater.inflate(R.layout.invoice_edit_dialog, null)
+
+        val valuex = textenter.findViewById<View>(R.id.valuex) as TextView
+        valuex.text = invoice.nai
+
+        val builder = AlertDialog.Builder(activity)
+        builder.setView(textenter).setTitle(getString(R.string.idc) + " " + invoice.ico)
+
+        var item4: CharSequence = ""
+        if( saltype == 0 ){
+            item4=getString(R.string.reminder)
+        }else{
+            item4=getString(R.string.pay)
+        }
+
+        builder.setItems(arrayOf<CharSequence>(getString(R.string.detailidc), getString(R.string.action_saldopdf1)
+                , getString(R.string.action_saldopdf2), item4)
+        ) { dialog, which ->
+            // The 'which' argument contains the index position
+            // of the selected item
+            when (which) {
+                0 -> {
+                    val `is` = Intent(activity, SaldoKtActivity::class.java)
+                    val extras = Bundle()
+                    extras.putInt("saltype", saltype)
+                    extras.putInt("salico", invoice.ico.toInt())
+                    `is`.putExtras(extras)
+                    startActivity(`is`)
+                }
+                1 -> {
+
+                    val `is` = Intent(activity, ShowPdfActivity::class.java)
+                    val extras = Bundle()
+                    if( saltype == 0 ) {
+                        extras.putString("fromact", "71")
+                        extras.putString("drhx", "71")
+                    }else{
+                        extras.putString("fromact", "72")
+                        extras.putString("drhx", "72")
+                    }
+                    extras.putString("ucex", invoice.uce)
+                    extras.putString("dokx", "0")
+                    extras.putString("icox", invoice.ico)
+                    `is`.putExtras(extras)
+                    startActivity(`is`)
+                    `is`.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP
+                }
+                2 -> {
+
+                    val `is2` = Intent(activity, ShowPdfActivity::class.java)
+                    val extras2 = Bundle()
+                    if( saltype == 0 ) {
+                        extras2.putString("fromact", "73")
+                        extras2.putString("drhx", "73")
+                    }else{
+                        extras2.putString("fromact", "74")
+                        extras2.putString("drhx", "74")
+                    }
+                    extras2.putString("ucex", invoice.uce)
+                    extras2.putString("dokx", "0")
+                    extras2.putString("icox", invoice.ico)
+                    `is2`.putExtras(extras2)
+                    startActivity(`is2`)
+                    `is2`.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP
+                }
+                3 -> {
+
+                }
+            }
+        }
+        val dialog = builder.create()
+        builder.show()
+
+    }
 
 
 }

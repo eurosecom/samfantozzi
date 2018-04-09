@@ -272,6 +272,7 @@ class MainFantozziActivity : AppCompatActivity() {
         val `is` = Intent(this, SaldoKtActivity::class.java)
         val extras = Bundle()
         extras.putInt("saltype", 0)
+        extras.putInt("salico", 0)
         `is`.putExtras(extras)
         startActivity(`is`)
     }
@@ -280,6 +281,7 @@ class MainFantozziActivity : AppCompatActivity() {
         val `is` = Intent(this, SaldoKtActivity::class.java)
         val extras = Bundle()
         extras.putInt("saltype", 1)
+        extras.putInt("salico", 0)
         `is`.putExtras(extras)
         startActivity(`is`)
     }

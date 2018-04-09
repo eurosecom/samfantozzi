@@ -36,6 +36,7 @@ class SaldoKtActivity : AppCompatActivity() {
     private var mViewPager: ViewPager? = null
 
     var saltype: Int = 0
+    var salico: Int = 0
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -45,9 +46,10 @@ class SaldoKtActivity : AppCompatActivity() {
         //0=mainfantozzi, 1=customers invoice, 2=supliers invoice, 3=cash document, 4=bank document, 5=internal document
         val extras = i.extras
         saltype = extras!!.getInt("saltype")
+        salico = extras!!.getInt("salico")
 
         //setContentView(R.layout.activity_cashlist)
-        SaldoKtActivityUI(_rxBus, prefs, saltype).setContentView(this)
+        SaldoKtActivityUI(_rxBus, prefs, saltype, salico).setContentView(this)
 
 
         if (saltype == 0) {
@@ -61,6 +63,7 @@ class SaldoKtActivity : AppCompatActivity() {
             mPagerAdapter = object : FragmentPagerAdapter(supportFragmentManager) {
                 private val mFragments = arrayOf(SaldoCustomersFragment())
                 private val mFragmentNames = arrayOf(getString(R.string.customers))
+                private val mFragmentNamesIdc = arrayOf(getString(R.string.customer))
 
                 override fun getItem(position: Int): Fragment {
                     return mFragments[position]
@@ -71,7 +74,14 @@ class SaldoKtActivity : AppCompatActivity() {
                 }
 
                 override fun getPageTitle(position: Int): CharSequence {
-                    return mFragmentNames[position]
+                    var titx: CharSequence = ""
+                    if( salico == 0) {
+                        titx = mFragmentNames[position]
+                    }else{
+                        titx = mFragmentNamesIdc[position] + " " + salico
+                    }
+
+                    return titx
                 }
             }
 
@@ -80,6 +90,7 @@ class SaldoKtActivity : AppCompatActivity() {
             mPagerAdapter = object : FragmentPagerAdapter(supportFragmentManager) {
                 private val mFragments = arrayOf(SaldoSuppliersFragment())
                 private val mFragmentNames = arrayOf(getString(R.string.suppliers))
+                private val mFragmentNamesIdc = arrayOf(getString(R.string.supplier))
 
                 override fun getItem(position: Int): Fragment {
                     return mFragments[position]
@@ -90,7 +101,14 @@ class SaldoKtActivity : AppCompatActivity() {
                 }
 
                 override fun getPageTitle(position: Int): CharSequence {
-                    return mFragmentNames[position]
+                    var titx: CharSequence = ""
+                    if( salico == 0) {
+                        titx = mFragmentNames[position]
+                    }else{
+                        titx = mFragmentNamesIdc[position] + " " + salico
+                    }
+
+                    return titx
                 }
             }
 

@@ -454,6 +454,7 @@ class CashListKtFragment : Fragment() {
                     extras.putString("drhx", invoice.drh)
                     extras.putString("ucex", invoice.uce)
                     extras.putString("dokx", invoice.dok)
+                    extras.putString("icox", invoice.ico)
                     `is`.putExtras(extras)
                     startActivity(`is`)
                 }

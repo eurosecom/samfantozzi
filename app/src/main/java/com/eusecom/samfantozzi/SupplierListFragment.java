@@ -431,6 +431,7 @@ public class SupplierListFragment extends Fragment {
                                 extras.putString("drhx", invoice.getDrh());
                                 extras.putString("ucex", invoice.getUce());
                                 extras.putString("dokx", invoice.getDok());
+                                extras.putString("icox", invoice.getIco());
                                 is.putExtras(extras);
                                 startActivity(is);
 

@@ -331,7 +331,11 @@
     <string name="action_saldopdf1">PDF IDC</string>
     <string name="action_saldopdf2">PDF items</string>
     <string name="action_toothersaldo">Customer/Supplier</string>
-
+    <string name="reminder">Reminder</string>
+    <string name="detailidc">Detail IDC</string>
+    <string name="customer">Customer</string>
+    <string name="supplier">Supplier</string>
+    <string name="pay">Pay</string>
 
 
 

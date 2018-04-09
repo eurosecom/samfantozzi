@@ -267,8 +267,10 @@ public class DgAllEmpsAbsDataModel implements DgAllEmpsAbsIDataModel {
             , String encrypted, @NonNull final String umex) {
 
 
-        Log.d("dokx ", invx.getDok());
-        Log.d("drhx ", invx.getDrh());
+        Log.d("DocPdf dokx ", invx.getDok());
+        Log.d("DocPdf drhx ", invx.getDrh());
+        Log.d("DocPdf ucex ", invx.getUce());
+        Log.d("DocPdf icox ", invx.getIco());
 
         Uri uri = null;
         if (invx.getDrh().equals("31")){
@@ -439,15 +441,16 @@ public class DgAllEmpsAbsDataModel implements DgAllEmpsAbsIDataModel {
             String[] umexxx = umex.split(delims);
 
             String mesx = umexxx[0];
-            String ucex = "31100";
+            String ucex = invx.getUce();
+            String icox = invx.getIco();
 
             //"/ucto/saldo_pdf.php?copern=11&drupoh=1&page=1&h_uce=" + ucex + "&h_ico=0&zandroidu=1&anduct=1&serverx="
             // serverx + "&userhash=" + encrypted + "&rokx=" + allxxx[3] + "&firx=" + allxxx[1] );
 
             uri = Uri.parse("http://" + serverx +
-                    "/ucto/saldo_pdf.php?copern=11&drupoh=1&page=1&h_uce=" + ucex + "&h_ico=0&zandroidu=1&anduct=1"
+                    "/ucto/saldo_pdf.php?copern=11&drupoh=1&page=1&h_uce=" + ucex + "&zandroidu=1&anduct=1"
                     + "&serverx=" + adresx + "&userhash=" + encrypted + "&rokx=" + rokx + "&firx=" + firx
-                    + "&newfntz=1&typ=PDF" );
+                    + "&newfntz=1&typ=PDF&h_ico=" + icox);
 
         }
 
@@ -457,15 +460,16 @@ public class DgAllEmpsAbsDataModel implements DgAllEmpsAbsIDataModel {
             String[] umexxx = umex.split(delims);
 
             String mesx = umexxx[0];
-            String ucex = "32100";
+            String ucex = invx.getUce();
+            String icox = invx.getIco();
 
             //"/ucto/saldo_pdf.php?copern=11&drupoh=1&page=1&h_uce=" + ucex + "&h_ico=0&zandroidu=1&anduct=1&serverx="
             // serverx + "&userhash=" + encrypted + "&rokx=" + allxxx[3] + "&firx=" + allxxx[1] );
 
             uri = Uri.parse("http://" + serverx +
-                    "/ucto/saldo_pdf.php?copern=11&drupoh=1&page=1&h_uce=" + ucex + "&h_ico=0&zandroidu=1&anduct=1"
+                    "/ucto/saldo_pdf.php?copern=11&drupoh=1&page=1&h_uce=" + ucex + "&zandroidu=1&anduct=1"
                     + "&serverx=" + adresx + "&userhash=" + encrypted + "&rokx=" + rokx + "&firx=" + firx
-                    + "&newfntz=1&typ=PDF" );
+                    + "&newfntz=1&typ=PDF&h_ico=" + icox );
 
         }
 
@@ -475,12 +479,13 @@ public class DgAllEmpsAbsDataModel implements DgAllEmpsAbsIDataModel {
             String[] umexxx = umex.split(delims);
 
             String mesx = umexxx[0];
-            String ucex = "31100";
+            String ucex = invx.getUce();
+            String icox = invx.getIco();
 
             uri = Uri.parse("http://" + serverx +
-                    "/ucto/saldo_pdf.php?copern=14&drupoh=4&page=1&h_uce=" + ucex + "&h_ico=0&zandroidu=1&anduct=1"
+                    "/ucto/saldo_pdf.php?copern=14&drupoh=4&page=1&h_uce=" + ucex + "&zandroidu=1&anduct=1"
                     + "&serverx=" + adresx + "&userhash=" + encrypted + "&rokx=" + rokx + "&firx=" + firx
-                    + "&newfntz=1&typ=PDF" );
+                    + "&newfntz=1&typ=PDF&h_ico=" + icox );
 
         }
 
@@ -490,12 +495,13 @@ public class DgAllEmpsAbsDataModel implements DgAllEmpsAbsIDataModel {
             String[] umexxx = umex.split(delims);
 
             String mesx = umexxx[0];
-            String ucex = "32100";
+            String ucex = invx.getUce();
+            String icox = invx.getIco();
 
             uri = Uri.parse("http://" + serverx +
-                    "/ucto/saldo_pdf.php?copern=14&drupoh=4&page=1&h_uce=" + ucex + "&h_ico=0&zandroidu=1&anduct=1"
+                    "/ucto/saldo_pdf.php?copern=14&drupoh=4&page=1&h_uce=" + ucex + "&zandroidu=1&anduct=1"
                     + "&serverx=" + adresx + "&userhash=" + encrypted + "&rokx=" + rokx + "&firx=" + firx
-                    + "&newfntz=1&typ=PDF" );
+                    + "&newfntz=1&typ=PDF&h_ico=" + icox );
 
         }
 

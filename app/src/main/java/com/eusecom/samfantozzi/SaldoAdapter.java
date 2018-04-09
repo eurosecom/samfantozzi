@@ -81,13 +81,13 @@ public class SaldoAdapter extends RecyclerView.Adapter<SaldoAdapter.SaldoViewHol
               if (isLongClick) {
 
                   // View v at position pos is long-clicked.
-                  Log.d("onLongClickListener", mListabsserver.get(pos).getNai());
+                  Log.d("onLongSaldoList", mListabsserver.get(pos).getNai());
                   //getDialog(mListabsserver.get(position).longi, mListabsserver.get(position), holder.mContext);
 
 
               } else {
 
-                  Log.d("onShortClickListener", mListabsserver.get(pos).getNai());
+                  Log.d("onShortSaldoList", mListabsserver.get(pos).getNai());
                   _rxBus.send(mListabsserver.get(pos));
               }
           }

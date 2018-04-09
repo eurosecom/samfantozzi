@@ -26,6 +26,7 @@ public class AccountReportsMySqlHelper {
 				extras.putString("drhx", "41");
 				extras.putString("ucex", "0");
 				extras.putString("dokx", "0");
+				extras.putString("icox", "0");
 				is.putExtras(extras);
 				context.startActivity(is);
 				is.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
@@ -38,6 +39,7 @@ public class AccountReportsMySqlHelper {
 				extras2.putString("drhx", "42");
 				extras2.putString("ucex", "0");
 				extras2.putString("dokx", "0");
+				extras2.putString("icox", "0");
 				is2.putExtras(extras2);
 				context.startActivity(is2);
 				is2.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
@@ -50,6 +52,7 @@ public class AccountReportsMySqlHelper {
 				extras3.putString("drhx", "43");
 				extras3.putString("ucex", "0");
 				extras3.putString("dokx", "0");
+				extras3.putString("icox", "0");
 				is3.putExtras(extras3);
 				context.startActivity(is3);
 				is3.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
@@ -62,6 +65,7 @@ public class AccountReportsMySqlHelper {
 				extras4.putString("drhx", "44");
 				extras4.putString("ucex", "0");
 				extras4.putString("dokx", "0");
+				extras4.putString("icox", "0");
 				is4.putExtras(extras4);
 				context.startActivity(is4);
 				is4.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
@@ -74,6 +78,7 @@ public class AccountReportsMySqlHelper {
 				extras5.putString("drhx", "51");
 				extras5.putString("ucex", "0");
 				extras5.putString("dokx", "0");
+				extras5.putString("icox", "0");
 				is5.putExtras(extras5);
 				context.startActivity(is5);
 				is5.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
@@ -86,6 +91,7 @@ public class AccountReportsMySqlHelper {
 				extras6.putString("drhx", "52");
 				extras6.putString("ucex", "0");
 				extras6.putString("dokx", "0");
+				extras6.putString("icox", "0");
 				is6.putExtras(extras6);
 				context.startActivity(is6);
 				is6.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
@@ -98,6 +104,7 @@ public class AccountReportsMySqlHelper {
 				extras7.putString("drhx", "53");
 				extras7.putString("ucex", "0");
 				extras7.putString("dokx", "0");
+				extras7.putString("icox", "0");
 				is7.putExtras(extras7);
 				context.startActivity(is7);
 				is7.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
@@ -111,6 +118,7 @@ public class AccountReportsMySqlHelper {
 				extras8.putString("drhx", "61");
 				extras8.putString("ucex", "0");
 				extras8.putString("dokx", "0");
+				extras8.putString("icox", "0");
 				is8.putExtras(extras8);
 				context.startActivity(is8);
 				is8.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
@@ -123,6 +131,7 @@ public class AccountReportsMySqlHelper {
 				extras9.putString("drhx", "54");
 				extras9.putString("ucex", "0");
 				extras9.putString("dokx", "0");
+				extras9.putString("icox", "0");
 				is9.putExtras(extras9);
 				context.startActivity(is9);
 				is9.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
@@ -135,58 +144,12 @@ public class AccountReportsMySqlHelper {
 				extras10.putString("drhx", "55");
 				extras10.putString("ucex", "0");
 				extras10.putString("dokx", "0");
+				extras10.putString("icox", "0");
 				is10.putExtras(extras10);
 				context.startActivity(is10);
 				is10.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
 				break;
 
-			case SALIDC0:
-				Intent is11 = new Intent(context, ShowPdfActivity.class);
-				Bundle extras11 = new Bundle();
-				extras11.putString("fromact", "71");
-				extras11.putString("drhx", "71");
-				extras11.putString("ucex", "0");
-				extras11.putString("dokx", "0");
-				is11.putExtras(extras11);
-				context.startActivity(is11);
-				is11.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-				break;
-
-			case SALIDC1:
-				Intent is12 = new Intent(context, ShowPdfActivity.class);
-				Bundle extras12 = new Bundle();
-				extras12.putString("fromact", "72");
-				extras12.putString("drhx", "72");
-				extras12.putString("ucex", "0");
-				extras12.putString("dokx", "0");
-				is12.putExtras(extras12);
-				context.startActivity(is12);
-				is12.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-				break;
-
-			case SALITM0:
-				Intent is14 = new Intent(context, ShowPdfActivity.class);
-				Bundle extras14 = new Bundle();
-				extras14.putString("fromact", "73");
-				extras14.putString("drhx", "73");
-				extras14.putString("ucex", "0");
-				extras14.putString("dokx", "0");
-				is14.putExtras(extras14);
-				context.startActivity(is14);
-				is14.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-				break;
-
-			case SALITM1:
-				Intent is15 = new Intent(context, ShowPdfActivity.class);
-				Bundle extras15 = new Bundle();
-				extras15.putString("fromact", "74");
-				extras15.putString("drhx", "74");
-				extras15.putString("ucex", "0");
-				extras15.putString("dokx", "0");
-				is15.putExtras(extras15);
-				context.startActivity(is15);
-				is15.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-				break;
 		}
 
 	}
