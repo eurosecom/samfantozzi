@@ -29,6 +29,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import com.eusecom.samfantozzi.models.Attendance;
 import com.eusecom.samfantozzi.rxbus.RxBus;
@@ -42,10 +43,12 @@ public class SaldoAdapter extends RecyclerView.Adapter<SaldoAdapter.SaldoViewHol
 
     private List<Invoice> mListabsserver;
     private RxBus _rxBus;
+    private int salico;
 
-    SaldoAdapter(RxBus bus){
+    SaldoAdapter(RxBus bus, int msalico){
 
         _rxBus = bus;
+        salico = msalico;
     }
 
   @Override
@@ -67,8 +70,16 @@ public class SaldoAdapter extends RecyclerView.Adapter<SaldoAdapter.SaldoViewHol
       holder.idcx.setText(mListabsserver.get(position).getIco());
 
       holder.invoicex.setText(mListabsserver.get(position).getFak());
-      holder.invoicex.setVisibility(View.GONE);
-      holder.invoice.setVisibility(View.GONE);
+      holder.datx.setText(mListabsserver.get(position).getDat());
+      holder.dasx.setText(mListabsserver.get(position).getDat());
+      if( salico == 0 )
+      {
+          holder.invoicetype.setVisibility(View.GONE);
+          //holder.invoice.setVisibility(View.GONE);
+      }else {
+          holder.invoicetype.setVisibility(View.VISIBLE);
+          //holder.invoice.setVisibility(View.VISIBLE);
+      }
 
       holder.hodx.setText(mListabsserver.get(position).getHod());
 
@@ -114,10 +125,12 @@ public class SaldoAdapter extends RecyclerView.Adapter<SaldoAdapter.SaldoViewHol
       public ImageView invoice_photo;
       public TextView invoice;
       public TextView invoicex;
+      public RelativeLayout invoicetype;
       public TextView idcx;
       public TextView hodx;
       public TextView paidx;
       public TextView balx;
+      public TextView dat, datx, das, dasx;
       private ClickListener clickListener;
       Context mContext;
 
@@ -128,10 +141,15 @@ public class SaldoAdapter extends RecyclerView.Adapter<SaldoAdapter.SaldoViewHol
         invoice_photo = (ImageView) itemView.findViewById(R.id.invoice_photo);
         invoice = (TextView) itemView.findViewById(R.id.invoice);
         invoicex = (TextView) itemView.findViewById(R.id.invoicex);
+        invoicetype = (RelativeLayout) itemView.findViewById(R.id.invoice_type);
         idcx = (TextView) itemView.findViewById(R.id.idcx);
         hodx = (TextView) itemView.findViewById(R.id.hodx);
         paidx = (TextView) itemView.findViewById(R.id.paidx);
         balx = (TextView) itemView.findViewById(R.id.balx);
+        dat = (TextView) itemView.findViewById(R.id.dat);
+        datx = (TextView) itemView.findViewById(R.id.datx);
+        das = (TextView) itemView.findViewById(R.id.das);
+        dasx = (TextView) itemView.findViewById(R.id.dasx);
         mContext = itemView.getContext();
         itemView.setOnClickListener(this);
         itemView.setOnLongClickListener(this);

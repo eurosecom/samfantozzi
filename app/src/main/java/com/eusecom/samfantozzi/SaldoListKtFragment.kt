@@ -91,8 +91,10 @@ abstract class SaldoListKtFragment : Fragment() {
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
 
+        salico = mSharedPreferences.getString("edidok", "").toInt()
+
         saltype= getSaldoType("xxx")
-        mAdapter = SaldoAdapter(_rxBus)
+        mAdapter = SaldoAdapter(_rxBus, salico)
         mAdapter?.setAbsserver(emptyList())
         mSaldoSearchEngine = SaldoSearchEngine(emptyList())
         // Set up Layout Manager, reverse layout
@@ -101,8 +103,6 @@ abstract class SaldoListKtFragment : Fragment() {
         mManager?.setStackFromEnd(true)
         mRecycler?.setLayoutManager(mManager)
         mRecycler?.setAdapter(mAdapter)
-
-        salico = mSharedPreferences.getString("edidok", "").toInt()
 
     }//end of onActivityCreated
 
@@ -124,7 +124,11 @@ abstract class SaldoListKtFragment : Fragment() {
                         val usnamex = event.nai
 
                         Log.d("SaldoListKtFragment ", usnamex)
-                        getTodoDialog(event)
+                        if( salico == 0 ) {
+                            getTodoDialog(event)
+                        }else{
+                            getTodoIdcDialog(event)
+                        }
 
 
                     }
@@ -228,20 +232,20 @@ abstract class SaldoListKtFragment : Fragment() {
 
     override fun onDestroy() {
         super.onDestroy()
-        Log.d("SaldoListKtFragment ", "onDestroy");
+        //Log.d("SaldoListKtFragment ", "onDestroy");
         unBind()
 
     }
 
     override fun onResume() {
         super.onResume()
-        Log.d("SaldoListKtFragment ", "onResume");
+        //Log.d("SaldoListKtFragment ", "onResume");
         bind()
     }
 
     override fun onPause() {
         super.onPause()
-        Log.d("SaldoListKtFragment ", "onPause");
+        //Log.d("SaldoListKtFragment ", "onPause");
         unBind()
     }
 
@@ -405,6 +409,47 @@ abstract class SaldoListKtFragment : Fragment() {
                     `is2`.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP
                 }
                 3 -> {
+
+                }
+            }
+        }
+        val dialog = builder.create()
+        builder.show()
+
+    }
+
+    fun getTodoIdcDialog(invoice: Invoice) {
+
+        val inflater = LayoutInflater.from(activity)
+        val textenter = inflater.inflate(R.layout.invoice_edit_dialog, null)
+
+        val valuex = textenter.findViewById<View>(R.id.valuex) as TextView
+        valuex.text = invoice.nai
+
+        val builder = AlertDialog.Builder(activity)
+        builder.setView(textenter).setTitle(getString(R.string.invoice) + " " + invoice.fak)
+
+        var item4: CharSequence = ""
+        if( saltype == 0 ){
+            item4=getString(R.string.reminder)
+        }else{
+            item4=getString(R.string.pay)
+        }
+
+        builder.setItems(arrayOf<CharSequence>(getString(R.string.showpdf), item4)
+        ) { dialog, which ->
+            // The 'which' argument contains the index position
+            // of the selected item
+            when (which) {
+                0 -> {
+                    val `is` = Intent(activity, SaldoKtActivity::class.java)
+                    val extras = Bundle()
+                    extras.putInt("saltype", saltype)
+                    extras.putInt("salico", invoice.ico.toInt())
+                    `is`.putExtras(extras)
+                    //startActivity(`is`)
+                }
+                1 -> {
 
                 }
             }

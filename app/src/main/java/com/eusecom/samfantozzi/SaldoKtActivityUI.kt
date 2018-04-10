@@ -87,7 +87,7 @@ class SaldoKtActivityUI (val _rxBus: RxBus, val prefs: SharedPreferences
                             extras.putString("drhx", "71")
                             extras.putString("ucex", prefs.getString("odbuce", ""))
                             extras.putString("dokx", "0")
-                            extras.putString("icox", "0")
+                            extras.putString("icox", salico.toString())
                             `is`.putExtras(extras)
                             context.startActivity(`is`)
                             `is`.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP
@@ -98,7 +98,7 @@ class SaldoKtActivityUI (val _rxBus: RxBus, val prefs: SharedPreferences
                             extras.putString("drhx", "72")
                             extras.putString("ucex", prefs.getString("doduce", ""))
                             extras.putString("dokx", "0")
-                            extras.putString("icox", "0")
+                            extras.putString("icox", salico.toString())
                             `is`.putExtras(extras)
                             context.startActivity(`is`)
                             `is`.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP
@@ -113,7 +113,7 @@ class SaldoKtActivityUI (val _rxBus: RxBus, val prefs: SharedPreferences
                             extras.putString("drhx", "73")
                             extras.putString("ucex", prefs.getString("odbuce", ""))
                             extras.putString("dokx", "0")
-                            extras.putString("icox", "0")
+                            extras.putString("icox", salico.toString())
                             `is`.putExtras(extras)
                             context.startActivity(`is`)
                             `is`.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP
@@ -124,7 +124,7 @@ class SaldoKtActivityUI (val _rxBus: RxBus, val prefs: SharedPreferences
                             extras.putString("drhx", "74")
                             extras.putString("ucex", prefs.getString("doduce", ""))
                             extras.putString("dokx", "0")
-                            extras.putString("icox", "0")
+                            extras.putString("icox", salico.toString())
                             `is`.putExtras(extras)
                             context.startActivity(`is`)
                             `is`.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP
