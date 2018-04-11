@@ -505,6 +505,50 @@ public class DgAllEmpsAbsDataModel implements DgAllEmpsAbsIDataModel {
 
         }
 
+        if (invx.getDrh().equals("81")) {
+            String drupoh = "2";
+            String delims = "[.]+";
+            String[] umexxx = umex.split(delims);
+
+            String mesx = umexxx[0];
+            String ucex = invx.getUce();
+            String icox = invx.getIco();
+
+            //za ico
+            //window.open('../ucto/upomienka.php?copern=20&cislo_strana=' + cislo_strana + '&cislo_ico=' + cislo_ico +  '&cislo_fak=' + cislo_fak +
+            //                '&h_pen=' + h_pen +  '&h_ppe=' + h_ppe +
+            //                '&h_spl=0&h_dsp=10.04.2018&drupoh=1&cinnost=1&h_uce=31100&h_ico=44551142&h_obd=0',
+            //        '_blank', 'width=800, height=900, top=0, left=10, status=yes, resizable=yes, scrollbars=yes'  );
+
+            //za fak
+            //window.open('../ucto/upomienka.php?copern=10&cislo_strana=' + cislo_strana + '&cislo_ico=' + cislo_ico +  '&cislo_fak=' + cislo_fak +
+            //                '&h_pen=' + h_pen +  '&h_ppe=' + h_ppe +
+            //                '&h_spl=0&h_dsp=10.04.2018&drupoh=1&cinnost=1&h_uce=31100&h_ico=44551142&h_obd=0',
+            //        '_blank', 'width=800, height=900, top=0, left=10, status=yes, resizable=yes, scrollbars=yes'  );
+
+            uri = Uri.parse("http://" + serverx +
+                    "/ucto/upomienka.php?copern=20&drupoh=1&page=1&h_pen=0&h_ppe=0&h_uce=" + ucex + "&zandroidu=1&anduct=1"
+                    + "&serverx=" + adresx + "&userhash=" + encrypted + "&rokx=" + rokx + "&firx=" + firx
+                    + "&newfntz=1&typ=PDF&h_ico=" + icox + "&cislo_ico=" + icox + "&cislo_fak=0&cislo_strana=1" );
+
+        }
+
+        if (invx.getDrh().equals("82")) {
+            String drupoh = "2";
+            String delims = "[.]+";
+            String[] umexxx = umex.split(delims);
+
+            String mesx = umexxx[0];
+            String ucex = invx.getUce();
+            String icox = invx.getIco();
+            String dokx = invx.getDok();
+
+            uri = Uri.parse("http://" + serverx +
+                    "/ucto/upomienka.php?copern=10&drupoh=1&page=1&h_pen=0&h_ppe=0&h_uce=" + ucex + "&zandroidu=1&anduct=1"
+                    + "&serverx=" + adresx + "&userhash=" + encrypted + "&rokx=" + rokx + "&firx=" + firx
+                    + "&newfntz=1&typ=PDF&h_ico=" + icox + "&cislo_ico=" + icox + "&cislo_fak=" + dokx + "&cislo_strana=1" );
+
+        }
         return Observable.just(uri);
 
     }

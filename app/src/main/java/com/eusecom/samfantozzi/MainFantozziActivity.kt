@@ -269,21 +269,53 @@ class MainFantozziActivity : AppCompatActivity() {
     }
 
     fun navigateToSaldoCustomerKt(){
-        val `is` = Intent(this, SaldoKtActivity::class.java)
-        val extras = Bundle()
-        extras.putInt("saltype", 0)
-        extras.putInt("salico", 0)
-        `is`.putExtras(extras)
-        startActivity(`is`)
+
+        val usuid = prefs.getString("usuid", "")
+        if (usuid == "0") {
+            showDonotloginAlert()
+        }else {
+
+            val usfir = prefs.getString("fir", "")
+            if (usfir == "") {
+                showDonotcompanyAlert()
+            }else {
+
+                val `is` = Intent(this, SaldoKtActivity::class.java)
+                val extras = Bundle()
+                extras.putInt("saltype", 0)
+                extras.putInt("salico", 0)
+                `is`.putExtras(extras)
+                startActivity(`is`)
+            }
+
+        }
+
+
     }
 
     fun navigateToSaldoSupplierKt(){
-        val `is` = Intent(this, SaldoKtActivity::class.java)
-        val extras = Bundle()
-        extras.putInt("saltype", 1)
-        extras.putInt("salico", 0)
-        `is`.putExtras(extras)
-        startActivity(`is`)
+
+
+        val usuid = prefs.getString("usuid", "")
+        if (usuid == "0") {
+            showDonotloginAlert()
+        }else {
+
+            val usfir = prefs.getString("fir", "")
+            if (usfir == "") {
+                showDonotcompanyAlert()
+            }else {
+
+                val `is` = Intent(this, SaldoKtActivity::class.java)
+                val extras = Bundle()
+                extras.putInt("saltype", 1)
+                extras.putInt("salico", 0)
+                `is`.putExtras(extras)
+                startActivity(`is`)
+            }
+
+        }
+
     }
 
     fun navigateToSetMonth(){

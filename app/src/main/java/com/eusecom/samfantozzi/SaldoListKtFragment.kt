@@ -409,7 +409,18 @@ abstract class SaldoListKtFragment : Fragment() {
                     `is2`.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP
                 }
                 3 -> {
-
+                    if( saltype == 0 ) {
+                        val `is2` = Intent(activity, ShowPdfActivity::class.java)
+                        val extras2 = Bundle()
+                        extras2.putString("fromact", "81")
+                        extras2.putString("drhx", "81")
+                        extras2.putString("ucex", invoice.uce)
+                        extras2.putString("dokx", "0")
+                        extras2.putString("icox", invoice.ico)
+                        `is2`.putExtras(extras2)
+                        startActivity(`is2`)
+                        `is2`.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP
+                    }
                 }
             }
         }
@@ -430,13 +441,16 @@ abstract class SaldoListKtFragment : Fragment() {
         builder.setView(textenter).setTitle(getString(R.string.invoice) + " " + invoice.fak)
 
         var item4: CharSequence = ""
+        var item5: CharSequence = ""
         if( saltype == 0 ){
             item4=getString(R.string.reminder)
+            item5=getString(R.string.smsreminder)
         }else{
             item4=getString(R.string.pay)
+            item5=getString(R.string.xmlpay)
         }
 
-        builder.setItems(arrayOf<CharSequence>(getString(R.string.showpdf), item4)
+        builder.setItems(arrayOf<CharSequence>(getString(R.string.pdfdoc), item4, item5 )
         ) { dialog, which ->
             // The 'which' argument contains the index position
             // of the selected item
@@ -450,6 +464,21 @@ abstract class SaldoListKtFragment : Fragment() {
                     //startActivity(`is`)
                 }
                 1 -> {
+
+                    if( saltype == 0 ) {
+                        val `is2` = Intent(activity, ShowPdfActivity::class.java)
+                        val extras2 = Bundle()
+                        extras2.putString("fromact", "82")
+                        extras2.putString("drhx", "82")
+                        extras2.putString("ucex", invoice.uce)
+                        extras2.putString("dokx", invoice.fak)
+                        extras2.putString("icox", invoice.ico)
+                        `is2`.putExtras(extras2)
+                        startActivity(`is2`)
+                        `is2`.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP
+                    }
+                }
+                2 -> {
 
                 }
             }
