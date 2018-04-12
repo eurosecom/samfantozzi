@@ -48,6 +48,8 @@ public class NewIdcActivity extends BaseListActivity {
     EditText inputPsc;
     EditText inputTel;
     EditText inputMail;
+    EditText inputIb1;
+    EditText inputSw1;
     Button _btnSave;
     Button _btnTel;
 
@@ -96,6 +98,8 @@ public class NewIdcActivity extends BaseListActivity {
         inputPsc = (EditText) findViewById(R.id.inputPsc);
         inputTel = (EditText) findViewById(R.id.inputTel);
         inputMail = (EditText) findViewById(R.id.inputMail);
+        inputIb1 = (EditText) findViewById(R.id.inputIb1);
+        inputSw1 = (EditText) findViewById(R.id.inputSw1);
 
 
         // save button
@@ -249,6 +253,8 @@ public class NewIdcActivity extends BaseListActivity {
                             realminvoice.setDn1(inputPsc.getText().toString());
                             realminvoice.setDn2(inputMes.getText().toString());
                             realminvoice.setPoz(inputTel.getText().toString());
+                            realminvoice.setDas(inputIb1.getText().toString());
+                            realminvoice.setDaz(inputSw1.getText().toString());
                             realminvoice.setFak("0");
                             realminvoice.setKto(inputMail.getText().toString());
                             realminvoice.setPoh("0");
@@ -274,6 +280,8 @@ public class NewIdcActivity extends BaseListActivity {
                             realminvoice.setDn1(inputPsc.getText().toString());
                             realminvoice.setDn2(inputMes.getText().toString());
                             realminvoice.setPoz(inputTel.getText().toString());
+                            realminvoice.setDas(inputIb1.getText().toString());
+                            realminvoice.setDaz(inputSw1.getText().toString());
                             realminvoice.setFak("0");
                             realminvoice.setKto(inputMail.getText().toString());
                             realminvoice.setPoh("0");
@@ -301,6 +309,8 @@ public class NewIdcActivity extends BaseListActivity {
            inputMes.setText(idc.get(0).getMes());
            inputTel.setText(idc.get(0).getTel());
            inputMail.setText(idc.get(0).getEmail());
+           inputIb1.setText(idc.get(0).getIb1());
+           inputSw1.setText(idc.get(0).getSw1());
         }
         hideProgressDialog();
     }

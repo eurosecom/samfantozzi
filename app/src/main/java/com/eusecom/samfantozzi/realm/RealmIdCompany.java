@@ -15,6 +15,8 @@ public class RealmIdCompany extends RealmObject {
     private String logprx;
     private String datm;
     private String email;
+    private String ib1;
+    private String sw1;
 
     public String getIco() {
         return ico;
@@ -102,6 +104,22 @@ public class RealmIdCompany extends RealmObject {
 
     public void setEmail(String email) {
         this.email = email;
+    }
+
+    public String getIb1() {
+        return ib1;
+    }
+
+    public void setIb1(String ib1) {
+        this.ib1 = ib1;
+    }
+
+    public String getSw1() {
+        return sw1;
+    }
+
+    public void setSw1(String sw1) {
+        this.sw1 = sw1;
     }
 }
 

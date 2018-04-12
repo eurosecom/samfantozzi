@@ -204,7 +204,7 @@ public class DgAllEmpsAbsDataModel implements DgAllEmpsAbsIDataModel {
 
         List<IdCompanyKt> myidc = new ArrayList<>();
         IdCompanyKt newidc = new IdCompanyKt("31414466", "", "", "Firma xyz", "ulixyz",
-                "Mesto", "", "", true, "", "");
+                "Mesto", "", "", true, "", "", "", "");
         myidc.add(newidc);
 
         //Log.d("userhash ", userhash);
@@ -575,7 +575,7 @@ public class DgAllEmpsAbsDataModel implements DgAllEmpsAbsIDataModel {
 
         List<IdCompanyKt> myidc = new ArrayList<>();
         IdCompanyKt newidc = new IdCompanyKt("31414466", "", "", "Firma xyz", "ulixyz",
-                "Mesto", "", "", true, "", "");
+                "Mesto", "", "", true, "", "", "", "");
         myidc.add(newidc);
 
         //Log.d("userhash ", userhash);
@@ -816,7 +816,7 @@ public class DgAllEmpsAbsDataModel implements DgAllEmpsAbsIDataModel {
 
             IdCompanyKt account = new IdCompanyKt(b.getIco(), b.getDic(), b.getIcd(), "rm " + b.getDatm() + " " + b.getNai()
                     ,b.getUli(), b.getMes(), b.getPsc()
-                    ,b.getTel(), true, b.getDatm(), b.getEmail() );
+                    ,b.getTel(), true, b.getDatm(), b.getEmail(), b.getIb1(), b.getSw1() );
             myaccounts.add(account);
 
             long unixTime = System.currentTimeMillis() / 1000L;
@@ -1060,7 +1060,7 @@ public class DgAllEmpsAbsDataModel implements DgAllEmpsAbsIDataModel {
             IdCompanyKt newidc = new IdCompanyKt(invoices.getIco(), invoices.getZk1(), invoices.getZk0()
                     , invoices.getNai(), invoices.getZk2(),
                     invoices.getDn2(), invoices.getDn1(), invoices.getPoz()
-                    , true, "", invoices.getKto());
+                    , true, "", invoices.getKto(), "", "");
             companies.add(newidc);
 
 
