@@ -24,6 +24,7 @@ import com.eusecom.samfantozzi.SaldoListKtFragment;
 import com.eusecom.samfantozzi.ShowPdfActivity;
 import com.eusecom.samfantozzi.SupplierListActivity;
 import com.eusecom.samfantozzi.SupplierListFragment;
+import com.eusecom.samfantozzi.TaxPaymentsActivity;
 import com.eusecom.samfantozzi.TypesKtActivity;
 import com.eusecom.samfantozzi.dagger.modules.ApplicationModule;
 import com.eusecom.samfantozzi.dagger.modules.DgAeaModule;
@@ -59,6 +60,7 @@ public interface DgAeaComponent {
   void inject(BankMvpActivity bankMvptActivity);
   void inject(SaldoKtActivity saldoKtActivity);
   void inject(SaldoListKtFragment saldoListKtFragment);
+  void inject(TaxPaymentsActivity taxPaymentsActivity);
 
 
 

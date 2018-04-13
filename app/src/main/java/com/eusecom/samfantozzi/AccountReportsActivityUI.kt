@@ -192,7 +192,13 @@ class AccountReportsActivityUI (val mReport: String, val prefs: SharedPreference
                 button() {
                     id = R.id.rep14
                     textResource = R.string.popisbtnplatbystatu
-                    onClick { /* Todo on click */ }
+                    onClick {
+                        val `is` = Intent(context, TaxPaymentsActivity::class.java)
+                        val extras = Bundle()
+                        extras.putString("fromact", "1")
+                        `is`.putExtras(extras)
+                        context.startActivity(`is`)
+                    }
                 }.lparams {
                     width = matchParent
                     height = wrapContent

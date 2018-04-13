@@ -271,6 +271,7 @@ public class DgAllEmpsAbsDataModel implements DgAllEmpsAbsIDataModel {
         Log.d("DocPdf drhx ", invx.getDrh());
         Log.d("DocPdf ucex ", invx.getUce());
         Log.d("DocPdf icox ", invx.getIco());
+        System.out.println("DocPdf userhash " + encrypted);
 
         Uri uri = null;
         if (invx.getDrh().equals("31")){

@@ -26,6 +26,7 @@
         <activity android:name=".ChooseCompanyActivity"/>
         <activity android:name=".ChooseMonthActivity"/>
         <activity android:name=".ChooseAccountActivity"/>
+        <activity android:name=".TaxPaymentsActivity"/>
         <activity android:name=".SupplierListActivity"/>
         <activity android:name=".InvoiceListKtActivity"/>
         <activity android:name=".CashListKtActivity"/>

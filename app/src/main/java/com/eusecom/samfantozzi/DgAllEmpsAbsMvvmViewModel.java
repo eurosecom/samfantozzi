@@ -362,6 +362,7 @@ public class DgAllEmpsAbsMvvmViewModel {
         String userx = "Nick/test2345" + "/ID/1001" + "/PSW/cp41cs" + "/Doklad/" + ds;
 
         String userxplus = userx + "/" + usuidx;
+        System.out.println("DocPdf userxplus " + userxplus);
 
         encrypted = "";
 
