@@ -31,26 +31,9 @@ class TaxPaymentsAdapter(var mList: MutableList<Account>, val listener: (Account
 
         fun bindItem(account: Account, listener: (Account) -> Unit) = with(itemView) {
 
-            accName?.setText(account.accname)
-            //if(account.logprx) {
-            //    accName?.setText(account.accname + " true")
-            //}else{
-            //    accName?.setText(account.accname + " false")
-            //}
-            accNumber?.setText(account.accnumber)
-            Picasso.with(itemView.context).load(R.drawable.ic_call_made_black_24dp).resize(120, 120).into(accImage)
-            if( account.acctype.equals("2")){
-                Picasso.with(itemView.context).load(R.drawable.ic_call_received_black_24dp).resize(120, 120).into(accImage)
-            }
-            if( account.acctype.equals("3")){
-                Picasso.with(itemView.context).load(R.drawable.ic_local_atm_black_24dp).resize(120, 120).into(accImage)
-            }
-            if( account.acctype.equals("4")){
-                Picasso.with(itemView.context).load(R.drawable.ic_account_balance_black_24dp).resize(120, 120).into(accImage)
-            }
-            if( account.acctype.equals("5")){
-                Picasso.with(itemView.context).load(R.drawable.ic_insert_drive_file_black_24dp).resize(120, 120).into(accImage)
-            }
+            accName?.setText(account.accnumber + " " + account.accname)
+            accNumber?.setText(account.accdoc)
+            Picasso.with(itemView.context).load(R.drawable.ic_check_circle_black_24dp).resize(120, 120).into(accImage)
             itemView.setOnClickListener{listener(account)}
 
         }

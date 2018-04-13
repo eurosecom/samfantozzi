@@ -49,7 +49,7 @@ class TaxPaymentsItemUI : AnkoComponent<Context> {
             }.lparams {
                 width = wrapContent
                 height = wrapContent
-                rightOf(R.id.accimg)
+                alignParentEnd()
                 below(R.id.accname)
 
         }

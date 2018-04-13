@@ -19,7 +19,7 @@ import rx.Observable
  * github https://github.com/prajakta05/recyclerviewKotlin
  */
 
-class ChooseAccountActivity : AppCompatActivity() {
+class ChooseAccountActivity : BaseListActivity() {
 
     @Inject
     lateinit var prefs: SharedPreferences
@@ -75,10 +75,15 @@ class ChooseAccountActivity : AppCompatActivity() {
 
     private fun bind(adapter: ChooseAccountAdapter) {
 
+            showProgressDialog()
             mSubscription.add(mViewModel.getMyAccountsFromSqlServer(fromact)
                     .subscribeOn(Schedulers.computation())
                     .observeOn(rx.android.schedulers.AndroidSchedulers.mainThread())
-                    .doOnError { throwable -> Log.e("ChooseAccountAktivity ", "Error Throwable " + throwable.message) }
+                    .doOnError {
+                        throwable ->
+                        Log.e("ChooseAccountAktivity ", "Error Throwable " + throwable.message)
+                        hideProgressDialog()
+                    }
                     .onErrorResumeNext({ throwable -> Observable.empty() })
                     .subscribe({ it -> setAccountsFromServer(it, adapter) }))
 
@@ -90,6 +95,7 @@ class ChooseAccountActivity : AppCompatActivity() {
 
         //toast("${accounts.get(0).accname } invoice0")
         adapter.setdata(accounts)
+        hideProgressDialog()
     }
 
     override fun onDestroy() {
