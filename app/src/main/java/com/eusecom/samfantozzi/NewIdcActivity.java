@@ -17,6 +17,8 @@ import android.widget.Toast;
 import com.eusecom.samfantozzi.realm.RealmInvoice;
 import com.jakewharton.rxbinding.view.RxView;
 
+import java.io.UnsupportedEncodingException;
+import java.net.URLEncoder;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
@@ -183,11 +185,12 @@ public class NewIdcActivity extends BaseListActivity {
 
         if(newx.equals("0")) {
 
+            showProgressDialog();
             mSubscription.add(mViewModel.getMyObservableIdModelCompany()
                     .subscribeOn(Schedulers.computation())
                     .observeOn(rx.android.schedulers.AndroidSchedulers.mainThread())
                     .doOnError(throwable -> { Log.e(TAG, "Error NewIdcActivity " + throwable.getMessage());
-                        showProgressDialog();
+                        hideProgressDialog();
                         Toast.makeText(this, "Server not connected", Toast.LENGTH_SHORT).show();
                     })
                     .onErrorResumeNext(throwable -> empty())

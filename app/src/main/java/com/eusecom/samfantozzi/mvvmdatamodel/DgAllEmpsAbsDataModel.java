@@ -910,6 +910,7 @@ public class DgAllEmpsAbsDataModel implements DgAllEmpsAbsIDataModel {
         System.out.println("invxstring vyb_rok " + vyb_rok);
         System.out.println("invxstring drh " + drh);
         System.out.println("invxstring " + invxstring);
+        System.out.println("invxstring edidok" + edidok);
 
         //POST API
         return mAbsServerService.saveInvoiceToMysqlPost(userhash, userid, fromfir, vyb_rok, drh, invxstring, edidok);
