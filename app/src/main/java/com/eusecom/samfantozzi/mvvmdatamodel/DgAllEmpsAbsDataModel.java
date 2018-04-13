@@ -1118,6 +1118,15 @@ public class DgAllEmpsAbsDataModel implements DgAllEmpsAbsIDataModel {
     }
 
 
+    //recyclerview method for TaxPaymentsActivity
+    @Override
+    public Observable<List<Account>> getTaxPayFromMysqlServer(String userhash, String userid, String fromfir
+            , String vyb_rok, String drh, String serverx) {
+
+        return mAbsServerService.getTaxPayFromSqlServer(userhash, userid, fromfir, vyb_rok, drh, serverx
+                , "1", "1", "1");
+
+    }
 
 
 }

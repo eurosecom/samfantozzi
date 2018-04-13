@@ -149,4 +149,9 @@ public interface DgAllEmpsAbsIDataModel {
     public Observable<List<Invoice>> getSaldoFromSql(String userhash, String userid, String fromfir
             , String vyb_rok, int drh, String ucex, String ucto, int salico);
 
+    //recyclerview method for TaxPaymentsActivity
+    @NonNull
+    public Observable<List<Account>> getTaxPayFromMysqlServer(String userhash, String userid, String fromfir
+            , String vyb_rok, String drh, String serverx);
+
 }

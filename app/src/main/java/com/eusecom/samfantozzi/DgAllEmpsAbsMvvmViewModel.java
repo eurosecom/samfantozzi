@@ -1051,4 +1051,39 @@ public class DgAllEmpsAbsMvvmViewModel {
     }
     //end get get saldo from MySql server
 
+
+    //recyclerview method for TaxPaymentsActivity
+
+    //get taxpayments from MySql server
+    public Observable<List<Account>> getMyTaxPaymentsFromSqlServer(String drh) {
+
+        String firx = mSharedPreferences.getString("fir", "");
+        String rokx = mSharedPreferences.getString("rok", "");
+        String serverx = mSharedPreferences.getString("servername", "");
+        String adresx = mSharedPreferences.getString("servername", "") + "/androiducto";
+        String usuidx = mSharedPreferences.getString("usuid", "");
+        String umex = mSharedPreferences.getString("ume", "");
+
+        Random r = new Random();
+        double d = -10.0 + r.nextDouble() * 20.0;
+        String ds = String.valueOf(d);
+
+        String userx = "Nick/test2345" + "/ID/1001" + "/PSW/cp41cs" + "/Doklad/" + ds;
+
+        String userxplus = userx + "/" + usuidx;
+        System.out.println("DocPdf userxplus " + userxplus);
+
+        encrypted = "";
+
+        try {
+            encrypted = mMcrypt.bytesToHex( mMcrypt.encrypt(userxplus) );
+        } catch (Exception e1) {
+            // TODO Auto-generated catch block
+            e1.printStackTrace();
+        }
+
+        return mDataModel.getTaxPayFromMysqlServer(encrypted, ds, firx, rokx, drh, adresx);
+    }
+    //end get taxpayments from MySql server
+
 }

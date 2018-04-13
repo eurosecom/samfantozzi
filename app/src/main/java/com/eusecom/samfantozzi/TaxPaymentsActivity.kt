@@ -56,7 +56,7 @@ class TaxPaymentsActivity : AppCompatActivity() {
 
     private fun bind(adapter: TaxPaymentsAdapter) {
 
-            mSubscription.add(mViewModel.getMyAccountsFromSqlServer(fromact)
+            mSubscription.add(mViewModel.getMyTaxPaymentsFromSqlServer(fromact)
                     .subscribeOn(Schedulers.computation())
                     .observeOn(rx.android.schedulers.AndroidSchedulers.mainThread())
                     .doOnError { throwable -> Log.e("ChooseAccountAktivity ", "Error Throwable " + throwable.message) }

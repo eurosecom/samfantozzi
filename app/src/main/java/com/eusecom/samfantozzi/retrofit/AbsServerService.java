@@ -117,4 +117,12 @@ public interface AbsServerService {
             , @Query("vyb_rok") String vyb_rok, @Query("drh") int drh
             , @Query("ucex") String ucex, @Query("ucto") String ucto, @Query("salico") int salico);
 
+    //@GET("/androidfantozzi/get_accounttypes.php")
+    @GET("/ucto/platbyju.php")
+    Observable<List<Account>> getTaxPayFromSqlServer(@Query("userhash") String userhash
+            , @Query("userid") String userid, @Query("fromfir") String fromfir
+            , @Query("vyb_rok") String vyb_rok, @Query("drh") String drh, @Query("serverx") String serverx
+            , @Query("zandroidu") String zandroidu, @Query("anduct") String anduct
+            , @Query("newfntz") String newfntz );
+
 }
