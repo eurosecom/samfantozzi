@@ -252,6 +252,8 @@ public class EmailPasswordActivity extends AppCompatActivity implements
 
     private void onAuthSuccessCreate(FirebaseUser user) {
 
+        String username = usernameFromEmail(user.getEmail());
+
         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(getBaseContext());
         SharedPreferences.Editor editor = prefs.edit();
 
@@ -260,13 +262,13 @@ public class EmailPasswordActivity extends AppCompatActivity implements
         editor.putString("usico", "0").apply();
         editor.putString("usosc", "0").apply();
         editor.putString("usatw", "0").apply();
-        editor.putString("usuid", "0").apply();
+        editor.putString("usuid", user.getUid()).apply();
+        editor.putString("usname", username).apply();
         editor.putString("fir", "").apply();
         editor.putString("firnaz", "").apply();
 
         editor.commit();
-
-        String username = usernameFromEmail(user.getEmail());
+        
         // Write new user
         writeNewUser(user.getUid(), username, user.getEmail(), "0", "0", "0", "0");
 
