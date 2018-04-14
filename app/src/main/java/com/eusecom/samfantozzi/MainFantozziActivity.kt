@@ -546,13 +546,14 @@ class MainFantozziActivity : AppCompatActivity() {
                 " " + prefs.getString("firnaz", ""))
 
         val usermailx = prefs.getString("username", "")
+        val usernamex = prefs.getString("usname", "")
         val usuid = prefs.getString("usuid", "")
 
         if (usuid == "0") {
             textView.setText(R.string.signed_out)
             headerProfil.withEmail(R.string.signed_out)
         } else {
-            textView.setText(getString(R.string.emailpassword_status_fmt, usermailx))
+            textView.setText(getString(R.string.username_status_fmt, usernamex))
             headerProfil.withEmail(usermailx)
         }
 

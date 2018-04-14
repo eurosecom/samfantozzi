@@ -55,6 +55,7 @@
     <string name="atwork">You are at work now.</string>
     <string name="firebase_status_fmt" translatable="false">Firebase User: %s</string>
     <string name="emailpassword_status_fmt">Email User: %s</string>
+    <string name="username_status_fmt">User name: %s</string>
 
     //settings
     <string name="servername_title">Server name.</string>
