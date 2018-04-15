@@ -268,7 +268,7 @@ public class EmailPasswordActivity extends AppCompatActivity implements
         editor.putString("firnaz", "").apply();
 
         editor.commit();
-        
+
         // Write new user
         writeNewUser(user.getUid(), username, user.getEmail(), "0", "0", "0", "0");
 

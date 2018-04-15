@@ -78,12 +78,6 @@ class ChooseCompanyActivity : AppCompatActivity() {
 
     private fun setCompanies(companies: List<CompanyKt>) {
 
-        //toast("${companies.get(0).naz } company0")
-
-        //val myCompanies : MutableList<CompanyKt> = arrayListOf()
-        //myCompanies.add(CompanyKt("301","JUCTO 2017", "2017", R.drawable.donut1))
-        //myCompanies.add(CompanyKt("302","PUCTO 2017", "2017", R.drawable.kitkat))
-        hideProgressBar()
         recyclerView.adapter = ChooseCompanyAdapter(companies){
             toast("${it.xcf + " " + it.naz + " " + it.rok } Clicked")
             val editor = prefs.edit()
@@ -113,7 +107,7 @@ class ChooseCompanyActivity : AppCompatActivity() {
             setResult(101, i)
             finish()
         }
-
+        hideProgressBar()
     }
 
     protected fun showProgressBar() {

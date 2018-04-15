@@ -246,7 +246,7 @@ class MainFantozziActivity : AppCompatActivity() {
 
     fun navigateToGetCompany(){
         val usuid = prefs.getString("usuid", "")
-        if (usuid == "0") {
+        if (usuid == "" || usuid == "0") {
             showDonotloginAlert()
         }else {
             startActivityForResult(intentFor<ChooseCompanyActivity>(), 101)
@@ -271,12 +271,12 @@ class MainFantozziActivity : AppCompatActivity() {
     fun navigateToSaldoCustomerKt(){
 
         val usuid = prefs.getString("usuid", "")
-        if (usuid == "0") {
+        if (usuid == "" || usuid == "0") {
             showDonotloginAlert()
         }else {
 
             val usfir = prefs.getString("fir", "")
-            if (usfir == "") {
+            if ( usfir == "" || usfir == "0" ) {
                 showDonotcompanyAlert()
             }else {
 
@@ -297,12 +297,12 @@ class MainFantozziActivity : AppCompatActivity() {
 
 
         val usuid = prefs.getString("usuid", "")
-        if (usuid == "0") {
+        if (usuid == "" || usuid == "0") {
             showDonotloginAlert()
         }else {
 
             val usfir = prefs.getString("fir", "")
-            if (usfir == "") {
+            if ( usfir == "" || usfir == "0" ) {
                 showDonotcompanyAlert()
             }else {
 
@@ -326,12 +326,12 @@ class MainFantozziActivity : AppCompatActivity() {
     fun navigateToIdCompanies(){
 
         val usuid = prefs.getString("usuid", "")
-        if (usuid == "0") {
+        if (usuid == "" || usuid == "0") {
             showDonotloginAlert()
         }else {
 
             val usfir = prefs.getString("fir", "")
-            if (usfir == "") {
+            if ( usfir == "" || usfir == "0" ) {
                 showDonotcompanyAlert()
             }else {
 
@@ -361,12 +361,12 @@ class MainFantozziActivity : AppCompatActivity() {
     fun navigateToSupplierList(){
 
         val usuid = prefs.getString("usuid", "")
-        if (usuid == "0") {
+        if (usuid == "" || usuid == "0") {
             showDonotloginAlert()
         }else {
 
             val usfir = prefs.getString("fir", "")
-            if (usfir == "") {
+            if ( usfir == "" || usfir == "0" ) {
                 showDonotcompanyAlert()
             }else {
                 val intent = Intent(this, SupplierListActivity::class.java)
@@ -380,12 +380,12 @@ class MainFantozziActivity : AppCompatActivity() {
     fun navigateToCashListKt(){
 
         val usuid = prefs.getString("usuid", "")
-        if (usuid == "0") {
+        if (usuid == "" || usuid == "0") {
             showDonotloginAlert()
         }else {
 
             val usfir = prefs.getString("fir", "")
-            if (usfir == "") {
+            if ( usfir == "" || usfir == "0" ) {
                 showDonotcompanyAlert()
             }else {
                 startActivity<CashListKtActivity>()
@@ -398,12 +398,12 @@ class MainFantozziActivity : AppCompatActivity() {
     fun navigateToInvoiceListKt(){
 
         val usuid = prefs.getString("usuid", "")
-        if (usuid == "0") {
+        if (usuid == "" || usuid == "0") {
             showDonotcompanyAlert()
         }else {
 
             val usfir = prefs.getString("fir", "")
-            if (usfir == "") {
+            if ( usfir == "" || usfir == "0" ) {
                 showDonotcompanyAlert()
             }else {
                 startActivity<InvoiceListKtActivity>()
@@ -416,12 +416,12 @@ class MainFantozziActivity : AppCompatActivity() {
     fun navigateToBankMvpList(){
 
         val usuid = prefs.getString("usuid", "")
-        if (usuid == "0") {
+        if (usuid == "" || usuid == "0") {
             showDonotcompanyAlert()
         }else {
 
             val usfir = prefs.getString("fir", "")
-            if (usfir == "") {
+            if ( usfir == "" || usfir == "0" ) {
                 showDonotcompanyAlert()
             }else {
                 startActivity<BankMvpActivity>()
@@ -434,12 +434,12 @@ class MainFantozziActivity : AppCompatActivity() {
     fun navigateToAccountReportsKt(){
 
         val usuid = prefs.getString("usuid", "")
-        if (usuid == "0") {
+        if (usuid == "" || usuid == "0") {
             showDonotcompanyAlert()
         }else {
 
             val usfir = prefs.getString("fir", "")
-            if (usfir == "") {
+            if ( usfir == "" || usfir == "0" ) {
                 showDonotcompanyAlert()
             }else {
 
@@ -468,12 +468,12 @@ class MainFantozziActivity : AppCompatActivity() {
     fun navigateToTaxReportsKt(){
 
         val usuid = prefs.getString("usuid", "")
-        if (usuid == "0") {
+        if (usuid == "" || usuid == "0") {
             showDonotcompanyAlert()
         }else {
 
             val usfir = prefs.getString("fir", "")
-            if (usfir == "") {
+            if ( usfir == "" || usfir == "0" ) {
                 showDonotcompanyAlert()
             }else {
                 val `is` = Intent(this, AccountReportsActivity::class.java)
@@ -491,12 +491,12 @@ class MainFantozziActivity : AppCompatActivity() {
     fun navigateToMixedReportsKt(){
 
         val usuid = prefs.getString("usuid", "")
-        if (usuid == "0") {
+        if (usuid == "" || usuid == "0") {
             showDonotcompanyAlert()
         }else {
 
             val usfir = prefs.getString("fir", "")
-            if (usfir == "") {
+            if ( usfir == "" || usfir == "0" ) {
                 showDonotcompanyAlert()
             }else {
                 val `is` = Intent(this, AccountReportsActivity::class.java)
@@ -549,7 +549,7 @@ class MainFantozziActivity : AppCompatActivity() {
         val usernamex = prefs.getString("usname", "")
         val usuid = prefs.getString("usuid", "")
 
-        if (usuid == "0") {
+        if (usuid == "" || usuid == "0") {
             textView.setText(R.string.signed_out)
             headerProfil.withEmail(R.string.signed_out)
         } else {
