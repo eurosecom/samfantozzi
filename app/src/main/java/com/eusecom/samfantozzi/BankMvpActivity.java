@@ -18,18 +18,22 @@
 
 package com.eusecom.samfantozzi;
 
+import android.app.SearchManager;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.FloatingActionButton;
+import android.support.v4.view.MenuItemCompat;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.SearchView;
 import android.view.LayoutInflater;
 import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
@@ -61,6 +65,12 @@ public class BankMvpActivity extends AppCompatActivity implements BankMvpView, A
     AbsServerService mAbsServerService;
     @Inject
     SharedPreferences mSharedPreferences;
+
+    //searchview
+    private SearchView searchView;
+    private SearchView.OnQueryTextListener onQueryTextListener = null;
+    SearchManager searchManager;
+    protected BankItemSearchEngine mBankItemSearchEngine;
 
     @Override protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -139,6 +149,7 @@ public class BankMvpActivity extends AppCompatActivity implements BankMvpView, A
 
     @Override public void setBankItems(AccountItemAdapter mAdapter, List<BankItem> bankitems) {
         //listView.setAdapter(new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, items));
+        mBankItemSearchEngine = new BankItemSearchEngine(bankitems);
         mAdapter.setBankItems(bankitems);
         mRecycler.setAdapter(mAdapter);
     }
@@ -246,8 +257,13 @@ public class BankMvpActivity extends AppCompatActivity implements BankMvpView, A
     //option menu
     @Override public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.bankmvp_menu, menu);
+        searchView = (SearchView) MenuItemCompat.getActionView(menu.findItem(R.id.action_search));
+        searchManager = (SearchManager) this.getSystemService(SEARCH_SERVICE);
+        searchView.setSearchableInfo(searchManager.getSearchableInfo(this.getComponentName()));
+        //getObservableSearchViewText();
         return true;
     }
+
 
     @Override public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();
