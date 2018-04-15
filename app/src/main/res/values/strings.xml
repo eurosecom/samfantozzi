@@ -164,6 +164,7 @@
 
     //choosecompanyactivity
     <string name="choosecompany">Choose company</string>
+    <string name="clickchoosecompany">Click to choose your company</string>
 
     //chooseaccountactivity
     <string name="chooseaccount">Choose account</string>

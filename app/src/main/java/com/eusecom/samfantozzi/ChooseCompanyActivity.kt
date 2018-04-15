@@ -44,7 +44,7 @@ class ChooseCompanyActivity : AppCompatActivity() {
 
         setContentView(R.layout.activity_choosecompany)
 
-        supportActionBar!!.setTitle(getString(R.string.choosecompany))
+        supportActionBar!!.setTitle(getString(R.string.clickchoosecompany))
 
         //Bind the recyclerview
         recyclerView = findViewById<RecyclerView>(R.id.rvAndroidVersions)
