@@ -34,6 +34,8 @@ public interface BankMvpView {
 
     void setBankItems(AccountItemAdapter mAdapter, List<BankItem> items);
 
+    void setSearchedBankItems(AccountItemAdapter mAdapter, List<BankItem> items);
+
     void showMessage(String message);
 
     void showItemDialog(BankItem invoice);

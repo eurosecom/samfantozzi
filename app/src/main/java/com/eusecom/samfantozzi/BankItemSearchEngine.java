@@ -42,26 +42,24 @@ public class BankItemSearchEngine {
 
   public List<BankItem> searchModel(String query) {
     query = query.toLowerCase();
-    //Log.d("searchModel", query);
 
     try {
-      Thread.sleep(1000);
+      Thread.sleep(200);
     } catch (InterruptedException e) {
       e.printStackTrace();
     }
 
-    List<BankItem> resultAs = new ArrayList<BankItem>();
+    List<BankItem> result = new ArrayList<BankItem>();
 
     for (int i = 0; i < mListabsserverCount; i++) {
       if (mListabsserver.get(i).getNai().toLowerCase().contains(query) ||
               mListabsserver.get(i).getDok().toLowerCase().contains(query) ||
               mListabsserver.get(i).getFak().toLowerCase().contains(query) ) {
-        resultAs.add(mListabsserver.get(i));
-        //Log.d("mListabs.get(i).dmna", mListabsserver.get(i).getNai());
+        result.add(mListabsserver.get(i));
       }
     }
 
-    return resultAs;
+    return result;
   }
 
 }

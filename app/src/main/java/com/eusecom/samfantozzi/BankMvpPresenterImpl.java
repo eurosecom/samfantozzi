@@ -298,5 +298,14 @@ public class BankMvpPresenterImpl implements BankMvpPresenter, BankFindItemsInte
         }
     }
 
+    public void showSearchResult(List<BankItem> result) {
+
+        if (result.isEmpty()) {
+            mainView.setSearchedBankItems(mAdapter, Collections.<BankItem>emptyList());
+        } else {
+            mainView.setSearchedBankItems(mAdapter, result);
+        }
+    }
+
 
 }

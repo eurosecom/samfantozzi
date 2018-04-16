@@ -25,6 +25,7 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.FloatingActionButton;
+import android.support.v4.app.ActivityCompat;
 import android.support.v4.view.MenuItemCompat;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
@@ -33,7 +34,6 @@ import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.SearchView;
 import android.view.LayoutInflater;
 import android.view.Menu;
-import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
@@ -45,7 +45,17 @@ import android.widget.Toast;
 import com.eusecom.samfantozzi.models.BankItem;
 import com.eusecom.samfantozzi.retrofit.AbsServerService;
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 import javax.inject.Inject;
+import io.reactivex.Observable;
+import io.reactivex.ObservableEmitter;
+import io.reactivex.ObservableOnSubscribe;
+import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.disposables.Disposable;
+import io.reactivex.functions.Cancellable;
+import io.reactivex.functions.Consumer;
+import io.reactivex.functions.Function;
+import io.reactivex.functions.Predicate;
 
 /*
 * MVP pattern for Bank and Universal Documents List
@@ -71,6 +81,7 @@ public class BankMvpActivity extends AppCompatActivity implements BankMvpView, A
     private SearchView.OnQueryTextListener onQueryTextListener = null;
     SearchManager searchManager;
     protected BankItemSearchEngine mBankItemSearchEngine;
+    private Disposable mDisposable;
 
     @Override protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -106,7 +117,7 @@ public class BankMvpActivity extends AppCompatActivity implements BankMvpView, A
 
                 }
         );
-
+        
     }
 
 
@@ -120,12 +131,14 @@ public class BankMvpActivity extends AppCompatActivity implements BankMvpView, A
         getSupportActionBar().setTitle(mSharedPreferences.getString("ume", "") + " "
                 + mSharedPreferences.getString("bankuce", "") + " " +  getString(R.string.bank));
         //presenter.onResume();
+        ActivityCompat.invalidateOptionsMenu(this);
         presenter.onStart();
     }
 
     @Override protected void onDestroy() {
         //presenter.onDestroy();
         super.onDestroy();
+        if( mDisposable != null ) {mDisposable.dispose();}
     }
 
     //View implementation called from presenter
@@ -148,10 +161,21 @@ public class BankMvpActivity extends AppCompatActivity implements BankMvpView, A
     }
 
     @Override public void setBankItems(AccountItemAdapter mAdapter, List<BankItem> bankitems) {
-        //listView.setAdapter(new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, items));
-        mBankItemSearchEngine = new BankItemSearchEngine(bankitems);
+
         mAdapter.setBankItems(bankitems);
         mRecycler.setAdapter(mAdapter);
+        nastavSearchEngine(bankitems);
+    }
+
+    @Override public void setSearchedBankItems(AccountItemAdapter mAdapter, List<BankItem> searchedbankitems) {
+
+        mAdapter.setBankItems(searchedbankitems);
+        mRecycler.setAdapter(mAdapter);
+
+    }
+
+    protected void nastavSearchEngine(List<BankItem> result) {
+        mBankItemSearchEngine = new BankItemSearchEngine(result);
     }
 
     @Override public void showMessage(String message) {
@@ -260,7 +284,7 @@ public class BankMvpActivity extends AppCompatActivity implements BankMvpView, A
         searchView = (SearchView) MenuItemCompat.getActionView(menu.findItem(R.id.action_search));
         searchManager = (SearchManager) this.getSystemService(SEARCH_SERVICE);
         searchView.setSearchableInfo(searchManager.getSearchableInfo(this.getComponentName()));
-        //getObservableSearchViewText();
+        getObservableSearchViewText();
         return true;
     }
 
@@ -306,5 +330,84 @@ public class BankMvpActivity extends AppCompatActivity implements BankMvpView, A
         return super.onOptionsItemSelected(item);
     }
 
+
+    //listener to searchview
+    private void getObservableSearchViewText() {
+
+        Observable<String> searchViewChangeStream = createSearchViewTextChangeObservable();
+
+        mDisposable = searchViewChangeStream
+                .observeOn(AndroidSchedulers.mainThread())
+                .doOnNext(new Consumer<String>() {
+                    @Override
+                    public void accept(String s) {
+                        showProgress();
+                    }
+                })
+                .observeOn(io.reactivex.schedulers.Schedulers.io())
+                .map(new Function<String, List<BankItem>>() {
+                    @Override
+                    public List<BankItem> apply(String query) {
+                        return mBankItemSearchEngine.searchModel(query);
+                    }
+                })
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new Consumer<List<BankItem>>() {
+                    @Override
+                    public void accept(List<BankItem> result) {
+                        hideProgress();
+                        presenter.showSearchResult(result);
+                    }
+                });
+    }
+
+    private Observable<String> createSearchViewTextChangeObservable() {
+        Observable<String> searchViewTextChangeObservable = Observable.create(new ObservableOnSubscribe<String>() {
+            @Override
+            public void subscribe(final ObservableEmitter<String> emitter) throws Exception {
+
+                onQueryTextListener = new SearchView.OnQueryTextListener() {
+                    @Override
+                    public boolean onQueryTextSubmit(String query) {
+                        // use this method when query submitted
+                        //Toast.makeText(getActivity(), "submit " + query, Toast.LENGTH_SHORT).show();
+                        emitter.onNext(query.toString());
+                        return false;
+                    }
+
+                    @Override
+                    public boolean onQueryTextChange(String newText) {
+                        // use this method for auto complete search process
+                        //Toast.makeText(getActivity(), "change " + newText, Toast.LENGTH_SHORT).show();
+                        emitter.onNext(newText.toString());
+                        //andrejko mViewModel.emitMyObservableCashListQuery(newText.toString());
+                        return false;
+                    }
+
+
+
+
+
+                };
+
+                searchView.setOnQueryTextListener(onQueryTextListener);
+
+                emitter.setCancellable(new Cancellable() {
+                    @Override
+                    public void cancel() throws Exception {
+                        searchView.setOnQueryTextListener(null);
+                    }
+                });
+            }
+        });
+
+        return searchViewTextChangeObservable
+                .filter(new Predicate<String>() {
+                    @Override
+                    public boolean test(String query) throws Exception {
+                        return query.length() >= 3 || query.equals("");
+                    }
+                }).debounce(300, TimeUnit.MILLISECONDS);  // add this line
+    }
 
 }

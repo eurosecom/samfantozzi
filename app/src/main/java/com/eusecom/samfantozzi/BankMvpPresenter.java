@@ -20,6 +20,8 @@ package com.eusecom.samfantozzi;
 
 import com.eusecom.samfantozzi.models.BankItem;
 
+import java.util.List;
+
 public interface BankMvpPresenter {
 
     void onResume();
@@ -31,5 +33,7 @@ public interface BankMvpPresenter {
     void onStart();
 
     void deleteDoc(BankItem invoice);
+
+    void showSearchResult(List<BankItem> result);
 
 }
