@@ -18,8 +18,9 @@
 
 package com.eusecom.samfantozzi;
 
-import com.eusecom.samfantozzi.models.BankItem;
+import android.view.View;
 
+import com.eusecom.samfantozzi.models.BankItem;
 import java.util.List;
 
 public interface BankMvpPresenter {
@@ -35,5 +36,11 @@ public interface BankMvpPresenter {
     void deleteDoc(BankItem invoice);
 
     void showSearchResult(List<BankItem> result);
+
+    void emitSearchString(String query);
+
+    void attachView(BankMvpView view);
+
+    void detachView();
 
 }

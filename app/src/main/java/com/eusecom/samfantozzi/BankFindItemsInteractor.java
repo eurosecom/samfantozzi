@@ -18,6 +18,8 @@
 
 package com.eusecom.samfantozzi;
 
+import android.support.annotation.NonNull;
+
 import com.eusecom.samfantozzi.models.BankItem;
 import com.eusecom.samfantozzi.models.BankItemList;
 
@@ -47,5 +49,6 @@ public interface BankFindItemsInteractor {
     Observable<BankItemList> getMyDocDelFromServer(String userhash, String userid, String fromfir
             , String vyb_rok, String drh, String uce, String ume, String dokx);
 
+    Observable<String> getObservableBankListQuery(String queryx);
 
 }

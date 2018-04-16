@@ -21,6 +21,8 @@ package com.eusecom.samfantozzi;
 import android.content.SharedPreferences;
 import android.support.annotation.NonNull;
 import android.util.Log;
+import android.widget.Toast;
+
 import com.eusecom.samfantozzi.models.BankItem;
 import com.eusecom.samfantozzi.models.BankItemList;
 
@@ -42,12 +44,29 @@ public class BankMvpPresenterImpl implements BankMvpPresenter, BankFindItemsInte
     private CompositeSubscription mSubscription;
     private SharedPreferences mSharedPreferences;
     private AccountItemAdapter mAdapter;
+    private String searchQuery = "";
 
     public BankMvpPresenterImpl(BankMvpView mainView, SharedPreferences sharedPreferences,
                                 BankFindItemsInteractor findItemsInteractor) {
         this.mainView = mainView;
         this.mSharedPreferences = sharedPreferences;
         this.findItemsInteractor = findItemsInteractor;
+    }
+
+    @Override
+    public void attachView(BankMvpView view) {
+        this.mainView = view;
+
+        Log.d("BankMvpPresenter ", "attachView " + searchQuery);
+        if (mainView != null) {
+            mainView.setQueryToSearch(searchQuery);
+        }
+    }
+
+    @Override
+    public void detachView() {
+        this.mainView = null;
+        Log.d("BankMvpPresenter ", "detachView " + searchQuery);
     }
 
     @Override public void onResume() {
@@ -306,6 +325,24 @@ public class BankMvpPresenterImpl implements BankMvpPresenter, BankFindItemsInte
             mainView.setSearchedBankItems(mAdapter, result);
         }
     }
+
+    //emit BankList search query
+    public void emitSearchString(String queryx){
+
+        searchQuery=queryx;
+
+    }
+
+    private void setQueryString(String querystring) {
+
+        Log.d("Presenter query ", querystring);
+        if (mainView != null) {
+            mainView.setQueryToSearch(querystring);
+        }
+
+    }
+
+    //end emit BankList search query
 
 
 }

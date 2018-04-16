@@ -99,4 +99,10 @@ public class BankFindItemsInteractorImpl implements BankFindItemsInteractor {
                 "Item 10"
         );
     }
+
+    @Override
+    public Observable<String> getObservableBankListQuery(@NonNull final String queryx) {
+
+        return Observable.just(queryx);
+    }
 }

@@ -32,12 +32,15 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.SearchView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
@@ -60,6 +63,8 @@ import io.reactivex.functions.Predicate;
 /*
 * MVP pattern for Bank and Universal Documents List
 * by https://github.com/antoniolg/androidmvp
+*
+* save Presenter state by https://medium.com/@trionkidnapper/android-mvp-keeping-presenters-alive-a91b9e080761
 */
 
 public class BankMvpActivity extends AppCompatActivity implements BankMvpView, AdapterView.OnItemClickListener {
@@ -101,7 +106,15 @@ public class BankMvpActivity extends AppCompatActivity implements BankMvpView, A
         mRecycler.setLayoutManager(mManager);
 
         progressBar = (ProgressBar) findViewById(R.id.progress);
-        presenter = new BankMvpPresenterImpl(this, mSharedPreferences, new BankFindItemsInteractorImpl(mAbsServerService));
+        //presenter = new BankMvpPresenterImpl(this, mSharedPreferences, new BankFindItemsInteractorImpl(mAbsServerService));
+
+        presenter = (BankMvpPresenter) getLastCustomNonConfigurationInstance();
+        if (presenter == null) {
+            presenter = new BankMvpPresenterImpl(this, mSharedPreferences
+                    , new BankFindItemsInteractorImpl(mAbsServerService));
+
+        }
+        presenter.attachView(this);
 
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(v -> {
@@ -117,9 +130,13 @@ public class BankMvpActivity extends AppCompatActivity implements BankMvpView, A
 
                 }
         );
-        
+
     }
 
+    @Override
+    public Object onRetainCustomNonConfigurationInstance() {
+        return presenter;
+    }
 
     //call presenter
     @Override public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
@@ -132,11 +149,13 @@ public class BankMvpActivity extends AppCompatActivity implements BankMvpView, A
                 + mSharedPreferences.getString("bankuce", "") + " " +  getString(R.string.bank));
         //presenter.onResume();
         ActivityCompat.invalidateOptionsMenu(this);
+
         presenter.onStart();
     }
 
     @Override protected void onDestroy() {
         //presenter.onDestroy();
+        presenter.detachView();
         super.onDestroy();
         if( mDisposable != null ) {mDisposable.dispose();}
     }
@@ -260,8 +279,6 @@ public class BankMvpActivity extends AppCompatActivity implements BankMvpView, A
                         new DialogInterface.OnClickListener() {
                             public void onClick(DialogInterface dialog,
                                                 int whichButton) {
-                                //showProgressBar();
-                                //mViewModel.emitDelInvFromServer(invoice);
                                 presenter.deleteDoc(invoice);
 
                             }
@@ -370,7 +387,6 @@ public class BankMvpActivity extends AppCompatActivity implements BankMvpView, A
                     @Override
                     public boolean onQueryTextSubmit(String query) {
                         // use this method when query submitted
-                        //Toast.makeText(getActivity(), "submit " + query, Toast.LENGTH_SHORT).show();
                         emitter.onNext(query.toString());
                         return false;
                     }
@@ -380,13 +396,9 @@ public class BankMvpActivity extends AppCompatActivity implements BankMvpView, A
                         // use this method for auto complete search process
                         //Toast.makeText(getActivity(), "change " + newText, Toast.LENGTH_SHORT).show();
                         emitter.onNext(newText.toString());
-                        //andrejko mViewModel.emitMyObservableCashListQuery(newText.toString());
+                        presenter.emitSearchString(newText.toString());
                         return false;
                     }
-
-
-
-
 
                 };
 
@@ -408,6 +420,19 @@ public class BankMvpActivity extends AppCompatActivity implements BankMvpView, A
                         return query.length() >= 3 || query.equals("");
                     }
                 }).debounce(300, TimeUnit.MILLISECONDS);  // add this line
+    }
+
+    @Override public void setQueryToSearch(String querystring) {
+
+        Log.d("BankMvpPresenter query ", "in View " + querystring);
+        if( querystring.equals("")){
+
+        }else {
+
+            //searchView.setQuery(querystring, false);
+
+        }
+
     }
 
 }

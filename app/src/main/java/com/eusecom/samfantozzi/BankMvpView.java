@@ -41,4 +41,6 @@ public interface BankMvpView {
     void showItemDialog(BankItem invoice);
 
     void setBalance(String statebalance);
+
+    void setQueryToSearch(String query);
 }
