@@ -231,7 +231,10 @@ class AccountReportsActivityUI (val mReport: String, val prefs: SharedPreference
                 button() {
                     id = R.id.rep22
                     textResource = R.string.popisbtnhladok
-                    onClick { /* Todo on click */ }
+                    onClick {
+                        val `is` = Intent(context, DocSearchActivity::class.java)
+                        context.startActivity(`is`)
+                    }
                 }.lparams {
                     width = matchParent
                     height = wrapContent
