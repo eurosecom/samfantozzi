@@ -35,12 +35,10 @@ import android.support.v7.widget.SearchView;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
-import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
-import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
@@ -83,10 +81,12 @@ public class BankMvpActivity extends AppCompatActivity implements BankMvpView, A
 
     //searchview
     private SearchView searchView;
+    private MenuItem menuItem;
     private SearchView.OnQueryTextListener onQueryTextListener = null;
     SearchManager searchManager;
     protected BankItemSearchEngine mBankItemSearchEngine;
     private Disposable mDisposable;
+    private String querystring = "";
 
     @Override protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -184,6 +184,14 @@ public class BankMvpActivity extends AppCompatActivity implements BankMvpView, A
         mAdapter.setBankItems(bankitems);
         mRecycler.setAdapter(mAdapter);
         nastavSearchEngine(bankitems);
+
+        if( querystring.equals("")){
+
+        }else {
+            searchView.setIconified(false);
+            searchView.setQuery(querystring, false);
+            menuItem.setVisible(true);
+        }
     }
 
     @Override public void setSearchedBankItems(AccountItemAdapter mAdapter, List<BankItem> searchedbankitems) {
@@ -298,10 +306,12 @@ public class BankMvpActivity extends AppCompatActivity implements BankMvpView, A
     //option menu
     @Override public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.bankmvp_menu, menu);
+        menuItem = menu.findItem(R.id.action_search);
         searchView = (SearchView) MenuItemCompat.getActionView(menu.findItem(R.id.action_search));
         searchManager = (SearchManager) this.getSystemService(SEARCH_SERVICE);
         searchView.setSearchableInfo(searchManager.getSearchableInfo(this.getComponentName()));
         getObservableSearchViewText();
+
         return true;
     }
 
@@ -422,17 +432,16 @@ public class BankMvpActivity extends AppCompatActivity implements BankMvpView, A
                 }).debounce(300, TimeUnit.MILLISECONDS);  // add this line
     }
 
-    @Override public void setQueryToSearch(String querystring) {
+    @Override public void setQueryToSearch(String querystringx) {
 
-        Log.d("BankMvpPresenter query ", "in View " + querystring);
-        if( querystring.equals("")){
-
+        Log.d("BankMvpPresenter query ", "in View " + querystringx);
+        if( querystringx.equals("")){
         }else {
-
-            //searchView.setQuery(querystring, false);
-
+            querystring = querystringx;
         }
 
     }
+
+
 
 }
