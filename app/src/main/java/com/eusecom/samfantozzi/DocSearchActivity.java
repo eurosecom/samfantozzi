@@ -11,6 +11,12 @@ import android.widget.TextView;
 import java.util.ArrayList;
 import java.util.List;
 
+/*
+* How to Implement Load More in #RecyclerView
+* by https://medium.com/@programmerasi/how-to-implement-load-more-in-recyclerview-3c6358297f4
+*
+*/
+
 public class DocSearchActivity  extends AppCompatActivity {
 
     private Toolbar toolbar;
@@ -33,11 +39,8 @@ public class DocSearchActivity  extends AppCompatActivity {
         mRecyclerView = (RecyclerView) findViewById(R.id.my_recycler_view);
         studentList = new ArrayList<DocSearchStudent>();
         handler = new Handler();
-        if (toolbar != null) {
-            setSupportActionBar(toolbar);
-            getSupportActionBar().setTitle("Android Students");
+        getSupportActionBar().setTitle("Android Students");
 
-        }
 
         loadData();
 
