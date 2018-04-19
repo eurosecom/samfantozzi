@@ -1,5 +1,6 @@
 package com.eusecom.samfantozzi;
 
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
@@ -8,8 +9,13 @@ import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.TextView;
+
+import com.eusecom.samfantozzi.retrofit.AbsServerService;
+
 import java.util.ArrayList;
 import java.util.List;
+
+import javax.inject.Inject;
 
 /*
 * How to Implement Load More in #RecyclerView
@@ -17,7 +23,7 @@ import java.util.List;
 *
 */
 
-public class DocSearchActivity  extends AppCompatActivity {
+public class DocSearchActivity  extends AppCompatActivity implements DocSearchMvpView {
 
     private Toolbar toolbar;
 
@@ -30,15 +36,34 @@ public class DocSearchActivity  extends AppCompatActivity {
 
     protected Handler handler;
 
+    //MVP
+    private DocSearchMvpPresenter presenter;
+    @Inject
+    AbsServerService mAbsServerService;
+    @Inject
+    SharedPreferences mSharedPreferences;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.docsearch_activity);
+
+        ((SamfantozziApp) getApplication()).dgaeacomponent().inject(this);
+
         toolbar = (Toolbar) findViewById(R.id.toolbar);
         tvEmptyView = (TextView) findViewById(R.id.empty_view);
         mRecyclerView = (RecyclerView) findViewById(R.id.my_recycler_view);
         studentList = new ArrayList<DocSearchStudent>();
         handler = new Handler();
+
+        presenter = (DocSearchMvpPresenter) getLastCustomNonConfigurationInstance();
+        if (presenter == null) {
+            presenter = new DocSearchMvpPresenterImpl(this, mSharedPreferences
+                    , new DocSearchInteractorImpl(mAbsServerService));
+
+        }
+        //andrejko presenter.attachView(this);
+
         getSupportActionBar().setTitle("Android Students");
 
 
@@ -94,6 +119,13 @@ public class DocSearchActivity  extends AppCompatActivity {
             }
         });
 
+    }
+
+
+    @Override protected void onDestroy() {
+
+        //andrejko presenter.detachView();
+        super.onDestroy();
     }
 
 
