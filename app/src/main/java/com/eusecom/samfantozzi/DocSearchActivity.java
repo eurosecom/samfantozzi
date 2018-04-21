@@ -1,12 +1,18 @@
 package com.eusecom.samfantozzi;
 
+import android.app.SearchManager;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.Handler;
+import android.support.v4.view.MenuItemCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.SearchView;
 import android.support.v7.widget.Toolbar;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
 
@@ -16,6 +22,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 import javax.inject.Inject;
+
+import io.reactivex.disposables.Disposable;
 
 /*
 * How to Implement Load More in #RecyclerView
@@ -43,6 +51,15 @@ public class DocSearchActivity  extends AppCompatActivity implements DocSearchMv
     @Inject
     SharedPreferences mSharedPreferences;
 
+    //searchview
+    private SearchView searchView;
+    private MenuItem menuItem;
+    private SearchView.OnQueryTextListener onQueryTextListener = null;
+    SearchManager searchManager;
+    protected BankItemSearchEngine mBankItemSearchEngine;
+    private Disposable mDisposable;
+    private String querystring = "";
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -62,10 +79,9 @@ public class DocSearchActivity  extends AppCompatActivity implements DocSearchMv
                     , new DocSearchInteractorImpl(mAbsServerService));
 
         }
-        //andrejko presenter.attachView(this);
+        presenter.attachView(this);
 
-        getSupportActionBar().setTitle("Android Students");
-
+        getSupportActionBar().setTitle(getString(R.string.docsearch));
 
         loadData();
 
@@ -121,10 +137,14 @@ public class DocSearchActivity  extends AppCompatActivity implements DocSearchMv
 
     }
 
+    @Override
+    public Object onRetainCustomNonConfigurationInstance() {
+        return presenter;
+    }
 
     @Override protected void onDestroy() {
 
-        //andrejko presenter.detachView();
+        presenter.detachView();
         super.onDestroy();
     }
 
@@ -137,7 +157,41 @@ public class DocSearchActivity  extends AppCompatActivity implements DocSearchMv
 
         }
 
+    }
 
+    //option menu
+    @Override public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.docsearch_menu, menu);
+        menuItem = menu.findItem(R.id.action_search);
+        searchView = (SearchView) MenuItemCompat.getActionView(menu.findItem(R.id.action_search));
+        searchManager = (SearchManager) this.getSystemService(SEARCH_SERVICE);
+        searchView.setSearchableInfo(searchManager.getSearchableInfo(this.getComponentName()));
+        //andrejko getObservableSearchViewText();
+
+        return true;
+    }
+
+
+    @Override public boolean onOptionsItemSelected(MenuItem item) {
+        int id = item.getItemId();
+
+        if (id == R.id.action_settings) {
+
+            Intent is = new Intent(this, SettingsActivity.class);
+            startActivity(is);
+            return true;
+        }
+
+        if (id == R.id.action_setmonth) {
+
+            Intent is = new Intent(this, ChooseMonthActivity.class);
+            startActivity(is);
+            return true;
+        }
+
+
+
+        return super.onOptionsItemSelected(item);
     }
 
 }

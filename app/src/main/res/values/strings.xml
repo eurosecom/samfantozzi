@@ -350,6 +350,9 @@
     //taxpaymentsactivity
     <string name="taxpay">Tax payments</string>
 
+    //docsearchmenuactivity
+    <string name="docsearch">Search documents</string>
+
 
 
 </resources>

@@ -19,6 +19,8 @@
 package com.eusecom.samfantozzi;
 
 import android.content.SharedPreferences;
+import android.util.Log;
+
 import rx.subscriptions.CompositeSubscription;
 
 public class DocSearchMvpPresenterImpl implements DocSearchMvpPresenter {
@@ -27,6 +29,7 @@ public class DocSearchMvpPresenterImpl implements DocSearchMvpPresenter {
     private DocSearchInteractor findItemsInteractor;
     private CompositeSubscription mSubscription;
     private SharedPreferences mSharedPreferences;
+    private String searchQuery = "";
 
 
     public DocSearchMvpPresenterImpl(DocSearchMvpView mainView, SharedPreferences sharedPreferences,
@@ -36,7 +39,21 @@ public class DocSearchMvpPresenterImpl implements DocSearchMvpPresenter {
         this.findItemsInteractor = findItemsInteractor;
     }
 
+    @Override
+    public void attachView(DocSearchMvpView view) {
+        this.mainView = view;
 
+        Log.d("DocSearchMvpPresenter ", "attachView " + searchQuery);
+        if (mainView != null) {
+            //andrejko mainView.setQueryToSearch(searchQuery);
+        }
+    }
+
+    @Override
+    public void detachView() {
+        this.mainView = null;
+        Log.d("DocSearchMvpPresenter ", "detachView " + searchQuery);
+    }
 
     @Override
     public void loadData() {

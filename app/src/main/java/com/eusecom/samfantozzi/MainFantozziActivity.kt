@@ -240,8 +240,20 @@ class MainFantozziActivity : AppCompatActivity() {
         R.id.action_settings -> consume { navigateToSettings() }
         R.id.action_setmonth -> consume { navigateToSetMonth() }
         R.id.action_idc -> consume { navigateToIdCompanies() }
+        R.id.action_search -> consume { navigateToDocSearch() }
 
         else -> super.onOptionsItemSelected(item)
+    }
+
+    fun navigateToDocSearch(){
+        val usuid = prefs.getString("usuid", "")
+        if (usuid == "" || usuid == "0") {
+            showDonotloginAlert()
+        }else {
+            val `is` = Intent(this, DocSearchActivity::class.java)
+            startActivity(`is`)
+        }
+
     }
 
     fun navigateToGetCompany(){
