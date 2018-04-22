@@ -37,13 +37,12 @@ import rx.subscriptions.CompositeSubscription;
 import static android.content.ContentValues.TAG;
 import static rx.Observable.empty;
 
-public class BankMvpPresenterImpl implements BankMvpPresenter, BankFindItemsInteractor.OnFinishedListener, AccountItemAdapter.KlikaciListener {
+public class BankMvpPresenterImpl implements BankMvpPresenter, BankFindItemsInteractor.OnFinishedListener{
 
     private BankMvpView mainView;
     private BankFindItemsInteractor findItemsInteractor;
     private CompositeSubscription mSubscription;
     private SharedPreferences mSharedPreferences;
-    private AccountItemAdapter mAdapter;
     private String searchQuery = "";
 
     public BankMvpPresenterImpl(BankMvpView mainView, SharedPreferences sharedPreferences,
@@ -209,8 +208,7 @@ public class BankMvpPresenterImpl implements BankMvpPresenter, BankFindItemsInte
         //Log.d("Presenter bankitems", bankitems.getBalance());
         if (mainView != null) {
             //Log.d("BankMvpPresenter ", bankitems.get(0).getDok());
-            mAdapter = new AccountItemAdapter(this);
-            mainView.setBankItems(mAdapter, bankitems.getBankitem());
+            mainView.setBankItems(bankitems.getBankitem());
             mainView.setBalance(bankitems.getBalance());
             mainView.hideProgress();
         }
@@ -220,12 +218,6 @@ public class BankMvpPresenterImpl implements BankMvpPresenter, BankFindItemsInte
         return mainView;
     }
 
-    public void klikolSomItem(BankItem item){
-        Log.d("onShortClickListAdapt", item.getHod());
-        if (mainView != null) {
-            mainView.showItemDialog(item);
-        }
-    }
 
     public void deleteDoc(BankItem item){
         Log.d("deleteDoc", item.getHod());
@@ -311,7 +303,7 @@ public class BankMvpPresenterImpl implements BankMvpPresenter, BankFindItemsInte
         //Log.d("deleted Item", item.get(0).getDok());
         if (mainView != null) {
             //mAdapter = new AccountItemAdapter(this);
-            mainView.setBankItems(mAdapter, item.getBankitem());
+            mainView.setBankItems(item.getBankitem());
             mainView.hideProgress();
             mainView.setBalance(item.getBalance());
         }
@@ -320,9 +312,9 @@ public class BankMvpPresenterImpl implements BankMvpPresenter, BankFindItemsInte
     public void showSearchResult(List<BankItem> result) {
 
         if (result.isEmpty()) {
-            mainView.setSearchedBankItems(mAdapter, Collections.<BankItem>emptyList());
+            mainView.setSearchedBankItems(Collections.<BankItem>emptyList());
         } else {
-            mainView.setSearchedBankItems(mAdapter, result);
+            mainView.setSearchedBankItems(result);
         }
     }
 

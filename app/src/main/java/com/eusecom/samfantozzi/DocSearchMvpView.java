@@ -19,7 +19,14 @@
 package com.eusecom.samfantozzi;
 
 
+import java.util.List;
+
 public interface DocSearchMvpView {
 
+    void showProgress();
+
+    void hideProgress();
+
+    void setStudents(List<DocSearchStudent> items);
 
 }

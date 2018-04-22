@@ -19,7 +19,6 @@
 package com.eusecom.samfantozzi;
 
 import android.support.annotation.NonNull;
-
 import com.eusecom.samfantozzi.models.BankItem;
 import com.eusecom.samfantozzi.models.BankItemList;
 

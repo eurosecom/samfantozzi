@@ -11,9 +11,11 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.SearchView;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.ArrayAdapter;
 import android.widget.TextView;
 
 import com.eusecom.samfantozzi.retrofit.AbsServerService;
@@ -84,6 +86,7 @@ public class DocSearchActivity  extends AppCompatActivity implements DocSearchMv
         getSupportActionBar().setTitle(getString(R.string.docsearch));
 
         loadData();
+        presenter.loadStudents();
 
         // use this setting to improve performance if you know that changes
         // in content do not change the layout size of the RecyclerView
@@ -159,6 +162,21 @@ public class DocSearchActivity  extends AppCompatActivity implements DocSearchMv
 
     }
 
+    @Override public void showProgress() {
+        //andrejko progressBar.setVisibility(View.VISIBLE);
+        //andrejko listView.setVisibility(View.INVISIBLE);
+    }
+
+    @Override public void hideProgress() {
+        //andrejko progressBar.setVisibility(View.INVISIBLE);
+        //andrejko listView.setVisibility(View.VISIBLE);
+    }
+
+    @Override public void setStudents(List<DocSearchStudent> items) {
+        Log.d("DocSearchMvp ", "setitems " + items.get(0).getName());
+        //andrejko listView.setAdapter(new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, items));
+    }
+
     //option menu
     @Override public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.docsearch_menu, menu);
@@ -188,8 +206,6 @@ public class DocSearchActivity  extends AppCompatActivity implements DocSearchMv
             startActivity(is);
             return true;
         }
-
-
 
         return super.onOptionsItemSelected(item);
     }

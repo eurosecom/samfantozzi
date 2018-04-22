@@ -19,24 +19,26 @@
 package com.eusecom.samfantozzi;
 
 import android.content.SharedPreferences;
+import android.os.Handler;
 import android.util.Log;
-
+import java.util.Arrays;
+import java.util.List;
 import rx.subscriptions.CompositeSubscription;
 
-public class DocSearchMvpPresenterImpl implements DocSearchMvpPresenter {
+public class DocSearchMvpPresenterImpl implements DocSearchMvpPresenter, DocSearchInteractor.OnFinishedListener  {
 
     private DocSearchMvpView mainView;
-    private DocSearchInteractor findItemsInteractor;
+    private DocSearchInteractor docSearchInteractor;
     private CompositeSubscription mSubscription;
     private SharedPreferences mSharedPreferences;
     private String searchQuery = "";
 
 
     public DocSearchMvpPresenterImpl(DocSearchMvpView mainView, SharedPreferences sharedPreferences,
-                                DocSearchInteractor findItemsInteractor) {
+                                DocSearchInteractor mDocSearchInteractor) {
         this.mainView = mainView;
         this.mSharedPreferences = sharedPreferences;
-        this.findItemsInteractor = findItemsInteractor;
+        this.docSearchInteractor = mDocSearchInteractor;
     }
 
     @Override
@@ -55,12 +57,18 @@ public class DocSearchMvpPresenterImpl implements DocSearchMvpPresenter {
         Log.d("DocSearchMvpPresenter ", "detachView " + searchQuery);
     }
 
-    @Override
-    public void loadData() {
 
+    @Override
+    public void loadStudents() {
+        docSearchInteractor.loadStudentsList(this);
     }
 
-
+    @Override public void onFinishedStudents(List<DocSearchStudent> items) {
+        if (mainView != null) {
+            mainView.setStudents(items);
+            mainView.hideProgress();
+        }
+    }
 
 
 }

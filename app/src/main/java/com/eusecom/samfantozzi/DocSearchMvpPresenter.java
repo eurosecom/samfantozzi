@@ -21,7 +21,7 @@ package com.eusecom.samfantozzi;
 
 public interface DocSearchMvpPresenter {
 
-    void loadData();
+    void loadStudents();
 
     void attachView(DocSearchMvpView view);
 

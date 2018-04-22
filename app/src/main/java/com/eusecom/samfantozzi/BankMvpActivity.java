@@ -65,7 +65,7 @@ import io.reactivex.functions.Predicate;
 * save Presenter state by https://medium.com/@trionkidnapper/android-mvp-keeping-presenters-alive-a91b9e080761
 */
 
-public class BankMvpActivity extends AppCompatActivity implements BankMvpView, AdapterView.OnItemClickListener {
+public class BankMvpActivity extends AppCompatActivity implements BankMvpView, AdapterView.OnItemClickListener, AccountItemAdapter.KlikaciListener  {
 
     private ListView listView;
     private ProgressBar progressBar;
@@ -73,6 +73,7 @@ public class BankMvpActivity extends AppCompatActivity implements BankMvpView, A
     private RecyclerView mRecycler;
     private LinearLayoutManager mManager;
     private TextView balance;
+    private AccountItemAdapter mAdapter;
 
     @Inject
     AbsServerService mAbsServerService;
@@ -104,6 +105,7 @@ public class BankMvpActivity extends AppCompatActivity implements BankMvpView, A
         mManager.setReverseLayout(true);
         mManager.setStackFromEnd(true);
         mRecycler.setLayoutManager(mManager);
+        mAdapter = new AccountItemAdapter(this);
 
         progressBar = (ProgressBar) findViewById(R.id.progress);
         //presenter = new BankMvpPresenterImpl(this, mSharedPreferences, new BankFindItemsInteractorImpl(mAbsServerService));
@@ -179,7 +181,7 @@ public class BankMvpActivity extends AppCompatActivity implements BankMvpView, A
         listView.setAdapter(new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, items));
     }
 
-    @Override public void setBankItems(AccountItemAdapter mAdapter, List<BankItem> bankitems) {
+    @Override public void setBankItems(List<BankItem> bankitems) {
 
         mAdapter.setBankItems(bankitems);
         mRecycler.setAdapter(mAdapter);
@@ -194,7 +196,7 @@ public class BankMvpActivity extends AppCompatActivity implements BankMvpView, A
         }
     }
 
-    @Override public void setSearchedBankItems(AccountItemAdapter mAdapter, List<BankItem> searchedbankitems) {
+    @Override public void setSearchedBankItems(List<BankItem> searchedbankitems) {
 
         mAdapter.setBankItems(searchedbankitems);
         mRecycler.setAdapter(mAdapter);
@@ -442,6 +444,11 @@ public class BankMvpActivity extends AppCompatActivity implements BankMvpView, A
 
     }
 
+    public void klikolSomItem(BankItem item){
+        Log.d("onShortClickListAdapt", item.getHod());
+        showItemDialog(item);
+
+    }
 
 
 }

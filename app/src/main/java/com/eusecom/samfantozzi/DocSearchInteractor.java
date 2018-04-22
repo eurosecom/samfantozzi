@@ -18,8 +18,16 @@
 
 package com.eusecom.samfantozzi;
 
+import java.util.List;
+
 public interface DocSearchInteractor {
 
+    interface OnFinishedListener {
 
+        void onFinishedStudents(List<DocSearchStudent> studentList);
+        //void onFinishedBankItems(List<BankItem> items);
 
+    }
+
+    void loadStudentsList(OnFinishedListener listener);
 }

@@ -18,16 +18,39 @@
 
 package com.eusecom.samfantozzi;
 
+import android.os.Handler;
 import android.support.annotation.NonNull;
 import com.eusecom.samfantozzi.retrofit.AbsServerService;
+
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
 public class DocSearchInteractorImpl implements DocSearchInteractor {
 
     AbsServerService mAbsServerService;
+    private List<DocSearchStudent> studentList;
 
     public DocSearchInteractorImpl (@NonNull final AbsServerService absServerService ) {
         mAbsServerService = absServerService;
     }
 
+    @Override public void loadStudentsList(OnFinishedListener listener) {
+        new Handler().postDelayed(new Runnable() {
+            @Override public void run() {
+                listener.onFinishedStudents(createStudentsArrayList());
+            }
+        }, 2000);
+    }
+
+    private List<DocSearchStudent> createStudentsArrayList() {
+
+        studentList = new ArrayList<DocSearchStudent>();
+        for (int i = 1; i <= 20; i++) {
+            studentList.add(new DocSearchStudent("Student " + i, "androidstudent" + i + "@gmail.com"));
+
+        }
+        return studentList;
+    }
 
 }
