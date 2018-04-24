@@ -20,6 +20,8 @@ package com.eusecom.samfantozzi;
 
 import android.os.Handler;
 import android.support.annotation.NonNull;
+
+import com.eusecom.samfantozzi.models.BankItem;
 import com.eusecom.samfantozzi.retrofit.AbsServerService;
 
 import java.util.ArrayList;
@@ -30,11 +32,13 @@ public class DocSearchInteractorImpl implements DocSearchInteractor {
 
     AbsServerService mAbsServerService;
     private List<DocSearchStudent> studentList;
+    private List<BankItem> bankitemList;
 
     public DocSearchInteractorImpl (@NonNull final AbsServerService absServerService ) {
         mAbsServerService = absServerService;
     }
 
+    //get students list
     @Override public void loadStudentsList(OnFinishedListener listener) {
         new Handler().postDelayed(new Runnable() {
             @Override public void run() {
@@ -51,6 +55,26 @@ public class DocSearchInteractorImpl implements DocSearchInteractor {
 
         }
         return studentList;
+    }
+
+    //get bankitems list
+    @Override public void loadSearchItemsList(OnFinishedListener listener) {
+        new Handler().postDelayed(new Runnable() {
+            @Override public void run() {
+                listener.onFinishedSearchItems(createSearchItemsList());
+            }
+        }, 2000);
+    }
+
+    private List<BankItem> createSearchItemsList() {
+
+        bankitemList = new ArrayList<BankItem>();
+        for (int i = 1; i <= 20; i++) {
+            bankitemList.add(new BankItem(" "," ","100" + i," "," "
+                    ," "," "," "," "," ","120","pop" + i," "));
+
+        }
+        return bankitemList;
     }
 
 }

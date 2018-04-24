@@ -21,6 +21,9 @@ package com.eusecom.samfantozzi;
 import android.content.SharedPreferences;
 import android.os.Handler;
 import android.util.Log;
+
+import com.eusecom.samfantozzi.models.BankItem;
+
 import java.util.Arrays;
 import java.util.List;
 import rx.subscriptions.CompositeSubscription;
@@ -58,6 +61,7 @@ public class DocSearchMvpPresenterImpl implements DocSearchMvpPresenter, DocSear
     }
 
 
+    //load students list
     @Override
     public void loadStudents() {
         docSearchInteractor.loadStudentsList(this);
@@ -66,6 +70,15 @@ public class DocSearchMvpPresenterImpl implements DocSearchMvpPresenter, DocSear
     @Override public void onFinishedStudents(List<DocSearchStudent> items) {
         if (mainView != null) {
             mainView.setStudents(items);
+            mainView.hideProgress();
+        }
+    }
+
+
+    //load bankitems list
+    @Override public void onFinishedSearchItems(List<BankItem> items) {
+        if (mainView != null) {
+           //mainView.setStudents(items);
             mainView.hideProgress();
         }
     }

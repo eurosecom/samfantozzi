@@ -94,11 +94,9 @@ public class DocSearchActivity  extends AppCompatActivity implements DocSearchMv
         mLayoutManager = new LinearLayoutManager(this);
         // use a linear layout manager
         mRecyclerView.setLayoutManager(mLayoutManager);
-        // create an Object for Adapter
+
         mAdapter = new DocSearchDataAdapter(studentList, mRecyclerView);
-        // set the adapter object to the Recyclerview
         mRecyclerView.setAdapter(mAdapter);
-        //  mAdapter.notifyDataSetChanged();
 
         if (studentList.isEmpty()) {
             mRecyclerView.setVisibility(View.GONE);
@@ -174,7 +172,9 @@ public class DocSearchActivity  extends AppCompatActivity implements DocSearchMv
 
     @Override public void setStudents(List<DocSearchStudent> items) {
         Log.d("DocSearchMvp ", "setitems " + items.get(0).getName());
-        //andrejko listView.setAdapter(new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, items));
+        //mAdapter = new DocSearchDataAdapter(items, mRecyclerView);
+        //mRecyclerView.setAdapter(mAdapter);
+
     }
 
     //option menu

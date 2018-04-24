@@ -18,6 +18,8 @@
 
 package com.eusecom.samfantozzi;
 
+import com.eusecom.samfantozzi.models.BankItem;
+
 import java.util.List;
 
 public interface DocSearchInteractor {
@@ -25,9 +27,11 @@ public interface DocSearchInteractor {
     interface OnFinishedListener {
 
         void onFinishedStudents(List<DocSearchStudent> studentList);
+        void onFinishedSearchItems(List<BankItem> studentList);
         //void onFinishedBankItems(List<BankItem> items);
 
     }
 
     void loadStudentsList(OnFinishedListener listener);
+    void loadSearchItemsList(OnFinishedListener listener);
 }
