@@ -43,20 +43,8 @@
         android:title="@string/usadmin_title" />
 
     <EditTextPreference
-        android:key="usosc"
-        android:enabled="false"
-        android:summary="@string/usosc_summary"
-        android:title="@string/usosc_title" />
-
-    <EditTextPreference
-        android:key="usatw"
-        android:enabled="true"
-        android:summary="@string/usatw_summary"
-        android:title="@string/usatw_title" />
-
-    <EditTextPreference
         android:key="usico"
-        android:enabled="false"
+        android:enabled="true"
         android:summary="@string/usico_summary"
         android:title="@string/usico_title" />
 
@@ -187,6 +175,16 @@
         android:summary="@string/edidok_summary"
         android:title="@string/edidok_title" />
 
+    <EditTextPreference
+        android:key="usosc"
+        android:enabled="false"
+        android:summary="@string/usosc_summary"
+        android:title="@string/usosc_title" />
 
+    <EditTextPreference
+        android:key="usatw"
+        android:enabled="true"
+        android:summary="@string/usatw_summary"
+        android:title="@string/usatw_title" />
 
 </PreferenceScreen>

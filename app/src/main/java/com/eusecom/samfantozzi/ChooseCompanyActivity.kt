@@ -82,6 +82,7 @@ class ChooseCompanyActivity : AppCompatActivity() {
             toast("${it.xcf + " " + it.naz + " " + it.rok } Clicked")
             val editor = prefs.edit()
             editor.putString("fir", it.xcf).apply();
+            editor.putString("usico", it.firico).apply();
             editor.putString("firnaz", it.naz).apply();
             editor.putString("rok", it.rok).apply();
             editor.putString("ume", "01." + it.rok).apply();

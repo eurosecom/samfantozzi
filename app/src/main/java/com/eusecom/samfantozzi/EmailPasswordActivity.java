@@ -40,7 +40,7 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
 
-public class EmailPasswordActivity extends AppCompatActivity implements
+public class EmailPasswordActivity extends BaseListActivity implements
         View.OnClickListener {
 
     private static final String TAG = "EmailPassword";
@@ -127,7 +127,7 @@ public class EmailPasswordActivity extends AppCompatActivity implements
         if (!validateForm()) {
             return;
         }
-
+        showProgressDialog();
 
         // [START create_user_with_email]
         mAuth.createUserWithEmailAndPassword(email, password)
@@ -144,6 +144,7 @@ public class EmailPasswordActivity extends AppCompatActivity implements
                         // the auth state listener will be notified and logic to handle the
                         // signed in user can be handled in the listener.
                         if (!task.isSuccessful()) {
+                            hideProgressDialog();
                             Toast.makeText(EmailPasswordActivity.this, "Authentication failed.",
                                     Toast.LENGTH_SHORT).show();
                         }
@@ -161,7 +162,7 @@ public class EmailPasswordActivity extends AppCompatActivity implements
             return;
         }
 
-
+        showProgressDialog();
         // [START sign_in_with_email]
         mAuth.signInWithEmailAndPassword(email, password)
                 .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
@@ -178,6 +179,7 @@ public class EmailPasswordActivity extends AppCompatActivity implements
                         // signed in user can be handled in the listener.
                         if (!task.isSuccessful()) {
                             Log.w(TAG, "signInWithEmail", task.getException());
+                            hideProgressDialog();
                             Toast.makeText(EmailPasswordActivity.this, "Authentication failed.",
                                     Toast.LENGTH_SHORT).show();
                         }
@@ -222,10 +224,7 @@ public class EmailPasswordActivity extends AppCompatActivity implements
                         String approvetopic = "approve" + userico;
                         String mytopic = "mytopic" + myuserid;
 
-                        //FirebaseMessaging.getInstance().subscribeToTopic(mytopic);
-                        //if( usertype.equals("99")) {
-                        //    FirebaseMessaging.getInstance().subscribeToTopic(approvetopic);
-                        //}
+                        hideProgressDialog();
 
                     }
 
@@ -245,6 +244,7 @@ public class EmailPasswordActivity extends AppCompatActivity implements
                         editor.putString("firnaz", "").apply();
 
                         editor.commit();
+                        hideProgressDialog();
                     }
                 });
 
@@ -271,6 +271,7 @@ public class EmailPasswordActivity extends AppCompatActivity implements
 
         // Write new user
         writeNewUser(user.getUid(), username, user.getEmail(), "0", "0", "0", "0");
+        hideProgressDialog();
 
     }
 
@@ -297,6 +298,7 @@ public class EmailPasswordActivity extends AppCompatActivity implements
     // [END basic_write]
 
     private void signOut() {
+        showProgressDialog();
         mAuth.signOut();
         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(getBaseContext());
         SharedPreferences.Editor editor = prefs.edit();
@@ -313,9 +315,7 @@ public class EmailPasswordActivity extends AppCompatActivity implements
         String approvetopic = "approve" + userico;
         String mytopic = "mytopic" + myuserid;
 
-        //FirebaseMessaging.getInstance().unsubscribeFromTopic(mytopic);
-        //FirebaseMessaging.getInstance().unsubscribeFromTopic(approvetopic);
-
+        hideProgressDialog();
 
         updateUI(null);
     }
