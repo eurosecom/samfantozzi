@@ -18,6 +18,7 @@ import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.TextView;
 
+import com.eusecom.samfantozzi.models.BankItem;
 import com.eusecom.samfantozzi.retrofit.AbsServerService;
 
 import java.util.ArrayList;
@@ -33,7 +34,7 @@ import io.reactivex.disposables.Disposable;
 *
 */
 
-public class DocSearchActivity  extends AppCompatActivity implements DocSearchMvpView {
+public class DocSearchActivity  extends BaseListActivity implements DocSearchMvpView {
 
     private Toolbar toolbar;
 
@@ -41,9 +42,6 @@ public class DocSearchActivity  extends AppCompatActivity implements DocSearchMv
     private RecyclerView mRecyclerView;
     private DocSearchDataAdapter mAdapter;
     private LinearLayoutManager mLayoutManager;
-
-    private List<DocSearchStudent> studentList;
-
     protected Handler handler;
 
     //MVP
@@ -72,7 +70,6 @@ public class DocSearchActivity  extends AppCompatActivity implements DocSearchMv
         toolbar = (Toolbar) findViewById(R.id.toolbar);
         tvEmptyView = (TextView) findViewById(R.id.empty_view);
         mRecyclerView = (RecyclerView) findViewById(R.id.my_recycler_view);
-        studentList = new ArrayList<DocSearchStudent>();
         handler = new Handler();
 
         presenter = (DocSearchMvpPresenter) getLastCustomNonConfigurationInstance();
@@ -85,15 +82,37 @@ public class DocSearchActivity  extends AppCompatActivity implements DocSearchMv
 
         getSupportActionBar().setTitle(getString(R.string.docsearch));
 
-        loadData();
-        presenter.loadStudents();
-
-        // use this setting to improve performance if you know that changes
-        // in content do not change the layout size of the RecyclerView
         mRecyclerView.setHasFixedSize(true);
         mLayoutManager = new LinearLayoutManager(this);
-        // use a linear layout manager
         mRecyclerView.setLayoutManager(mLayoutManager);
+
+        presenter.loadStudents();
+        //presenter.loadSearchItems();
+
+    }
+
+    @Override
+    public Object onRetainCustomNonConfigurationInstance() {
+        return presenter;
+    }
+
+    @Override protected void onDestroy() {
+
+        presenter.detachView();
+        super.onDestroy();
+    }
+
+
+    @Override public void showProgress() {
+        showProgressDialog();
+    }
+
+    @Override public void hideProgress() {
+        hideProgressDialog();
+    }
+
+    @Override public void setStudents(List<DocSearchStudent> studentList) {
+        Log.d("DocSearchMvp ", "student " + studentList.get(0).getName());
 
         mAdapter = new DocSearchDataAdapter(studentList, mRecyclerView);
         mRecyclerView.setAdapter(mAdapter);
@@ -138,42 +157,9 @@ public class DocSearchActivity  extends AppCompatActivity implements DocSearchMv
 
     }
 
-    @Override
-    public Object onRetainCustomNonConfigurationInstance() {
-        return presenter;
-    }
+    @Override public void setSearchItems(List<BankItem> items) {
+        Log.d("DocSearchMvp ", "searchitem " + items.get(0).getDok());
 
-    @Override protected void onDestroy() {
-
-        presenter.detachView();
-        super.onDestroy();
-    }
-
-
-    // load initial data
-    private void loadData() {
-
-        for (int i = 1; i <= 20; i++) {
-            studentList.add(new DocSearchStudent("Student " + i, "androidstudent" + i + "@gmail.com"));
-
-        }
-
-    }
-
-    @Override public void showProgress() {
-        //andrejko progressBar.setVisibility(View.VISIBLE);
-        //andrejko listView.setVisibility(View.INVISIBLE);
-    }
-
-    @Override public void hideProgress() {
-        //andrejko progressBar.setVisibility(View.INVISIBLE);
-        //andrejko listView.setVisibility(View.VISIBLE);
-    }
-
-    @Override public void setStudents(List<DocSearchStudent> items) {
-        Log.d("DocSearchMvp ", "setitems " + items.get(0).getName());
-        //mAdapter = new DocSearchDataAdapter(items, mRecyclerView);
-        //mRecyclerView.setAdapter(mAdapter);
 
     }
 

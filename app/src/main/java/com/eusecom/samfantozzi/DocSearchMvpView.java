@@ -19,6 +19,8 @@
 package com.eusecom.samfantozzi;
 
 
+import com.eusecom.samfantozzi.models.BankItem;
+
 import java.util.List;
 
 public interface DocSearchMvpView {
@@ -28,5 +30,7 @@ public interface DocSearchMvpView {
     void hideProgress();
 
     void setStudents(List<DocSearchStudent> items);
+
+    void setSearchItems(List<BankItem> items);
 
 }

@@ -23,6 +23,8 @@ public interface DocSearchMvpPresenter {
 
     void loadStudents();
 
+    void loadSearchItems();
+
     void attachView(DocSearchMvpView view);
 
     void detachView();

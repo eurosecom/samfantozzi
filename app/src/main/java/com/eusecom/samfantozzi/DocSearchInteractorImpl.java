@@ -63,7 +63,7 @@ public class DocSearchInteractorImpl implements DocSearchInteractor {
             @Override public void run() {
                 listener.onFinishedSearchItems(createSearchItemsList());
             }
-        }, 2000);
+        }, 200);
     }
 
     private List<BankItem> createSearchItemsList() {

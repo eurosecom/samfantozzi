@@ -64,6 +64,9 @@ public class DocSearchMvpPresenterImpl implements DocSearchMvpPresenter, DocSear
     //load students list
     @Override
     public void loadStudents() {
+        if (mainView != null) {
+            mainView.showProgress();
+        }
         docSearchInteractor.loadStudentsList(this);
     }
 
@@ -76,10 +79,18 @@ public class DocSearchMvpPresenterImpl implements DocSearchMvpPresenter, DocSear
 
 
     //load bankitems list
+    @Override
+    public void loadSearchItems() {
+        if (mainView != null) {
+            mainView.showProgress();
+        }
+        docSearchInteractor.loadSearchItemsList(this);
+    }
+
     @Override public void onFinishedSearchItems(List<BankItem> items) {
         if (mainView != null) {
-           //mainView.setStudents(items);
-            mainView.hideProgress();
+           mainView.setSearchItems(items);
+           mainView.hideProgress();
         }
     }
 
