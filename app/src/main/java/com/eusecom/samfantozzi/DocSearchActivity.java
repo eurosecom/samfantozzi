@@ -6,7 +6,6 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.v4.view.MenuItemCompat;
-import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.SearchView;
@@ -15,17 +14,11 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.ArrayAdapter;
 import android.widget.TextView;
-
 import com.eusecom.samfantozzi.models.BankItem;
 import com.eusecom.samfantozzi.retrofit.AbsServerService;
-
-import java.util.ArrayList;
 import java.util.List;
-
 import javax.inject.Inject;
-
 import io.reactivex.disposables.Disposable;
 
 /*
@@ -40,7 +33,7 @@ public class DocSearchActivity  extends BaseListActivity implements DocSearchMvp
 
     private TextView tvEmptyView;
     private RecyclerView mRecyclerView;
-    private DocSearchDataAdapter mAdapter;
+    private DocSearchAdapter mAdapter;
     private LinearLayoutManager mLayoutManager;
     protected Handler handler;
 
@@ -86,8 +79,8 @@ public class DocSearchActivity  extends BaseListActivity implements DocSearchMvp
         mLayoutManager = new LinearLayoutManager(this);
         mRecyclerView.setLayoutManager(mLayoutManager);
 
-        presenter.loadStudents();
-        //presenter.loadSearchItems();
+        //presenter.loadStudents();
+        presenter.loadSearchItems();
 
     }
 
@@ -113,11 +106,15 @@ public class DocSearchActivity  extends BaseListActivity implements DocSearchMvp
 
     @Override public void setStudents(List<DocSearchStudent> studentList) {
         Log.d("DocSearchMvp ", "student " + studentList.get(0).getName());
+    }
 
-        mAdapter = new DocSearchDataAdapter(studentList, mRecyclerView);
+    @Override public void setSearchItems(List<BankItem> searchitems) {
+        Log.d("DocSearchMvp ", "searchitem " + searchitems.get(0).getDok());
+
+        mAdapter = new DocSearchAdapter(searchitems, mRecyclerView);
         mRecyclerView.setAdapter(mAdapter);
 
-        if (studentList.isEmpty()) {
+        if (searchitems.isEmpty()) {
             mRecyclerView.setVisibility(View.GONE);
             tvEmptyView.setVisibility(View.VISIBLE);
 
@@ -130,22 +127,23 @@ public class DocSearchActivity  extends BaseListActivity implements DocSearchMvp
             @Override
             public void onLoadMore() {
                 //add null , so the adapter will check view_type and show progress bar at bottom
-                studentList.add(null);
-                mAdapter.notifyItemInserted(studentList.size() - 1);
+                searchitems.add(null);
+                mAdapter.notifyItemInserted(searchitems.size() - 1);
 
                 handler.postDelayed(new Runnable() {
                     @Override
                     public void run() {
                         //   remove progress item
-                        studentList.remove(studentList.size() - 1);
-                        mAdapter.notifyItemRemoved(studentList.size());
+                        searchitems.remove(searchitems.size() - 1);
+                        mAdapter.notifyItemRemoved(searchitems.size());
                         //add items one by one
-                        int start = studentList.size();
+                        int start = searchitems.size();
                         int end = start + 20;
 
                         for (int i = start + 1; i <= end; i++) {
-                            studentList.add(new DocSearchStudent("Student " + i, "AndroidStudent" + i + "@gmail.com"));
-                            mAdapter.notifyItemInserted(studentList.size());
+                            searchitems.add(new BankItem(" "," ","100" + i," "," "
+                                    ," "," "," "," "," ","120","pop" + i," "));
+                            mAdapter.notifyItemInserted(searchitems.size());
                         }
                         mAdapter.setLoaded();
                         //or you can add all at once but do not forget to call mAdapter.notifyDataSetChanged();
@@ -154,12 +152,6 @@ public class DocSearchActivity  extends BaseListActivity implements DocSearchMvp
 
             }
         });
-
-    }
-
-    @Override public void setSearchItems(List<BankItem> items) {
-        Log.d("DocSearchMvp ", "searchitem " + items.get(0).getDok());
-
 
     }
 
