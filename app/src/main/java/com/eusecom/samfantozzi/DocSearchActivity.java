@@ -15,6 +15,8 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
+import android.widget.Toast;
+
 import com.eusecom.samfantozzi.models.BankItem;
 import com.eusecom.samfantozzi.retrofit.AbsServerService;
 import java.util.List;
@@ -80,7 +82,8 @@ public class DocSearchActivity  extends BaseListActivity implements DocSearchMvp
         mRecyclerView.setLayoutManager(mLayoutManager);
 
         //presenter.loadStudents();
-        presenter.loadSearchItems();
+        //presenter.loadSearchItems();
+        presenter.onStart();
 
     }
 
@@ -102,6 +105,10 @@ public class DocSearchActivity  extends BaseListActivity implements DocSearchMvp
 
     @Override public void hideProgress() {
         hideProgressDialog();
+    }
+
+    @Override public void showMessage(String message) {
+        Toast.makeText(this, message, Toast.LENGTH_LONG).show();
     }
 
     @Override public void setStudents(List<DocSearchStudent> studentList) {
@@ -141,8 +148,8 @@ public class DocSearchActivity  extends BaseListActivity implements DocSearchMvp
                         int end = start + 20;
 
                         for (int i = start + 1; i <= end; i++) {
-                            searchitems.add(new BankItem(" "," ","100" + i," "," "
-                                    ," "," "," "," "," ","120","pop" + i," "));
+                            //searchitems.add(new BankItem(" "," ","100" + i," "," "
+                            //        ," "," "," "," "," ","120","pop" + i," "));
                             mAdapter.notifyItemInserted(searchitems.size());
                         }
                         mAdapter.setLoaded();

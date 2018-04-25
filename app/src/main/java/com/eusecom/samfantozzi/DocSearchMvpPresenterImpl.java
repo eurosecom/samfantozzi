@@ -23,10 +23,17 @@ import android.os.Handler;
 import android.util.Log;
 
 import com.eusecom.samfantozzi.models.BankItem;
+import com.eusecom.samfantozzi.models.BankItemList;
 
 import java.util.Arrays;
 import java.util.List;
+import java.util.Random;
+
+import rx.schedulers.Schedulers;
 import rx.subscriptions.CompositeSubscription;
+
+import static android.content.ContentValues.TAG;
+import static rx.Observable.empty;
 
 public class DocSearchMvpPresenterImpl implements DocSearchMvpPresenter, DocSearchInteractor.OnFinishedListener  {
 
@@ -94,5 +101,66 @@ public class DocSearchMvpPresenterImpl implements DocSearchMvpPresenter, DocSear
         }
     }
 
+
+    @Override
+    public void onStart() {
+        if (mainView != null) {
+            mainView.showProgress();
+
+            mSubscription = new CompositeSubscription();
+
+            Random r = new Random();
+            double d = 10.0 + r.nextDouble() * 20.0;
+            String ds = String.valueOf(d);
+
+            String usuidx = mSharedPreferences.getString("usuid", "");
+            String userxplus = ds + "/" + usuidx + "/" + ds;
+
+            MCrypt mcrypt = new MCrypt();
+            String encrypted2 = "";
+            try {
+                encrypted2 = mcrypt.bytesToHex(mcrypt.encrypt(userxplus));
+            } catch (Exception e1) {
+                // TODO Auto-generated catch block
+                e1.printStackTrace();
+            }
+
+            String firx = mSharedPreferences.getString("fir", "");
+            String rokx = mSharedPreferences.getString("rok", "");
+            String drh = "4";
+            String dodx = mSharedPreferences.getString("doduce", "");
+            if (drh.equals("1")) {
+                dodx = mSharedPreferences.getString("odbuce", "");
+            }
+            if (drh.equals("3")) {
+                dodx = mSharedPreferences.getString("pokluce", "");
+            }
+            if (drh.equals("4")) {
+                dodx = mSharedPreferences.getString("bankuce", "");
+            }
+            String umex = mSharedPreferences.getString("ume", "");
+            String edidok = mSharedPreferences.getString("edidok", "");
+
+            mSubscription.add(docSearchInteractor.getSearchItemsFromSql(encrypted2, ds, firx, rokx, drh, dodx, umex, edidok)
+                    .subscribeOn(Schedulers.computation())
+                    .observeOn(rx.android.schedulers.AndroidSchedulers.mainThread())
+                    .doOnError(throwable -> {
+                        Log.e(TAG, "Error DocSearchPresenter " + throwable.getMessage());
+                        mainView.hideProgress();
+                        mainView.showMessage("Server not connected");
+                    })
+                    .onErrorResumeNext(throwable -> empty())
+                    .subscribe(this::onFinishedSearchItemsFromSql));
+
+        }
+    }
+
+    public void onFinishedSearchItemsFromSql(List<BankItem> searchtems) {
+        Log.d("DocSearchMvp bankitem0", searchtems.get(0).getDok());
+        if (mainView != null) {
+            mainView.setSearchItems(searchtems);
+            mainView.hideProgress();
+        }
+    }
 
 }

@@ -29,6 +29,8 @@ public interface DocSearchMvpView {
 
     void hideProgress();
 
+    void showMessage(String message);
+
     void setStudents(List<DocSearchStudent> items);
 
     void setSearchItems(List<BankItem> items);

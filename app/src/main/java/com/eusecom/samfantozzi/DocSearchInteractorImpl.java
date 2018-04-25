@@ -18,15 +18,26 @@
 
 package com.eusecom.samfantozzi;
 
+import android.content.SharedPreferences;
 import android.os.Handler;
 import android.support.annotation.NonNull;
+import android.util.Log;
 
 import com.eusecom.samfantozzi.models.BankItem;
+import com.eusecom.samfantozzi.models.BankItemList;
 import com.eusecom.samfantozzi.retrofit.AbsServerService;
 
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Random;
+
+import rx.Observable;
+import rx.schedulers.Schedulers;
+import rx.subscriptions.CompositeSubscription;
+
+import static android.content.ContentValues.TAG;
+import static rx.Observable.empty;
 
 public class DocSearchInteractorImpl implements DocSearchInteractor {
 
@@ -77,4 +88,12 @@ public class DocSearchInteractorImpl implements DocSearchInteractor {
         return bankitemList;
     }
 
+    //get search items from mysql server
+    @Override public Observable<List<BankItem>> getSearchItemsFromSql(String userhash, String userid, String fromfir
+            , String vyb_rok, String drh, String uce, String ume, String dokx) {
+
+        return mAbsServerService.getBankItemsFromSqlServer(userhash, userid, fromfir, vyb_rok, drh, uce, ume, dokx);
+
+    }
+    //end get search items from mysql server
 }

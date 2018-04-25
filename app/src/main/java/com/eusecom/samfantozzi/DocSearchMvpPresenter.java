@@ -29,4 +29,6 @@ public interface DocSearchMvpPresenter {
 
     void detachView();
 
+    void onStart();
+
 }

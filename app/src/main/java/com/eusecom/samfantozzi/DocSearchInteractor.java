@@ -19,8 +19,11 @@
 package com.eusecom.samfantozzi;
 
 import com.eusecom.samfantozzi.models.BankItem;
+import com.eusecom.samfantozzi.models.BankItemList;
 
 import java.util.List;
+
+import rx.Observable;
 
 public interface DocSearchInteractor {
 
@@ -28,10 +31,12 @@ public interface DocSearchInteractor {
 
         void onFinishedStudents(List<DocSearchStudent> studentList);
         void onFinishedSearchItems(List<BankItem> studentList);
-        //void onFinishedBankItems(List<BankItem> items);
 
     }
 
     void loadStudentsList(OnFinishedListener listener);
     void loadSearchItemsList(OnFinishedListener listener);
+
+    Observable<List<BankItem>> getSearchItemsFromSql(String userhash, String userid, String fromfir
+            , String vyb_rok, String drh, String uce, String ume, String dokx);
 }
