@@ -25,6 +25,8 @@ public interface DocSearchMvpPresenter {
 
     void loadSearchItems();
 
+    void loadNext20SearchItems(int start, int end);
+
     void attachView(DocSearchMvpView view);
 
     void detachView();

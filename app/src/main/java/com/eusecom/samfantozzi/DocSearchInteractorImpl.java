@@ -88,6 +88,26 @@ public class DocSearchInteractorImpl implements DocSearchInteractor {
         return bankitemList;
     }
 
+    //get next 20 bankitems list
+    @Override public void loadNext20SearchItemsList(OnFinishedListener listener, int start, int end) {
+        new Handler().postDelayed(new Runnable() {
+            @Override public void run() {
+                listener.onFinishedNext20SearchItems(createNext20SearchItemsList(start, end));
+            }
+        }, 2000);
+    }
+
+    private List<BankItem> createNext20SearchItemsList(int start, int end) {
+
+        bankitemList = new ArrayList<BankItem>();
+        for (int i = start + 1; i <= end; i++) {
+            bankitemList.add(new BankItem(" "," ","100" + i," "," "
+                    ," "," "," "," "," ","120","pop" + i," "));
+
+        }
+        return bankitemList;
+    }
+
     //get search items from mysql server
     @Override public Observable<List<BankItem>> getSearchItemsFromSql(String userhash, String userid, String fromfir
             , String vyb_rok, String drh, String uce, String ume, String dokx) {

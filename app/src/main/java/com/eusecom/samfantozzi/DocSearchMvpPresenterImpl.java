@@ -101,6 +101,21 @@ public class DocSearchMvpPresenterImpl implements DocSearchMvpPresenter, DocSear
         }
     }
 
+    //load next 20 bankitems list
+    @Override
+    public void loadNext20SearchItems(int start, int end) {
+        if (mainView != null) {
+            mainView.showProgress();
+        }
+        docSearchInteractor.loadNext20SearchItemsList(this, start, end);
+    }
+
+    @Override public void onFinishedNext20SearchItems(List<BankItem> items) {
+        if (mainView != null) {
+            mainView.setNext20SearchItems(items);
+            mainView.hideProgress();
+        }
+    }
 
     @Override
     public void onStart() {

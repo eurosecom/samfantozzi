@@ -35,4 +35,6 @@ public interface DocSearchMvpView {
 
     void setSearchItems(List<BankItem> items);
 
+    void setNext20SearchItems(List<BankItem> items);
+
 }

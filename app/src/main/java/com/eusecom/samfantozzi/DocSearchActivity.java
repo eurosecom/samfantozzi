@@ -19,6 +19,8 @@ import android.widget.Toast;
 
 import com.eusecom.samfantozzi.models.BankItem;
 import com.eusecom.samfantozzi.retrofit.AbsServerService;
+
+import java.util.ArrayList;
 import java.util.List;
 import javax.inject.Inject;
 import io.reactivex.disposables.Disposable;
@@ -38,6 +40,7 @@ public class DocSearchActivity  extends BaseListActivity implements DocSearchMvp
     private DocSearchAdapter mAdapter;
     private LinearLayoutManager mLayoutManager;
     protected Handler handler;
+    private List<BankItem> searchitems;
 
     //MVP
     private DocSearchMvpPresenter presenter;
@@ -115,9 +118,11 @@ public class DocSearchActivity  extends BaseListActivity implements DocSearchMvp
         Log.d("DocSearchMvp ", "student " + studentList.get(0).getName());
     }
 
-    @Override public void setSearchItems(List<BankItem> searchitems) {
-        Log.d("DocSearchMvp ", "searchitem " + searchitems.get(0).getDok());
+    @Override public void setSearchItems(List<BankItem> first20searchitems) {
+        Log.d("DocSearchMvp ", "searchitem " + first20searchitems.get(0).getDok());
 
+        searchitems = new ArrayList<BankItem>();
+        searchitems = first20searchitems;
         mAdapter = new DocSearchAdapter(searchitems, mRecyclerView);
         mRecyclerView.setAdapter(mAdapter);
 
@@ -137,29 +142,27 @@ public class DocSearchActivity  extends BaseListActivity implements DocSearchMvp
                 searchitems.add(null);
                 mAdapter.notifyItemInserted(searchitems.size() - 1);
 
-                handler.postDelayed(new Runnable() {
-                    @Override
-                    public void run() {
-                        //   remove progress item
-                        searchitems.remove(searchitems.size() - 1);
-                        mAdapter.notifyItemRemoved(searchitems.size());
-                        //add items one by one
-                        int start = searchitems.size();
-                        int end = start + 20;
+                searchitems.remove(searchitems.size() - 1);
+                mAdapter.notifyItemRemoved(searchitems.size());
 
-                        for (int i = start + 1; i <= end; i++) {
-                            //searchitems.add(new BankItem(" "," ","100" + i," "," "
-                            //        ," "," "," "," "," ","120","pop" + i," "));
-                            mAdapter.notifyItemInserted(searchitems.size());
-                        }
-                        mAdapter.setLoaded();
-                        //or you can add all at once but do not forget to call mAdapter.notifyDataSetChanged();
-                    }
-                }, 2000);
+                int start = searchitems.size();
+                int end = start + 20;
+
+                presenter.loadNext20SearchItems(start, end);
 
             }
         });
 
+    }
+
+    @Override public void setNext20SearchItems(List<BankItem> next20searchitems) {
+        Log.d("DocSearchMvp ", "searchitem " + next20searchitems.get(0).getDok());
+
+        for (int i = 0; i < next20searchitems.size(); i++) {
+            searchitems.add(next20searchitems.get(i));
+        }
+        mAdapter.setLoaded();
+        mAdapter.notifyDataSetChanged();
     }
 
     //option menu

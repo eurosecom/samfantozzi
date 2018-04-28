@@ -31,11 +31,12 @@ public interface DocSearchInteractor {
 
         void onFinishedStudents(List<DocSearchStudent> studentList);
         void onFinishedSearchItems(List<BankItem> studentList);
-
+        void onFinishedNext20SearchItems(List<BankItem> studentList);
     }
 
     void loadStudentsList(OnFinishedListener listener);
     void loadSearchItemsList(OnFinishedListener listener);
+    void loadNext20SearchItemsList(OnFinishedListener listener, int start, int end);
 
     Observable<List<BankItem>> getSearchItemsFromSql(String userhash, String userid, String fromfir
             , String vyb_rok, String drh, String uce, String ume, String dokx);
