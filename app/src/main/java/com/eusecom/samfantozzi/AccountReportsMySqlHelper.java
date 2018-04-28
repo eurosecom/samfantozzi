@@ -1,9 +1,13 @@
 package com.eusecom.samfantozzi;
 
+import android.app.AlertDialog;
+import android.app.AlertDialog.Builder;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+
 
 
 public class AccountReportsMySqlHelper {
@@ -148,6 +152,17 @@ public class AccountReportsMySqlHelper {
 				is10.putExtras(extras10);
 				context.startActivity(is10);
 				is10.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+				break;
+
+			case NEXTVERSION:
+				new AlertDialog.Builder(context)
+						.setTitle(context.getResources().getString(R.string.unpackeditem))
+						.setMessage(context.getResources().getString(R.string.innextversion))
+						.setPositiveButton(context.getResources().getString(R.string.textok), new DialogInterface.OnClickListener() {
+							public void onClick(DialogInterface dialog, int which) {
+
+							}
+						}).show();
 				break;
 
 		}

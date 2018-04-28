@@ -420,6 +420,11 @@ abstract class SaldoListKtFragment : Fragment() {
                         `is2`.putExtras(extras2)
                         startActivity(`is2`)
                         `is2`.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP
+                    }else{
+                        //generating MySql PDF report with using CommandExecutorProxy and Facade
+                        callCommandExecutorProxy("lgn", AccountReportsHelperFacade.DBTypes.MYSQL
+                                , AccountReportsHelperFacade.ReportTypes.PDF
+                                , AccountReportsHelperFacade.ReportName.NEXTVERSION, context)
                     }
                 }
             }
@@ -476,16 +481,48 @@ abstract class SaldoListKtFragment : Fragment() {
                         `is2`.putExtras(extras2)
                         startActivity(`is2`)
                         `is2`.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP
+                    }else{
+                        //generating MySql PDF report with using CommandExecutorProxy and Facade
+                        callCommandExecutorProxy("lgn", AccountReportsHelperFacade.DBTypes.MYSQL
+                                , AccountReportsHelperFacade.ReportTypes.PDF
+                                , AccountReportsHelperFacade.ReportName.NEXTVERSION, context)
                     }
                 }
                 2 -> {
-
+                    //generating MySql PDF report with using CommandExecutorProxy and Facade
+                    callCommandExecutorProxy("lgn", AccountReportsHelperFacade.DBTypes.MYSQL
+                            , AccountReportsHelperFacade.ReportTypes.PDF
+                            , AccountReportsHelperFacade.ReportName.NEXTVERSION, context)
                 }
+
             }
         }
         val dialog = builder.create()
         builder.show()
 
+    }
+
+    fun callCommandExecutorProxy(perm: String , dbType: AccountReportsHelperFacade.DBTypes
+                                 , reportType :AccountReportsHelperFacade.ReportTypes
+                                 , tableName : AccountReportsHelperFacade.ReportName
+                                 , context: Context ) {
+        val executor = CommandExecutorProxy(mSharedPreferences.getString("usuid", "0")
+                , mSharedPreferences.getString("fir", "0"), mSharedPreferences.getString("usadmin", "0"))
+        try {
+            executor.runCommand(perm, dbType, reportType, tableName, context)
+        } catch (e: Exception) {
+            println("Exception Message::" + e.message)
+            if(e.message.equals("adm")) {
+                //showDonotadminAlert()
+            }
+            if(e.message.equals("lgn")) {
+                //showDonotloginAlert()
+            }
+            if(e.message.equals("cmp")) {
+                //showDonotcompanyAlert()
+            }
+
+        }
     }
 
 
