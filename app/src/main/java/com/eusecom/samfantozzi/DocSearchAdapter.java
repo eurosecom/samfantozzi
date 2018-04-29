@@ -1,16 +1,19 @@
 package com.eusecom.samfantozzi;
 
+import android.content.Context;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.eusecom.samfantozzi.models.BankItem;
+import com.squareup.picasso.Picasso;
 
 import java.util.List;
 
@@ -81,9 +84,38 @@ public class DocSearchAdapter extends RecyclerView.Adapter {
 
             BankItem singleStudent = (BankItem) studentList.get(position);
 
-            ((StudentViewHolder) holder).tvName.setText(singleStudent.getDok());
+            Picasso.with(((StudentViewHolder) holder).mContext).load(R.drawable.ic_call_made_black_24dp)
+                    .resize(120, 120).into(((StudentViewHolder) holder).invoice_photo);
 
-            ((StudentViewHolder) holder).tvEmailId.setText(singleStudent.getPop());
+            if( singleStudent.getDrh().equals("3")) {
+                Picasso.with(((StudentViewHolder) holder).mContext).load(R.drawable.ic_local_atm_black_24dp)
+                        .resize(120, 120).into(((StudentViewHolder) holder).invoice_photo);
+            }
+            if( singleStudent.getDrh().equals("4")) {
+                Picasso.with(((StudentViewHolder) holder).mContext).load(R.drawable.ic_account_balance_black_24dp)
+                        .resize(120, 120).into(((StudentViewHolder) holder).invoice_photo);
+            }
+            if( singleStudent.getDrh().equals("1")) {
+                Picasso.with(((StudentViewHolder) holder).mContext).load(R.drawable.ic_call_made_black_24dp)
+                        .resize(120, 120).into(((StudentViewHolder) holder).invoice_photo);
+            }
+            if( singleStudent.getDrh().equals("2")) {
+                Picasso.with(((StudentViewHolder) holder).mContext).load(R.drawable.ic_call_received_black_24dp)
+                        .resize(120, 120).into(((StudentViewHolder) holder).invoice_photo);
+            }
+
+            ((StudentViewHolder) holder).invoice_name.setText(singleStudent.getUcm() + " / "
+                    + singleStudent.getUcd() + " "
+                    + singleStudent.getNai() + " "
+                    + singleStudent.getPop());
+
+            ((StudentViewHolder) holder).docx.setText(singleStudent.getDok());
+
+            ((StudentViewHolder) holder).datex.setText(singleStudent.getDat());
+
+            ((StudentViewHolder) holder).invoicex.setText(singleStudent.getFak());
+
+            ((StudentViewHolder) holder).valuex.setText(singleStudent.getHod());
 
             ((StudentViewHolder) holder).student = singleStudent;
 
@@ -108,16 +140,25 @@ public class DocSearchAdapter extends RecyclerView.Adapter {
 
     //student viewholder
     public static class StudentViewHolder extends RecyclerView.ViewHolder {
-        public TextView tvName;
 
-        public TextView tvEmailId;
-
+        public TextView invoice_name;
+        public ImageView invoice_photo;
+        public TextView datex;
+        public TextView invoicex;
+        public TextView valuex;
+        public TextView docx;
         public BankItem student;
+        Context mContext;
 
         public StudentViewHolder(View v) {
             super(v);
-            tvName = (TextView) v.findViewById(R.id.tvName);
-            tvEmailId = (TextView) v.findViewById(R.id.tvEmailId);
+            invoice_name = (TextView) v.findViewById(R.id.invoice_name);
+            invoice_photo = (ImageView) v.findViewById(R.id.invoice_photo);
+            datex = (TextView) v.findViewById(R.id.datex);
+            invoicex = (TextView) v.findViewById(R.id.invoicex);
+            valuex = (TextView) v.findViewById(R.id.valuex);
+            docx = (TextView) v.findViewById(R.id.docx);
+            mContext = itemView.getContext();
 
             v.setOnClickListener(new OnClickListener() {
 

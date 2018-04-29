@@ -93,6 +93,12 @@ public interface AbsServerService {
             , @Query("vyb_rok") String vyb_rok, @Query("drh") String drh
             , @Query("uce") String uce, @Query("ume") String ume, @Query("dokx") String dokx);
 
+    @GET("/androidfantozzi/get_searchitems.php")
+    Observable<List<BankItem>> getSearchItemsFromSqlServer(@Query("userhash") String userhash
+            , @Query("userid") String userid, @Query("fromfir") String fromfir
+            , @Query("vyb_rok") String vyb_rok, @Query("drh") String drh
+            , @Query("uce") String uce, @Query("ume") String ume, @Query("dokx") String dokx);
+
     @GET("/androidfantozzi/get_accountitem_withbalance.php")
     Observable<BankItemList> getBankItemsFromSqlServerWithBalance(@Query("userhash") String userhash
             , @Query("userid") String userid, @Query("fromfir") String fromfir
