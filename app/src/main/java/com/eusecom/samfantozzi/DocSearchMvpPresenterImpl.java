@@ -188,7 +188,8 @@ public class DocSearchMvpPresenterImpl implements DocSearchMvpPresenter, DocSear
     @Override
     public void getNext20SearchItemsFromSql(int start, int end) {
         if (mainView != null) {
-            mainView.showProgress();
+            //do not use activity progressbar but progressbar in adapter
+            //mainView.showProgress();
 
             mSubscription = new CompositeSubscription();
 
@@ -244,7 +245,8 @@ public class DocSearchMvpPresenterImpl implements DocSearchMvpPresenter, DocSear
         //Log.d("DocSearchMvp bankitem0", searchtems.get(0).getDok());
         if (mainView != null) {
             mainView.setNext20SearchItems(searchtems);
-            mainView.hideProgress();
+            //do not use activity progressbar but progressbar in adapter
+            //mainView.hideProgress();
         }
     }
     //end get next 20 items from sql
