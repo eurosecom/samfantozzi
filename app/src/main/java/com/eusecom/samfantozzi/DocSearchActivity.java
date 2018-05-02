@@ -10,7 +10,6 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.SearchView;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -86,7 +85,7 @@ public class DocSearchActivity  extends BaseListActivity implements DocSearchMvp
 
         //presenter.loadStudents();
         //presenter.loadSearchItems();
-        presenter.onStart();
+        presenter.getFirst20SearchItemsFromSql();
 
     }
 
@@ -115,11 +114,11 @@ public class DocSearchActivity  extends BaseListActivity implements DocSearchMvp
     }
 
     @Override public void setStudents(List<DocSearchStudent> studentList) {
-        Log.d("DocSearchMvp ", "student " + studentList.get(0).getName());
+        //Log.d("DocSearchMvp ", "student " + studentList.get(0).getName());
     }
 
     @Override public void setSearchItems(List<BankItem> first20searchitems) {
-        Log.d("DocSearchMvp ", "searchitem " + first20searchitems.get(0).getDok());
+        //Log.d("DocSearchMvp ", "searchitem " + first20searchitems.get(0).getDok());
 
         searchitems = new ArrayList<BankItem>();
         searchitems = first20searchitems;
@@ -138,17 +137,16 @@ public class DocSearchActivity  extends BaseListActivity implements DocSearchMvp
         mAdapter.setOnLoadMoreListener(new DocSearchOnLoadMoreListener() {
             @Override
             public void onLoadMore() {
+
                 //add null , so the adapter will check view_type and show progress bar at bottom
                 searchitems.add(null);
                 mAdapter.notifyItemInserted(searchitems.size() - 1);
 
-                searchitems.remove(searchitems.size() - 1);
-                mAdapter.notifyItemRemoved(searchitems.size());
-
-                int start = searchitems.size();
+                int start = searchitems.size()-1;
                 int end = start + 20;
 
-                presenter.loadNext20SearchItems(start, end);
+                //presenter.loadNext20SearchItems(start, end);
+                presenter.getNext20SearchItemsFromSql(start, end);
 
             }
         });
@@ -156,7 +154,11 @@ public class DocSearchActivity  extends BaseListActivity implements DocSearchMvp
     }
 
     @Override public void setNext20SearchItems(List<BankItem> next20searchitems) {
-        Log.d("DocSearchMvp ", "searchitem " + next20searchitems.get(0).getDok());
+        //Log.d("DocSearchMvp ", "searchitem " + next20searchitems.get(0).getDok());
+
+        //hide bottom progressbar
+        searchitems.remove(searchitems.size() - 1);
+        mAdapter.notifyItemRemoved(searchitems.size());
 
         for (int i = 0; i < next20searchitems.size(); i++) {
             searchitems.add(next20searchitems.get(i));

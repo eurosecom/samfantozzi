@@ -3,6 +3,7 @@ package com.eusecom.samfantozzi;
 import android.content.Context;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -25,7 +26,7 @@ public class DocSearchAdapter extends RecyclerView.Adapter {
 
     // The minimum amount of items to have below your current scroll position before loading more.
     private int visibleThreshold = 5;
-    private int lastVisibleItem, totalItemCount;
+    private int lastVisibleItem, totalItemCount, sizeStudents, displayedStudents;
     private boolean loading;
     private DocSearchOnLoadMoreListener onLoadMoreListener;
 
@@ -45,7 +46,13 @@ public class DocSearchAdapter extends RecyclerView.Adapter {
 
                             totalItemCount = linearLayoutManager.getItemCount();
                             lastVisibleItem = linearLayoutManager.findLastVisibleItemPosition();
-                            if (!loading && totalItemCount <= (lastVisibleItem + visibleThreshold)) {
+                            sizeStudents = Integer.parseInt(studentList.get(0).getBal());
+                            displayedStudents = studentList.size();
+
+                            //Log.d("DocSearchMvp ", "size " + sizeStudents);
+                            //Log.d("DocSearchMvp ", "displayed " + displayedStudents);
+
+                            if (!loading && totalItemCount <= (lastVisibleItem + visibleThreshold) && displayedStudents < sizeStudents ) {
                                 // End has been reached
                                 // Do something
                                 if (onLoadMoreListener != null) {
@@ -109,7 +116,7 @@ public class DocSearchAdapter extends RecyclerView.Adapter {
                     + singleStudent.getNai() + " "
                     + singleStudent.getPop());
 
-            ((StudentViewHolder) holder).docx.setText(singleStudent.getDok());
+            ((StudentViewHolder) holder).docx.setText(position + ". " + singleStudent.getDok());
 
             ((StudentViewHolder) holder).datex.setText(singleStudent.getDat());
 

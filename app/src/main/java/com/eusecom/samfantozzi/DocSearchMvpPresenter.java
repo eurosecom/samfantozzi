@@ -31,6 +31,8 @@ public interface DocSearchMvpPresenter {
 
     void detachView();
 
-    void onStart();
+    void getFirst20SearchItemsFromSql();
+
+    void getNext20SearchItemsFromSql(int start, int end);
 
 }

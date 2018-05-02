@@ -39,5 +39,5 @@ public interface DocSearchInteractor {
     void loadNext20SearchItemsList(OnFinishedListener listener, int start, int end);
 
     Observable<List<BankItem>> getSearchItemsFromSql(String userhash, String userid, String fromfir
-            , String vyb_rok, String drh, String uce, String ume, String dokx);
+            , String vyb_rok, String drh, String uce, String ume, String dokx, int start, int end);
 }
