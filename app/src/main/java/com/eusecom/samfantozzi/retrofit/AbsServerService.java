@@ -97,7 +97,7 @@ public interface AbsServerService {
     Observable<List<BankItem>> getSearchItemsFromSqlServer(@Query("userhash") String userhash
             , @Query("userid") String userid, @Query("fromfir") String fromfir
             , @Query("vyb_rok") String vyb_rok, @Query("drh") String drh
-            , @Query("uce") String uce, @Query("ume") String ume, @Query("dokx") String dokx
+            , @Query("uce") String uce, @Query("ume") String ume, @Query("query") String query
             , @Query("start") int start, @Query("end") int end);
 
     @GET("/androidfantozzi/get_accountitem_withbalance.php")

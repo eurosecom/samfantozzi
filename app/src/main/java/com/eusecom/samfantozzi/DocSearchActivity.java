@@ -10,6 +10,7 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.SearchView;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -21,8 +22,19 @@ import com.eusecom.samfantozzi.retrofit.AbsServerService;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.TimeUnit;
+
 import javax.inject.Inject;
+
+import io.reactivex.Observable;
+import io.reactivex.ObservableEmitter;
+import io.reactivex.ObservableOnSubscribe;
+import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.Disposable;
+import io.reactivex.functions.Cancellable;
+import io.reactivex.functions.Consumer;
+import io.reactivex.functions.Function;
+import io.reactivex.functions.Predicate;
 
 /*
 * How to Implement Load More in #RecyclerView
@@ -85,7 +97,7 @@ public class DocSearchActivity  extends BaseListActivity implements DocSearchMvp
 
         //presenter.loadStudents();
         //presenter.loadSearchItems();
-        presenter.getFirst20SearchItemsFromSql();
+        presenter.getFirst20SearchItemsFromSql(querystring);
 
     }
 
@@ -146,7 +158,7 @@ public class DocSearchActivity  extends BaseListActivity implements DocSearchMvp
                 int end = start + 20;
 
                 //presenter.loadNext20SearchItems(start, end);
-                presenter.getNext20SearchItemsFromSql(start, end);
+                presenter.getNext20SearchItemsFromSql(querystring, start, end);
 
             }
         });
@@ -174,7 +186,7 @@ public class DocSearchActivity  extends BaseListActivity implements DocSearchMvp
         searchView = (SearchView) MenuItemCompat.getActionView(menu.findItem(R.id.action_search));
         searchManager = (SearchManager) this.getSystemService(SEARCH_SERVICE);
         searchView.setSearchableInfo(searchManager.getSearchableInfo(this.getComponentName()));
-        //andrejko getObservableSearchViewText();
+        getObservableSearchViewText();
 
         return true;
     }
@@ -199,5 +211,81 @@ public class DocSearchActivity  extends BaseListActivity implements DocSearchMvp
 
         return super.onOptionsItemSelected(item);
     }
+
+    //listener to searchview
+    private void getObservableSearchViewText() {
+
+        Observable<String> searchViewChangeStream = createSearchViewTextChangeObservable();
+
+        mDisposable = searchViewChangeStream
+                .observeOn(AndroidSchedulers.mainThread())
+                .doOnNext(new Consumer<String>() {
+                    @Override
+                    public void accept(String s) {
+                        showProgress();
+                    }
+                })
+                .observeOn(io.reactivex.schedulers.Schedulers.io())
+                .map(new Function<String, String>() {
+                    @Override
+                    public String apply(String query) {
+                        presenter.getForQueryFirst20SearchItemsFromSql(query);
+                        return query;
+                    }
+                })
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new Consumer<String>() {
+                    @Override
+                    public void accept(String result) {
+                        //hideProgress();
+                        //andrejko presenter.showSearchResult(result);
+                    }
+                });
+    }
+
+    private Observable<String> createSearchViewTextChangeObservable() {
+        Observable<String> searchViewTextChangeObservable = Observable.create(new ObservableOnSubscribe<String>() {
+            @Override
+            public void subscribe(final ObservableEmitter<String> emitter) throws Exception {
+
+                onQueryTextListener = new SearchView.OnQueryTextListener() {
+                    @Override
+                    public boolean onQueryTextSubmit(String query) {
+                        // use this method when query submitted
+                        emitter.onNext(query.toString());
+                        return false;
+                    }
+
+                    @Override
+                    public boolean onQueryTextChange(String newText) {
+                        // use this method for auto complete search process
+                        emitter.onNext(newText.toString());
+                        //andrejko presenter.emitSearchString(newText.toString());
+                        return false;
+                    }
+
+                };
+
+                searchView.setOnQueryTextListener(onQueryTextListener);
+
+                emitter.setCancellable(new Cancellable() {
+                    @Override
+                    public void cancel() throws Exception {
+                        searchView.setOnQueryTextListener(null);
+                    }
+                });
+            }
+        });
+
+        return searchViewTextChangeObservable
+                .filter(new Predicate<String>() {
+                    @Override
+                    public boolean test(String query) throws Exception {
+                        return query.length() >= 3 || query.equals("");
+                    }
+                }).debounce(300, TimeUnit.MILLISECONDS);  // add this line
+    }
+
+
 
 }

@@ -110,9 +110,9 @@ public class DocSearchInteractorImpl implements DocSearchInteractor {
 
     //get search items from mysql server
     @Override public Observable<List<BankItem>> getSearchItemsFromSql(String userhash, String userid, String fromfir
-            , String vyb_rok, String drh, String uce, String ume, String dokx, int start, int end) {
+            , String vyb_rok, String drh, String uce, String ume, String query, int start, int end) {
 
-        return mAbsServerService.getSearchItemsFromSqlServer(userhash, userid, fromfir, vyb_rok, drh, uce, ume, dokx, start, end);
+        return mAbsServerService.getSearchItemsFromSqlServer(userhash, userid, fromfir, vyb_rok, drh, uce, ume, query, start, end);
 
     }
     //end get search items from mysql server

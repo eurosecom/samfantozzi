@@ -123,7 +123,7 @@ public class DocSearchMvpPresenterImpl implements DocSearchMvpPresenter, DocSear
 
     //get first 20 items from sql
     @Override
-    public void getFirst20SearchItemsFromSql() {
+    public void getFirst20SearchItemsFromSql(String query) {
         if (mainView != null) {
             mainView.showProgress();
 
@@ -159,9 +159,8 @@ public class DocSearchMvpPresenterImpl implements DocSearchMvpPresenter, DocSear
                 dodx = mSharedPreferences.getString("bankuce", "");
             }
             String umex = mSharedPreferences.getString("ume", "");
-            String edidok = mSharedPreferences.getString("edidok", "");
 
-            mSubscription.add(docSearchInteractor.getSearchItemsFromSql(encrypted2, ds, firx, rokx, drh, dodx, umex, edidok, 0, 20)
+            mSubscription.add(docSearchInteractor.getSearchItemsFromSql(encrypted2, ds, firx, rokx, drh, dodx, umex, query, 0, 20)
                     .subscribeOn(Schedulers.computation())
                     .observeOn(rx.android.schedulers.AndroidSchedulers.mainThread())
                     .doOnError(throwable -> {
@@ -176,7 +175,7 @@ public class DocSearchMvpPresenterImpl implements DocSearchMvpPresenter, DocSear
     }
 
     public void onFinishedSearchItemsFromSql(List<BankItem> searchtems) {
-        Log.d("DocSearchMvp bankitem0", searchtems.get(0).getDok());
+        //Log.d("DocSearchMvp bankitem0", searchtems.get(0).getDok());
         if (mainView != null) {
             mainView.setSearchItems(searchtems);
             mainView.hideProgress();
@@ -186,7 +185,7 @@ public class DocSearchMvpPresenterImpl implements DocSearchMvpPresenter, DocSear
 
     //get next 20 items from sql
     @Override
-    public void getNext20SearchItemsFromSql(int start, int end) {
+    public void getNext20SearchItemsFromSql(String query, int start, int end) {
         if (mainView != null) {
             //do not use activity progressbar but progressbar in adapter
             //mainView.showProgress();
@@ -227,7 +226,7 @@ public class DocSearchMvpPresenterImpl implements DocSearchMvpPresenter, DocSear
 
             Log.d("DocSearchMvp start end ", start + " " + end);
 
-            mSubscription.add(docSearchInteractor.getSearchItemsFromSql(encrypted2, ds, firx, rokx, drh, dodx, umex, edidok, start, end)
+            mSubscription.add(docSearchInteractor.getSearchItemsFromSql(encrypted2, ds, firx, rokx, drh, dodx, umex, query, start, end)
                     .subscribeOn(Schedulers.computation())
                     .observeOn(rx.android.schedulers.AndroidSchedulers.mainThread())
                     .doOnError(throwable -> {
@@ -250,5 +249,67 @@ public class DocSearchMvpPresenterImpl implements DocSearchMvpPresenter, DocSear
         }
     }
     //end get next 20 items from sql
+
+    //get for query first 20 items from sql
+    @Override
+    public void getForQueryFirst20SearchItemsFromSql(String query) {
+        if (mainView != null) {
+            mainView.showProgress();
+
+            mSubscription = new CompositeSubscription();
+
+            Random r = new Random();
+            double d = 10.0 + r.nextDouble() * 20.0;
+            String ds = String.valueOf(d);
+
+            String usuidx = mSharedPreferences.getString("usuid", "");
+            String userxplus = ds + "/" + usuidx + "/" + ds;
+
+            MCrypt mcrypt = new MCrypt();
+            String encrypted2 = "";
+            try {
+                encrypted2 = mcrypt.bytesToHex(mcrypt.encrypt(userxplus));
+            } catch (Exception e1) {
+                // TODO Auto-generated catch block
+                e1.printStackTrace();
+            }
+
+            String firx = mSharedPreferences.getString("fir", "");
+            String rokx = mSharedPreferences.getString("rok", "");
+            String drh = "4";
+            String dodx = mSharedPreferences.getString("doduce", "");
+            if (drh.equals("1")) {
+                dodx = mSharedPreferences.getString("odbuce", "");
+            }
+            if (drh.equals("3")) {
+                dodx = mSharedPreferences.getString("pokluce", "");
+            }
+            if (drh.equals("4")) {
+                dodx = mSharedPreferences.getString("bankuce", "");
+            }
+            String umex = mSharedPreferences.getString("ume", "");
+
+            mSubscription.add(docSearchInteractor.getSearchItemsFromSql(encrypted2, ds, firx, rokx, drh, dodx, umex, query, 0, 20)
+                    .subscribeOn(Schedulers.computation())
+                    .observeOn(rx.android.schedulers.AndroidSchedulers.mainThread())
+                    .doOnError(throwable -> {
+                        Log.e(TAG, "Error DocSearchPresenter " + throwable.getMessage());
+                        mainView.hideProgress();
+                        mainView.showMessage("Server not connected");
+                    })
+                    .onErrorResumeNext(throwable -> empty())
+                    .subscribe(this::onForQueryFinishedSearchItemsFromSql));
+
+        }
+    }
+
+    public void onForQueryFinishedSearchItemsFromSql(List<BankItem> searchtems) {
+        //Log.d("DocSearchMvp bankitem0", searchtems.get(0).getDok());
+        if (mainView != null) {
+            mainView.setSearchItems(searchtems);
+            mainView.hideProgress();
+        }
+    }
+    //end get for query first 20 items from sql
 
 }

@@ -19,6 +19,10 @@
 package com.eusecom.samfantozzi;
 
 
+import com.eusecom.samfantozzi.models.BankItem;
+
+import java.util.List;
+
 public interface DocSearchMvpPresenter {
 
     void loadStudents();
@@ -31,8 +35,10 @@ public interface DocSearchMvpPresenter {
 
     void detachView();
 
-    void getFirst20SearchItemsFromSql();
+    void getFirst20SearchItemsFromSql(String query);
 
-    void getNext20SearchItemsFromSql(int start, int end);
+    void getNext20SearchItemsFromSql(String query, int start, int end);
+
+    void getForQueryFirst20SearchItemsFromSql(String query);
 
 }

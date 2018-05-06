@@ -46,7 +46,11 @@ public class DocSearchAdapter extends RecyclerView.Adapter {
 
                             totalItemCount = linearLayoutManager.getItemCount();
                             lastVisibleItem = linearLayoutManager.findLastVisibleItemPosition();
-                            sizeStudents = Integer.parseInt(studentList.get(0).getBal());
+                            try {
+                                sizeStudents = Integer.parseInt(studentList.get(0).getBal());
+                            }catch(IndexOutOfBoundsException e){
+                                sizeStudents = 0;
+                            }
                             displayedStudents = studentList.size();
 
                             //Log.d("DocSearchMvp ", "size " + sizeStudents);
