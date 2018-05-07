@@ -354,7 +354,6 @@
 
     //docsearchmenuactivity
     <string name="docsearch">Search documents</string>
-
-
+    <string name="itemsamount">Items: </string>
 
 </resources>

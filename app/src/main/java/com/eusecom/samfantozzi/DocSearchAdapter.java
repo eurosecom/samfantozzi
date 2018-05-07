@@ -120,7 +120,8 @@ public class DocSearchAdapter extends RecyclerView.Adapter {
                     + singleStudent.getNai() + " "
                     + singleStudent.getPop());
 
-            ((StudentViewHolder) holder).docx.setText(position + ". " + singleStudent.getDok());
+            //((StudentViewHolder) holder).docx.setText(position + ". " + singleStudent.getDok());
+            ((StudentViewHolder) holder).docx.setText(singleStudent.getDok());
 
             ((StudentViewHolder) holder).datex.setText(singleStudent.getDat());
 

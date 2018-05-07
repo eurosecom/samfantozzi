@@ -16,16 +16,12 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
-
 import com.eusecom.samfantozzi.models.BankItem;
 import com.eusecom.samfantozzi.retrofit.AbsServerService;
-
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
-
 import javax.inject.Inject;
-
 import io.reactivex.Observable;
 import io.reactivex.ObservableEmitter;
 import io.reactivex.ObservableOnSubscribe;
@@ -46,7 +42,7 @@ public class DocSearchActivity  extends BaseListActivity implements DocSearchMvp
 
     private Toolbar toolbar;
 
-    private TextView tvEmptyView;
+    private TextView tvEmptyView, amount;
     private RecyclerView mRecyclerView;
     private DocSearchAdapter mAdapter;
     private LinearLayoutManager mLayoutManager;
@@ -78,6 +74,7 @@ public class DocSearchActivity  extends BaseListActivity implements DocSearchMvp
 
         toolbar = (Toolbar) findViewById(R.id.toolbar);
         tvEmptyView = (TextView) findViewById(R.id.empty_view);
+        amount = (TextView) findViewById(R.id.amount);
         mRecyclerView = (RecyclerView) findViewById(R.id.my_recycler_view);
         handler = new Handler();
 
@@ -163,6 +160,14 @@ public class DocSearchActivity  extends BaseListActivity implements DocSearchMvp
             }
         });
 
+        String amitems="";
+        try {
+            amitems = first20searchitems.get(0).getBal();
+        }catch(IndexOutOfBoundsException e){
+            amitems="0";
+        }
+        amount.setText(amitems);
+
     }
 
     @Override public void setNext20SearchItems(List<BankItem> next20searchitems) {
@@ -177,6 +182,14 @@ public class DocSearchActivity  extends BaseListActivity implements DocSearchMvp
         }
         mAdapter.setLoaded();
         mAdapter.notifyDataSetChanged();
+        
+        String amitems="";
+        try {
+            amitems = next20searchitems.get(0).getBal();
+        }catch(IndexOutOfBoundsException e){
+            amitems="0";
+        }
+        amount.setText(amitems);
     }
 
     //option menu
@@ -283,7 +296,7 @@ public class DocSearchActivity  extends BaseListActivity implements DocSearchMvp
                     public boolean test(String query) throws Exception {
                         return query.length() >= 3 || query.equals("");
                     }
-                }).debounce(300, TimeUnit.MILLISECONDS);  // add this line
+                }).debounce(800, TimeUnit.MILLISECONDS);  // add this line
     }
 
 

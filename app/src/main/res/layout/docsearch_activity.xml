@@ -5,6 +5,37 @@
     android:fitsSystemWindows="true"
     android:orientation="vertical">
 
+  <LinearLayout
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:gravity="center_vertical"
+      android:id="@+id/itemsamount"
+      android:orientation="horizontal">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="5dp"
+        android:layout_marginTop="5dp"
+        android:layout_gravity="center_vertical"
+        android:gravity="center_vertical"
+        android:text="@string/itemsamount"
+        android:textSize="18sp"
+        android:textStyle="bold"/>
+
+    <TextView
+        android:id="@+id/amount"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="5dp"
+        android:layout_marginTop="5dp"
+        android:layout_gravity="center_vertical"
+        android:gravity="center_vertical"
+        android:textSize="18sp"
+        android:textStyle="bold"/>
+
+  </LinearLayout>
+
   <android.support.v7.widget.RecyclerView
         android:id="@+id/my_recycler_view"
         android:layout_width="match_parent"
