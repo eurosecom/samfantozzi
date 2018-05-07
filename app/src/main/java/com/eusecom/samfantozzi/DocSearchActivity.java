@@ -127,7 +127,8 @@ public class DocSearchActivity  extends BaseListActivity implements DocSearchMvp
     }
 
     @Override public void setSearchItems(List<BankItem> first20searchitems) {
-        //Log.d("DocSearchMvp ", "searchitem " + first20searchitems.get(0).getDok());
+        //Log.d("DocSearchMvp ", "firstitems " + first20searchitems.get(0).getDok());
+        Log.d("DocSearchMvp ", "firstitems ");
 
         searchitems = new ArrayList<BankItem>();
         searchitems = first20searchitems;
@@ -171,7 +172,8 @@ public class DocSearchActivity  extends BaseListActivity implements DocSearchMvp
     }
 
     @Override public void setNext20SearchItems(List<BankItem> next20searchitems) {
-        //Log.d("DocSearchMvp ", "searchitem " + next20searchitems.get(0).getDok());
+        //Log.d("DocSearchMvp ", "nextitems " + next20searchitems.get(0).getDok());
+        Log.d("DocSearchMvp ", "nextitems ");
 
         //hide bottom progressbar
         searchitems.remove(searchitems.size() - 1);
@@ -182,10 +184,33 @@ public class DocSearchActivity  extends BaseListActivity implements DocSearchMvp
         }
         mAdapter.setLoaded();
         mAdapter.notifyDataSetChanged();
-        
+
         String amitems="";
         try {
             amitems = next20searchitems.get(0).getBal();
+        }catch(IndexOutOfBoundsException e){
+            amitems="0";
+        }
+        amount.setText(amitems);
+    }
+
+    @Override public void setForQueryFirstSearchItems(List<BankItem> querysearchitems) {
+        //Log.d("DocSearchMvp ", "nextitems " + next20searchitems.get(0).getDok());
+        Log.d("DocSearchMvp ", "firstqueryitems ");
+
+        //hide bottom progressbar
+        searchitems.clear();
+        mAdapter.notifyDataSetChanged();
+
+        for (int i = 0; i < querysearchitems.size(); i++) {
+            searchitems.add(querysearchitems.get(i));
+        }
+        mAdapter.setLoaded();
+        mAdapter.notifyDataSetChanged();
+
+        String amitems="";
+        try {
+            amitems = querysearchitems.get(0).getBal();
         }catch(IndexOutOfBoundsException e){
             amitems="0";
         }

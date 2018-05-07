@@ -306,7 +306,7 @@ public class DocSearchMvpPresenterImpl implements DocSearchMvpPresenter, DocSear
     public void onForQueryFinishedSearchItemsFromSql(List<BankItem> searchtems) {
         //Log.d("DocSearchMvp bankitem0", searchtems.get(0).getDok());
         if (mainView != null) {
-            mainView.setSearchItems(searchtems);
+            mainView.setForQueryFirstSearchItems(searchtems);
             mainView.hideProgress();
         }
     }
