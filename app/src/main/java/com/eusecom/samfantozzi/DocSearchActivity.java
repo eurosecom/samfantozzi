@@ -42,7 +42,7 @@ public class DocSearchActivity  extends BaseListActivity implements DocSearchMvp
 
     private Toolbar toolbar;
 
-    private TextView tvEmptyView, amount;
+    private TextView tvEmptyView, total, listed;
     private RecyclerView mRecyclerView;
     private DocSearchAdapter mAdapter;
     private LinearLayoutManager mLayoutManager;
@@ -74,9 +74,12 @@ public class DocSearchActivity  extends BaseListActivity implements DocSearchMvp
 
         toolbar = (Toolbar) findViewById(R.id.toolbar);
         tvEmptyView = (TextView) findViewById(R.id.empty_view);
-        amount = (TextView) findViewById(R.id.amount);
+        total = (TextView) findViewById(R.id.total);
+        listed = (TextView) findViewById(R.id.listed);
         mRecyclerView = (RecyclerView) findViewById(R.id.my_recycler_view);
         handler = new Handler();
+        total.setText("0");
+        listed.setText("0");
 
         presenter = (DocSearchMvpPresenter) getLastCustomNonConfigurationInstance();
         if (presenter == null) {
@@ -161,13 +164,7 @@ public class DocSearchActivity  extends BaseListActivity implements DocSearchMvp
             }
         });
 
-        String amitems="";
-        try {
-            amitems = first20searchitems.get(0).getBal();
-        }catch(IndexOutOfBoundsException e){
-            amitems="0";
-        }
-        amount.setText(amitems);
+        setItemsAmount(first20searchitems);
 
     }
 
@@ -185,19 +182,15 @@ public class DocSearchActivity  extends BaseListActivity implements DocSearchMvp
         mAdapter.setLoaded();
         mAdapter.notifyDataSetChanged();
 
-        String amitems="";
-        try {
-            amitems = next20searchitems.get(0).getBal();
-        }catch(IndexOutOfBoundsException e){
-            amitems="0";
-        }
-        amount.setText(amitems);
+        setItemsAmount(next20searchitems);
+
     }
 
     @Override public void setForQueryFirstSearchItems(List<BankItem> querysearchitems) {
         //Log.d("DocSearchMvp ", "nextitems " + next20searchitems.get(0).getDok());
         Log.d("DocSearchMvp ", "firstqueryitems ");
 
+        listed.setText("0");
         //hide bottom progressbar
         searchitems.clear();
         mAdapter.notifyDataSetChanged();
@@ -208,13 +201,7 @@ public class DocSearchActivity  extends BaseListActivity implements DocSearchMvp
         mAdapter.setLoaded();
         mAdapter.notifyDataSetChanged();
 
-        String amitems="";
-        try {
-            amitems = querysearchitems.get(0).getBal();
-        }catch(IndexOutOfBoundsException e){
-            amitems="0";
-        }
-        amount.setText(amitems);
+        setItemsAmount(querysearchitems);
     }
 
     //option menu
@@ -324,6 +311,22 @@ public class DocSearchActivity  extends BaseListActivity implements DocSearchMvp
                 }).debounce(800, TimeUnit.MILLISECONDS);  // add this line
     }
 
+    private void setItemsAmount(List<BankItem> items) {
+
+        String amitems="";
+        try {
+            amitems = items.get(0).getBal();
+        }catch(IndexOutOfBoundsException e){
+            amitems="0";
+        }
+        total.setText(amitems);
+
+        int listedi = items.size();
+        int listepi = Integer.parseInt(listed.getText().toString());
+        int listesi = listepi + listedi;
+        String listeds = listesi + "";
+        listed.setText(listeds);
+    }
 
 
 }
