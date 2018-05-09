@@ -262,8 +262,7 @@ public class DocSearchActivity  extends BaseListActivity implements DocSearchMvp
                 .subscribe(new Consumer<String>() {
                     @Override
                     public void accept(String result) {
-                        //hideProgress();
-                        //andrejko presenter.showSearchResult(result);
+                        querystring = result;
                     }
                 });
     }
@@ -308,7 +307,7 @@ public class DocSearchActivity  extends BaseListActivity implements DocSearchMvp
                     public boolean test(String query) throws Exception {
                         return query.length() >= 3 || query.equals("");
                     }
-                }).debounce(800, TimeUnit.MILLISECONDS);  // add this line
+                }).debounce(1200, TimeUnit.MILLISECONDS);  // add this line
     }
 
     private void setItemsAmount(List<BankItem> items) {
