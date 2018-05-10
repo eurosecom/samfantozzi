@@ -356,5 +356,7 @@
     <string name="docsearch">Search documents</string>
     <string name="totalitems">Total items: </string>
     <string name="listeditems">Listed items: </string>
+    <string name="searchhint">enter at least 3 characters</string>
+
 
 </resources>

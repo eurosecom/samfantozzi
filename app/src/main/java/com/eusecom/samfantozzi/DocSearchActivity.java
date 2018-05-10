@@ -243,6 +243,7 @@ public class DocSearchActivity  extends BaseListActivity implements DocSearchMvp
         searchView = (SearchView) MenuItemCompat.getActionView(menu.findItem(R.id.action_search));
         searchManager = (SearchManager) this.getSystemService(SEARCH_SERVICE);
         searchView.setSearchableInfo(searchManager.getSearchableInfo(this.getComponentName()));
+        searchView.setQueryHint(getString(R.string.searchhint));
         getObservableSearchViewText();
 
         return true;
