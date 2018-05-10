@@ -3,6 +3,7 @@ package com.eusecom.samfantozzi;
 import android.app.SearchManager;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.v4.view.MenuItemCompat;
@@ -11,11 +12,17 @@ import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.SearchView;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
+import android.widget.TextSwitcher;
 import android.widget.TextView;
 import android.widget.Toast;
+import android.widget.ViewSwitcher;
+
 import com.eusecom.samfantozzi.models.BankItem;
 import com.eusecom.samfantozzi.retrofit.AbsServerService;
 import java.util.ArrayList;
@@ -42,7 +49,8 @@ public class DocSearchActivity  extends BaseListActivity implements DocSearchMvp
 
     private Toolbar toolbar;
 
-    private TextView tvEmptyView, total, listed;
+    private TextView tvEmptyView, total;
+    private TextSwitcher listed;
     private RecyclerView mRecyclerView;
     private DocSearchAdapter mAdapter;
     private LinearLayoutManager mLayoutManager;
@@ -75,7 +83,31 @@ public class DocSearchActivity  extends BaseListActivity implements DocSearchMvp
         toolbar = (Toolbar) findViewById(R.id.toolbar);
         tvEmptyView = (TextView) findViewById(R.id.empty_view);
         total = (TextView) findViewById(R.id.total);
-        listed = (TextView) findViewById(R.id.listed);
+        listed = (TextSwitcher) findViewById(R.id.listed);
+        //listed = (TextView) findViewById(R.id.listed);
+
+        // Set the ViewFactory of the TextSwitcher that will create TextView object when asked
+        listed.setFactory(new ViewSwitcher.ViewFactory() {
+
+            public View makeView() {
+                // TODO Auto-generated method stub
+                // create new textView and set the properties like colour, size, gravity etc
+                TextView myText = new TextView(DocSearchActivity.this);
+                myText.setGravity(Gravity.TOP | Gravity.CENTER_HORIZONTAL);
+                myText.setTextSize(18);
+                myText.setTextColor(Color.BLACK);
+                return myText;
+            }
+        });
+
+        // Declare the in and out animations and initialize them
+        Animation in = AnimationUtils.loadAnimation(this,android.R.anim.slide_in_left);
+        Animation out = AnimationUtils.loadAnimation(this,android.R.anim.slide_out_right);
+
+        // set the animation type of textSwitcher
+        listed.setInAnimation(in);
+        listed.setOutAnimation(out);
+
         mRecyclerView = (RecyclerView) findViewById(R.id.my_recycler_view);
         handler = new Handler();
         total.setText("0");
@@ -321,7 +353,8 @@ public class DocSearchActivity  extends BaseListActivity implements DocSearchMvp
         total.setText(amitems);
 
         int listedi = items.size();
-        int listepi = Integer.parseInt(listed.getText().toString());
+        TextView tvlisted = (TextView) listed.getCurrentView();
+        int listepi = Integer.parseInt(tvlisted.getText().toString());
         int listesi = listepi + listedi;
         String listeds = listesi + "";
         listed.setText(listeds);
