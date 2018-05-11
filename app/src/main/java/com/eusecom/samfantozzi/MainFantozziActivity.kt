@@ -83,6 +83,10 @@ class MainFantozziActivity : AppCompatActivity() {
             _ -> navigateToSupplierList()
         }
 
+        button5.setOnClickListener {
+            _ -> navigateToGeneralList()
+        }
+
         buttonFir.setOnClickListener {
             _ -> navigateToGetCompany()
         }
@@ -437,6 +441,24 @@ class MainFantozziActivity : AppCompatActivity() {
                 showDonotcompanyAlert()
             }else {
                 startActivity<BankMvpActivity>()
+            }
+
+        }
+
+    }
+
+    fun navigateToGeneralList(){
+
+        val usuid = prefs.getString("usuid", "")
+        if (usuid == "" || usuid == "0") {
+            showDonotcompanyAlert()
+        }else {
+
+            val usfir = prefs.getString("fir", "")
+            if ( usfir == "" || usfir == "0" ) {
+                showDonotcompanyAlert()
+            }else {
+                startActivity<GeneralDocActivity>()
             }
 
         }
