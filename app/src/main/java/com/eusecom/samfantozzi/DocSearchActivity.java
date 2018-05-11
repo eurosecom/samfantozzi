@@ -317,7 +317,7 @@ public class DocSearchActivity  extends BaseListActivity implements DocSearchMvp
                     public boolean onQueryTextChange(String newText) {
                         // use this method for auto complete search process
                         emitter.onNext(newText.toString());
-                        //andrejko presenter.emitSearchString(newText.toString());
+                        presenter.emitSearchString(newText.toString());
                         return false;
                     }
 
@@ -343,6 +343,16 @@ public class DocSearchActivity  extends BaseListActivity implements DocSearchMvp
                 }).debounce(1200, TimeUnit.MILLISECONDS);  // add this line
     }
 
+    @Override public void setQueryToSearch(String querystringx) {
+
+        Log.d("BankMvpPresenter query ", "in View " + querystringx);
+        if( querystringx.equals("")){
+        }else {
+            querystring = querystringx;
+        }
+
+    }
+
     private void setItemsAmount(List<BankItem> items) {
 
         String amitems="";
@@ -359,6 +369,15 @@ public class DocSearchActivity  extends BaseListActivity implements DocSearchMvp
         int listesi = listepi + listedi;
         String listeds = listesi + "";
         listed.setText(listeds);
+
+        if( querystring.equals("")){
+
+        }else {
+            searchView.setIconified(false);
+            searchView.setQuery(querystring, false);
+            menuItem.setVisible(true);
+        }
+
     }
 
 

@@ -39,4 +39,6 @@ public interface DocSearchMvpView {
 
     void setForQueryFirstSearchItems(List<BankItem> items);
 
+    void setQueryToSearch(String query);
+
 }

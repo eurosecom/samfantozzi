@@ -57,7 +57,7 @@ public class DocSearchMvpPresenterImpl implements DocSearchMvpPresenter, DocSear
 
         Log.d("DocSearchMvpPresenter ", "attachView " + searchQuery);
         if (mainView != null) {
-            //andrejko mainView.setQueryToSearch(searchQuery);
+            mainView.setQueryToSearch(searchQuery);
         }
     }
 
@@ -311,5 +311,14 @@ public class DocSearchMvpPresenterImpl implements DocSearchMvpPresenter, DocSear
         }
     }
     //end get for query first 20 items from sql
+
+    //emit DocSearchList search query
+    public void emitSearchString(String queryx){
+
+        Log.d("DocSearchMvp presenter ", queryx);
+        searchQuery=queryx;
+
+    }
+    //end emit DocSearchList search query
 
 }

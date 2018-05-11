@@ -41,4 +41,6 @@ public interface DocSearchMvpPresenter {
 
     void getForQueryFirst20SearchItemsFromSql(String query);
 
+    void emitSearchString(String query);
+
 }
