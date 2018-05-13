@@ -161,13 +161,6 @@ public class GeneralDocFragment extends Fragment implements GeneralDocMvpView  {
         ((AppCompatActivity)getActivity()).getSupportActionBar().setTitle(mSharedPreferences.getString("ume", "") + " "
                 +  getString(R.string.generaldoc));
 
-        if( querystring.equals("")){
-
-        }else {
-            //searchView.setIconified(false);
-            //searchView.setQuery(querystring, false);
-            //menuItem.setVisible(true);
-        }
     }
 
     @Override public void setQueryToSearch(String querystringx) {
@@ -188,10 +181,21 @@ public class GeneralDocFragment extends Fragment implements GeneralDocMvpView  {
 
         // Retrieve the SearchView and plug it into SearchManager
         inflater.inflate(R.menu.menu_listdoc, menu);
+        inflater.inflate(R.menu.bankmvp_menu, menu);
         menuItem = menu.findItem(R.id.action_search);
         searchView = (SearchView) MenuItemCompat.getActionView(menu.findItem(R.id.action_search));
         searchManager = (SearchManager) getActivity().getSystemService(SEARCH_SERVICE);
         searchView.setSearchableInfo(searchManager.getSearchableInfo(getActivity().getComponentName()));
+
+        if( querystring.equals("")){
+
+        }else {
+            searchView.setIconified(false);
+            searchView.setQuery(querystring, false);
+            menuItem.setVisible(true);
+            presenter.emitSearchString(querystring);
+        }
+
         getObservableSearchViewText();
     }
 
