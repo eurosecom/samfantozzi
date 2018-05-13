@@ -46,9 +46,6 @@ public class  GeneralDocActivity extends BaseListActivity {
     @Inject
     SharedPreferences mSharedPreferences;
 
-    @Inject
-    RxBus _rxBus;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
