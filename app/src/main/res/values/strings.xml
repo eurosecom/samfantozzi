@@ -359,5 +359,8 @@
     <string name="listeditems">Listed items: </string>
     <string name="searchhint">enter at least 3 characters</string>
 
+    //generaldocactivity
+    <string name="generaldoc">General</string>
+
 
 </resources>

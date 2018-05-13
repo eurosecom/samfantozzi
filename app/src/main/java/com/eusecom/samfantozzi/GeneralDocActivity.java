@@ -52,7 +52,7 @@ public class  GeneralDocActivity extends BaseListActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_suppliers);
+        setContentView(R.layout.activity_general);
 
 
         ((SamfantozziApp) getApplication()).dgaeacomponent().inject(this);
@@ -60,11 +60,11 @@ public class  GeneralDocActivity extends BaseListActivity {
             // Create the adapter that will return a fragment for each section
             mPagerAdapter = new FragmentPagerAdapter(getSupportFragmentManager()) {
                 private final Fragment[] mFragments = new Fragment[]{
-                        new SupplierListFragment(),
+                        new GeneralDocFragment(),
                         new EmptyKtFragment()
                 };
                 private final String[] mFragmentNames = new String[]{
-                        getString(R.string.suppliers),
+                        getString(R.string.generaldoc),
                         getString(R.string.empty)
                 };
 
@@ -101,7 +101,7 @@ public class  GeneralDocActivity extends BaseListActivity {
                     FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
                     fab.setVisibility(View.VISIBLE);
                     getSupportActionBar().setTitle(mSharedPreferences.getString("ume", "") + " "
-                            + mSharedPreferences.getString("doduce", "") + " " +  getString(R.string.suppliers));
+                            + mSharedPreferences.getString("doduce", "") + " " +  getString(R.string.generaldoc));
                 }
                 if(position == 1){
                     FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
@@ -120,7 +120,7 @@ public class  GeneralDocActivity extends BaseListActivity {
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(v -> {
 
-            _rxBus.send(new SupplierListFragment.ClickFobEvent());
+            //_rxBus.send(new SupplierListFragment.ClickFobEvent());
 
             }
         );
