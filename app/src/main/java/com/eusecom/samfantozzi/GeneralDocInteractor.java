@@ -18,7 +18,11 @@
 
 package com.eusecom.samfantozzi;
 
+import com.eusecom.samfantozzi.models.BankItemList;
+
 import java.util.List;
+
+import rx.Observable;
 
 public interface GeneralDocInteractor {
 
@@ -27,5 +31,7 @@ public interface GeneralDocInteractor {
 
     }
 
+    Observable<BankItemList> findBankItemsWithBalance(String userhash, String userid, String fromfir
+            , String vyb_rok, String drh, String uce, String ume, String dokx);
 
 }

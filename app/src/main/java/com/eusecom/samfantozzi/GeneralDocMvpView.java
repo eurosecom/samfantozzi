@@ -19,8 +19,20 @@
 package com.eusecom.samfantozzi;
 
 
+import com.eusecom.samfantozzi.models.BankItem;
+
+import java.util.List;
+
 public interface GeneralDocMvpView {
 
+    void setBankItems(List<BankItem> items);
+
     void setQueryToSearch(String query);
+
+    void showProgress();
+
+    void hideProgress();
+
+    void showMessage(String message);
 
 }

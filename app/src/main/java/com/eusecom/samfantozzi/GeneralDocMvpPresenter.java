@@ -23,6 +23,8 @@ import com.eusecom.samfantozzi.models.GeneralDocPresenterState;
 
 public interface GeneralDocMvpPresenter {
 
+    void onStart();
+
     public GeneralDocPresenterState getSerializedPresenter();
 
     void emitSearchString(String query);
