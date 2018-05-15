@@ -710,6 +710,7 @@ public class DgAllEmpsAbsMvvmViewModel {
         if(drhsaved.equals("31")) { editor.putString("pokldok", dokladnew).apply(); }
         if(drhsaved.equals("32")) { editor.putString("pokldov", dokladnew).apply(); }
         if(drhsaved.equals("4")) { editor.putString("bankdok", dokladnew).apply(); }
+        if(drhsaved.equals("5")) { editor.putString("gendok", dokladnew).apply(); }
         editor.commit();
 
     }

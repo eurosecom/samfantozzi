@@ -200,6 +200,12 @@ public class NewBankDocFragment extends Fragment {
                             //1=customers invoice, 2=supliers invoice,
                             //31=cash document receipt, 32=cash document expense, 4=bank document, 5=internal document
                             realminvoice.setDrh("4");
+                            if( drupoh.equals("1") ) {
+
+                            }else{
+                                realminvoice.setUce("1");
+                                realminvoice.setDrh("5");
+                            }
                             realminvoice.setDok(_inputDoc.getText().toString());
                             realminvoice.setDat(_datex.getText().toString());
                             realminvoice.setIco(_companyid.getText().toString());
@@ -224,6 +230,12 @@ public class NewBankDocFragment extends Fragment {
                             //1=customers invoice, 2=supliers invoice,
                             //31=cash document receipt, 32=cash document expense, 4=bank document, 5=internal document
                             realminvoice.setDrh("4");
+                            if( drupoh.equals("1") ) {
+
+                            }else{
+                                realminvoice.setUce("1");
+                                realminvoice.setDrh("5");
+                            }
                             realminvoice.setDok(_inputDoc.getText().toString());
                             realminvoice.setDat(_datex.getText().toString());
                             realminvoice.setIco(_companyid.getText().toString());
