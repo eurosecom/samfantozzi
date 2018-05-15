@@ -25,7 +25,7 @@ import java.util.List;
 
 public interface GeneralDocMvpView {
 
-    void setBankItems(List<BankItem> items);
+    void setGeneralItems(List<BankItem> items);
 
     void setQueryToSearch(String query);
 

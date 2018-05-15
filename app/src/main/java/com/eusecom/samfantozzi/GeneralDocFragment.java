@@ -160,7 +160,7 @@ public class GeneralDocFragment extends Fragment implements GeneralDocMvpView {
 
     }
 
-    @Override public void setBankItems(List<BankItem> bankitems) {
+    @Override public void setGeneralItems(List<BankItem> bankitems) {
 
         mAdapter.setBankItems(bankitems);
         mRecycler.setAdapter(mAdapter);

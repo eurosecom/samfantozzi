@@ -31,7 +31,7 @@ public interface GeneralDocInteractor {
 
     }
 
-    Observable<BankItemList> findBankItemsWithBalance(String userhash, String userid, String fromfir
+    Observable<BankItemList> findGeneralItemsWithBalance(String userhash, String userid, String fromfir
             , String vyb_rok, String drh, String uce, String ume, String dokx);
 
 }

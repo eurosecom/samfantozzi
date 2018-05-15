@@ -114,6 +114,10 @@ public class DocSearchAdapter extends RecyclerView.Adapter {
                 Picasso.with(((StudentViewHolder) holder).mContext).load(R.drawable.ic_call_received_black_24dp)
                         .resize(120, 120).into(((StudentViewHolder) holder).invoice_photo);
             }
+            if( singleStudent.getDrh().equals("5")) {
+                Picasso.with(((StudentViewHolder) holder).mContext).load(R.drawable.ic_insert_drive_file_black_24dp)
+                        .resize(120, 120).into(((StudentViewHolder) holder).invoice_photo);
+            }
 
             ((StudentViewHolder) holder).invoice_name.setText(singleStudent.getUcm() + " / "
                     + singleStudent.getUcd() + " "

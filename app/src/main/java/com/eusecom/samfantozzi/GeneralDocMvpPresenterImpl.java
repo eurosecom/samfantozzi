@@ -115,22 +115,13 @@ public class GeneralDocMvpPresenterImpl implements GeneralDocMvpPresenter, Gener
 
             String firx = mSharedPreferences.getString("fir", "");
             String rokx = mSharedPreferences.getString("rok", "");
-            String drh = "4";
+            String drh = "5";
             String dodx = mSharedPreferences.getString("doduce", "");
-            if (drh.equals("1")) {
-                dodx = mSharedPreferences.getString("odbuce", "");
-            }
-            if (drh.equals("3")) {
-                dodx = mSharedPreferences.getString("pokluce", "");
-            }
-            if (drh.equals("4")) {
-                dodx = mSharedPreferences.getString("bankuce", "");
-            }
             String umex = mSharedPreferences.getString("ume", "");
             String edidok = mSharedPreferences.getString("edidok", "");
 
             mSubscription = new CompositeSubscription();
-            mSubscription.add(genDocInteractor.findBankItemsWithBalance(encrypted2, ds, firx, rokx, drh, dodx, umex, edidok)
+            mSubscription.add(genDocInteractor.findGeneralItemsWithBalance(encrypted2, ds, firx, rokx, drh, dodx, umex, edidok)
                     .subscribeOn(Schedulers.computation())
                     .observeOn(rx.android.schedulers.AndroidSchedulers.mainThread())
                     .doOnError(throwable -> { Log.e(TAG, "Error GenDocMvpPresenter " + throwable.getMessage());
@@ -138,17 +129,17 @@ public class GeneralDocMvpPresenterImpl implements GeneralDocMvpPresenter, Gener
                         mainView.showMessage("Server not connected");
                     })
                     .onErrorResumeNext(throwable -> empty())
-                    .subscribe(this::onFinishedBankItemList));
+                    .subscribe(this::onFinishedGenItemList));
 
         }
 
     }
 
-    public void onFinishedBankItemList(BankItemList bankitems) {
+    public void onFinishedGenItemList(BankItemList bankitems) {
         //Log.d("Presenter bankitems", bankitems.getBalance());
         if (mainView != null) {
-            Log.d("MvpPresenter ", bankitems.getBankitem().get(0).getDok());
-            mainView.setBankItems(bankitems.getBankitem());
+            //Log.d("MvpPresenter ", bankitems.getBankitem().get(0).getDok());
+            mainView.setGeneralItems(bankitems.getBankitem());
             //mainView.setBalance(bankitems.getBalance());
             mainView.hideProgress();
         }

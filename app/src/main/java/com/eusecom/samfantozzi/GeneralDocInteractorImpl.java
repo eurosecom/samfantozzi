@@ -32,7 +32,7 @@ public class GeneralDocInteractorImpl implements GeneralDocInteractor {
     }
 
     //find BankItemsList from Mysql
-    @Override public Observable<BankItemList> findBankItemsWithBalance(String userhash, String userid, String fromfir
+    @Override public Observable<BankItemList> findGeneralItemsWithBalance(String userhash, String userid, String fromfir
             , String vyb_rok, String drh, String uce, String ume, String dokx) {
 
         return mAbsServerService.getBankItemsFromSqlServerWithBalance(userhash, userid, fromfir, vyb_rok, drh, uce, ume, dokx);
