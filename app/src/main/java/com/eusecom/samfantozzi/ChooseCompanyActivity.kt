@@ -102,6 +102,8 @@ class ChooseCompanyActivity : AppCompatActivity() {
             editor.putString("odbdok", it.odbdok).apply();
             editor.putString("doduce", it.doduce).apply();
             editor.putString("doddok", it.doddok).apply();
+            editor.putString("genuce", it.genuce).apply();
+            editor.putString("gendok", it.gendok).apply();
 
             editor.commit();
             val i = intent

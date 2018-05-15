@@ -16,6 +16,7 @@
 
 package com.eusecom.samfantozzi;
 
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
@@ -98,12 +99,12 @@ public class  GeneralDocActivity extends BaseListActivity {
                     FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
                     fab.setVisibility(View.VISIBLE);
                     getSupportActionBar().setTitle(mSharedPreferences.getString("ume", "") + " "
-                            + mSharedPreferences.getString("doduce", "") + " " +  getString(R.string.generaldoc));
+                            +  getString(R.string.generaldoc));
                 }
                 if(position == 1){
                     FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
-                    //fab.setVisibility(View.GONE);
-                    fab.setVisibility(View.VISIBLE);
+                    fab.setVisibility(View.GONE);
+                    //fab.setVisibility(View.VISIBLE);
                     getSupportActionBar().setTitle(getString(R.string.empty));
                 }
 
@@ -117,7 +118,13 @@ public class  GeneralDocActivity extends BaseListActivity {
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(v -> {
 
-            //_rxBus.send(new SupplierListFragment.ClickFobEvent());
+            Intent ie = new Intent(GeneralDocActivity.this, NewBankDocKtActivity.class);
+            Bundle extrase = new Bundle();
+            extrase.putString("drupoh", "2");
+            extrase.putString("newdok", "1");
+            extrase.putString("edidok", "0");
+            ie.putExtras(extrase);
+            startActivity(ie);
 
             }
         );

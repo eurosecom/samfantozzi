@@ -597,8 +597,7 @@ public class NewBankDocFragment extends Fragment {
                 ((AppCompatActivity)getActivity()).getSupportActionBar().setTitle(mSharedPreferences.getString("bankuce", "")
                         + " " +  getString(R.string.newbank));
             }else{
-                ((AppCompatActivity)getActivity()).getSupportActionBar().setTitle(mSharedPreferences.getString("bankuce", "")
-                        + " " +  getString(R.string.newuni));
+                ((AppCompatActivity)getActivity()).getSupportActionBar().setTitle(getString(R.string.newuni));
             }
 
             if(_inputPoh.getText().toString().equals("")) { _inputPoh.setText("0"); }
@@ -606,7 +605,7 @@ public class NewBankDocFragment extends Fragment {
                 if (drupoh.equals("1")) {
                     _inputDoc.setText(mSharedPreferences.getString("bankdok", ""));
                 } else {
-                    _inputDoc.setText(mSharedPreferences.getString("bankdok", ""));
+                    _inputDoc.setText(mSharedPreferences.getString("gendok", ""));
                 }
             }else{
 
@@ -618,8 +617,7 @@ public class NewBankDocFragment extends Fragment {
                 ((AppCompatActivity)getActivity()).getSupportActionBar().setTitle(mSharedPreferences.getString("bankuce", "")
                         + " " +  getString(R.string.editbank));
             }else{
-                ((AppCompatActivity)getActivity()).getSupportActionBar().setTitle(mSharedPreferences.getString("bankuce", "")
-                        + " " +  getString(R.string.edituni));
+                ((AppCompatActivity)getActivity()).getSupportActionBar().setTitle(getString(R.string.edituni));
             }
 
         }
@@ -627,9 +625,9 @@ public class NewBankDocFragment extends Fragment {
         ActivityCompat.invalidateOptionsMenu(getActivity());
 
         if( drupoh.equals("1") ) {
-            spinner.setPrompt(getString(R.string.select_receipt));
+            spinner.setPrompt(getString(R.string.select_account));
         }else{
-            spinner.setPrompt(getString(R.string.select_expense));
+            spinner.setPrompt(getString(R.string.select_account));
         }
 
     }

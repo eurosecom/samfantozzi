@@ -106,6 +106,10 @@
     <string name="odbuce_summary">Default account of customer invoice 31100,31101 etc.</string>
     <string name="odbdok_title">Customer document.</string>
     <string name="odbdok_summary">Following document number of customer invoice.</string>
+    <string name="genuce_title">Account of general docs.</string>
+    <string name="genuce_summary">Default account of general docs.</string>
+    <string name="gendok_title">General docs document.</string>
+    <string name="gendok_summary">Following document number of general docs.</string>
     <string name="pokluce_title">Cash register account.</string>
     <string name="pokluce_summary">Default account for cash register 21100,21101 etc.</string>
     <string name="drupoh_summary">Cash register type.</string>
@@ -224,6 +228,7 @@
     <string name="datedialogpos">Set date</string>
     <string name="select_receipt">Select receipt</string>
     <string name="select_expense">Select expense</string>
+    <string name="select_account">Select account</string>
     <string-array name="AbsenceSpinnerArray">
         <item>506 Holliday</item>
         <item>510 Bank holliday</item>
@@ -302,9 +307,9 @@
     //bankmvpactivity and newbankdocKtactivity and fragment
     <string name="bank">Bank</string>
     <string name="newbank">New Bank doc</string>
-    <string name="newuni">New Uni doc</string>
+    <string name="newuni">New General doc</string>
     <string name="editbank">Edit Bank doc</string>
-    <string name="edituni">Edit Uni doc</string>
+    <string name="edituni">Edit General doc</string>
     <string name="user_name">username</string>
     <string name="password">password</string>
     <string name="log_in">Log in</string>

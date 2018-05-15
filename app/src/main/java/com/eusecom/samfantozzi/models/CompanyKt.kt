@@ -5,4 +5,5 @@ data class CompanyKt(var xcf : String, var naz: String, var rok: String, var ima
                      , var pokluce: String, var pokldok: String, var pokldov: String
                      , var bankuce: String, var bankdok: String
                      , var odbuce: String, var odbdok: String
-                     , var doduce: String, var doddok: String)
+                     , var doduce: String, var doddok: String
+                     , var genuce: String, var gendok: String)

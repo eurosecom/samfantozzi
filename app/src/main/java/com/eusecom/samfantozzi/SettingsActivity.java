@@ -40,6 +40,8 @@ public class SettingsActivity extends android.preference.PreferenceActivity {
 	public static final String DODDOK = "doddok";
 	public static final String ODBUCE = "odbuce";
 	public static final String ODBDOK = "odbdok";
+	public static final String GENUCE = "genuce";
+	public static final String GENDOK = "gendok";
 	public static final String NEWDOK = "newdok";
 	public static final String EDIDOK = "edidok";
 
@@ -142,11 +144,11 @@ public class SettingsActivity extends android.preference.PreferenceActivity {
 	}
 
 	public static String getPokldov(Context ctx){
-		return PreferenceManager.getDefaultSharedPreferences(ctx).getString(POKLDOV, "0");
+		return PreferenceManager.getDefaultSharedPreferences(ctx).getString(POKLDOV, "1");
 	}
 
 	public static String getPokldok(Context ctx){
-		return PreferenceManager.getDefaultSharedPreferences(ctx).getString(POKLDOK, "0");
+		return PreferenceManager.getDefaultSharedPreferences(ctx).getString(POKLDOK, "1");
 	}
 
 	public static String getPokluce(Context ctx){
@@ -158,7 +160,7 @@ public class SettingsActivity extends android.preference.PreferenceActivity {
 	}
 
 	public static String getBankdok(Context ctx){
-		return PreferenceManager.getDefaultSharedPreferences(ctx).getString(BANKDOK, "0");
+		return PreferenceManager.getDefaultSharedPreferences(ctx).getString(BANKDOK, "1");
 	}
 
 	public static String getBankuce(Context ctx){
@@ -166,15 +168,23 @@ public class SettingsActivity extends android.preference.PreferenceActivity {
 	}
 
 	public static String getOdbdok(Context ctx){
-		return PreferenceManager.getDefaultSharedPreferences(ctx).getString(ODBDOK, "0");
+		return PreferenceManager.getDefaultSharedPreferences(ctx).getString(ODBDOK, "1");
 	}
 
 	public static String getOdbuce(Context ctx){
 		return PreferenceManager.getDefaultSharedPreferences(ctx).getString(ODBUCE, "0");
 	}
 
+	public static String getGendok(Context ctx){
+		return PreferenceManager.getDefaultSharedPreferences(ctx).getString(GENDOK, "1");
+	}
+
+	public static String getGenuce(Context ctx){
+		return PreferenceManager.getDefaultSharedPreferences(ctx).getString(GENUCE, "0");
+	}
+
 	public static String getDoddok(Context ctx){
-		return PreferenceManager.getDefaultSharedPreferences(ctx).getString(DODDOK, "0");
+		return PreferenceManager.getDefaultSharedPreferences(ctx).getString(DODDOK, "1");
 	}
 
 	public static String getDoduce(Context ctx){

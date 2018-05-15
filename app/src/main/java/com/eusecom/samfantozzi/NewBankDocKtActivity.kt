@@ -56,13 +56,13 @@ class NewBankDocKtActivity : AppCompatActivity() {
             if (drupoh == "1") {
                 supportActionBar!!.setTitle(prefs.getString("bankuce", "") + " " + getString(R.string.newbank))
             } else {
-                supportActionBar!!.setTitle(prefs.getString("bankuce", "") + " " + getString(R.string.newuni))
+                supportActionBar!!.setTitle(getString(R.string.newuni))
             }
         }else{
             if (drupoh == "1") {
                 supportActionBar!!.setTitle(prefs.getString("bankuce", "") + " " + getString(R.string.editbank))
             } else {
-                supportActionBar!!.setTitle(prefs.getString("bankuce", "") + " " + getString(R.string.edituni))
+                supportActionBar!!.setTitle(getString(R.string.edituni))
             }
         }
 

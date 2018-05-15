@@ -164,6 +164,18 @@
         android:title="@string/odbdok_title" />
 
     <EditTextPreference
+        android:key="genuce"
+        android:defaultValue="1"
+        android:summary="@string/genuce_summary"
+        android:title="@string/genuce_title" />
+
+    <EditTextPreference
+        android:key="gendok"
+        android:defaultValue="4001"
+        android:summary="@string/gendok_summary"
+        android:title="@string/gendok_title" />
+
+    <EditTextPreference
         android:key="newdok"
         android:defaultValue="1"
         android:summary="@string/newdok_summary"
