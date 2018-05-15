@@ -1,21 +1,16 @@
 package com.eusecom.samfantozzi;
 
 import android.app.SearchManager;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.MenuItemCompat;
-import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.SearchView;
-import android.text.Editable;
-import android.text.TextWatcher;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -23,18 +18,11 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
-import android.widget.EditText;
 import android.widget.ProgressBar;
-import android.widget.TextView;
 import android.widget.Toast;
-
 import com.eusecom.samfantozzi.models.BankItem;
 import com.eusecom.samfantozzi.models.GeneralDocPresenterState;
 import com.eusecom.samfantozzi.retrofit.AbsServerService;
-import com.eusecom.samfantozzi.rxbus.RxBus;
-
-import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
@@ -43,21 +31,15 @@ import io.reactivex.Observable;
 import io.reactivex.ObservableEmitter;
 import io.reactivex.ObservableOnSubscribe;
 import io.reactivex.android.schedulers.AndroidSchedulers;
-import io.reactivex.disposables.CompositeDisposable;
 import io.reactivex.disposables.Disposable;
-import io.reactivex.flowables.ConnectableFlowable;
 import io.reactivex.functions.Cancellable;
 import io.reactivex.functions.Consumer;
 import io.reactivex.functions.Function;
 import io.reactivex.functions.Predicate;
-import rx.schedulers.Schedulers;
-import rx.subscriptions.CompositeSubscription;
-import static android.content.ContentValues.TAG;
 import static android.content.Context.SEARCH_SERVICE;
-import static rx.Observable.empty;
 
 
-public class GeneralDocFragment extends Fragment implements GeneralDocMvpView  {
+public class GeneralDocFragment extends Fragment implements GeneralDocMvpView {
 
     public GeneralDocFragment() {
 
@@ -65,6 +47,9 @@ public class GeneralDocFragment extends Fragment implements GeneralDocMvpView  {
 
     private RecyclerView mRecycler;
     private LinearLayoutManager mManager;
+    private ProgressBar mProgressBar;
+    private GeneralDocAdapter mAdapter;
+    private GeneralDocAdapter.ClickOnItemListener listener;
 
     @Inject
     SharedPreferences mSharedPreferences;
@@ -120,6 +105,7 @@ public class GeneralDocFragment extends Fragment implements GeneralDocMvpView  {
 
         mRecycler = (RecyclerView) rootView.findViewById(R.id.list);
         mRecycler.setHasFixedSize(true);
+        mProgressBar = (ProgressBar) rootView.findViewById(R.id.progress_bar);
 
 
         return rootView;
@@ -135,7 +121,14 @@ public class GeneralDocFragment extends Fragment implements GeneralDocMvpView  {
         mManager.setReverseLayout(true);
         mManager.setStackFromEnd(true);
         mRecycler.setLayoutManager(mManager);
-        //mRecycler.setAdapter(mAdapter);
+
+        listener = (item, pos) -> {
+            Toast.makeText(getContext(), "Dok " + item.getDok(), Toast.LENGTH_SHORT).show();
+            Log.d("Frag onShortClick", item.getHod());
+        };
+
+        mAdapter = new GeneralDocAdapter(listener);
+        mRecycler.setAdapter(mAdapter);
 
         mBankItemSearchEngine = new BankItemSearchEngine(Collections.<BankItem>emptyList());
 
@@ -146,6 +139,7 @@ public class GeneralDocFragment extends Fragment implements GeneralDocMvpView  {
         super.onDestroy();
         presenter.detachView();
         mDisposable.dispose();
+        listener = null;
 
     }
 
@@ -157,10 +151,34 @@ public class GeneralDocFragment extends Fragment implements GeneralDocMvpView  {
 
     private void bind() {
 
+        presenter.onStart();
+        //presenter.getGeneralDocs();
+
         ActivityCompat.invalidateOptionsMenu(getActivity());
         ((AppCompatActivity)getActivity()).getSupportActionBar().setTitle(mSharedPreferences.getString("ume", "") + " "
                 +  getString(R.string.generaldoc));
 
+    }
+
+    @Override public void setBankItems(List<BankItem> bankitems) {
+
+        mAdapter.setBankItems(bankitems);
+        mRecycler.setAdapter(mAdapter);
+        //andrejko nastavSearchEngine(bankitems);
+
+    }
+
+    //View implementation called from presenter
+    @Override public void showProgress() {
+        mProgressBar.setVisibility(View.VISIBLE);
+    }
+
+    @Override public void hideProgress() {
+        mProgressBar.setVisibility(View.INVISIBLE);
+    }
+
+    @Override public void showMessage(String message) {
+        Toast.makeText(getActivity(), message, Toast.LENGTH_LONG).show();
     }
 
     @Override public void setQueryToSearch(String querystringx) {
@@ -176,11 +194,11 @@ public class GeneralDocFragment extends Fragment implements GeneralDocMvpView  {
     }
 
 
+
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
 
         // Retrieve the SearchView and plug it into SearchManager
-        inflater.inflate(R.menu.menu_listdoc, menu);
         inflater.inflate(R.menu.bankmvp_menu, menu);
         menuItem = menu.findItem(R.id.action_search);
         searchView = (SearchView) MenuItemCompat.getActionView(menu.findItem(R.id.action_search));

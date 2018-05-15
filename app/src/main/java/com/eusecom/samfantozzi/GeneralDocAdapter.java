@@ -39,15 +39,15 @@ import java.util.List;
 public class GeneralDocAdapter extends RecyclerView.Adapter<GeneralDocAdapter.GeneralDocViewHolder> {
 
     private List<BankItem> mListabsserver;
-    private KlikaciListener mKlikaciListener;
+    private ClickOnItemListener mClickOnItemListener;
 
-    interface KlikaciListener {
+    interface ClickOnItemListener {
         void klikolSomItem(BankItem item, int pos);
     }
 
-    GeneralDocAdapter(KlikaciListener klikaciListener){
+    GeneralDocAdapter(ClickOnItemListener clickOnItemListener){
 
-        this.mKlikaciListener = klikaciListener;
+        this.mClickOnItemListener = clickOnItemListener;
     }
 
   @Override
@@ -107,7 +107,7 @@ public class GeneralDocAdapter extends RecyclerView.Adapter<GeneralDocAdapter.Ge
               } else {
 
                   Log.d("Adapter onShortClick", mListabsserver.get(pos).getHod());
-                  mKlikaciListener.klikolSomItem(mListabsserver.get(pos), pos);
+                  mClickOnItemListener.klikolSomItem(mListabsserver.get(pos), pos);
               }
           }
       });
