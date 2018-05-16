@@ -1,12 +1,15 @@
 package com.eusecom.samfantozzi;
 
 import android.app.SearchManager;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.MenuItemCompat;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -19,6 +22,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ProgressBar;
+import android.widget.TextView;
 import android.widget.Toast;
 import com.eusecom.samfantozzi.models.BankItem;
 import com.eusecom.samfantozzi.models.GeneralDocPresenterState;
@@ -123,8 +127,9 @@ public class GeneralDocFragment extends Fragment implements GeneralDocMvpView {
         mRecycler.setLayoutManager(mManager);
 
         listener = (item, pos) -> {
-            Toast.makeText(getContext(), "Dok " + item.getDok(), Toast.LENGTH_SHORT).show();
-            Log.d("Frag onShortClick", item.getHod());
+            //Toast.makeText(getContext(), "Dok " + item.getDok(), Toast.LENGTH_SHORT).show();
+            //Log.d("Frag onShortClick", item.getHod());
+            getItemDialog(item);
         };
 
         mAdapter = new GeneralDocAdapter(listener);
@@ -145,6 +150,9 @@ public class GeneralDocFragment extends Fragment implements GeneralDocMvpView {
 
     @Override public void onResume() {
         super.onResume();
+        SharedPreferences.Editor editor = mSharedPreferences.edit();
+        editor.putString("edidok", "0").apply();
+        editor.commit();
         bind();
     }
 
@@ -194,7 +202,93 @@ public class GeneralDocFragment extends Fragment implements GeneralDocMvpView {
     }
 
 
+    private void getItemDialog(@NonNull final BankItem invoice) {
 
+        LayoutInflater inflater = LayoutInflater.from(getActivity());
+        final View textenter = inflater.inflate(R.layout.invoice_edit_dialog, null);
+
+        final TextView valuex = (TextView) textenter.findViewById(R.id.valuex);
+        valuex.setText(invoice.getHod());
+
+        final AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+        builder.setView(textenter).setTitle(getString(R.string.document) + " " + invoice.getDok());
+
+        builder.setItems(new CharSequence[]
+                        {getString(R.string.pdf), getString(R.string.edit), getString(R.string.deletedoc)},
+                new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int which) {
+                        // The 'which' argument contains the index position
+                        // of the selected item
+                        switch (which) {
+                            case 0:
+
+                                Intent is = new Intent(getActivity(), ShowPdfActivity.class);
+                                Bundle extras = new Bundle();
+                                extras.putString("fromact", "1");
+                                extras.putString("drhx", invoice.getDrh());
+                                extras.putString("ucex", mSharedPreferences.getString("genuce", ""));
+                                extras.putString("dokx", invoice.getDok());
+                                extras.putString("icox", invoice.getIco());
+                                is.putExtras(extras);
+                                startActivity(is);
+
+                                break;
+                            case 1:
+
+                                Intent ie = new Intent(getActivity(), NewBankDocKtActivity.class);
+                                Bundle extrase = new Bundle();
+                                extrase.putString("drupoh", "2");
+                                extrase.putString("newdok", "0");
+                                extrase.putString("edidok", invoice.getDok());
+                                ie.putExtras(extrase);
+                                startActivity(ie);
+
+                                break;
+                            case 2:
+                                deleteItemDialog(invoice, 1);
+                                break;
+                        }
+                    }
+                });
+        AlertDialog dialog = builder.create();
+        builder.show();
+
+    }
+
+    private void deleteItemDialog(@NonNull final BankItem invoice, int all){
+
+        String title = "";
+        if( all == 0 ) {
+            title = getString(R.string.deletedoc) + " " + invoice.getDok()
+                    + " " + getString(R.string.value) + " " + invoice.getHod();
+        }else{
+            title = getString(R.string.deletewholedoc) + " " + invoice.getDok();
+        }
+        new AlertDialog.Builder(getActivity())
+                .setTitle(title)
+                .setPositiveButton(R.string.delete,
+                        new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog,
+                                                int whichButton) {
+                                //presenter.deleteDoc(invoice);
+
+                            }
+                        })
+                .setNegativeButton(R.string.close,
+                        new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog,
+                                                int whichButton) {
+
+
+                            }
+                        })
+                .show();
+
+    }
+
+
+
+    //options menu
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
 

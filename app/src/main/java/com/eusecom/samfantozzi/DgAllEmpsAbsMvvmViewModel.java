@@ -471,6 +471,9 @@ public class DgAllEmpsAbsMvvmViewModel {
         if (drh.equals("4")) {
             dodx = mSharedPreferences.getString("bankuce", "");
         }
+        if (drh.equals("5")) {
+            dodx = mSharedPreferences.getString("genuce", "");
+        }
         String umex = mSharedPreferences.getString("ume", "");
         String dokx = mSharedPreferences.getString("edidok", "");
 

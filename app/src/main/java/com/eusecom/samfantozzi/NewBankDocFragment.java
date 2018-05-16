@@ -401,7 +401,11 @@ public class NewBankDocFragment extends Fragment {
 
 
         if(newdok.equals("0")) {
-            mSubscription.add(mViewModel.getEditedInvoiceFromSqlServer("4")
+
+            String drhx2="4";
+            if( drupoh.equals("2")){ drhx2="5"; }
+
+            mSubscription.add(mViewModel.getEditedInvoiceFromSqlServer(drhx2)
                     .subscribeOn(Schedulers.computation())
                     .observeOn(rx.android.schedulers.AndroidSchedulers.mainThread())
                     .doOnError(throwable -> {

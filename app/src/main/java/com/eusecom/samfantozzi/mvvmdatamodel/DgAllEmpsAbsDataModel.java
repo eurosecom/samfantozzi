@@ -184,7 +184,9 @@ public class DgAllEmpsAbsDataModel implements DgAllEmpsAbsIDataModel {
     @Override
     public Observable<List<Invoice>> getInvoicesFromMysqlServer(String userhash, String userid, String fromfir
             , String vyb_rok, String drh, String ucex, String umex, String dokx) {
-
+        Log.d("GenDoc dokx", dokx);
+        Log.d("GenDoc drh", drh);
+        Log.d("GenDoc ucex", ucex);
         return mAbsServerService.getInvoicesFromSqlServer(userhash, userid, fromfir, vyb_rok, drh, ucex, umex, dokx);
 
     }
@@ -304,6 +306,13 @@ public class DgAllEmpsAbsDataModel implements DgAllEmpsAbsIDataModel {
         }
         if (invx.getDrh().equals("4")){
             String drupoh = "4";
+            uri = Uri.parse("http://" + serverx +
+                    "/ucto/vspk_pdf.php?cislo_dok=" + invx.getDok() + "&hladaj_dok=" + invx.getDok()
+                    + "&sysx=UCT&rozuct=ANO&zandroidu=1&anduct=1&copern=20&drupoh="+ drupoh + "&page=1&serverx="
+                    + adresx + "&userhash=" + encrypted + "&rokx=" + rokx + "&firx=" + firx + "&newfntz=1");
+        }
+        if (invx.getDrh().equals("5")){
+            String drupoh = "5";
             uri = Uri.parse("http://" + serverx +
                     "/ucto/vspk_pdf.php?cislo_dok=" + invx.getDok() + "&hladaj_dok=" + invx.getDok()
                     + "&sysx=UCT&rozuct=ANO&zandroidu=1&anduct=1&copern=20&drupoh="+ drupoh + "&page=1&serverx="

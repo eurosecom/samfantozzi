@@ -129,6 +129,10 @@ public class  GeneralDocActivity extends BaseListActivity {
             }
         );
 
+        SharedPreferences.Editor editor = mSharedPreferences.edit();
+        editor.putString("edidok", "0").apply();
+        editor.commit();
+
     }
 
     @Override
