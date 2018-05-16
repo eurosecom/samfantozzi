@@ -22,7 +22,11 @@ package com.eusecom.samfantozzi;
 import com.eusecom.samfantozzi.models.BankItem;
 import com.eusecom.samfantozzi.models.GeneralDocPresenterState;
 
+import java.util.List;
+
 public interface GeneralDocMvpPresenter {
+
+    List<BankItem> searchModel(String query);
 
     void deleteDoc(BankItem invoice);
 

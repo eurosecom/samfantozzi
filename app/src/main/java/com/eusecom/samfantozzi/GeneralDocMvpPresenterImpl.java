@@ -241,7 +241,12 @@ public class GeneralDocMvpPresenterImpl implements GeneralDocMvpPresenter, Gener
         }
         clearObservableItemDelFromServer();
     }
-
     //end delete Invoice from Mysql
+
+    //search model
+    public List<BankItem> searchModel(String query){
+        return mGeneralDocSearchEngine.searchModel(query);
+    }
+    //end search model
 
 }

@@ -54,6 +54,7 @@ public class BankItemSearchEngine {
     for (int i = 0; i < mListabsserverCount; i++) {
       if (mListabsserver.get(i).getNai().toLowerCase().contains(query) ||
               mListabsserver.get(i).getDok().toLowerCase().contains(query) ||
+              mListabsserver.get(i).getHod().toLowerCase().contains(query) ||
               mListabsserver.get(i).getFak().toLowerCase().contains(query) ) {
         result.add(mListabsserver.get(i));
       }

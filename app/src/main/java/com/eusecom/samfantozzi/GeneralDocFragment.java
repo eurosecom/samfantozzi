@@ -68,7 +68,6 @@ public class GeneralDocFragment extends Fragment implements GeneralDocMvpView {
     private SearchView.OnQueryTextListener onQueryTextListener = null;
     SearchManager searchManager;
     private String querystring = "";
-    protected BankItemSearchEngine mBankItemSearchEngine;
     private Disposable mDisposable;
 
     @Override
@@ -135,7 +134,6 @@ public class GeneralDocFragment extends Fragment implements GeneralDocMvpView {
         mAdapter = new GeneralDocAdapter(listener);
         mRecycler.setAdapter(mAdapter);
 
-        mBankItemSearchEngine = new BankItemSearchEngine(Collections.<BankItem>emptyList());
 
     }//end of onActivityCreated
 
@@ -362,22 +360,22 @@ public class GeneralDocFragment extends Fragment implements GeneralDocMvpView {
                 .doOnNext(new Consumer<String>() {
                     @Override
                     public void accept(String s) {
-                        //andrejdko showProgress();
+                        showProgress();
                     }
                 })
                 .observeOn(io.reactivex.schedulers.Schedulers.io())
                 .map(new Function<String, List<BankItem>>() {
                     @Override
                     public List<BankItem> apply(String query) {
-                        return mBankItemSearchEngine.searchModel(query);
+                        return presenter.searchModel(query);
                     }
                 })
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new Consumer<List<BankItem>>() {
                     @Override
                     public void accept(List<BankItem> result) {
-                        //andrejko hideProgress();
-                        //andrejko presenter.showSearchResult(result);
+                        hideProgress();
+                        setGeneralItems(result);
                     }
                 });
     }
