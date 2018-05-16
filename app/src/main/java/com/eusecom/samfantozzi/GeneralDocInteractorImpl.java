@@ -40,4 +40,20 @@ public class GeneralDocInteractorImpl implements GeneralDocInteractor {
     }
     //end find BankItemsList from Mysql
 
+    //delete General Doc from Mysql
+    @Override public Observable<BankItemList> getMyDocDelFromServer(String userhash, String userid, String fromfir
+            , String vyb_rok, String drh, String uce, String ume, String dokx) {
+
+        System.out.println("invxstring userhash " + userhash);
+        System.out.println("invxstring userid " + userid);
+        System.out.println("invxstring fromfir " + fromfir);
+        System.out.println("invxstring vyb_rok " + vyb_rok);
+        System.out.println("invxstring drh " + drh);
+        System.out.println("invxstring dok " + dokx);
+
+        return mAbsServerService.deleteBankDocFromSqlServer(userhash, userid, fromfir, vyb_rok, drh, uce, ume, dokx);
+
+    }
+    //end delete General Doc from Mysql
+
 }

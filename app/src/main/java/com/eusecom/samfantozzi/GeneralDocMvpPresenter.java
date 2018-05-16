@@ -19,9 +19,12 @@
 package com.eusecom.samfantozzi;
 
 
+import com.eusecom.samfantozzi.models.BankItem;
 import com.eusecom.samfantozzi.models.GeneralDocPresenterState;
 
 public interface GeneralDocMvpPresenter {
+
+    void deleteDoc(BankItem invoice);
 
     void onStart();
 

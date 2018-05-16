@@ -270,7 +270,7 @@ public class GeneralDocFragment extends Fragment implements GeneralDocMvpView {
                         new DialogInterface.OnClickListener() {
                             public void onClick(DialogInterface dialog,
                                                 int whichButton) {
-                                //presenter.deleteDoc(invoice);
+                                presenter.deleteDoc(invoice);
 
                             }
                         })

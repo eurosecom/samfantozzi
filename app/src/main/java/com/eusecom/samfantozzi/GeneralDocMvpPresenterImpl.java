@@ -145,5 +145,98 @@ public class GeneralDocMvpPresenterImpl implements GeneralDocMvpPresenter, Gener
         }
     }
 
+    //delete Invoice from Mysql
+    public void deleteDoc(BankItem item){
+        Log.d("deleteDoc", item.getHod());
+        mSubscription.add(getMyItemDelFromServer()
+                .subscribeOn(Schedulers.computation())
+                .observeOn(rx.android.schedulers.AndroidSchedulers.mainThread())
+                .doOnError(throwable -> { Log.e(TAG, "Error GenDocPresenter " + throwable.getMessage());
+                    if (mainView != null) {
+                        mainView.hideProgress();
+                        mainView.showMessage("Server not connected");
+                    }
+                })
+                .onErrorResumeNext(throwable -> empty())
+                .subscribe(this::deletedInvoice));
+        if (mainView != null) {
+            mainView.showProgress();
+        }
+        emitDelItemFromServer(item);
+
+    }
+
+    //emit delete Item from Mysql
+    public void emitDelItemFromServer(BankItem invx) {
+
+        mObservableItemDelFromServer.onNext(invx);
+    }
+
+    @NonNull
+    private BehaviorSubject<BankItem> mObservableItemDelFromServer = BehaviorSubject.create();
+
+    @NonNull
+    public Observable<BankItemList> getMyItemDelFromServer() {
+
+        Random r = new Random();
+        double d = -10.0 + r.nextDouble() * 20.0;
+        String ds = String.valueOf(d);
+
+        String usuidx = mSharedPreferences.getString("usuid", "");
+        String userxplus =  ds + "/" + usuidx + "/" + ds;
+
+        MCrypt mcrypt = new MCrypt();
+        String encrypted2 = "";
+        try {
+            encrypted2 = mcrypt.bytesToHex( mcrypt.encrypt(userxplus) );
+        } catch (Exception e1) {
+            // TODO Auto-generated catch block
+            e1.printStackTrace();
+        }
+
+        String firx = mSharedPreferences.getString("fir", "");
+        String rokx = mSharedPreferences.getString("rok", "");
+        String drh = "4";
+        String dodx = mSharedPreferences.getString("doduce", "");
+        if (drh.equals("1")) {
+            dodx = mSharedPreferences.getString("odbuce", "");
+        }
+        if (drh.equals("3")) {
+            dodx = mSharedPreferences.getString("pokluce", "");
+        }
+        if (drh.equals("4")) {
+            dodx = mSharedPreferences.getString("bankuce", "");
+        }
+        if (drh.equals("5")) {
+            dodx = mSharedPreferences.getString("genuce", "");
+        }
+        String umex = mSharedPreferences.getString("ume", "");
+
+        Log.d("NewCashLog del fir ", firx);
+
+        final String encryptedf=encrypted2;
+        final String dodxf=dodx;
+
+        return mObservableItemDelFromServer
+                .observeOn(Schedulers.computation())
+                .flatMap(invx -> genDocInteractor.getMyDocDelFromServer(encryptedf, ds, firx, rokx, invx.getDrh(), dodxf, umex, invx.getDok() ));
+    }
+
+    public void clearObservableItemDelFromServer() {
+
+        mObservableItemDelFromServer = BehaviorSubject.create();
+
+    }
+    private void deletedInvoice(BankItemList item) {
+        //Log.d("deleted Item", item.get(0).getDok());
+        if (mainView != null) {
+            //mAdapter = new AccountItemAdapter(this);
+            mainView.setGeneralItems(item.getBankitem());
+            mainView.hideProgress();
+        }
+        clearObservableItemDelFromServer();
+    }
+
+    //end delete Invoice from Mysql
 
 }
