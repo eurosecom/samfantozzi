@@ -45,6 +45,7 @@ public class GeneralDocMvpPresenterImpl implements GeneralDocMvpPresenter, Gener
     private SharedPreferences mSharedPreferences;
     private String searchQuery = "";
     private CompositeSubscription mSubscription;
+    private GeneralDocSearchEngine mGeneralDocSearchEngine;
 
     public GeneralDocMvpPresenterImpl(GeneralDocMvpView mainView, SharedPreferences sharedPreferences,
                                       GeneralDocInteractor generalDocInteractor) {
@@ -140,9 +141,13 @@ public class GeneralDocMvpPresenterImpl implements GeneralDocMvpPresenter, Gener
         if (mainView != null) {
             //Log.d("MvpPresenter ", bankitems.getBankitem().get(0).getDok());
             mainView.setGeneralItems(bankitems.getBankitem());
-            //mainView.setBalance(bankitems.getBalance());
+            setSearchEngine(bankitems.getBankitem());
             mainView.hideProgress();
         }
+    }
+
+    private void setSearchEngine(List<BankItem> result) {
+        mGeneralDocSearchEngine = new GeneralDocSearchEngineImpl(result);
     }
 
     //delete Invoice from Mysql
