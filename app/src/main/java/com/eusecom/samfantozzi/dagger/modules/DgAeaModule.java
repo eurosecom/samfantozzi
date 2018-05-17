@@ -32,7 +32,11 @@ import retrofit2.converter.gson.GsonConverterFactory;
 @Module(includes = {ApplicationModule.class} )
 public class DgAeaModule {
 
-    String mBaseUrl = "http:\\www.eshoptest.sk";
+    String mBaseUrl = "";
+
+    public DgAeaModule(String url){
+        this.mBaseUrl=url;
+    }
 
     @Provides
     @Singleton

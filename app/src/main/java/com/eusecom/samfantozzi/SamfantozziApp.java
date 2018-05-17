@@ -1,12 +1,13 @@
 package com.eusecom.samfantozzi;
 
 import android.app.Activity;
+import android.content.SharedPreferences;
 import android.support.annotation.NonNull;
 import android.support.multidex.MultiDexApplication;
-
 import com.eusecom.samfantozzi.dagger.components.DaggerDgAeaComponent;
 import com.eusecom.samfantozzi.dagger.components.DgAeaComponent;
 import com.eusecom.samfantozzi.dagger.modules.ApplicationModule;
+import com.eusecom.samfantozzi.dagger.modules.DgAeaModule;
 import com.eusecom.samfantozzi.di.DaggerAppComponent;
 import com.eusecom.samfantozzi.mvvmschedulers.ISchedulerProvider;
 import com.eusecom.samfantozzi.mvvmschedulers.SchedulerProvider;
@@ -20,7 +21,6 @@ import dagger.android.HasActivityInjector;
 import io.realm.Realm;
 import io.realm.RealmConfiguration;
 
-
 public class SamfantozziApp extends MultiDexApplication implements HasActivityInjector {
 
     @Inject
@@ -31,6 +31,7 @@ public class SamfantozziApp extends MultiDexApplication implements HasActivityIn
     @NonNull
     private DatabaseReference mDatabaseReference;
     private Realm mRealm;
+    private SharedPreferences prefs;
 
     @Override
     public void onCreate() {
@@ -91,13 +92,18 @@ public class SamfantozziApp extends MultiDexApplication implements HasActivityIn
     private final DgAeaComponent dgaeacomponent = createDgAeaComponent();
 
     protected DgAeaComponent createDgAeaComponent() {
+
+        String serverurl = "http:\\www.eshoptest.sk";
+
         return DaggerDgAeaComponent.builder()
                 .applicationModule(new ApplicationModule(this))
+                .dgAeaModule(new DgAeaModule(serverurl))
                 .build();
     }
 
     public DgAeaComponent dgaeacomponent() {
         return dgaeacomponent;
     }
+
 
 }
