@@ -12,6 +12,7 @@ import com.eusecom.samfantozzi.mvvmdatamodel.DgAllEmpsAbsDataModel;
 import com.eusecom.samfantozzi.mvvmdatamodel.DgAllEmpsAbsIDataModel;
 import com.eusecom.samfantozzi.mvvmschedulers.ISchedulerProvider;
 import com.eusecom.samfantozzi.retrofit.AbsServerService;
+import com.eusecom.samfantozzi.retrofit.ExampleInterceptor;
 import com.google.firebase.database.DatabaseReference;
 import javax.inject.Singleton;
 import dagger.Module;
@@ -40,6 +41,12 @@ public class DgAeaModule {
 
     @Provides
     @Singleton
+    ExampleInterceptor provideInterceptor() { // This is where the Interceptor object is constructed
+        return ExampleInterceptor.get();
+    }
+
+    @Provides
+    @Singleton
     Cache provideOkHttpCache(Application application) {
         int cacheSize = 10 * 1024 * 1024; // 10 MiB
         Cache cache = new Cache(application.getCacheDir(), cacheSize);
@@ -56,8 +63,9 @@ public class DgAeaModule {
 
     @Provides @Named("cached")
     @Singleton
-    OkHttpClient provideOkHttpClient(Cache cache) {
+    OkHttpClient provideOkHttpClient(Cache cache, ExampleInterceptor interceptor) {
         OkHttpClient okHttpClient = new OkHttpClient.Builder()
+                .addInterceptor(interceptor)
                 .cache(cache)
                 .build();
         return okHttpClient;
@@ -65,8 +73,9 @@ public class DgAeaModule {
 
     @Provides @Named("non_cached")
     @Singleton
-    OkHttpClient provideOkHttpClientNonCached() {
+    OkHttpClient provideOkHttpClientNonCached(ExampleInterceptor interceptor) {
         OkHttpClient okHttpClient = new OkHttpClient.Builder()
+                .addInterceptor(interceptor)
                 .build();
         return okHttpClient;
     }

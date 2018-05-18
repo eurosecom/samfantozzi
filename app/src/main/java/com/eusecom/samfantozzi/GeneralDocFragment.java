@@ -27,6 +27,8 @@ import android.widget.Toast;
 import com.eusecom.samfantozzi.models.BankItem;
 import com.eusecom.samfantozzi.models.GeneralDocPresenterState;
 import com.eusecom.samfantozzi.retrofit.AbsServerService;
+import com.eusecom.samfantozzi.retrofit.ExampleInterceptor;
+
 import java.util.Collections;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
@@ -59,6 +61,8 @@ public class GeneralDocFragment extends Fragment implements GeneralDocMvpView {
     SharedPreferences mSharedPreferences;
     @Inject
     AbsServerService mAbsServerService;
+    @Inject
+    ExampleInterceptor mInterceptor;
 
     private GeneralDocMvpPresenter presenter;
 
@@ -89,6 +93,7 @@ public class GeneralDocFragment extends Fragment implements GeneralDocMvpView {
                     , new GeneralDocInteractorImpl(mAbsServerService));
 
         }
+        mInterceptor.setInterceptor("http://www.eshoptest.sk");
         presenter.attachView(this, state);
 
     }
