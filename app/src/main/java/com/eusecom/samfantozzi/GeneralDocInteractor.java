@@ -31,10 +31,10 @@ public interface GeneralDocInteractor {
 
     }
 
-    Observable<BankItemList> findGeneralItemsWithBalance(String userhash, String userid, String fromfir
+    Observable<BankItemList> findGeneralItemsWithBalance(String servername, String userhash, String userid, String fromfir
             , String vyb_rok, String drh, String uce, String ume, String dokx);
 
-    Observable<BankItemList> getMyDocDelFromServer(String userhash, String userid, String fromfir
+    Observable<BankItemList> getMyDocDelFromServer(String servername, String userhash, String userid, String fromfir
             , String vyb_rok, String drh, String uce, String ume, String dokx);
 
 }

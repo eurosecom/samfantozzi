@@ -120,9 +120,10 @@ public class GeneralDocMvpPresenterImpl implements GeneralDocMvpPresenter, Gener
             String dodx = mSharedPreferences.getString("doduce", "");
             String umex = mSharedPreferences.getString("ume", "");
             String edidok = mSharedPreferences.getString("edidok", "");
+            String serverx = mSharedPreferences.getString("servername", "");
 
             mSubscription = new CompositeSubscription();
-            mSubscription.add(genDocInteractor.findGeneralItemsWithBalance(encrypted2, ds, firx, rokx, drh, dodx, umex, edidok)
+            mSubscription.add(genDocInteractor.findGeneralItemsWithBalance(serverx, encrypted2, ds, firx, rokx, drh, dodx, umex, edidok)
                     .subscribeOn(Schedulers.computation())
                     .observeOn(rx.android.schedulers.AndroidSchedulers.mainThread())
                     .doOnError(throwable -> { Log.e(TAG, "Error GenDocMvpPresenter " + throwable.getMessage());
@@ -216,6 +217,7 @@ public class GeneralDocMvpPresenterImpl implements GeneralDocMvpPresenter, Gener
             dodx = mSharedPreferences.getString("genuce", "");
         }
         String umex = mSharedPreferences.getString("ume", "");
+        String serverx = mSharedPreferences.getString("servername", "");
 
         Log.d("NewCashLog del fir ", firx);
 
@@ -224,7 +226,7 @@ public class GeneralDocMvpPresenterImpl implements GeneralDocMvpPresenter, Gener
 
         return mObservableItemDelFromServer
                 .observeOn(Schedulers.computation())
-                .flatMap(invx -> genDocInteractor.getMyDocDelFromServer(encryptedf, ds, firx, rokx, invx.getDrh(), dodxf, umex, invx.getDok() ));
+                .flatMap(invx -> genDocInteractor.getMyDocDelFromServer(serverx, encryptedf, ds, firx, rokx, invx.getDrh(), dodxf, umex, invx.getDok() ));
     }
 
     public void clearObservableItemDelFromServer() {

@@ -90,10 +90,9 @@ public class GeneralDocFragment extends Fragment implements GeneralDocMvpView {
         }
         if (presenter == null) {
             presenter = new GeneralDocMvpPresenterImpl(this, mSharedPreferences
-                    , new GeneralDocInteractorImpl(mAbsServerService));
+                    , new GeneralDocInteractorImpl(mAbsServerService, mInterceptor));
 
         }
-        mInterceptor.setInterceptor("http://www.eshoptest.sk");
         presenter.attachView(this, state);
 
     }
