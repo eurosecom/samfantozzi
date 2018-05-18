@@ -96,9 +96,10 @@ public class BankMvpPresenterImpl implements BankMvpPresenter, BankFindItemsInte
             editor.putString("newdok", "1").apply();
             editor.putString("edidok", "0").apply();
             editor.commit();
+            String serverx = mSharedPreferences.getString("servername", "");
 
         mSubscription = new CompositeSubscription();
-        mSubscription.add(findItemsInteractor.findCompanies()
+        mSubscription.add(findItemsInteractor.findCompanies(serverx)
                 .subscribeOn(Schedulers.computation())
                 .observeOn(rx.android.schedulers.AndroidSchedulers.mainThread())
                 .doOnError(throwable -> { Log.e(TAG, "Error InvoiceListFragment " + throwable.getMessage());
@@ -143,6 +144,7 @@ public class BankMvpPresenterImpl implements BankMvpPresenter, BankFindItemsInte
         }
         String umex = mSharedPreferences.getString("ume", "");
         String edidok = mSharedPreferences.getString("edidok", "");
+        String serverx = mSharedPreferences.getString("servername", "");
 
         //mSubscription.add(findItemsInteractor.findBankItems("7d074740465344b6cb3cd1eea75d88c73664d4ea912e15d5c7d851d328046849cd0325dd6778ae40da3c4d73ac441e34f03ad6ff3cd7f926df466e3a660c8740"
         //        , "6.49580023480085", "301"
@@ -159,7 +161,7 @@ public class BankMvpPresenterImpl implements BankMvpPresenter, BankFindItemsInte
         //       .onErrorResumeNext(throwable -> empty())
         //        .subscribe(this::onFinishedBankItems));
 
-        mSubscription.add(findItemsInteractor.findBankItemsWithBalance(encrypted2, ds, firx, rokx, drh, dodx, umex, edidok)
+        mSubscription.add(findItemsInteractor.findBankItemsWithBalance(serverx, encrypted2, ds, firx, rokx, drh, dodx, umex, edidok)
                 .subscribeOn(Schedulers.computation())
                 .observeOn(rx.android.schedulers.AndroidSchedulers.mainThread())
                 .doOnError(throwable -> { Log.e(TAG, "Error BankMvpPresenter " + throwable.getMessage());
@@ -281,6 +283,7 @@ public class BankMvpPresenterImpl implements BankMvpPresenter, BankFindItemsInte
             dodx = mSharedPreferences.getString("bankuce", "");
         }
         String umex = mSharedPreferences.getString("ume", "");
+        String serverx = mSharedPreferences.getString("servername", "");
 
         Log.d("NewCashLog del fir ", firx);
 
@@ -289,7 +292,7 @@ public class BankMvpPresenterImpl implements BankMvpPresenter, BankFindItemsInte
 
         return mObservableItemDelFromServer
                 .observeOn(Schedulers.computation())
-                .flatMap(invx -> findItemsInteractor.getMyDocDelFromServer(encryptedf, ds, firx, rokx, drh, dodxf, umex, invx.getDok() ));
+                .flatMap(invx -> findItemsInteractor.getMyDocDelFromServer(serverx, encryptedf, ds, firx, rokx, drh, dodxf, umex, invx.getDok() ));
     }
 
     public void clearObservableItemDelFromServer() {

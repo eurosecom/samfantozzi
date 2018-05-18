@@ -45,6 +45,8 @@ import android.widget.TextView;
 import android.widget.Toast;
 import com.eusecom.samfantozzi.models.BankItem;
 import com.eusecom.samfantozzi.retrofit.AbsServerService;
+import com.eusecom.samfantozzi.retrofit.ExampleInterceptor;
+
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 import javax.inject.Inject;
@@ -79,6 +81,8 @@ public class BankMvpActivity extends AppCompatActivity implements BankMvpView, A
     AbsServerService mAbsServerService;
     @Inject
     SharedPreferences mSharedPreferences;
+    @Inject
+    ExampleInterceptor mInterceptor;
 
     //searchview
     private SearchView searchView;
@@ -113,7 +117,7 @@ public class BankMvpActivity extends AppCompatActivity implements BankMvpView, A
         presenter = (BankMvpPresenter) getLastCustomNonConfigurationInstance();
         if (presenter == null) {
             presenter = new BankMvpPresenterImpl(this, mSharedPreferences
-                    , new BankFindItemsInteractorImpl(mAbsServerService));
+                    , new BankFindItemsInteractorImpl(mAbsServerService, mInterceptor));
 
         }
         presenter.attachView(this);

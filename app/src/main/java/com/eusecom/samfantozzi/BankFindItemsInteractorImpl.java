@@ -23,6 +23,8 @@ import android.support.annotation.NonNull;
 import com.eusecom.samfantozzi.models.BankItem;
 import com.eusecom.samfantozzi.models.BankItemList;
 import com.eusecom.samfantozzi.retrofit.AbsServerService;
+import com.eusecom.samfantozzi.retrofit.ExampleInterceptor;
+
 import java.util.Arrays;
 import java.util.List;
 import rx.Observable;
@@ -32,37 +34,43 @@ import rx.subscriptions.CompositeSubscription;
 public class BankFindItemsInteractorImpl implements BankFindItemsInteractor {
 
     AbsServerService mAbsServerService;
+    ExampleInterceptor mInterceptor;
 
-    public BankFindItemsInteractorImpl (@NonNull final AbsServerService absServerService ) {
+    public BankFindItemsInteractorImpl (@NonNull final AbsServerService absServerService,
+                                        ExampleInterceptor interceptor ) {
         mAbsServerService = absServerService;
+        mInterceptor = interceptor;
     }
 
-    @Override public Observable<List<Invoice>> findCompanies() {
+    @Override public Observable<List<Invoice>> findCompanies(String servername) {
 
+        setRetrofit(servername);
         return mAbsServerService.getExample("301");
 
     }
 
     //find Bank Docs from Mysql
-    @Override public Observable<List<BankItem>> findBankItems(String userhash, String userid, String fromfir
+    @Override public Observable<List<BankItem>> findBankItems(String servername, String userhash, String userid, String fromfir
             , String vyb_rok, String drh, String uce, String ume, String dokx) {
 
+        setRetrofit(servername);
         return mAbsServerService.getBankItemsFromSqlServer(userhash, userid, fromfir, vyb_rok, drh, uce, ume, dokx);
 
     }
     //end find Bank Docs from Mysql
 
     //find BankItemsList rom Mysql
-    @Override public Observable<BankItemList> findBankItemsWithBalance(String userhash, String userid, String fromfir
+    @Override public Observable<BankItemList> findBankItemsWithBalance(String servername, String userhash, String userid, String fromfir
             , String vyb_rok, String drh, String uce, String ume, String dokx) {
 
+        setRetrofit(servername);
         return mAbsServerService.getBankItemsFromSqlServerWithBalance(userhash, userid, fromfir, vyb_rok, drh, uce, ume, dokx);
 
     }
     //end find BankItemsList from Mysql
 
     //delete Bank Doc from Mysql
-    @Override public Observable<BankItemList> getMyDocDelFromServer(String userhash, String userid, String fromfir
+    @Override public Observable<BankItemList> getMyDocDelFromServer(String servername, String userhash, String userid, String fromfir
             , String vyb_rok, String drh, String uce, String ume, String dokx) {
 
         System.out.println("invxstring userhash " + userhash);
@@ -72,6 +80,7 @@ public class BankFindItemsInteractorImpl implements BankFindItemsInteractor {
         System.out.println("invxstring drh " + drh);
         System.out.println("invxstring dok " + dokx);
 
+        setRetrofit(servername);
         return mAbsServerService.deleteBankDocFromSqlServer(userhash, userid, fromfir, vyb_rok, drh, uce, ume, dokx);
 
     }
@@ -105,4 +114,17 @@ public class BankFindItemsInteractorImpl implements BankFindItemsInteractor {
 
         return Observable.just(queryx);
     }
+
+    //set retrofit by runtime
+    public void setRetrofit(String servername) {
+
+        System.out.println("invxstring servername " + servername);
+        String urlname = "http://" + servername;
+
+        mInterceptor.setInterceptor(urlname);
+
+    }
+    //end set retrofit by runtime
+
+
 }

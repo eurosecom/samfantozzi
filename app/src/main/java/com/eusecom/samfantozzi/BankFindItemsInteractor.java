@@ -37,15 +37,15 @@ public interface BankFindItemsInteractor {
 
     void findItems(OnFinishedListener listener);
 
-    Observable<List<Invoice>> findCompanies();
+    Observable<List<Invoice>> findCompanies(String servername);
 
-    Observable<List<BankItem>> findBankItems(String userhash, String userid, String fromfir
+    Observable<List<BankItem>> findBankItems(String servername, String userhash, String userid, String fromfir
             , String vyb_rok, String drh, String uce, String ume, String dokx);
 
-    Observable<BankItemList> findBankItemsWithBalance(String userhash, String userid, String fromfir
+    Observable<BankItemList> findBankItemsWithBalance(String servername, String userhash, String userid, String fromfir
             , String vyb_rok, String drh, String uce, String ume, String dokx);
 
-    Observable<BankItemList> getMyDocDelFromServer(String userhash, String userid, String fromfir
+    Observable<BankItemList> getMyDocDelFromServer(String servername, String userhash, String userid, String fromfir
             , String vyb_rok, String drh, String uce, String ume, String dokx);
 
     Observable<String> getObservableBankListQuery(String queryx);
