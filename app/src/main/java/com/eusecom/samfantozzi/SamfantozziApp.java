@@ -93,7 +93,7 @@ public class SamfantozziApp extends MultiDexApplication implements HasActivityIn
 
     protected DgAeaComponent createDgAeaComponent() {
 
-        String serverurl = "http:\\www.eshoptestxxx.sk";
+        String serverurl = "http:\\www.eshoptest.sk";
 
         return DaggerDgAeaComponent.builder()
                 .applicationModule(new ApplicationModule(this))

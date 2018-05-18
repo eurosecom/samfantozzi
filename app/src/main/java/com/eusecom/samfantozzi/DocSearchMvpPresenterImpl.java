@@ -159,8 +159,9 @@ public class DocSearchMvpPresenterImpl implements DocSearchMvpPresenter, DocSear
                 dodx = mSharedPreferences.getString("bankuce", "");
             }
             String umex = mSharedPreferences.getString("ume", "");
+            String serverx = mSharedPreferences.getString("servername", "");
 
-            mSubscription.add(docSearchInteractor.getSearchItemsFromSql(encrypted2, ds, firx, rokx, drh, dodx, umex, query, 0, 20)
+            mSubscription.add(docSearchInteractor.getSearchItemsFromSql(serverx, encrypted2, ds, firx, rokx, drh, dodx, umex, query, 0, 20)
                     .subscribeOn(Schedulers.computation())
                     .observeOn(rx.android.schedulers.AndroidSchedulers.mainThread())
                     .doOnError(throwable -> {
@@ -225,8 +226,9 @@ public class DocSearchMvpPresenterImpl implements DocSearchMvpPresenter, DocSear
             String edidok = mSharedPreferences.getString("edidok", "");
 
             Log.d("DocSearchMvp start end ", start + " " + end);
+            String serverx = mSharedPreferences.getString("servername", "");
 
-            mSubscription.add(docSearchInteractor.getSearchItemsFromSql(encrypted2, ds, firx, rokx, drh, dodx, umex, query, start, end)
+            mSubscription.add(docSearchInteractor.getSearchItemsFromSql(serverx, encrypted2, ds, firx, rokx, drh, dodx, umex, query, start, end)
                     .subscribeOn(Schedulers.computation())
                     .observeOn(rx.android.schedulers.AndroidSchedulers.mainThread())
                     .doOnError(throwable -> {
@@ -288,8 +290,9 @@ public class DocSearchMvpPresenterImpl implements DocSearchMvpPresenter, DocSear
                 dodx = mSharedPreferences.getString("bankuce", "");
             }
             String umex = mSharedPreferences.getString("ume", "");
+            String serverx = mSharedPreferences.getString("servername", "");
 
-            mSubscription.add(docSearchInteractor.getSearchItemsFromSql(encrypted2, ds, firx, rokx, drh, dodx, umex, query, 0, 20)
+            mSubscription.add(docSearchInteractor.getSearchItemsFromSql(serverx, encrypted2, ds, firx, rokx, drh, dodx, umex, query, 0, 20)
                     .subscribeOn(Schedulers.computation())
                     .observeOn(rx.android.schedulers.AndroidSchedulers.mainThread())
                     .doOnError(throwable -> {

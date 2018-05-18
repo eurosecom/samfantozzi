@@ -24,6 +24,8 @@ import android.widget.Toast;
 import android.widget.ViewSwitcher;
 import com.eusecom.samfantozzi.models.BankItem;
 import com.eusecom.samfantozzi.retrofit.AbsServerService;
+import com.eusecom.samfantozzi.retrofit.ExampleInterceptor;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
@@ -62,6 +64,8 @@ public class DocSearchActivity  extends BaseListActivity implements DocSearchMvp
     AbsServerService mAbsServerService;
     @Inject
     SharedPreferences mSharedPreferences;
+    @Inject
+    ExampleInterceptor mInterceptor;
 
     //searchview
     private SearchView searchView;
@@ -115,7 +119,7 @@ public class DocSearchActivity  extends BaseListActivity implements DocSearchMvp
         presenter = (DocSearchMvpPresenter) getLastCustomNonConfigurationInstance();
         if (presenter == null) {
             presenter = new DocSearchMvpPresenterImpl(this, mSharedPreferences
-                    , new DocSearchInteractorImpl(mAbsServerService));
+                    , new DocSearchInteractorImpl(mAbsServerService, mInterceptor));
 
         }
         presenter.attachView(this);

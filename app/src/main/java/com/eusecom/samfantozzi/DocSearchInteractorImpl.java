@@ -26,6 +26,7 @@ import android.util.Log;
 import com.eusecom.samfantozzi.models.BankItem;
 import com.eusecom.samfantozzi.models.BankItemList;
 import com.eusecom.samfantozzi.retrofit.AbsServerService;
+import com.eusecom.samfantozzi.retrofit.ExampleInterceptor;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -42,11 +43,14 @@ import static rx.Observable.empty;
 public class DocSearchInteractorImpl implements DocSearchInteractor {
 
     AbsServerService mAbsServerService;
+    ExampleInterceptor mInterceptor;
     private List<DocSearchStudent> studentList;
     private List<BankItem> bankitemList;
 
-    public DocSearchInteractorImpl (@NonNull final AbsServerService absServerService ) {
+    public DocSearchInteractorImpl (@NonNull final AbsServerService absServerService,
+                                    ExampleInterceptor interceptor) {
         mAbsServerService = absServerService;
+        mInterceptor = interceptor;
     }
 
     //get students list
@@ -109,11 +113,24 @@ public class DocSearchInteractorImpl implements DocSearchInteractor {
     }
 
     //get search items from mysql server
-    @Override public Observable<List<BankItem>> getSearchItemsFromSql(String userhash, String userid, String fromfir
+    @Override public Observable<List<BankItem>> getSearchItemsFromSql(String servername, String userhash, String userid, String fromfir
             , String vyb_rok, String drh, String uce, String ume, String query, int start, int end) {
 
+        setRetrofit(servername);
         return mAbsServerService.getSearchItemsFromSqlServer(userhash, userid, fromfir, vyb_rok, drh, uce, ume, query, start, end);
 
     }
     //end get search items from mysql server
+
+
+    //set retrofit by runtime
+    public void setRetrofit(String servername) {
+
+        System.out.println("invxstring servername " + servername);
+        String urlname = "http://" + servername;
+
+        mInterceptor.setInterceptor(urlname);
+
+    }
+    //end set retrofit by runtime
 }
