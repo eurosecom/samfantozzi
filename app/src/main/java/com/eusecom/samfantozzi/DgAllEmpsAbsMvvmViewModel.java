@@ -102,9 +102,9 @@ public class DgAllEmpsAbsMvvmViewModel {
         if (usicox.equals("44551142999")) {
             firx = "37";
         }
+        String serverx = mSharedPreferences.getString("servername", "");
 
-
-        return mDataModel.getAbsencesFromMysqlServer(firx);
+        return mDataModel.getAbsencesFromMysqlServer(serverx, firx);
     }
     //end get absences from server
 
@@ -145,8 +145,9 @@ public class DgAllEmpsAbsMvvmViewModel {
             dodx = mSharedPreferences.getString("bankuce", "");
         }
         String umex = mSharedPreferences.getString("ume", "");
+        String serverx = mSharedPreferences.getString("servername", "");
 
-        return mDataModel.getInvoicesFromMysqlServer(encrypted, ds, firx, rokx, drh, dodx, umex, "0");
+        return mDataModel.getInvoicesFromMysqlServer(serverx, encrypted, ds, firx, rokx, drh, dodx, umex, "0");
     }
     //end get invoices from MySql server
 
@@ -158,9 +159,9 @@ public class DgAllEmpsAbsMvvmViewModel {
         if (usicox.equals("44551142999")) {
             firx = "37";
         }
+        String serverx = mSharedPreferences.getString("servername", "");
 
-
-        return mDataModel.getInvoicesFromServer(firx);
+        return mDataModel.getInvoicesFromServer(serverx, firx);
     }
     //end get invoices from server
 
@@ -202,8 +203,9 @@ public class DgAllEmpsAbsMvvmViewModel {
 
         String firx = mSharedPreferences.getString("fir", "");
         String rokx = mSharedPreferences.getString("rok", "");
+        String serverx = mSharedPreferences.getString("servername", "");
 
-        return mDataModel.getAccountsFromMysqlServer(encrypted, ds, firx, rokx, drh);
+        return mDataModel.getAccountsFromMysqlServer(serverx, encrypted, ds, firx, rokx, drh);
     }
     //end get accounts from MySql server
 
@@ -240,8 +242,9 @@ public class DgAllEmpsAbsMvvmViewModel {
         Log.d("userxplus ", encrypted + " " + ds);
         	/* Decrypt */
         //String decrypted = new String( mMcrypt.decrypt( encrypted ) );
+        String serverx = mSharedPreferences.getString("servername", "");
 
-        return mDataModel.getCompaniesFromMysqlServer(encrypted, ds);
+        return mDataModel.getCompaniesFromMysqlServer(serverx, encrypted, ds);
     }
     //end get companies from MySql server
 
@@ -282,8 +285,9 @@ public class DgAllEmpsAbsMvvmViewModel {
             dodx = mSharedPreferences.getString("bankuce", "");
         }
         String umex = mSharedPreferences.getString("ume", "");
+        String serverx = mSharedPreferences.getString("servername", "");
 
-        return mDataModel.getCashDocsFromMysqlServer(encrypted, ds, firx, rokx, drh, dodx, umex, "0");
+        return mDataModel.getCashDocsFromMysqlServer(serverx, encrypted, ds, firx, rokx, drh, dodx, umex, "0");
     }
     //end get cashdocs from MySql server
 
@@ -320,10 +324,11 @@ public class DgAllEmpsAbsMvvmViewModel {
         String drh = "2";
 
         Log.d("NewCashLog del fir ", firx);
+        String serverx = mSharedPreferences.getString("servername", "");
 
         return mObservableInvoiceDelFromServer
                 .observeOn(mSchedulerProvider.computation())
-                .flatMap(invx -> mDataModel.getObservableInvoiceDelFromMysql(encrypted, ds, firx, rokx, drh, invx ));
+                .flatMap(invx -> mDataModel.getObservableInvoiceDelFromMysql(serverx, encrypted, ds, firx, rokx, drh, invx ));
     }
 
     public void clearObservableInvoiceDelFromServer() {
@@ -476,8 +481,9 @@ public class DgAllEmpsAbsMvvmViewModel {
         }
         String umex = mSharedPreferences.getString("ume", "");
         String dokx = mSharedPreferences.getString("edidok", "");
+        String serverx = mSharedPreferences.getString("servername", "");
 
-        return mDataModel.getInvoicesFromMysqlServer(encrypted, ds, firx, rokx, drh, dodx, umex, dokx);
+        return mDataModel.getInvoicesFromMysqlServer(serverx, encrypted, ds, firx, rokx, drh, dodx, umex, dokx);
     }
     //end get edidok invoice from MySql server
 
@@ -538,10 +544,11 @@ public class DgAllEmpsAbsMvvmViewModel {
         String drh = "2";
 
         Log.d("NewCashLog idc fir ", firx);
+        String serverx = mSharedPreferences.getString("servername", "");
 
         return mObservableIdModelCompany
                 .observeOn(mSchedulerProvider.computation())
-                .flatMap(queryx -> mDataModel.getObservableIdModelCompany(encrypted, ds, firx, rokx, drh, queryx ));
+                .flatMap(queryx -> mDataModel.getObservableIdModelCompany(serverx, encrypted, ds, firx, rokx, drh, queryx ));
     }
 
     public void clearObservableIdModelCompany() {
@@ -606,21 +613,17 @@ public class DgAllEmpsAbsMvvmViewModel {
         String drupohx = drupoh;
         if( drh.equals("1")){ drupohx = "11"; }
         if( drh.equals("2")){ drupohx = "12"; }
+        String serverx = mSharedPreferences.getString("servername", "");
 
         return Observable.concatEager(
                 mDataModel.getReceiptsExpensesFromRealm(encrypted, ds, firx, rokx, drh, drupohx, uctox)
                         .filter(x -> x.size() > 0 )
                         .filter(x -> ( unixTimel - Long.valueOf(x.get(0).getDatm()) < interval || !isConnectedServer() ) ),
-                mDataModel.getReceiptsExpensesFromSql(encrypted, ds, firx, rokx, drh, drupoh, uctox)
+                mDataModel.getReceiptsExpensesFromSql(serverx, encrypted, ds, firx, rokx, drh, drupoh, uctox)
                         .observeOn(mSchedulerProvider.ui()) //switch to ui because of Realm is initialize in ui
                         .flatMap(listaccounts -> mDataModel.saveReceiptsExpensesToRealm(listaccounts, drh))
                  ).first();
 
-        //return mDataModel.getReceiptsExpensesFromSql(encrypted, ds, firx, rokx, drh, drupoh, uctox)
-        //        .observeOn(mSchedulerProvider.ui()) //switch to ui because of Realm is initialize in ui
-        //        .flatMap(listaccounts -> mDataModel.saveReceiptsExpensesToRealm(listaccounts));
-
-        //return mDataModel.getReceiptsExpensesFromRealm(encrypted, ds, firx, rokx, drh, drupoh, uctox);
 
     }
     //end get get uct.pohyby from MySql server
@@ -661,10 +664,11 @@ public class DgAllEmpsAbsMvvmViewModel {
         String firx = mSharedPreferences.getString("fir", "");
         String rokx = mSharedPreferences.getString("rok", "");
         String drh = "2";
+        String serverx = mSharedPreferences.getString("servername", "");
 
         return mObservableIdCompany
                 .observeOn(mSchedulerProvider.ui())
-                .flatMap(queryx -> mDataModel.getObservableIdCompany(encrypted, ds, firx, rokx, drh, queryx ));
+                .flatMap(queryx -> mDataModel.getObservableIdCompany(serverx, encrypted, ds, firx, rokx, drh, queryx ));
     }
 
     public void clearObservableIdCompany() {
@@ -747,12 +751,13 @@ public class DgAllEmpsAbsMvvmViewModel {
 
         long unixTimel = System.currentTimeMillis() / 1000L;
         int interval = 120;
+        String serverx = mSharedPreferences.getString("servername", "");
 
         return Observable.concatEager(
                 mDataModel.getIdCompaniesFromRealm(encrypted, ds, firx, rokx, drh, "0", "9")
                         .filter(x -> x.size() > 0 )
                         .filter(x -> ( unixTimel - Long.valueOf(x.get(0).getDatm()) < interval || !isConnectedServer() ) ),
-                mDataModel.getAllIdcFromMysqlServer(encrypted, ds, firx, rokx, drh)
+                mDataModel.getAllIdcFromMysqlServer(serverx, encrypted, ds, firx, rokx, drh)
                         .observeOn(mSchedulerProvider.ui()) //switch to ui because of Realm is initialize in ui
                         .flatMap(listaccounts -> mDataModel.saveIdCompaniesToRealm(listaccounts, drh))
         ).first();
@@ -850,12 +855,13 @@ public class DgAllEmpsAbsMvvmViewModel {
 
         //Log.d("NewCashLog save fir ", firx);
         Log.d("NewCashedit ", firx);
+        String serverx = mSharedPreferences.getString("servername", "");
 
         return mObservableInvoiceToServer
                 .observeOn(mSchedulerProvider.ui())
                 .flatMap(invx -> mDataModel.saveRealmOneIdcData(invx) )
                 .observeOn(mSchedulerProvider.computation())
-                .flatMap(invx -> mDataModel.getObservableInvoiceToMysql(encrypted2, ds, firx, rokx, drh, invx, edidok ));
+                .flatMap(invx -> mDataModel.getObservableInvoiceToMysql(serverx, encrypted2, ds, firx, rokx, drh, invx, edidok ));
     }
 
     public void clearObservableInvoiceToServer() {
@@ -978,12 +984,13 @@ public class DgAllEmpsAbsMvvmViewModel {
 
         //Log.d("NewCashLog save fir ", firx);
         Log.d("NewCashedit ", firx);
+        String serverx = mSharedPreferences.getString("servername", "");
 
         return mObservableIdcToServer
                 .observeOn(mSchedulerProvider.ui())
                 .flatMap(invx -> mDataModel.saveRealmOneIdcData(invx) )
                 .observeOn(mSchedulerProvider.computation())
-                .flatMap(invx -> mDataModel.getObservableInvoiceToMysql(encrypted2, ds, firx, rokx, drh, invx, edidok ));
+                .flatMap(invx -> mDataModel.getObservableInvoiceToMysql(serverx, encrypted2, ds, firx, rokx, drh, invx, edidok ));
     }
 
     public void clearObservableIdcSaveToServer() {
@@ -1047,9 +1054,10 @@ public class DgAllEmpsAbsMvvmViewModel {
         if (drh == 1) {
             ucex = mSharedPreferences.getString("doduce", "");
         }
+        String serverx = mSharedPreferences.getString("servername", "");
 
         Log.d("ucex ", ucex);
-        return mDataModel.getSaldoFromSql(encrypted, ds, firx, rokx, drh, ucex, uctox, salico);
+        return mDataModel.getSaldoFromSql(serverx, encrypted, ds, firx, rokx, drh, ucex, uctox, salico);
 
 
     }
@@ -1086,7 +1094,7 @@ public class DgAllEmpsAbsMvvmViewModel {
             e1.printStackTrace();
         }
 
-        return mDataModel.getTaxPayFromMysqlServer(encrypted, ds, firx, rokx, drh, adresx);
+        return mDataModel.getTaxPayFromMysqlServer(serverx, encrypted, ds, firx, rokx, drh, adresx);
     }
     //end get taxpayments from MySql server
 

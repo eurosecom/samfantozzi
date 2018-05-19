@@ -124,8 +124,10 @@ public class DgAeaModule {
     @Singleton
     public DgAllEmpsAbsIDataModel providesDgAllEmpsAbsIDataModel(DatabaseReference databasereference,
                                                                  AbsServerService absServerService,
-                                                                 Resources resources, Realm realm) {
-        return new DgAllEmpsAbsDataModel(databasereference, absServerService, resources, realm);
+                                                                 Resources resources, Realm realm,
+                                                                 ExampleInterceptor interceptor) {
+        return new DgAllEmpsAbsDataModel(databasereference, absServerService
+                , resources, realm, interceptor);
     }
 
 

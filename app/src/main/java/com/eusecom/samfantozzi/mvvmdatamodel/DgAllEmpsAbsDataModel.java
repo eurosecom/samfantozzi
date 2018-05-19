@@ -23,6 +23,7 @@ import com.eusecom.samfantozzi.realm.RealmAccount;
 import com.eusecom.samfantozzi.realm.RealmIdCompany;
 import com.eusecom.samfantozzi.realm.RealmInvoice;
 import com.eusecom.samfantozzi.retrofit.AbsServerService;
+import com.eusecom.samfantozzi.retrofit.ExampleInterceptor;
 import com.eusecom.samfantozzi.rxfirebase2.database.RxFirebaseDatabase;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseReference;
@@ -35,15 +36,18 @@ public class DgAllEmpsAbsDataModel implements DgAllEmpsAbsIDataModel {
     AbsServerService mAbsServerService;
     Resources mResources;
     Realm mRealm;
+    ExampleInterceptor mInterceptor;
 
     public DgAllEmpsAbsDataModel(@NonNull final DatabaseReference databaseReference,
                                  @NonNull final AbsServerService absServerService,
                                  @NonNull final Resources resources,
-                                 @NonNull final Realm realm) {
+                                 @NonNull final Realm realm,
+                                 @NonNull final ExampleInterceptor interceptor) {
         mFirebaseDatabase = databaseReference;
         mAbsServerService = absServerService;
         mResources = resources;
         mRealm = realm;
+        mInterceptor = interceptor;
     }
 
 
@@ -52,8 +56,9 @@ public class DgAllEmpsAbsDataModel implements DgAllEmpsAbsIDataModel {
 
     @NonNull
     @Override
-    public Observable<List<Attendance>> getAbsencesFromMysqlServer(String fromfir) {
+    public Observable<List<Attendance>> getAbsencesFromMysqlServer(String servername, String fromfir) {
 
+        setRetrofit(servername);
         return mAbsServerService.getAbsServer(fromfir);
 
 
@@ -143,17 +148,19 @@ public class DgAllEmpsAbsDataModel implements DgAllEmpsAbsIDataModel {
     //recyclerview method for ChooseCompanyuActivity
 
     @Override
-    public Observable<List<CompanyKt>> getCompaniesFromMysqlServer(String userhash, String userid) {
+    public Observable<List<CompanyKt>> getCompaniesFromMysqlServer(String servername, String userhash, String userid) {
 
+        setRetrofit(servername);
         return mAbsServerService.getCompaniesFromServer(userhash, userid);
 
     }
 
     //recyclerview method for ChooseAccountActivity
     @Override
-    public Observable<List<Account>> getAccountsFromMysqlServer(String userhash, String userid, String fromfir
+    public Observable<List<Account>> getAccountsFromMysqlServer(String servername, String userhash, String userid, String fromfir
             , String vyb_rok, String drh) {
 
+        setRetrofit(servername);
         return mAbsServerService.getAccountsFromSqlServer(userhash, userid, fromfir, vyb_rok, drh);
         //return mAbsServerService.controlIdCompanyOnSqlServer(userhash, userid, fromfir, vyb_rok, drh, "xxx");
 
@@ -175,33 +182,37 @@ public class DgAllEmpsAbsDataModel implements DgAllEmpsAbsIDataModel {
 
     @NonNull
     @Override
-    public Observable<List<Attendance>> getInvoicesFromServer(String fromfir) {
+    public Observable<List<Attendance>> getInvoicesFromServer(String servername, String fromfir) {
 
+        setRetrofit(servername);
         return mAbsServerService.getInvoicesFromServer(fromfir);
 
     }
 
     @Override
-    public Observable<List<Invoice>> getInvoicesFromMysqlServer(String userhash, String userid, String fromfir
+    public Observable<List<Invoice>> getInvoicesFromMysqlServer(String servername, String userhash, String userid, String fromfir
             , String vyb_rok, String drh, String ucex, String umex, String dokx) {
         Log.d("GenDoc dokx", dokx);
         Log.d("GenDoc drh", drh);
         Log.d("GenDoc ucex", ucex);
+
+        setRetrofit(servername);
         return mAbsServerService.getInvoicesFromSqlServer(userhash, userid, fromfir, vyb_rok, drh, ucex, umex, dokx);
 
     }
 
     //recyclerview method for CashListKtActivity
     @Override
-    public Observable<InvoiceList> getCashDocsFromMysqlServer(String userhash, String userid, String fromfir
+    public Observable<InvoiceList> getCashDocsFromMysqlServer(String servername, String userhash, String userid, String fromfir
             , String vyb_rok, String drh, String ucex, String umex, String dokx) {
 
+        setRetrofit(servername);
         return mAbsServerService.getCashDocsFromSqlServer(userhash, userid, fromfir, vyb_rok, drh, ucex, umex, dokx);
 
     }
 
     @NonNull
-    public Observable<List<Invoice>> getObservableInvoiceDelFromMysql(String userhash, String userid, String fromfir
+    public Observable<List<Invoice>> getObservableInvoiceDelFromMysql(String servername, String userhash, String userid, String fromfir
             , String vyb_rok, String drh, Invoice invx){
 
         List<IdCompanyKt> myidc = new ArrayList<>();
@@ -213,17 +224,11 @@ public class DgAllEmpsAbsDataModel implements DgAllEmpsAbsIDataModel {
         System.out.println("invx.dok " + invx.getDok());
         System.out.println("invx.hod " + invx.getHod());
 
-        //data class Invoice(var drh : String, var uce : String, var dok : String, var ico: String, var nai: String
-//        , var fak: String, var ksy: String, var ssy: String
-//        , var ume: String, var dat: String, var daz: String, var das: String, var poz: String
-//        , var hod: String, var zk0: String, var zk1: String, var dn1: String, var zk2: String, var dn2: String
-//        , var saved: Boolean, var datm: Long, var uzid: String)
-
         String invxstring = JSsonFromInvoice(invx);
 
         System.out.println("invxstring " + invxstring);
 
-        //POST API
+        setRetrofit(servername);
         return mAbsServerService.deleteInvoiceFromMysqlPost(userhash, userid, fromfir, vyb_rok, drh, invxstring);
     }
 
@@ -524,18 +529,6 @@ public class DgAllEmpsAbsDataModel implements DgAllEmpsAbsIDataModel {
             String ucex = invx.getUce();
             String icox = invx.getIco();
 
-            //za ico
-            //window.open('../ucto/upomienka.php?copern=20&cislo_strana=' + cislo_strana + '&cislo_ico=' + cislo_ico +  '&cislo_fak=' + cislo_fak +
-            //                '&h_pen=' + h_pen +  '&h_ppe=' + h_ppe +
-            //                '&h_spl=0&h_dsp=10.04.2018&drupoh=1&cinnost=1&h_uce=31100&h_ico=44551142&h_obd=0',
-            //        '_blank', 'width=800, height=900, top=0, left=10, status=yes, resizable=yes, scrollbars=yes'  );
-
-            //za fak
-            //window.open('../ucto/upomienka.php?copern=10&cislo_strana=' + cislo_strana + '&cislo_ico=' + cislo_ico +  '&cislo_fak=' + cislo_fak +
-            //                '&h_pen=' + h_pen +  '&h_ppe=' + h_ppe +
-            //                '&h_spl=0&h_dsp=10.04.2018&drupoh=1&cinnost=1&h_uce=31100&h_ico=44551142&h_obd=0',
-            //        '_blank', 'width=800, height=900, top=0, left=10, status=yes, resizable=yes, scrollbars=yes'  );
-
             uri = Uri.parse("http://" + serverx +
                     "/ucto/upomienka.php?copern=20&drupoh=1&page=1&h_pen=0&h_ppe=0&h_uce=" + ucex + "&zandroidu=1&anduct=1"
                     + "&serverx=" + adresx + "&userhash=" + encrypted + "&rokx=" + rokx + "&firx=" + firx
@@ -572,7 +565,7 @@ public class DgAllEmpsAbsDataModel implements DgAllEmpsAbsIDataModel {
 
     //method for NewCashDocKtActivity
     @NonNull
-    public Observable<Boolean> getObservableIdCompany(String userhash, String userid, String fromfir
+    public Observable<Boolean> getObservableIdCompany(String servername, String userhash, String userid, String fromfir
             , String vyb_rok, String drh, String queryx){
 
         return Observable.just(true);
@@ -580,7 +573,7 @@ public class DgAllEmpsAbsDataModel implements DgAllEmpsAbsIDataModel {
     }
 
     @NonNull
-    public Observable<List<IdCompanyKt>> getObservableIdModelCompany(String userhash, String userid, String fromfir
+    public Observable<List<IdCompanyKt>> getObservableIdModelCompany(String servername, String userhash, String userid, String fromfir
             , String vyb_rok, String drh, String queryx){
 
         List<IdCompanyKt> myidc = new ArrayList<>();
@@ -588,21 +581,17 @@ public class DgAllEmpsAbsDataModel implements DgAllEmpsAbsIDataModel {
                 "Mesto", "", "", true, "", "", "", "");
         myidc.add(newidc);
 
-        //Log.d("userhash ", userhash);
-        //System.out.println("userid " + userid);
-        //System.out.println("fromfir " + fromfir);
-        //System.out.println("vyb_rok " + vyb_rok);
-        //System.out.println("drh " + drh);
         Log.d("NewCashLog data queryx ", queryx);
 
-        //return Observable.just(myidc);
+        setRetrofit(servername);
         return mAbsServerService.controlIdCompanyOnSqlServer(userhash, userid, fromfir, vyb_rok, drh, queryx);
     }
 
     @Override
-    public Observable<List<Account>> getReceiptsExpensesFromSql(String userhash, String userid, String fromfir
+    public Observable<List<Account>> getReceiptsExpensesFromSql(String servername, String userhash, String userid, String fromfir
             , String vyb_rok, String drh, String drupoh, String ucto) {
 
+        setRetrofit(servername);
         return mAbsServerService.getReceiptExpensesFromSqlServer(userhash, userid, fromfir, vyb_rok, drh, drupoh, ucto);
 
     }
@@ -763,9 +752,10 @@ public class DgAllEmpsAbsDataModel implements DgAllEmpsAbsIDataModel {
 
     //methods for TypesKtActivity
     @Override
-    public Observable<List<IdCompanyKt>> getAllIdcFromMysqlServer(String userhash, String userid, String fromfir
+    public Observable<List<IdCompanyKt>> getAllIdcFromMysqlServer(String servername, String userhash, String userid, String fromfir
             , String vyb_rok, String drh) {
 
+        setRetrofit(servername);
         return mAbsServerService.getAllIdCompanyOnSqlServer(userhash, userid, fromfir, vyb_rok, drh, "xxx");
 
     }
@@ -900,7 +890,7 @@ public class DgAllEmpsAbsDataModel implements DgAllEmpsAbsIDataModel {
     }
 
     @NonNull
-    public Observable<List<Invoice>> getObservableInvoiceToMysql(String userhash, String userid, String fromfir
+    public Observable<List<Invoice>> getObservableInvoiceToMysql(String servername, String userhash, String userid, String fromfir
             , String vyb_rok, String drh, RealmInvoice invx, String edidok){
 
         if(invx.getDrh().toString().equals("99999")){
@@ -922,7 +912,7 @@ public class DgAllEmpsAbsDataModel implements DgAllEmpsAbsIDataModel {
         System.out.println("invxstring " + invxstring);
         System.out.println("invxstring edidok" + edidok);
 
-        //POST API
+        setRetrofit(servername);
         return mAbsServerService.saveInvoiceToMysqlPost(userhash, userid, fromfir, vyb_rok, drh, invxstring, edidok);
     }
 
@@ -1119,9 +1109,10 @@ public class DgAllEmpsAbsDataModel implements DgAllEmpsAbsIDataModel {
     //SaldoListKtFragment
 
     @Override
-    public Observable<List<Invoice>> getSaldoFromSql(String userhash, String userid, String fromfir
+    public Observable<List<Invoice>> getSaldoFromSql(String servername, String userhash, String userid, String fromfir
             , String vyb_rok, int drh, String ucex, String ucto, int salico) {
 
+        setRetrofit(servername);
         return mAbsServerService.getSaldoFromSqlServer(userhash, userid, fromfir, vyb_rok, drh, ucex, ucto, salico);
 
     }
@@ -1129,13 +1120,24 @@ public class DgAllEmpsAbsDataModel implements DgAllEmpsAbsIDataModel {
 
     //recyclerview method for TaxPaymentsActivity
     @Override
-    public Observable<List<Account>> getTaxPayFromMysqlServer(String userhash, String userid, String fromfir
+    public Observable<List<Account>> getTaxPayFromMysqlServer(String servername, String userhash, String userid, String fromfir
             , String vyb_rok, String drh, String serverx) {
 
+        setRetrofit(servername);
         return mAbsServerService.getTaxPayFromSqlServer(userhash, userid, fromfir, vyb_rok, drh, serverx
                 , "1", "1", "1");
 
     }
 
+    //set retrofit by runtime
+    public void setRetrofit(String servername) {
+
+        System.out.println("invxstring servername " + servername);
+        String urlname = "http://" + servername;
+
+        mInterceptor.setInterceptor(urlname);
+
+    }
+    //end set retrofit by runtime
 
 }

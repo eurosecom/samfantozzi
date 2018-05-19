@@ -29,7 +29,7 @@ public interface DgAllEmpsAbsIDataModel {
     Observable<List<Employee>> getObservableFBusersRealmEmployee(String usicox, String usuid, int lenmoje);
 
     @NonNull
-    public Observable<List<Attendance>> getAbsencesFromMysqlServer(String fromfir);
+    public Observable<List<Attendance>> getAbsencesFromMysqlServer(String servername, String fromfir);
 
     @NonNull
     public Observable<List<Attendance>> getAbsencesFromMock(String fromfir);
@@ -40,7 +40,7 @@ public interface DgAllEmpsAbsIDataModel {
 
     //recyclerview method for ChooseAccountActivity
     @NonNull
-    public Observable<List<Account>> getAccountsFromMysqlServer(String userhash, String userid, String fromfir
+    public Observable<List<Account>> getAccountsFromMysqlServer(String servername, String userhash, String userid, String fromfir
             , String vyb_rok, String drh);
 
     @NonNull
@@ -48,23 +48,23 @@ public interface DgAllEmpsAbsIDataModel {
 
     //recyclerview method for ChooseCompanyActivity
     @NonNull
-    public Observable<List<CompanyKt>> getCompaniesFromMysqlServer(String userhash, String userid);
+    public Observable<List<CompanyKt>> getCompaniesFromMysqlServer(String servername, String userhash, String userid);
 
     //recyclerview method for SupplierListActivity
     @NonNull
-    public Observable<List<Attendance>> getInvoicesFromServer(String fromfir);
+    public Observable<List<Attendance>> getInvoicesFromServer(String servername, String fromfir);
 
     @NonNull
-    public Observable<List<Invoice>> getInvoicesFromMysqlServer(String userhash, String userid, String fromfir
+    public Observable<List<Invoice>> getInvoicesFromMysqlServer(String servername, String userhash, String userid, String fromfir
             , String vyb_rok, String drh, String ucex, String umex, String dokx);
 
     //recyclerview method for CashListKtActivity
     @NonNull
-    public Observable<InvoiceList> getCashDocsFromMysqlServer(String userhash, String userid, String fromfir
+    public Observable<InvoiceList> getCashDocsFromMysqlServer(String servername, String userhash, String userid, String fromfir
             , String vyb_rok, String drh, String ucex, String umex, String dokx);
 
     @NonNull
-    public Observable<List<Invoice>> getObservableInvoiceDelFromMysql(String userhash, String userid, String fromfir
+    public Observable<List<Invoice>> getObservableInvoiceDelFromMysql(String servername, String userhash, String userid, String fromfir
             , String vyb_rok, String drh, Invoice invx);
 
     @NonNull
@@ -81,15 +81,15 @@ public interface DgAllEmpsAbsIDataModel {
 
     //method for NewCashDocKtActivity
     @NonNull
-    public Observable<Boolean> getObservableIdCompany(String userhash, String userid, String fromfir
+    public Observable<Boolean> getObservableIdCompany(String servername, String userhash, String userid, String fromfir
             , String vyb_rok, String drh, String queryx);
 
     @NonNull
-    public Observable<List<IdCompanyKt>> getObservableIdModelCompany(String userhash, String userid, String fromfir
+    public Observable<List<IdCompanyKt>> getObservableIdModelCompany(String servername, String userhash, String userid, String fromfir
             , String vyb_rok, String drh, String queryx);
 
     @NonNull
-    public Observable<List<Account>> getReceiptsExpensesFromSql(String userhash, String userid, String fromfir
+    public Observable<List<Account>> getReceiptsExpensesFromSql(String servername, String userhash, String userid, String fromfir
             , String vyb_rok, String drh, String drupoh, String ucto);
 
     @NonNull
@@ -111,7 +111,7 @@ public interface DgAllEmpsAbsIDataModel {
     //recyclerview method for TypesKtActivity
 
     @NonNull
-    public Observable<List<IdCompanyKt>> getAllIdcFromMysqlServer(String userhash, String userid, String fromfir
+    public Observable<List<IdCompanyKt>> getAllIdcFromMysqlServer(String servername, String userhash, String userid, String fromfir
             , String vyb_rok, String drh);
 
     @NonNull
@@ -134,7 +134,7 @@ public interface DgAllEmpsAbsIDataModel {
     public Observable<List<RealmInvoice>> deleteAllInvoicesFromRealm(RealmInvoice invoicex);
 
     @NonNull
-    public Observable<List<Invoice>> getObservableInvoiceToMysql(String userhash, String userid, String fromfir
+    public Observable<List<Invoice>> getObservableInvoiceToMysql(String servername, String userhash, String userid, String fromfir
             , String vyb_rok, String drh, RealmInvoice invx, String edidok);
 
     @NonNull
@@ -146,12 +146,12 @@ public interface DgAllEmpsAbsIDataModel {
     //SaldoListKtFragment
 
     @NonNull
-    public Observable<List<Invoice>> getSaldoFromSql(String userhash, String userid, String fromfir
+    public Observable<List<Invoice>> getSaldoFromSql(String servername, String userhash, String userid, String fromfir
             , String vyb_rok, int drh, String ucex, String ucto, int salico);
 
     //recyclerview method for TaxPaymentsActivity
     @NonNull
-    public Observable<List<Account>> getTaxPayFromMysqlServer(String userhash, String userid, String fromfir
+    public Observable<List<Account>> getTaxPayFromMysqlServer(String servername, String userhash, String userid, String fromfir
             , String vyb_rok, String drh, String serverx);
 
 }
