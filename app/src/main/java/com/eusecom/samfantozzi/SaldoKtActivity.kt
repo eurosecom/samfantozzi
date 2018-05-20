@@ -9,8 +9,6 @@ import android.support.design.widget.TabLayout
 import android.support.v4.app.Fragment
 import android.support.v4.app.FragmentPagerAdapter
 import android.support.v4.view.ViewPager
-import android.view.Menu
-import android.view.MenuItem
 import android.view.View
 import com.eusecom.samfantozzi.rxbus.RxBus
 import org.jetbrains.anko.*
@@ -208,5 +206,6 @@ class SaldoKtActivity : AppCompatActivity() {
         }
 
     }
+
 
 }

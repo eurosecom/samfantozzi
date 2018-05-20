@@ -4,13 +4,20 @@ import android.app.SearchManager
 import android.content.Context
 import android.content.Intent
 import android.content.SharedPreferences
+import android.content.pm.PackageManager
+import android.os.Build
 import android.os.Bundle
+import android.os.Environment
+import android.support.annotation.NonNull
+import android.support.v4.app.ActivityCompat
 import android.support.v4.app.Fragment
+import android.support.v4.content.ContextCompat
 import android.support.v4.view.MenuItemCompat
 import android.support.v7.app.AlertDialog
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
 import android.support.v7.widget.SearchView
+import android.telephony.gsm.SmsManager
 import android.util.Log
 import android.view.*
 import android.widget.ProgressBar
@@ -489,10 +496,16 @@ abstract class SaldoListKtFragment : Fragment() {
                     }
                 }
                 2 -> {
-                    //generating MySql PDF report with using CommandExecutorProxy and Facade
-                    callCommandExecutorProxy("lgn", AccountReportsHelperFacade.DBTypes.MYSQL
-                            , AccountReportsHelperFacade.ReportTypes.PDF
-                            , AccountReportsHelperFacade.ReportName.NEXTVERSION, context)
+
+                    if( saltype == 0 ) {
+                        sendSMS("0905665881", "message1 message2 message3 message4 message5 ")
+                    }else{
+                        //generating MySql PDF report with using CommandExecutorProxy and Facade
+                        callCommandExecutorProxy("lgn", AccountReportsHelperFacade.DBTypes.MYSQL
+                                , AccountReportsHelperFacade.ReportTypes.PDF
+                                , AccountReportsHelperFacade.ReportName.NEXTVERSION, context)
+                    }
+
                 }
 
             }
@@ -523,6 +536,54 @@ abstract class SaldoListKtFragment : Fragment() {
             }
 
         }
+    }
+
+
+    fun sendSMS(phoneNumber: String, message: String) {
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+
+            if (ActivityCompat.checkSelfPermission(getActivity(), android.Manifest.permission.SEND_SMS)
+                    != PackageManager.PERMISSION_GRANTED) {
+                ActivityCompat.requestPermissions(getActivity(),
+                        arrayOf(android.Manifest.permission.SEND_SMS,
+                                android.Manifest.permission.SEND_SMS), 1)
+            } else {
+
+                // Permission is already available
+                val sms: SmsManager  = SmsManager.getDefault()
+                sms.sendTextMessage(phoneNumber, null, message, null, null);
+            }
+
+        } else {
+
+            // Permission is already available
+            val sms: SmsManager  = SmsManager.getDefault()
+            sms.sendTextMessage(phoneNumber, null, message, null, null);
+        }
+
+    }
+
+
+    //Create Folder
+    fun createFolder() {
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+
+            if (ActivityCompat.checkSelfPermission(getActivity(), android.Manifest.permission.WRITE_EXTERNAL_STORAGE)
+                    != PackageManager.PERMISSION_GRANTED) {
+                ActivityCompat.requestPermissions(getActivity(),
+                        arrayOf(android.Manifest.permission.READ_EXTERNAL_STORAGE,
+                                android.Manifest.permission.WRITE_EXTERNAL_STORAGE), 1)
+            } else {
+
+            }
+
+        } else {
+
+
+        }
+
     }
 
 
