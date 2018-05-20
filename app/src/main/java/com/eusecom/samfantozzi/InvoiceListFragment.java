@@ -482,7 +482,7 @@ public class InvoiceListFragment extends Fragment {
 
             Intent is = new Intent(getActivity(), ChooseAccountActivity.class);
             Bundle extras = new Bundle();
-            extras.putString("fromact", "2");
+            extras.putString("fromact", "1");
             is.putExtras(extras);
             startActivity(is);
             return true;

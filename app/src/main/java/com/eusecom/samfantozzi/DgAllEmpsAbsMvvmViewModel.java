@@ -20,13 +20,8 @@ import java.util.Calendar;
 import java.util.List;
 import java.util.Random;
 import rx.Observable;
-import rx.Subscriber;
-import rx.schedulers.Schedulers;
 import rx.subjects.BehaviorSubject;
 import rx.subscriptions.CompositeSubscription;
-
-import static android.content.ContentValues.TAG;
-
 
 /**
  * View model for the CompaniesMvvmActivity.
@@ -197,7 +192,7 @@ public class DgAllEmpsAbsMvvmViewModel {
             // TODO Auto-generated catch block
             e1.printStackTrace();
         }
-        Log.d("userxplus ", encrypted + " " + ds);
+        //Log.d("ChooseAccount drh ", drh);
         	/* Decrypt */
         //String decrypted = new String( mMcrypt.decrypt( encrypted ) );
 

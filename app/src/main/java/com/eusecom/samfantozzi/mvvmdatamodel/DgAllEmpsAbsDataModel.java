@@ -160,6 +160,7 @@ public class DgAllEmpsAbsDataModel implements DgAllEmpsAbsIDataModel {
     public Observable<List<Account>> getAccountsFromMysqlServer(String servername, String userhash, String userid, String fromfir
             , String vyb_rok, String drh) {
 
+        //Log.d("ChooseAccount drh ", drh);
         setRetrofit(servername);
         return mAbsServerService.getAccountsFromSqlServer(userhash, userid, fromfir, vyb_rok, drh);
         //return mAbsServerService.controlIdCompanyOnSqlServer(userhash, userid, fromfir, vyb_rok, drh, "xxx");
