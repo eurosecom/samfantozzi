@@ -576,8 +576,13 @@ class MainFantozziActivity : AppCompatActivity() {
         }
 
         Log.d("updateUI ", "is going.")
-        buttonFir.setText(getString(R.string.company) + " " + prefs.getString("fir", "") +
-                " " + prefs.getString("firnaz", ""))
+        val usfir = prefs.getString("fir", "")
+        if ( usfir == "" || usfir == "0" ) {
+            buttonFir.setText(R.string.choosecompany)
+        }else {
+            buttonFir.setText(prefs.getString("fir", "") +
+                    " " + prefs.getString("firnaz", ""))
+        }
 
         val usermailx = prefs.getString("username", "")
         val usernamex = prefs.getString("usname", "")
