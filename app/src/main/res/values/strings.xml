@@ -69,6 +69,8 @@
     <string name="fir_summary">Number of connected company.</string>
     <string name="firnaz_title">Name of connected company.</string>
     <string name="firnaz_summary">Name of connected company.</string>
+    <string name="firiban_title">IBAN of connected company.</string>
+    <string name="firiban_summary">First IBAN of connected company.</string>
     <string name="rok_title">Accounting year.</string>
     <string name="rok_summary">Accounting year for attendance.</string>
     <string name="ume_title">Accounting month.</string>

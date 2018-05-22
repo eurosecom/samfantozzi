@@ -496,13 +496,14 @@ abstract class SaldoListKtFragment : Fragment() {
 
                     if( saltype == 0 ) {
 
-
                         val msghod = invoice.hod + ""
                         val msgvsy = invoice.fak + ""
+                        val msgfirnaz = mSharedPreferences.getString("firnaz", "0") + ""
+                        val msgfiriban = mSharedPreferences.getString("firiban", "0") + ""
 
                         val msgtext = String.format(getResources().getString(R.string.remindermessage)
-                                , "COEX spol. s r.o.", msghod
-                                , "SK56 0200 0000 0000 0121 6858", msgvsy )
+                                , msgfirnaz, msghod
+                                , msgfiriban, msgvsy )
 
                         checkPermissionSMS("0905665881", msgtext)
                     }else{

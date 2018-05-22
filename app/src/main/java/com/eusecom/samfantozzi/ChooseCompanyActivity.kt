@@ -84,6 +84,7 @@ class ChooseCompanyActivity : AppCompatActivity() {
             editor.putString("fir", it.xcf).apply();
             editor.putString("usico", it.firico).apply();
             editor.putString("firnaz", it.naz).apply();
+            editor.putString("firiban", it.iban).apply();
             editor.putString("rok", it.rok).apply();
             editor.putString("ume", "01." + it.rok).apply();
             editor.putString("firduct", it.duj).apply();

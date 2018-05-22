@@ -581,6 +581,7 @@ class MainFantozziActivity : AppCompatActivity() {
             buttonFir.setText(R.string.choosecompany)
         }else {
             buttonFir.setText(prefs.getString("fir", "") +
+                    " " + prefs.getString("rok", "") +
                     " " + prefs.getString("firnaz", ""))
         }
 
