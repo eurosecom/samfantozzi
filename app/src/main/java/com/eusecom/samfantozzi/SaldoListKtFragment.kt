@@ -1,17 +1,13 @@
 package com.eusecom.samfantozzi
 
+import android.app.PendingIntent
 import android.app.SearchManager
-import android.content.Context
-import android.content.Intent
-import android.content.SharedPreferences
+import android.content.*
 import android.content.pm.PackageManager
 import android.os.Build
 import android.os.Bundle
-import android.os.Environment
-import android.support.annotation.NonNull
 import android.support.v4.app.ActivityCompat
 import android.support.v4.app.Fragment
-import android.support.v4.content.ContextCompat
 import android.support.v4.view.MenuItemCompat
 import android.support.v7.app.AlertDialog
 import android.support.v7.widget.LinearLayoutManager
@@ -110,6 +106,7 @@ abstract class SaldoListKtFragment : Fragment() {
         mManager?.setStackFromEnd(true)
         mRecycler?.setLayoutManager(mManager)
         mRecycler?.setAdapter(mAdapter)
+
 
     }//end of onActivityCreated
 
@@ -498,7 +495,16 @@ abstract class SaldoListKtFragment : Fragment() {
                 2 -> {
 
                     if( saltype == 0 ) {
-                        sendSMS("0905665881", "message1 message2 message3 message4 message5 ")
+
+
+                        val msghod = invoice.hod + ""
+                        val msgvsy = invoice.fak + ""
+
+                        val msgtext = String.format(getResources().getString(R.string.remindermessage)
+                                , "COEX spol. s r.o.", msghod
+                                , "SK56 0200 0000 0000 0121 6858", msgvsy )
+
+                        checkPermissionSMS("0905665881", msgtext)
                     }else{
                         //generating MySql PDF report with using CommandExecutorProxy and Facade
                         callCommandExecutorProxy("lgn", AccountReportsHelperFacade.DBTypes.MYSQL
@@ -539,7 +545,7 @@ abstract class SaldoListKtFragment : Fragment() {
     }
 
 
-    fun sendSMS(phoneNumber: String, message: String) {
+    fun checkPermissionSMS(phoneNumber: String, message: String) {
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
 
@@ -551,16 +557,38 @@ abstract class SaldoListKtFragment : Fragment() {
             } else {
 
                 // Permission is already available
-                val sms: SmsManager  = SmsManager.getDefault()
-                sms.sendTextMessage(phoneNumber, null, message, null, null);
+                sendSMS(phoneNumber, message)
             }
 
         } else {
 
             // Permission is already available
-            val sms: SmsManager  = SmsManager.getDefault()
-            sms.sendTextMessage(phoneNumber, null, message, null, null);
+            sendSMS(phoneNumber, message)
         }
+
+    }
+
+    private val SENT = "SMS_SENT"
+    private val DELIVERED = "SMS_DELIVERED"
+    private val MAX_SMS_MESSAGE_LENGTH = 160
+
+    fun sendSMS(phoneNumber: String, message: String) {
+
+        val piSent: PendingIntent = PendingIntent.getBroadcast(activity, 0, Intent(SENT), 0);
+        val piDelivered: PendingIntent = PendingIntent.getBroadcast(activity, 0, Intent(DELIVERED), 0);
+
+        val smsManager: SmsManager  = SmsManager.getDefault()
+        val length: Int = message.length
+
+        if (length > MAX_SMS_MESSAGE_LENGTH) {
+            val messagelist: ArrayList<String> = smsManager.divideMessage(message);
+            smsManager.sendMultipartTextMessage(phoneNumber, null,
+                    messagelist, null, null);
+        } else {
+            smsManager.sendTextMessage(phoneNumber, null, message,
+                    piSent, piDelivered);
+        }
+
 
     }
 

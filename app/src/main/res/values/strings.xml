@@ -354,6 +354,7 @@
     <string name="due">Due</string>
     <string name="created">Created</string>
     <string name="createdshort">Crd</string>
+    <string name="remindermessage">%s neevidujeme uhradu sumy %s Eur. Uhradou na ucet %s a VSY %s predidete upomienke za neuhradenu fakturu.</string>
 
     //taxpaymentsactivity
     <string name="taxpay">Tax payments</string>

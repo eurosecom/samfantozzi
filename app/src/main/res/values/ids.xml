@@ -11,6 +11,7 @@
     <item name="acctype" type="id">8</item>
 
     <item name="fabinvoice" type="id">9</item>
+    <item name="verticallayout" type="id">910</item>
 
     <item name="query_edit_text" type="id">25</item>
     <item name="list" type="id">26</item>
