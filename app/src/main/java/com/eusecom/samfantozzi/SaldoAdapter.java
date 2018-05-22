@@ -23,6 +23,7 @@
 package com.eusecom.samfantozzi;
 
 import android.content.Context;
+import android.graphics.Color;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -69,15 +70,19 @@ public class SaldoAdapter extends RecyclerView.Adapter<SaldoAdapter.SaldoViewHol
 
       holder.idcx.setText(mListabsserver.get(position).getIco());
 
+      //holder.invoicex.setText(mListabsserver.get(position).getFak() + " " + mListabsserver.get(position).getPoh());
       holder.invoicex.setText(mListabsserver.get(position).getFak());
       holder.datx.setText(mListabsserver.get(position).getDat());
-      holder.dasx.setText(mListabsserver.get(position).getDat());
+      holder.dasx.setText(mListabsserver.get(position).getDas());
       if( salico == 0 )
       {
           holder.invoicetype.setVisibility(View.GONE);
           //holder.invoice.setVisibility(View.GONE);
       }else {
           holder.invoicetype.setVisibility(View.VISIBLE);
+          if( !mListabsserver.get(position).getPoh().equals("0")) {
+              holder.dasx.setBackgroundColor(Color.RED);
+          }
           //holder.invoice.setVisibility(View.VISIBLE);
       }
 
