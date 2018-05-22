@@ -68,7 +68,7 @@ class ShowPdfActivity : AppCompatActivity() {
         bind()
 
         val invoicex = Invoice(drhx,ucex,dokx,icox,"","","","","","",""
-                ,"","","","","","","","",true,0,"","","")
+                ,"","","","","","","","",true,0,"","","","")
 
         mViewModel.emitDocumentPdfUri(invoicex)
 

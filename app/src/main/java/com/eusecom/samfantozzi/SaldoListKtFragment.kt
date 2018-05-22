@@ -453,7 +453,7 @@ abstract class SaldoListKtFragment : Fragment() {
         var item5: CharSequence = ""
         if( saltype == 0 ){
             item4=getString(R.string.reminder)
-            item5=getString(R.string.smsreminder)
+            item5=getString(R.string.smsreminder) + " " + invoice.tel
         }else{
             item4=getString(R.string.pay)
             item5=getString(R.string.xmlpay)
@@ -505,7 +505,9 @@ abstract class SaldoListKtFragment : Fragment() {
                                 , msgfirnaz, msghod
                                 , msgfiriban, msgvsy )
 
-                        checkPermissionSMS("0905665881", msgtext)
+                        val msgtel = invoice.tel + ""
+
+                        checkPermissionSMS(msgtel, msgtext)
                     }else{
                         //generating MySql PDF report with using CommandExecutorProxy and Facade
                         callCommandExecutorProxy("lgn", AccountReportsHelperFacade.DBTypes.MYSQL
