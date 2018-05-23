@@ -5,8 +5,8 @@
     <string name="helloworld">Hello World!</string>
     <string name="app_desc">Samfantozzi accounting system v.4.20</string>
     <string name="action_settings">Settings</string>
-    <string name="action_loginout">Login / Logout</string>
-    <string name="action_login">Login</string>
+    <string name="action_loginout" translatable="false">Login / Logout</string>
+    <string name="action_login" translatable="false">Login</string>
     <string name="action_loginadmin">Login admin</string>
     <string name="action_accountreports">Accounting reports</string>
     <string name="action_taxreports">TAX reports</string>
@@ -21,11 +21,10 @@
     <string name="popisbtngen">General</string>
     <string name="addacount_title">Add account</string>
     <string name="addacount_summary">Add new Firebase Account</string>
-    <string name="resetpass_title">Reset password</string>
     <string name="resetpass_summary">Reset password of FB Account</string>
     <string name="company">Company</string>
     <string name="getcompany">Get company</string>
-    <string name="textok">Ok</string>
+    <string name="textok" translatable="false">Ok</string>
     <string name="donotlogin">You have to create email account and login.</string>
     <string name="didnotlogin">You did not login</string>
     <string name="donotcompany">You have to choose your company.</string>
@@ -40,28 +39,28 @@
     <string name="emailpassword_title_text">Email and Password</string>
     <string name="hint_user_id">User ID</string>
     <string name="get_custom_token">Get Token</string>
-    <string name="sign_in">Log In</string>
+    <string name="sign_in" translatable="false">Log In</string>
     <string name="create_account">Create Account</string>
-    <string name="sign_out">Log Out</string>
-    <string name="disconnect">Disconnect</string>
+    <string name="sign_out" translatable="false">Log Out</string>
+    <string name="disconnect" translatable="false">Disconnect</string>
     <string name="loading">Loading…</string>
-    <string name="custom_token">Custom Token</string>
-    <string name="signed_out">Logged Out</string>
+    <string name="custom_token" translatable="false">Custom Token</string>
+    <string name="signed_out" translatable="false">Logged Out</string>
     <string name="token_null" translatable="false">Token: null</string>
     <string name="hint_email" translatable="false">Email</string>
     <string name="hint_password">Password</string>
-    <string name="desc_firebase_lockup">Firebase logo and name</string>
-    <string name="loginfb">Login to Firebase.</string>
+    <string name="desc_firebase_lockup" translatable="false">Firebase logo and name</string>
+    <string name="loginfb" translatable="false">Login to Firebase.</string>
     <string name="outwork">You are out of work now.</string>
     <string name="atwork">You are at work now.</string>
     <string name="firebase_status_fmt" translatable="false">Firebase User: %s</string>
-    <string name="emailpassword_status_fmt">Email User: %s</string>
-    <string name="username_status_fmt">User name: %s</string>
+    <string name="emailpassword_status_fmt" translatable="false">Email User: %s</string>
+    <string name="username_status_fmt" translatable="false">User name: %s</string>
 
     //settings
     <string name="servername_title">Server name.</string>
     <string name="servername_summary">Server name to which you want to connect, for example www.edcom.sk, without http:\\</string>
-    <string name="username_title">Mail username.</string>
+    <string name="username_title" translatable="false">Mail username.</string>
     <string name="username_summary">Mail - username for login to Firebase.</string>
     <string name="userpsw_title">User password.</string>
     <string name="userpsw_summary">Password for login to Firebase.</string>
@@ -92,7 +91,6 @@
 
     <string name="firduct_title">Sort of Accounting 0=double-entry accounting, 9=single-entry accounting.</string>
     <string name="firduct_summary">Set the program to connect to Fantozzi.</string>
-    <string name="firdph_title">VAT payment 0=No, 1=monthly, 2=quarterly.</string>
     <string name="firdph_summary">Set the program to connect to Fantozzi.</string>
     <string name="firdph1_title">The reduced rate of VAT No.1 ( 10 % ).</string>
     <string name="firdph1_summary">Set the program to connect to Fantozzi.</string>
@@ -146,7 +144,7 @@
     <string name="fullfirma">company Id</string>
     <string name="name">Name</string>
     <string name="type">type</string>
-    <string name="email">email</string>
+    <string name="email" translatable="false">email</string>
 
     //absserver
     <string name="nothing_found">No items found</string>
@@ -163,11 +161,11 @@
     <string name="may">May</string>
     <string name="june">June</string>
     <string name="july">July</string>
-    <string name="august">August</string>
-    <string name="september">September</string>
+    <string name="august" translatable="false">August</string>
+    <string name="september" translatable="false">September</string>
     <string name="october">October</string>
-    <string name="november">November</string>
-    <string name="december">December</string>
+    <string name="november" translatable="false">November</string>
+    <string name="december" translatable="false">December</string>
 
     //choosecompanyactivity
     <string name="choosecompany">Choose company</string>
@@ -199,7 +197,7 @@
     <string name="value">Value</string>
     <string name="document">Document</string>
     <string name="docshort">Doc</string>
-    <string name="pdf">PDF</string>
+    <string name="pdf" translatable="false">PDF</string>
     <string name="edit">Edit</string>
     <string name="delete">Delete</string>
     <string name="action_search">Search</string>
@@ -211,7 +209,6 @@
     <string name="newdoc">New document</string>
     <string name="newreceipt">New receipt document</string>
     <string name="newexpense">New expense document</string>
-    <string name="editreceipt">Edit receipt document</string>
     <string name="editexpense">Edit expense document</string>
     <string name="save">Save</string>
     <string name="companyid">Company ID</string>
@@ -224,9 +221,9 @@
     <string name="popdph2">VAT%s</string>
     <string name="popzakl1">Basis%s</string>
     <string name="popdph1">VAT%s</string>
-    <string name="popzakl0">Basis0%</string>
+    <string name="popzakl0">Zákl.0%</string>
     <string name="pohyb">Account</string>
-    <string name="falsex">false</string>
+    <string name="falsex" translatable="false">false</string>
     <string name="datedialogpos">Set date</string>
     <string name="select_receipt">Select receipt</string>
     <string name="select_expense">Select expense</string>
@@ -246,8 +243,8 @@
     <string name="editsupplier">Edit supplier invoice</string>
     <string name="select_customerinv">Select type customer invoice</string>
     <string name="select_supplierinv">Select type supplier invoice</string>
-    <string name="ksyshort">Ksy</string>
-    <string name="ssyshort">Ssy</string>
+    <string name="ksyshort" translatable="false">Ksy</string>
+    <string name="ssyshort" translatable="false">Ssy</string>
     <string name="dasshort">Due</string>
 
 
@@ -356,7 +353,7 @@
     <string name="due">Due</string>
     <string name="created">Created</string>
     <string name="createdshort">Crd</string>
-    <string name="remindermessage">%s - Neevidujeme uhradu sumy %s Eur. Uhradou na ucet %s a VSY %s predidete upomienke za neuhradenu fakturu. Dakujeme.</string>
+    <string name="remindermessage">%s - We do not record the paid of % s Eur. By paying for% s and VSY% s, you will not receive a reminder for an outstanding invoice. We thank you.</string>
 
     //taxpaymentsactivity
     <string name="taxpay">Tax payments</string>
@@ -369,6 +366,9 @@
 
     //generaldocactivity
     <string name="generaldoc">General</string>
+    <string name="resetpass_title">Reset password</string>
+    <string name="firdph_title">VAT payment 0=No, 1=monthly, 2=quarterly.</string>
+    <string name="editreceipt">Edit receipt document</string>
 
 
 </resources>

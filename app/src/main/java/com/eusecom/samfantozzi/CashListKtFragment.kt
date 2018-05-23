@@ -474,7 +474,7 @@ class CashListKtFragment : Fragment() {
 
     fun showNewCashDocDialog() {
 
-        alert(getString(R.string.receipt), getString(R.string.createdoc)) {
+        alert(getString(R.string.drupoh_summary), getString(R.string.createdoc)) {
             //yesButton { navigateToNewCashDoc(1) }
             //noButton { navigateToNewCashDoc(2) }
             positiveButton(getString(R.string.expense), { _ -> navigateToNewCashDoc(2) } )
