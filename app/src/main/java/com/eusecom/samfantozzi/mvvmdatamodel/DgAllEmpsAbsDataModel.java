@@ -553,6 +553,12 @@ public class DgAllEmpsAbsDataModel implements DgAllEmpsAbsIDataModel {
                     + "&newfntz=1&typ=PDF&h_ico=" + icox + "&cislo_ico=" + icox + "&cislo_fak=" + dokx + "&cislo_strana=1" );
 
         }
+
+        if (invx.getDrh().equals("91")) {
+
+            uri = Uri.parse("http://www.edcom.sk/ram1/privacy_policy_samfantozzi.pdf" );
+
+        }
         return Observable.just(uri);
 
     }

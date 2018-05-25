@@ -245,8 +245,23 @@ class MainFantozziActivity : AppCompatActivity() {
         R.id.action_setmonth -> consume { navigateToSetMonth() }
         R.id.action_idc -> consume { navigateToIdCompanies() }
         R.id.action_search -> consume { navigateToDocSearch() }
+        R.id.privacy_policy -> consume { navigateToPrivacyPolicy() }
 
         else -> super.onOptionsItemSelected(item)
+    }
+
+    fun navigateToPrivacyPolicy(){
+
+        val `is` = Intent(this, ShowPdfActivity::class.java)
+        val extras = Bundle()
+        extras.putString("fromact", "3")
+        extras.putString("drhx", "91")
+        extras.putString("ucex", "0")
+        extras.putString("dokx", "0")
+        extras.putString("icox", "0")
+        `is`.putExtras(extras)
+        startActivity(`is`)
+
     }
 
     fun navigateToDocSearch(){

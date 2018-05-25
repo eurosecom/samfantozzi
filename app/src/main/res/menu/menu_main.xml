@@ -27,4 +27,10 @@
         app:showAsAction="always"
         />
 
+    <item
+        android:id="@+id/privacy_policy"
+        android:orderInCategory="100"
+        android:title="@string/privacy_policy"
+        app:showAsAction="never" />
+
 </menu>
