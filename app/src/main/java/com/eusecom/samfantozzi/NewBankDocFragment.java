@@ -120,6 +120,7 @@ public class NewBankDocFragment extends Fragment {
         View layout = inflater.inflate(R.layout.fragment_newbankdoc, container, false);
         ButterKnife.bind(this, layout);
 
+        mProgressBar = (ProgressBar) layout.findViewById(R.id.progressBar);
         datebutton = (Button) layout.findViewById(R.id.datebutton);
         datebutton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -362,7 +363,7 @@ public class NewBankDocFragment extends Fragment {
     protected void setIdCompanyKt(List<IdCompanyKt> resultAs) {
 
         if (resultAs.size() > 0) {
-            Log.d("NewCashLog Idc0 ", resultAs.get(0).getNai());
+            //Log.d("NewCashLog Idc0 ", resultAs.get(0).getNai());
             Boolean icoValid = resultAs.get(0).getLogprx();
             //_disposableObserver.onNext(icoValid);
             if (!icoValid) {
@@ -406,7 +407,7 @@ public class NewBankDocFragment extends Fragment {
 
             String drhx2="4";
             if( drupoh.equals("2")){ drhx2="5"; }
-
+            showProgressBar();
             mSubscription.add(mViewModel.getEditedInvoiceFromSqlServer(drhx2)
                     .subscribeOn(Schedulers.computation())
                     .observeOn(rx.android.schedulers.AndroidSchedulers.mainThread())
@@ -534,6 +535,7 @@ public class NewBankDocFragment extends Fragment {
         if (_inputDn2.getText().toString().equals("")) {
             _inputDn2.setText(invoices.get(0).getDn2());
         }
+        hideProgressBar();
     }
 
     private void setRecount(@NonNull final CalcVatKt result) {

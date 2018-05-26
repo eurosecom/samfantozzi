@@ -198,7 +198,7 @@
     <string name="date">Dátum</string>
     <string name="dateshort">Dát.</string>
     <string name="suppidshort">IČO</string>
-    <string name="fakshort">Fakt.</string>
+    <string name="fakshort">Fkt</string>
     <string name="value">Hodnota</string>
     <string name="document">Doklad</string>
     <string name="docshort">Dok.</string>
@@ -252,10 +252,12 @@
     <string name="select_supplierinv">Vybrať typ dodávateľskej faktúry</string>
     <string name="ksyshort">Ksy</string>
     <string name="ssyshort">Ssy</string>
-    <string name="dasshort">Splatná</string>
+    <string name="dasshort">Spl.</string>
     <string name="cid_nomatch">Nesprávne ičo %s !</string>
     <string name="inv_date">Nesprávny dátum!</string>
     <string name="inv_memo">Nesprávna poznámka!</string>
+    <string name="inv_pers">Nesprávna osoba!</string>
+    <string name="inv_fakt">Nesprávne číslo faktúry!</string>
 
 
     //idclistktfragment

@@ -121,6 +121,7 @@ public class NewCashDocFragment extends Fragment {
         View layout = inflater.inflate(R.layout.fragment_newcashdoc, container, false);
         ButterKnife.bind(this, layout);
 
+        mProgressBar = (ProgressBar) layout.findViewById(R.id.progressBar);
         datebutton = (Button) layout.findViewById(R.id.datebutton);
         datebutton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -354,11 +355,11 @@ public class NewCashDocFragment extends Fragment {
     protected void setIdCompanyKt(List<IdCompanyKt> resultAs) {
 
         if (resultAs.size() > 0) {
-            Log.d("NewCashLog Idc0 ", resultAs.get(0).getNai());
+            //Log.d("NewCashLog Idc0 ", resultAs.get(0).getNai());
             Boolean icoValid = resultAs.get(0).getLogprx();
             //_disposableObserver.onNext(icoValid);
             if (!icoValid) {
-                _companyid.setError("Company ID " + resultAs.get(0).getIco() + " does not match!");
+                _companyid.setError(String.format(getResources().getString(R.string.cid_nomatch), resultAs.get(0).getIco()));
                 _companyname.setText(resultAs.get(0).getNai());
                 _idcexist.setText("false");
             } else {
@@ -393,6 +394,7 @@ public class NewCashDocFragment extends Fragment {
 
 
         if(newdok.equals("0")) {
+            showProgressBar();
             mSubscription.add(mViewModel.getEditedInvoiceFromSqlServer("3")
                     .subscribeOn(Schedulers.computation())
                     .observeOn(rx.android.schedulers.AndroidSchedulers.mainThread())
@@ -519,6 +521,7 @@ public class NewCashDocFragment extends Fragment {
         if (_inputDn2.getText().toString().equals("")) {
             _inputDn2.setText(invoices.get(0).getDn2());
         }
+        hideProgressBar();
     }
 
     private void setRecount(@NonNull final CalcVatKt result) {
@@ -696,17 +699,17 @@ public class NewCashDocFragment extends Fragment {
 
                             boolean datexValid = !isEmpty(newDatex);
                             if (!datexValid) {
-                                _datex.setError("Invalid Date!");
+                                _datex.setError(getResources().getString(R.string.inv_date));
                             }
 
                             boolean personValid = !isEmpty(newPerson) && newPerson.length() > 1;
                             if (!personValid) {
-                                _person.setError("Invalid Person!");
+                                _person.setError(getResources().getString(R.string.inv_pers));
                             }
 
                             boolean memoValid = !isEmpty(newMemo) && newMemo.length() > 1;
                             if (!memoValid) {
-                                _memo.setError("Invalid Memo!");
+                                _memo.setError(getResources().getString(R.string.inv_memo));
                             }
 
 

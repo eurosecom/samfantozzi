@@ -253,6 +253,8 @@
     <string name="cid_nomatch">Company ID %s does not match!</string>
     <string name="inv_date">Invalid Date!</string>
     <string name="inv_memo">Invalid Memo!</string>
+    <string name="inv_pers">Invalid Person!</string>
+    <string name="inv_fakt">Invalid Invoice!</string>
 
     //idclistktfragment
     <string name="idc">ID company</string>
