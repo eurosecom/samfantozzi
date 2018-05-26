@@ -194,11 +194,12 @@
     //supplieractivity
     <string name="suppliers">Suppliers</string>
     <string name="date">Date</string>
+    <string name="dateshort">Date</string>
     <string name="suppidshort">ID</string>
     <string name="fakshort">Inv.</string>
     <string name="value">Value</string>
     <string name="document">Document</string>
-    <string name="docshort">Doc</string>
+    <string name="docshort">Doc.</string>
     <string name="pdf">PDF</string>
     <string name="edit">Edit</string>
     <string name="delete">Delete</string>
@@ -223,9 +224,10 @@
     <string name="popdph2">VAT%s</string>
     <string name="popzakl1">Basis%s</string>
     <string name="popdph1">VAT%s</string>
-    <string name="popzakl0">Zákl.0%</string>
+    <string name="popzakl0">Basis.0%</string>
     <string name="pohyb">Account</string>
     <string name="falsex">false</string>
+    <string name="truex">true</string>
     <string name="datedialogpos">Set date</string>
     <string name="select_receipt">Select receipt</string>
     <string name="select_expense">Select expense</string>
@@ -248,7 +250,9 @@
     <string name="ksyshort">Ksy</string>
     <string name="ssyshort">Ssy</string>
     <string name="dasshort">Due</string>
-
+    <string name="cid_nomatch">Company ID %s does not match!</string>
+    <string name="inv_date">Invalid Date!</string>
+    <string name="inv_memo">Invalid Memo!</string>
 
     //idclistktfragment
     <string name="idc">ID company</string>

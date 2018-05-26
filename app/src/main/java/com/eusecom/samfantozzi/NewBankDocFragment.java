@@ -366,13 +366,15 @@ public class NewBankDocFragment extends Fragment {
             Boolean icoValid = resultAs.get(0).getLogprx();
             //_disposableObserver.onNext(icoValid);
             if (!icoValid) {
-                _companyid.setError("Company ID " + resultAs.get(0).getIco() + " does not match!");
+                //companyid.setError("Company ID " + resultAs.get(0).getIco() + " does not match!");
+                _companyid.setError(String.format(getResources().getString(R.string.cid_nomatch), resultAs.get(0).getIco()));
+
                 _companyname.setText(resultAs.get(0).getNai());
-                _idcexist.setText("false");
+                _idcexist.setText(getResources().getString(R.string.falsex));
             } else {
                 _companyid.setError(null);
                 _companyname.setText(resultAs.get(0).getNai());
-                _idcexist.setText("true");
+                _idcexist.setText(getResources().getString(R.string.truex));
             }
         }
 
@@ -706,13 +708,13 @@ public class NewBankDocFragment extends Fragment {
 
                             boolean datexValid = !isEmpty(newDatex);
                             if (!datexValid) {
-                                _datex.setError("Invalid Date!");
+                                _datex.setError(getResources().getString(R.string.inv_date));
                             }
 
 
                             boolean memoValid = !isEmpty(newMemo) && newMemo.length() > 1;
                             if (!memoValid) {
-                                _memo.setError("Invalid Memo!");
+                                _memo.setError(getResources().getString(R.string.inv_memo));
                             }
 
 

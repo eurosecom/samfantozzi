@@ -196,11 +196,12 @@
     //supplieractivity
     <string name="suppliers">Dodávatelia</string>
     <string name="date">Dátum</string>
+    <string name="dateshort">Dát.</string>
     <string name="suppidshort">IČO</string>
     <string name="fakshort">Fakt.</string>
     <string name="value">Hodnota</string>
     <string name="document">Doklad</string>
-    <string name="docshort">Dok</string>
+    <string name="docshort">Dok.</string>
     <string name="pdf">PDF</string>
     <string name="edit">Upraviť</string>
     <string name="delete">Zmazať</string>
@@ -226,9 +227,10 @@
     <string name="popdph2">DPH%s</string>
     <string name="popzakl1">Zákl.%s</string>
     <string name="popdph1">DPH%s</string>
-    <string name="popzakl0">Basis0%</string>
+    <string name="popzakl0">Zákl.0%</string>
     <string name="pohyb">Účet</string>
     <string name="falsex">false</string>
+    <string name="truex">true</string>
     <string name="datedialogpos">Nastaviť dátum</string>
     <string name="select_receipt">Vybrať príjem</string>
     <string name="select_expense">Vybrať výdavok</string>
@@ -251,6 +253,9 @@
     <string name="ksyshort">Ksy</string>
     <string name="ssyshort">Ssy</string>
     <string name="dasshort">Splatná</string>
+    <string name="cid_nomatch">Nesprávne ičo %s !</string>
+    <string name="inv_date">Nesprávny dátum!</string>
+    <string name="inv_memo">Nesprávna poznámka!</string>
 
 
     //idclistktfragment
