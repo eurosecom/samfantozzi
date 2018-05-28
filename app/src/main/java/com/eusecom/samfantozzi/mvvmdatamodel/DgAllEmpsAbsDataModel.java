@@ -556,7 +556,7 @@ public class DgAllEmpsAbsDataModel implements DgAllEmpsAbsIDataModel {
 
         if (invx.getDrh().equals("91")) {
 
-            uri = Uri.parse("http://www.edcom.sk/ram1/privacy_policy_samfantozzi.pdf" );
+            uri = Uri.parse("http://www.edcom.sk/ram1/" + invx.getDok() + ".pdf");
 
         }
         return Observable.just(uri);
@@ -671,7 +671,7 @@ public class DgAllEmpsAbsDataModel implements DgAllEmpsAbsIDataModel {
         List<Account> myaccounts = new ArrayList<>();
         for (RealmAccount b : results) {
 
-            Account account = new Account("rm " + b.getDatm() + " " + b.getAccname(), b.getAccnumber(), b.getAccdoc()
+            Account account = new Account("rm " + b.getAccname(), b.getAccnumber(), b.getAccdoc()
                     ,b.getAccdov(), b.getAcctype(), b.getDatm(), b.getLogprx() );
             myaccounts.add(account);
 
@@ -821,7 +821,7 @@ public class DgAllEmpsAbsDataModel implements DgAllEmpsAbsIDataModel {
             //        , var uli: String, var mes: String, var psc: String, var tel: String
             //        , var logprx: Boolean, var datm: String )
 
-            IdCompanyKt account = new IdCompanyKt(b.getIco(), b.getDic(), b.getIcd(), "rm " + b.getDatm() + " " + b.getNai()
+            IdCompanyKt account = new IdCompanyKt(b.getIco(), b.getDic(), b.getIcd(), "rm " + b.getNai()
                     ,b.getUli(), b.getMes(), b.getPsc()
                     ,b.getTel(), true, b.getDatm(), b.getEmail(), b.getIb1(), b.getSw1() );
             myaccounts.add(account);

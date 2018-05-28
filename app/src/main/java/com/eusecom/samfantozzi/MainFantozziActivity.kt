@@ -257,7 +257,7 @@ class MainFantozziActivity : AppCompatActivity() {
         extras.putString("fromact", "3")
         extras.putString("drhx", "91")
         extras.putString("ucex", "0")
-        extras.putString("dokx", "0")
+        extras.putString("dokx", getString(R.string.privacy_policy_file))
         extras.putString("icox", "0")
         `is`.putExtras(extras)
         startActivity(`is`)
