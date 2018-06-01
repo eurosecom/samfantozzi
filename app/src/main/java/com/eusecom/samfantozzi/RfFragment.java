@@ -3,6 +3,7 @@ package com.eusecom.samfantozzi;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.util.Pair;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -36,7 +37,7 @@ public class RfFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        String githubToken = "b0914bebc777848928ba648aa6a2ac9a126d4255";
+        String githubToken = Constants.GITHUB_API_KEY;
         _githubService = RfGithubService.createGithubService(githubToken);
 
         _disposables = new CompositeDisposable();
@@ -80,12 +81,12 @@ public class RfFragment extends Fragment {
 
                         @Override
                         public void onComplete() {
-                            //Timber.d("Retrofit call 1 completed");
+                            Log.d("Retrof call 1 completed", "");
                         }
 
                         @Override
                         public void onError(Throwable e) {
-                            //Timber.e(e, "woops we got an error while getting the list of contributors");
+                            Log.e( "woops we got an error ", e.toString());
                         }
 
                         @Override
