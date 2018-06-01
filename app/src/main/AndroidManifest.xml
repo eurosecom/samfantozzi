@@ -47,6 +47,7 @@
         <activity android:name=".DocSearchActivity"/>
         <activity android:name=".GeneralDocActivity"/>
 
+        <activity android:name=".RfListActivity"/>
         <activity android:name=".Detail2Activity"/>
 
     </application>

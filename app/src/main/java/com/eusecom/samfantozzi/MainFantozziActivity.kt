@@ -203,6 +203,16 @@ class MainFantozziActivity : AppCompatActivity() {
                     false
                 }
             }
+
+            divider {}
+            secondaryItem("RfGitHub") {
+
+                onClick { _ ->
+                    //Log.d("DRAWER", "Click.")
+                    navigateToRfGitHub()
+                    false
+                }
+            }
         }
 
         //headerResult.setBackground(getResources().getDrawable(R.drawable.cupcake))
@@ -351,6 +361,11 @@ class MainFantozziActivity : AppCompatActivity() {
 
     fun navigateToSetMonth(){
         startActivity<ChooseMonthActivity>()
+
+    }
+
+    fun navigateToRfGitHub(){
+        startActivity<RfListActivity>()
 
     }
 
