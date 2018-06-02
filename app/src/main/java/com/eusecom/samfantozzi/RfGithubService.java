@@ -27,15 +27,12 @@ public class RfGithubService {
             HttpLoggingInterceptor interceptorLogging = new HttpLoggingInterceptor();
             interceptorLogging.setLevel(HttpLoggingInterceptor.Level.BODY);
 
+            RfBasicAuthInterceptor interceptorAuth = new RfBasicAuthInterceptor(githubToken);
+
             OkHttpClient client = new OkHttpClient.Builder()
                     .addInterceptor(interceptorLogging)
-                    .addInterceptor(chain -> {
-                        Request request = chain.request();
-                        Request newReq = request.newBuilder()
-                            .addHeader("Authorization", format("token %s", githubToken))
-                            .build();
-                    return chain.proceed(newReq);
-                    }).build();
+                    .addInterceptor(interceptorAuth)
+                    .build();
 
             builder.client(client);
         }
