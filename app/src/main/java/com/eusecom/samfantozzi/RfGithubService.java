@@ -6,6 +6,7 @@ import com.jakewharton.retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory;
 
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
+import okhttp3.logging.HttpLoggingInterceptor;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
@@ -23,13 +24,18 @@ public class RfGithubService {
 
         if (!TextUtils.isEmpty(githubToken)) {
 
-            OkHttpClient client = new OkHttpClient.Builder().addInterceptor(chain -> {
-                Request request = chain.request();
-                Request newReq = request.newBuilder()
-                      .addHeader("Authorization", format("token %s", githubToken))
-                      .build();
-                return chain.proceed(newReq);
-            }).build();
+            HttpLoggingInterceptor interceptorLogging = new HttpLoggingInterceptor();
+            interceptorLogging.setLevel(HttpLoggingInterceptor.Level.BODY);
+
+            OkHttpClient client = new OkHttpClient.Builder()
+                    .addInterceptor(interceptorLogging)
+                    .addInterceptor(chain -> {
+                        Request request = chain.request();
+                        Request newReq = request.newBuilder()
+                            .addHeader("Authorization", format("token %s", githubToken))
+                            .build();
+                    return chain.proceed(newReq);
+                    }).build();
 
             builder.client(client);
         }
