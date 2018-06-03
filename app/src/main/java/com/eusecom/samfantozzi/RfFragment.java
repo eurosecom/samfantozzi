@@ -38,7 +38,8 @@ public class RfFragment extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         String githubToken = Constants.GITHUB_API_KEY;
-        _githubService = RfGithubService.createGithubService(githubToken);
+        String githubToken2 = Constants.GITHUB_API_KEY2;
+        _githubService = RfGithubService.createGithubService(githubToken, githubToken2);
 
         _disposables = new CompositeDisposable();
     }

@@ -17,7 +17,7 @@ public class RfGithubService {
     private RfGithubService() {
     }
 
-    public static RfGithubApi createGithubService(final String githubToken) {
+    public static RfGithubApi createGithubService(final String githubToken, final String githubToken2) {
         Retrofit.Builder builder = new Retrofit.Builder().addCallAdapterFactory(RxJava2CallAdapterFactory.create())
               .addConverterFactory(GsonConverterFactory.create())
               .baseUrl("https://api.github.com");
@@ -27,7 +27,7 @@ public class RfGithubService {
             HttpLoggingInterceptor interceptorLogging = new HttpLoggingInterceptor();
             interceptorLogging.setLevel(HttpLoggingInterceptor.Level.BODY);
 
-            RfBasicAuthInterceptor interceptorAuth = new RfBasicAuthInterceptor(githubToken);
+            RfBasicAuthInterceptor interceptorAuth = new RfBasicAuthInterceptor(githubToken, githubToken2);
 
             OkHttpClient client = new OkHttpClient.Builder()
                     .addInterceptor(interceptorLogging)
