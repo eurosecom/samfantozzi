@@ -204,14 +204,19 @@ class MainFantozziActivity : AppCompatActivity() {
                 }
             }
 
-            divider {}
-            secondaryItem("RfGitHub") {
+            if (BuildConfig.DEBUG) {
 
-                onClick { _ ->
-                    //Log.d("DRAWER", "Click.")
-                    navigateToRfGitHub()
-                    false
+                divider {}
+                secondaryItem("RfGitHub") {
+
+                    onClick { _ ->
+                        //Log.d("DRAWER", "Click.")
+                        navigateToRfGitHub()
+                        false
+                    }
                 }
+            }else {
+
             }
         }
 
