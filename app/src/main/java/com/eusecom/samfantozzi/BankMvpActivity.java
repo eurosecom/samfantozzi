@@ -122,6 +122,8 @@ public class BankMvpActivity extends AppCompatActivity implements BankMvpView, A
         }
         presenter.attachView(this);
 
+        Log.d("BankMvpPresenter act ", presenter.toString());
+
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(v -> {
 

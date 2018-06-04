@@ -8,6 +8,7 @@ import android.support.design.widget.TabLayout
 import android.support.v4.app.Fragment
 import android.support.v4.app.FragmentPagerAdapter
 import android.support.v4.view.ViewPager
+import android.util.Log
 import android.view.View
 import com.eusecom.samfantozzi.rxbus.RxBus
 import org.jetbrains.anko.setContentView
@@ -41,6 +42,8 @@ class CashListKtActivity : AppCompatActivity() {
 
         supportActionBar!!.setTitle(prefs.getString("ume", "") + " " +
                 prefs.getString("pokluce", "") + " " +  getString(R.string.cashdocuments))
+
+        Log.d("mViewModel act ", mViewModel.toString())
 
         // Create the adapter that will return a fragment for each section
         mPagerAdapter = object : FragmentPagerAdapter(supportFragmentManager) {

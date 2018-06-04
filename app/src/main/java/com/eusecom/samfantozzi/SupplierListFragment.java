@@ -94,6 +94,8 @@ public class SupplierListFragment extends Fragment {
         ((SamfantozziApp) getActivity().getApplication()).dgaeacomponent().inject(this);
         setHasOptionsMenu(true);
 
+        Log.d("mViewModel frg ", mViewModel.toString());
+
     }
 
     @Override

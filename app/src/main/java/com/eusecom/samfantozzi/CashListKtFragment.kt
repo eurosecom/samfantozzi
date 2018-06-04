@@ -81,6 +81,8 @@ class CashListKtFragment : Fragment() {
         (activity.application as SamfantozziApp).dgaeacomponent().inject(this)
         setHasOptionsMenu(true)
 
+        Log.d("mViewModel frg ", mViewModel.toString())
+
     }
 
     override fun onCreateView(inflater: LayoutInflater?, container: ViewGroup?,
