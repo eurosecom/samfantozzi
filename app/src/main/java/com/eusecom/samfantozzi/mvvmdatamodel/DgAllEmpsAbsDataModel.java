@@ -898,7 +898,7 @@ public class DgAllEmpsAbsDataModel implements DgAllEmpsAbsIDataModel {
 
     @NonNull
     public Observable<List<Invoice>> getObservableInvoiceToMysql(String servername, String userhash, String userid, String fromfir
-            , String vyb_rok, String drh, RealmInvoice invx, String edidok){
+            , String vyb_rok, String drh, RealmInvoice invx, String edidok, String firduct){
 
         if(invx.getDrh().toString().equals("99999")){
             //andrejko
@@ -918,9 +918,10 @@ public class DgAllEmpsAbsDataModel implements DgAllEmpsAbsIDataModel {
         System.out.println("invxstring drh " + drh);
         System.out.println("invxstring " + invxstring);
         System.out.println("invxstring edidok" + edidok);
+        System.out.println("invxstring firduct" + firduct);
 
         setRetrofit(servername);
-        return mAbsServerService.saveInvoiceToMysqlPost(userhash, userid, fromfir, vyb_rok, drh, invxstring, edidok);
+        return mAbsServerService.saveInvoiceToMysqlPost(userhash, userid, fromfir, vyb_rok, drh, invxstring, edidok, firduct);
     }
 
     //JSON from Invoice

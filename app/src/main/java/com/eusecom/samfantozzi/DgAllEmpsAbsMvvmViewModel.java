@@ -847,6 +847,7 @@ public class DgAllEmpsAbsMvvmViewModel {
         String rokx = mSharedPreferences.getString("rok", "");
         String drh = "2";
         String edidok = mSharedPreferences.getString("edidok", "");
+        String firduct = mSharedPreferences.getString("firduct", "");
 
         //Log.d("NewCashLog save fir ", firx);
         Log.d("NewCashedit ", firx);
@@ -856,7 +857,7 @@ public class DgAllEmpsAbsMvvmViewModel {
                 .observeOn(mSchedulerProvider.ui())
                 .flatMap(invx -> mDataModel.saveRealmOneIdcData(invx) )
                 .observeOn(mSchedulerProvider.computation())
-                .flatMap(invx -> mDataModel.getObservableInvoiceToMysql(serverx, encrypted2, ds, firx, rokx, drh, invx, edidok ));
+                .flatMap(invx -> mDataModel.getObservableInvoiceToMysql(serverx, encrypted2, ds, firx, rokx, drh, invx, edidok, firduct ));
     }
 
     public void clearObservableInvoiceToServer() {
@@ -976,6 +977,7 @@ public class DgAllEmpsAbsMvvmViewModel {
         String rokx = mSharedPreferences.getString("rok", "");
         String drh = "2";
         String edidok = mSharedPreferences.getString("edidok", "");
+        String firduct = mSharedPreferences.getString("firduct", "");
 
         //Log.d("NewCashLog save fir ", firx);
         Log.d("NewCashedit ", firx);
@@ -985,7 +987,7 @@ public class DgAllEmpsAbsMvvmViewModel {
                 .observeOn(mSchedulerProvider.ui())
                 .flatMap(invx -> mDataModel.saveRealmOneIdcData(invx) )
                 .observeOn(mSchedulerProvider.computation())
-                .flatMap(invx -> mDataModel.getObservableInvoiceToMysql(serverx, encrypted2, ds, firx, rokx, drh, invx, edidok ));
+                .flatMap(invx -> mDataModel.getObservableInvoiceToMysql(serverx, encrypted2, ds, firx, rokx, drh, invx, edidok, firduct ));
     }
 
     public void clearObservableIdcSaveToServer() {
