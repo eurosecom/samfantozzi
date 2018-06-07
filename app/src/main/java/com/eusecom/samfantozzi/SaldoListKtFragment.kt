@@ -178,6 +178,7 @@ abstract class SaldoListKtFragment : Fragment() {
     private fun unBind() {
 
         mViewModel.clearObservableCashListQuery()
+        //mViewModel.clearMyObservableSaveReminderToSql()
         mSubscription?.unsubscribe()
         mSubscription?.clear()
         _disposables.dispose()
@@ -507,7 +508,7 @@ abstract class SaldoListKtFragment : Fragment() {
 
                         val msgtel = invoice.tel + ""
 
-                        checkPermissionSMS(msgtel, msgtext)
+                        checkPermissionSMS(msgtel, msgtext, invoice)
                     }else{
                         //generating MySql PDF report with using CommandExecutorProxy and Facade
                         callCommandExecutorProxy("lgn", AccountReportsHelperFacade.DBTypes.MYSQL
@@ -548,7 +549,7 @@ abstract class SaldoListKtFragment : Fragment() {
     }
 
 
-    fun checkPermissionSMS(phoneNumber: String, message: String) {
+    fun checkPermissionSMS(phoneNumber: String, message: String, invoice: Invoice) {
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
 
@@ -560,13 +561,13 @@ abstract class SaldoListKtFragment : Fragment() {
             } else {
 
                 // Permission is already available
-                sendSMS(phoneNumber, message)
+                sendSMS(phoneNumber, message, invoice)
             }
 
         } else {
 
             // Permission is already available
-            sendSMS(phoneNumber, message)
+            sendSMS(phoneNumber, message, invoice)
         }
 
     }
@@ -575,7 +576,7 @@ abstract class SaldoListKtFragment : Fragment() {
     private val DELIVERED = "SMS_DELIVERED"
     private val MAX_SMS_MESSAGE_LENGTH = 160
 
-    fun sendSMS(phoneNumber: String, message: String) {
+    fun sendSMS(phoneNumber: String, message: String, invoice: Invoice) {
 
         val piSent: PendingIntent = PendingIntent.getBroadcast(activity, 0, Intent(SENT), 0);
         val piDelivered: PendingIntent = PendingIntent.getBroadcast(activity, 0, Intent(DELIVERED), 0);
@@ -592,6 +593,7 @@ abstract class SaldoListKtFragment : Fragment() {
                     piSent, piDelivered);
         }
 
+        //mViewModel.emitMyObservableSaveReminderToSql(invoice)
         toast(getResources().getString(R.string.smssentto) + " " + phoneNumber)
 
     }
