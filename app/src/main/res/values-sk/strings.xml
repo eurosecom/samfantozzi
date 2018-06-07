@@ -356,6 +356,7 @@
     <string name="action_toothersaldo">Odber/Dodav</string>
     <string name="reminder">PDF Upomienka</string>
     <string name="smsreminder">SMS Upomienka</string>
+    <string name="smssentto">SMS upomienka bola poslaná na číslo </string>
     <string name="detailidc">Detail IČO položky</string>
     <string name="pdfdoc">Zobraziť PDf doklad</string>
     <string name="customer">Odberateľ</string>

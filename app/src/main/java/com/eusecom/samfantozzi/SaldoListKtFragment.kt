@@ -592,6 +592,7 @@ abstract class SaldoListKtFragment : Fragment() {
                     piSent, piDelivered);
         }
 
+        toast(getResources().getString(R.string.smssentto) + " " + phoneNumber)
 
     }
 

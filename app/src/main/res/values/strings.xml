@@ -352,6 +352,7 @@
     <string name="action_toothersaldo">Customer/Supplier</string>
     <string name="reminder">PDF Reminder</string>
     <string name="smsreminder">SMS Reminder</string>
+    <string name="smssentto">SMS reminder was sent to </string>
     <string name="detailidc">Detail IDC items</string>
     <string name="pdfdoc">Show PDf document</string>
     <string name="customer">Customer</string>
