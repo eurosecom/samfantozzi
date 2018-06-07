@@ -18,6 +18,7 @@ import android.util.Log
 import android.view.*
 import android.widget.ProgressBar
 import android.widget.TextView
+import com.eusecom.samfantozzi.realm.RealmInvoice
 import com.eusecom.samfantozzi.rxbus.RxBus
 import io.reactivex.ObservableOnSubscribe
 import io.reactivex.android.schedulers.AndroidSchedulers
@@ -26,6 +27,7 @@ import io.reactivex.disposables.Disposable
 import io.reactivex.functions.Function
 import org.jetbrains.anko.AlertDialogBuilder
 import org.jetbrains.anko.support.v4.toast
+import org.jetbrains.anko.toast
 import rx.Observable
 import rx.schedulers.Schedulers
 import rx.subscriptions.CompositeSubscription
@@ -172,13 +174,28 @@ abstract class SaldoListKtFragment : Fragment() {
                 .onErrorResumeNext { throwable -> Observable.empty() }
                 .subscribe { it -> setQueryString(it) })
 
+        mSubscription?.add(mViewModel.myObservableSaveReminderToServer
+                .subscribeOn(Schedulers.computation())
+                .observeOn(rx.android.schedulers.AndroidSchedulers.mainThread())
+                .doOnError { throwable -> Log.e("NoSavedDocAktivity ", "Error Throwable " + throwable.message) }
+                .onErrorResumeNext({ throwable -> Observable.empty() })
+                .subscribe({ it -> savedReminder(it) }))
+
+
+    }
+
+    private fun savedReminder(savedinv: List<Invoice>) {
+
+        //System.out.println("savedinvoice " + saveds);
+        mViewModel.clearMyObservableSaveReminderToServer()
+        toast(getResources().getString(R.string.smssentto) + " " + "${savedinv.get(0).tel } ")
 
     }
 
     private fun unBind() {
 
         mViewModel.clearObservableCashListQuery()
-        //mViewModel.clearMyObservableSaveReminderToSql()
+        mViewModel.clearMyObservableSaveReminderToServer()
         mSubscription?.unsubscribe()
         mSubscription?.clear()
         _disposables.dispose()
@@ -593,8 +610,8 @@ abstract class SaldoListKtFragment : Fragment() {
                     piSent, piDelivered);
         }
 
-        //mViewModel.emitMyObservableSaveReminderToSql(invoice)
-        toast(getResources().getString(R.string.smssentto) + " " + phoneNumber)
+        mViewModel.emitMyObservableSaveReminderToServer(invoice)
+        //toast(getResources().getString(R.string.smssentto) + " " + phoneNumber)
 
     }
 

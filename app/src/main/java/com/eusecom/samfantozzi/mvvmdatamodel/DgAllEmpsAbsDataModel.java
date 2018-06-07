@@ -952,6 +952,7 @@ public class DgAllEmpsAbsDataModel implements DgAllEmpsAbsIDataModel {
                 ", \"saved\":" + "\"" + invx.getSaved() + "\"" +
                 ", \"datm\":" + "\"" + invx.getDatm() + "\"" +
                 ", \"uzid\":" + "\"" + invx.getUzid() + "\"" +
+                ", \"tel\":" + "\"" + invx.getTel() + "\"" +
                 " }";
 
         return jsonstring;
@@ -1123,6 +1124,30 @@ public class DgAllEmpsAbsDataModel implements DgAllEmpsAbsIDataModel {
         setRetrofit(servername);
         return mAbsServerService.getSaldoFromSqlServer(userhash, userid, fromfir, vyb_rok, drh, ucex, ucto, salico);
 
+    }
+
+    @NonNull
+    public Observable<List<Invoice>> getObservableReminderToMysql(String servername, String userhash, String userid, String fromfir
+            , String vyb_rok, String drh, Invoice invx, String edidok, String firduct){
+
+
+        //Log.d("userhash ", userhash);
+        System.out.println("invx.dok " + invx.getDok());
+        System.out.println("invx.hod " + invx.getHod());
+
+        String invxstring = JSsonFromInvoice(invx);
+
+        System.out.println("invxstring userhash " + userhash);
+        System.out.println("invxstring userid " + userid);
+        System.out.println("invxstring fromfir " + fromfir);
+        System.out.println("invxstring vyb_rok " + vyb_rok);
+        System.out.println("invxstring drh " + drh);
+        System.out.println("invxstring " + invxstring);
+        System.out.println("invxstring edidok" + edidok);
+        System.out.println("invxstring firduct" + firduct);
+
+        setRetrofit(servername);
+        return mAbsServerService.saveReminderToMysqlPost(userhash, userid, fromfir, vyb_rok, drh, invxstring, edidok, firduct);
     }
 
 

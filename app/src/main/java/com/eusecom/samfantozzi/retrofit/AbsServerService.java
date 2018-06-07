@@ -39,6 +39,13 @@ public interface AbsServerService {
             , @Field("vyb_rok") String vyb_rok, @Field("drh") String drh
             , @Field("invx") String invx, @Field("edidok") String edidok, @Field("firduct") String firduct);
 
+    @POST("/androidfantozzi/save_reminder.php")
+    @FormUrlEncoded
+    Observable<List<Invoice>> saveReminderToMysqlPost(@Field("userhash") String userhash
+            , @Field("userid") String userid, @Field("fromfir") String fromfir
+            , @Field("vyb_rok") String vyb_rok, @Field("drh") String drh
+            , @Field("invx") String invx, @Field("edidok") String edidok, @Field("firduct") String firduct);
+
     @GET("/androidfantozzi/get_drhpohyby.php")
     Observable<List<Account>> getReceiptExpensesFromSqlServer(@Query("userhash") String userhash
             , @Query("userid") String userid, @Query("fromfir") String fromfir

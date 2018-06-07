@@ -1060,6 +1060,56 @@ public class DgAllEmpsAbsMvvmViewModel {
     }
     //end get get saldo from MySql server
 
+    //emit save Reminder to Mysql
+    public void emitMyObservableSaveReminderToServer(Invoice invx) {
+
+        mObservableReminderToServer.onNext(invx);
+    }
+
+    @NonNull
+    private BehaviorSubject<Invoice> mObservableReminderToServer = BehaviorSubject.create();
+
+    @NonNull
+    public Observable<List<Invoice>> getMyObservableSaveReminderToServer() {
+
+        Random r = new Random();
+        double d = 10.0 + r.nextDouble() * 20.0;
+        String ds = String.valueOf(d);
+
+        String usuidx = mSharedPreferences.getString("usuid", "");
+        String userxplus =  ds + "/" + usuidx + "/" + ds;
+        encrypted2 = "";
+
+
+        try {
+            encrypted2 = mMcrypt.bytesToHex( mMcrypt.encrypt(userxplus) );
+        } catch (Exception e1) {
+            // TODO Auto-generated catch block
+            e1.printStackTrace();
+        }
+
+        String firx = mSharedPreferences.getString("fir", "");
+        String rokx = mSharedPreferences.getString("rok", "");
+        String drh = "1";
+        String edidok = "0";
+        String firduct = mSharedPreferences.getString("firduct", "");
+
+        //Log.d("NewCashLog save fir ", firx);
+        Log.d("NewCashedit ", firx);
+        String serverx = mSharedPreferences.getString("servername", "");
+
+        return mObservableReminderToServer
+                .observeOn(mSchedulerProvider.computation())
+                .flatMap(invx -> mDataModel.getObservableReminderToMysql(serverx, encrypted2, ds, firx, rokx, drh, invx, edidok, firduct ));
+    }
+
+    public void clearMyObservableSaveReminderToServer() {
+
+        mObservableReminderToServer = BehaviorSubject.create();
+
+    }
+    //end save reminder to Mysql
+
 
     //recyclerview method for TaxPaymentsActivity
 
