@@ -3,7 +3,7 @@
     //mainactivity
     <string name="app_name">Samfantozzi</string>
     <string name="helloworld">Ahoj Svet!</string>
-    <string name="app_desc">Samfantozzi účtovný systém v.4.30</string>
+    <string name="app_desc">Samfantozzi účtovný systém v.4.31</string>
     <string name="privacy_policy">Ochrana osobných údajov</string>
     <string name="privacy_policy_file">privacy_policy_samfantozzi_sk</string>
     <string name="action_settings">Nastavenia</string>
