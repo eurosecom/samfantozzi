@@ -18,8 +18,8 @@ android {
         applicationId "com.eusecom.samfantozzi"
         minSdkVersion 18
         targetSdkVersion 26
-        versionCode 420
-        versionName "4.20"
+        versionCode 430
+        versionName "4.30"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
         multiDexEnabled true
         //because of realm added
@@ -129,6 +129,11 @@ dependencies {
 
     // Realm
     implementation 'io.realm:realm-android:0.82.1'
+
+    // Lifecycle
+    implementation "android.arch.lifecycle:runtime:1.1.1"
+    implementation "android.arch.lifecycle:extensions:1.1.1"
+    annotationProcessor "android.arch.lifecycle:compiler:1.1.1"
 
 
 }
