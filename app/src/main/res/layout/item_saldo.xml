@@ -124,7 +124,7 @@
                 android:layout_height="wrap_content"
                 android:layout_alignBaseline="@+id/invoice"
                 android:layout_alignParentRight="true"
-                android:textSize="12sp"
+                android:textSize="14sp"
                 android:layout_marginLeft="5dp"
                 android:layout_marginTop="5dp"
                 android:textStyle="bold"

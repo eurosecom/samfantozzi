@@ -69,6 +69,7 @@ public class SaldoAdapter extends RecyclerView.Adapter<SaldoAdapter.SaldoViewHol
       }
 
       holder.idcx.setText(mListabsserver.get(position).getIco());
+      holder.dasx.setBackgroundColor(Color.WHITE);
 
       //holder.invoicex.setText(mListabsserver.get(position).getFak() + " " + mListabsserver.get(position).getPoh());
       holder.invoicex.setText(mListabsserver.get(position).getFak());
@@ -81,7 +82,7 @@ public class SaldoAdapter extends RecyclerView.Adapter<SaldoAdapter.SaldoViewHol
       }else {
           holder.invoicetype.setVisibility(View.VISIBLE);
           if( !mListabsserver.get(position).getPoh().equals("0")) {
-              holder.dasx.setBackgroundColor(Color.RED);
+              holder.dasx.setBackgroundColor(holder.mContext.getResources().getColor(R.color.material_red_100));
           }
           //holder.invoice.setVisibility(View.VISIBLE);
       }
