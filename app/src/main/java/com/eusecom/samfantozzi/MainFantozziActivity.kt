@@ -218,6 +218,21 @@ class MainFantozziActivity : AppCompatActivity() {
             }else {
 
             }
+
+            if (BuildConfig.DEBUG) {
+
+                divider {}
+                secondaryItem("LoggingViewModelDemo") {
+
+                    onClick { _ ->
+                        //Log.d("DRAWER", "Click.")
+                        navigateToLoggingViewModelDemo()
+                        false
+                    }
+                }
+            }else {
+
+            }
         }
 
         //headerResult.setBackground(getResources().getDrawable(R.drawable.cupcake))
@@ -371,6 +386,11 @@ class MainFantozziActivity : AppCompatActivity() {
 
     fun navigateToRfGitHub(){
         startActivity<RfListActivity>()
+
+    }
+
+    fun navigateToLoggingViewModelDemo(){
+        startActivity<LoggingViewModelDemoActivity>()
 
     }
 
