@@ -31,7 +31,7 @@ import java.util.Calendar;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 import javax.inject.Inject;
-import butterknife.Bind;
+import butterknife.BindView;
 import butterknife.ButterKnife;
 import hu.akarnokd.rxjava.interop.RxJavaInterop;
 import io.reactivex.Flowable;
@@ -65,28 +65,28 @@ public class NewInvoiceDocFragment extends Fragment {
 
     }
 
-    @Bind(R.id.datex) EditText _datex;
-    @Bind(R.id.dasx) EditText _das;
-    @Bind(R.id.companyid) EditText _companyid;
-    @Bind(R.id.idcexist) EditText _idcexist;
-    @Bind(R.id.ssy) EditText _ssy;
-    @Bind(R.id.ksy) EditText _ksy;
-    @Bind(R.id.invoice) EditText _invoice;
-    @Bind(R.id.memo) EditText _memo;
-    @Bind(R.id.hod) EditText _hod;
+    @BindView(R.id.datex) EditText _datex;
+    @BindView(R.id.dasx) EditText _das;
+    @BindView(R.id.companyid) EditText _companyid;
+    @BindView(R.id.idcexist) EditText _idcexist;
+    @BindView(R.id.ssy) EditText _ssy;
+    @BindView(R.id.ksy) EditText _ksy;
+    @BindView(R.id.invoice) EditText _invoice;
+    @BindView(R.id.memo) EditText _memo;
+    @BindView(R.id.hod) EditText _hod;
     Button datebutton, idbutton, _btnsave, dasbutton;
-    @Bind(R.id.textzakl2) TextView _textzakl2;
-    @Bind(R.id.textdph2) TextView _textdph2;
-    @Bind(R.id.textzakl1) TextView _textzakl1;
-    @Bind(R.id.textdph1) TextView _textdph1;
-    @Bind(R.id.companyname) TextView _companyname;
-    @Bind(R.id.inputZk0) EditText _inputZk0;
-    @Bind(R.id.inputZk1) EditText _inputZk1;
-    @Bind(R.id.inputZk2) EditText _inputZk2;
-    @Bind(R.id.inputDn1) EditText _inputDn1;
-    @Bind(R.id.inputDn2) EditText _inputDn2;
-    @Bind(R.id.inputPoh) EditText _inputPoh;
-    @Bind(R.id.inputDoc) EditText _inputDoc;
+    @BindView(R.id.textzakl2) TextView _textzakl2;
+    @BindView(R.id.textdph2) TextView _textdph2;
+    @BindView(R.id.textzakl1) TextView _textzakl1;
+    @BindView(R.id.textdph1) TextView _textdph1;
+    @BindView(R.id.companyname) TextView _companyname;
+    @BindView(R.id.inputZk0) EditText _inputZk0;
+    @BindView(R.id.inputZk1) EditText _inputZk1;
+    @BindView(R.id.inputZk2) EditText _inputZk2;
+    @BindView(R.id.inputDn1) EditText _inputDn1;
+    @BindView(R.id.inputDn2) EditText _inputDn2;
+    @BindView(R.id.inputPoh) EditText _inputPoh;
+    @BindView(R.id.inputDoc) EditText _inputDoc;
 
     @NonNull
     private CompositeSubscription mSubscription;
@@ -401,7 +401,7 @@ public class NewInvoiceDocFragment extends Fragment {
     @Override
     public void onDestroy() {
         super.onDestroy();
-        ButterKnife.unbind(this);
+        //ButterKnife.unbind(this);
         mViewModel.clearObservableIdModelCompany();
         mViewModel.clearObservableRecount();
         mViewModel.clearObservableInvoiceSaveToRealm();

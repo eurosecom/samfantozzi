@@ -13,7 +13,7 @@ import android.widget.EditText;
 import android.widget.ListView;
 import java.util.ArrayList;
 import java.util.List;
-import butterknife.Bind;
+import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import io.reactivex.Observable;
@@ -26,9 +26,9 @@ import static java.lang.String.format;
 
 public class RfFragment extends Fragment {
 
-    @Bind(R.id.demo_retrofit_contributors_username) EditText _username;
-    @Bind(R.id.demo_retrofit_contributors_repository) EditText _repo;
-    @Bind(R.id.log_list) ListView _resultList;
+    @BindView(R.id.demo_retrofit_contributors_username) EditText _username;
+    @BindView(R.id.demo_retrofit_contributors_repository) EditText _repo;
+    @BindView(R.id.log_list) ListView _resultList;
 
     private ArrayAdapter<String> _adapter;
     private RfGithubApi _githubService;
@@ -61,7 +61,7 @@ public class RfFragment extends Fragment {
     @Override
     public void onDestroyView() {
         super.onDestroyView();
-        ButterKnife.unbind(this);
+        //ButterKnife.unbind(this);
     }
 
     @Override

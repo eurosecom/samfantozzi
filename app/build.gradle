@@ -89,8 +89,12 @@ dependencies {
     compile "org.jetbrains.anko:anko-recyclerview-v7:$anko_version"
 
     //butterknife
-    annotationProcessor 'com.jakewharton:butterknife:7.0.1'
-    compile 'com.jakewharton:butterknife:7.0.1'
+    //annotationProcessor 'com.jakewharton:butterknife:7.0.1'
+    //compile 'com.jakewharton:butterknife:7.0.1'
+
+    // Butterknife
+    implementation 'com.jakewharton:butterknife:8.6.0'
+    annotationProcessor 'com.jakewharton:butterknife-compiler:8.6.0'
 
     //icons by https://github.com/mikepenz/Android-Iconics
     //the core iconcis library (without any widgets)
