@@ -13,11 +13,11 @@ public class LiveDataMyObserver implements LifecycleObserver {
 
     @OnLifecycleEvent(Lifecycle.Event.ON_RESUME)
     public void onResume() {
-        Log.d(LOG_TAG, "resumed observing lifecycle.");
+        Log.d(LOG_TAG, "LiveDatDemo resumed observing lifecycle.");
     }
 
     @OnLifecycleEvent(Lifecycle.Event.ON_PAUSE)
     public void onPause() {
-        Log.d(LOG_TAG, "paused observing lifecycle.");
+        Log.d(LOG_TAG, "LiveDatDemo paused observing lifecycle.");
     }
 }

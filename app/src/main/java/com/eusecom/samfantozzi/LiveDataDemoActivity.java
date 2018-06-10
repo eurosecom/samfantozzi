@@ -21,7 +21,7 @@ public class LiveDataDemoActivity extends AppCompatActivity {
         public void onChanged(@Nullable final Long newValue) {
             String newText = LiveDataDemoActivity.this.getResources().getString(R.string.seconds, newValue);
             displayTimerValue(newText);
-            Log.d(LOG_TAG, "Updating timer");
+            Log.d(LOG_TAG, "LiveDatDemo Updating timer");
         }
     };
 
