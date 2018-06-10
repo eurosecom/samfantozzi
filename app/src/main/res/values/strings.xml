@@ -379,5 +379,8 @@
     <string name="firdph_title">VAT payment 0=No, 1=monthly, 2=quarterly.</string>
     <string name="editreceipt">Edit receipt document</string>
 
+    //loggingViewModal and LiveData demo
+    <string name="seconds">%d seconds elapsed</string>
+
 
 </resources>

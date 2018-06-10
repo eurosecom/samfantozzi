@@ -233,6 +233,21 @@ class MainFantozziActivity : AppCompatActivity() {
             }else {
 
             }
+
+            if (BuildConfig.DEBUG) {
+
+                divider {}
+                secondaryItem("LiveDataDemo") {
+
+                    onClick { _ ->
+                        //Log.d("DRAWER", "Click.")
+                        navigateToLiveDataDemo()
+                        false
+                    }
+                }
+            }else {
+
+            }
         }
 
         //headerResult.setBackground(getResources().getDrawable(R.drawable.cupcake))
@@ -391,8 +406,12 @@ class MainFantozziActivity : AppCompatActivity() {
 
     fun navigateToLoggingViewModelDemo(){
         startActivity<LoggingViewModelDemoActivity>()
-
     }
+
+    fun navigateToLiveDataDemo(){
+        startActivity<LiveDataDemoActivity>()
+    }
+
 
     fun navigateToIdCompanies(){
 

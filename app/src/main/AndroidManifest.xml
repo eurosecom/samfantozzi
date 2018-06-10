@@ -48,6 +48,7 @@
         <activity android:name=".GeneralDocActivity"/>
 
         <activity android:name=".LoggingViewModelDemoActivity"/>
+        <activity android:name=".LiveDataDemoActivity"/>
         <activity android:name=".RfListActivity"/>
         <activity android:name=".Detail2Activity"/>
 

@@ -380,5 +380,8 @@
     //generaldocactivity
     <string name="generaldoc">Všeobecné</string>
 
+    //loggingViewModal and LiveData demo
+    <string name="seconds">%d sekund uplynulo</string>
+
 
 </resources>
