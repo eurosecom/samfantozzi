@@ -37,6 +37,7 @@ class AccountReportsActivity : AppCompatActivity() {
 
 
     var reports: String = "0"
+    var firduct: String = "9"
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -46,8 +47,13 @@ class AccountReportsActivity : AppCompatActivity() {
         val extras = i.extras
         //0 accounting, 1 vat, 2 income, 3 mixed
         reports = extras!!.getString("reports")
+        firduct = prefs.getString("firduct", "9")
 
-        AccountReportsActivityUI(reports, prefs).setContentView(this)
+        if( firduct.equals("9")) {
+            AccountReportsActivityUI(reports, prefs).setContentView(this)
+        }else{
+            AccountDoubleReportsActivityUI(reports, prefs).setContentView(this)
+        }
 
 
     }
