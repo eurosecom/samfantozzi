@@ -98,9 +98,8 @@ class AccountDoubleReportsActivityUI (val mReport: String, val prefs: SharedPref
                     id = R.id.rep12
                     textResource = R.string.popisbtnfinsta
                     onClick {
-                        AccountReportsHelperFacade.generateReport(AccountReportsHelperFacade.DBTypes.MYSQL
-                                , AccountReportsHelperFacade.ReportTypes.PDF
-                                , AccountReportsHelperFacade.ReportName.FINSTA, context);
+                        //generating MySql PDF report with using CommandExecutorProxy and Facade
+                        
                     }
                 }.lparams {
                     width = matchParent
@@ -110,12 +109,10 @@ class AccountDoubleReportsActivityUI (val mReport: String, val prefs: SharedPref
 
                 button() {
                     id = R.id.rep13
-                    textResource = R.string.popisbtnfob
+                    textResource = R.string.popisbtndppo
                     onClick {
                         //generating MySql PDF report with using CommandExecutorProxy and Facade
-                        callCommandExecutorProxy("lgn", AccountReportsHelperFacade.DBTypes.MYSQL
-                                , AccountReportsHelperFacade.ReportTypes.PDF
-                                , AccountReportsHelperFacade.ReportName.FOBPRZ, context)
+
                     }
                 }.lparams {
                     width = matchParent
@@ -123,21 +120,6 @@ class AccountDoubleReportsActivityUI (val mReport: String, val prefs: SharedPref
                     below(R.id.rep12)
                 }
 
-                button() {
-                    id = R.id.rep14
-                    textResource = R.string.popisbtnplatbystatu
-                    onClick {
-                        val `is` = Intent(context, TaxPaymentsActivity::class.java)
-                        val extras = Bundle()
-                        extras.putString("fromact", "1")
-                        `is`.putExtras(extras)
-                        context.startActivity(`is`)
-                    }
-                }.lparams {
-                    width = matchParent
-                    height = wrapContent
-                    below(R.id.rep13)
-                }
 
             }//report 1
 
@@ -150,9 +132,7 @@ class AccountDoubleReportsActivityUI (val mReport: String, val prefs: SharedPref
                     onClick {
 
                         //generating MySql PDF report with using CommandExecutorProxy and Facade
-                        callCommandExecutorProxy("lgn", AccountReportsHelperFacade.DBTypes.MYSQL
-                                , AccountReportsHelperFacade.ReportTypes.PDF
-                                , AccountReportsHelperFacade.ReportName.UCTPOH, context)
+
 
 
                     }

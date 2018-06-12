@@ -314,6 +314,9 @@
     <string name="text_tax">Daň</string>
     <string name="text_mixed">Rôzne</string>
 
+    //double reports
+    <string name="popisbtndppo">Daňové priznanie k dani z príjmov DPPO</string>
+
 
     //bankmvpactivity and newbankdocKtactivity and fragment
     <string name="bank">Banka</string>

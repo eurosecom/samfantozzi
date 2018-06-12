@@ -310,6 +310,9 @@
     <string name="text_tax">Tax</string>
     <string name="text_mixed">Mixed</string>
 
+    //double reports
+    <string name="popisbtndppo">Taxes on incom of company</string>
+
 
     //bankmvpactivity and newbankdocKtactivity and fragment
     <string name="bank">Bank</string>
