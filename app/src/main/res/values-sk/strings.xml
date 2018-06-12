@@ -315,7 +315,12 @@
     <string name="text_mixed">Rôzne</string>
 
     //double reports
+    <string name="popisbtnobrat">Obratová predvaha</string>
+    <string name="popisbtndenn">Účtovný denník</string>
+    <string name="popisbtnsuv">Súvaha jednoduchá</string>
+    <string name="popisbtnvys">Výsledovka jednoduchá</string>
     <string name="popisbtndppo">Daňové priznanie k dani z príjmov DPPO</string>
+    <string name="popisbtnhlkn">Hlavná kniha položkovitá</string>
 
 
     //bankmvpactivity and newbankdocKtactivity and fragment

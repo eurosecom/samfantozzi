@@ -311,7 +311,12 @@
     <string name="text_mixed">Mixed</string>
 
     //double reports
+    <string name="popisbtnobrat">Account turnovers</string>
+    <string name="popisbtndenn">Accounting log</string>
+    <string name="popisbtnsuv">Balance sheet simple</string>
+    <string name="popisbtnvys">Income Statement simple</string>
     <string name="popisbtndppo">Taxes on incom of company</string>
+    <string name="popisbtnhlkn">Main book items</string>
 
 
     //bankmvpactivity and newbankdocKtactivity and fragment

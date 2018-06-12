@@ -47,6 +47,54 @@ class AccountDoubleReportsActivityUI (val mReport: String, val prefs: SharedPref
             if( mReport.equals("0")) {
 
                 button() {
+                    id = R.id.rep01
+                    textResource = R.string.popisbtnobrat
+                    onClick {
+
+                    }
+                }.lparams {
+                    width = matchParent
+                    height = wrapContent
+                    below(R.id.rep00)
+                }
+
+                button() {
+                    id = R.id.rep02
+                    textResource = R.string.popisbtndenn
+                    onClick {
+
+                    }
+                }.lparams {
+                    width = matchParent
+                    height = wrapContent
+                    below(R.id.rep01)
+                }
+
+                button() {
+                    id = R.id.rep03
+                    textResource = R.string.popisbtnsuv
+                    onClick {
+
+                    }
+                }.lparams {
+                    width = matchParent
+                    height = wrapContent
+                    below(R.id.rep02)
+                }
+
+                button() {
+                    id = R.id.rep04
+                    textResource = R.string.popisbtnvys
+                    onClick {
+
+                    }
+                }.lparams {
+                    width = matchParent
+                    height = wrapContent
+                    below(R.id.rep03)
+                }
+
+                button() {
                     id = R.id.rep05
                     textResource = R.string.popisbtnkniodb
                     onClick {
@@ -99,7 +147,7 @@ class AccountDoubleReportsActivityUI (val mReport: String, val prefs: SharedPref
                     textResource = R.string.popisbtnfinsta
                     onClick {
                         //generating MySql PDF report with using CommandExecutorProxy and Facade
-                        
+
                     }
                 }.lparams {
                     width = matchParent
@@ -128,12 +176,8 @@ class AccountDoubleReportsActivityUI (val mReport: String, val prefs: SharedPref
 
                 button() {
                     id = R.id.rep21
-                    textResource = R.string.popisbtnvyppoh
+                    textResource = R.string.popisbtnhlkn
                     onClick {
-
-                        //generating MySql PDF report with using CommandExecutorProxy and Facade
-
-
 
                     }
                 }.lparams {
