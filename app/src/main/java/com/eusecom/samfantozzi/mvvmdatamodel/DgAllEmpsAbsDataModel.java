@@ -598,6 +598,15 @@ public class DgAllEmpsAbsDataModel implements DgAllEmpsAbsIDataModel {
 
         }
 
+        if (invx.getDrh().equals("105")) {
+
+            uri = Uri.parse("http://" + serverx +
+                    "/ucto/hlkniha_polpdf.php?copern=10&drupoh=1&page=1&zandroidu=1&anduct=1&kli_vume="+ umex
+                    + "&serverx=" + adresx + "&userhash=" + encrypted + "&rokx=" + rokx + "&firx=" + firx
+                    + "&newfntz=1" );
+
+        }
+
         return Observable.just(uri);
 
     }

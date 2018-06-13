@@ -155,6 +155,9 @@ class AccountDoubleReportsActivityUI (val mReport: String, val prefs: SharedPref
                     textResource = R.string.popisbtnfinsta
                     onClick {
                         //generating MySql PDF report with using CommandExecutorProxy and Facade
+                        callCommandExecutorProxy("lgn", AccountReportsHelperFacade.DBTypes.MYSQL
+                                , AccountReportsHelperFacade.ReportTypes.PDF
+                                , AccountReportsHelperFacade.ReportName.NEXTVERSION, context)
 
                     }
                 }.lparams {
@@ -168,6 +171,9 @@ class AccountDoubleReportsActivityUI (val mReport: String, val prefs: SharedPref
                     textResource = R.string.popisbtndppo
                     onClick {
                         //generating MySql PDF report with using CommandExecutorProxy and Facade
+                        callCommandExecutorProxy("lgn", AccountReportsHelperFacade.DBTypes.MYSQL
+                                , AccountReportsHelperFacade.ReportTypes.PDF
+                                , AccountReportsHelperFacade.ReportName.NEXTVERSION, context)
 
                     }
                 }.lparams {
@@ -186,7 +192,9 @@ class AccountDoubleReportsActivityUI (val mReport: String, val prefs: SharedPref
                     id = R.id.rep21
                     textResource = R.string.popisbtnhlkn
                     onClick {
-
+                        AccountReportsHelperFacade.generateReport(AccountReportsHelperFacade.DBTypes.MYSQL
+                                , AccountReportsHelperFacade.ReportTypes.PDF
+                                , AccountReportsHelperFacade.ReportName.HLKNIHA, context);
                     }
                 }.lparams {
                     width = matchParent
