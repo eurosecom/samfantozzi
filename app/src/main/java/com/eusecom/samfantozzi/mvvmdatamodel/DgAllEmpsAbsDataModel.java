@@ -564,7 +564,6 @@ public class DgAllEmpsAbsDataModel implements DgAllEmpsAbsIDataModel {
 
         if (invx.getDrh().equals("101")) {
 
-            //copy fntz version from kniha_faktur.php
             uri = Uri.parse("http://" + serverx +
                     "/ucto/uobrat.php?copern=1&drupoh=1&page=1&zandroidu=1&anduct=1&kli_vume="+ umex
                     + "&serverx=" + adresx + "&userhash=" + encrypted + "&rokx=" + rokx + "&firx=" + firx
@@ -574,9 +573,26 @@ public class DgAllEmpsAbsDataModel implements DgAllEmpsAbsIDataModel {
 
         if (invx.getDrh().equals("102")) {
 
-            //copy fntz version from kniha_faktur.php
             uri = Uri.parse("http://" + serverx +
                     "/ucto/udennik.php?copern=1&drupoh=1&page=1&zandroidu=1&anduct=1&kli_vume="+ umex
+                    + "&serverx=" + adresx + "&userhash=" + encrypted + "&rokx=" + rokx + "&firx=" + firx
+                    + "&newfntz=1" );
+
+        }
+
+        if (invx.getDrh().equals("103")) {
+
+            uri = Uri.parse("http://" + serverx +
+                    "/ucto/suv_mala.php?copern=10&drupoh=1&page=1&zandroidu=1&anduct=1&kli_vume="+ umex
+                    + "&serverx=" + adresx + "&userhash=" + encrypted + "&rokx=" + rokx + "&firx=" + firx
+                    + "&newfntz=1" );
+
+        }
+
+        if (invx.getDrh().equals("104")) {
+
+            uri = Uri.parse("http://" + serverx +
+                    "/ucto/vys_mala.php?copern=10&drupoh=1&page=1&zandroidu=1&anduct=1&kli_vume="+ umex
                     + "&serverx=" + adresx + "&userhash=" + encrypted + "&rokx=" + rokx + "&firx=" + firx
                     + "&newfntz=1" );
 
