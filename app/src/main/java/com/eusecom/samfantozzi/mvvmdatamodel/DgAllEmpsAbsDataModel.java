@@ -559,6 +559,29 @@ public class DgAllEmpsAbsDataModel implements DgAllEmpsAbsIDataModel {
             uri = Uri.parse("http://www.edcom.sk/ram1/" + invx.getDok() + ".pdf");
 
         }
+
+        //double accounts reports
+
+        if (invx.getDrh().equals("101")) {
+
+            //copy fntz version from kniha_faktur.php
+            uri = Uri.parse("http://" + serverx +
+                    "/ucto/uobrat.php?copern=1&drupoh=1&page=1&zandroidu=1&anduct=1&kli_vume="+ umex
+                    + "&serverx=" + adresx + "&userhash=" + encrypted + "&rokx=" + rokx + "&firx=" + firx
+                    + "&newfntz=1" );
+
+        }
+
+        if (invx.getDrh().equals("102")) {
+
+            //copy fntz version from kniha_faktur.php
+            uri = Uri.parse("http://" + serverx +
+                    "/ucto/udennik.php?copern=1&drupoh=1&page=1&zandroidu=1&anduct=1&kli_vume="+ umex
+                    + "&serverx=" + adresx + "&userhash=" + encrypted + "&rokx=" + rokx + "&firx=" + firx
+                    + "&newfntz=1" );
+
+        }
+
         return Observable.just(uri);
 
     }

@@ -165,6 +165,34 @@ public class AccountReportsMySqlHelper {
 						}).show();
 				break;
 
+			//double accounts reports
+
+			case OBRATOV:
+				Intent is101 = new Intent(context, ShowPdfActivity.class);
+				Bundle extras101 = new Bundle();
+				extras101.putString("fromact", "101");
+				extras101.putString("drhx", "101");
+				extras101.putString("ucex", "0");
+				extras101.putString("dokx", "0");
+				extras101.putString("icox", "0");
+				is101.putExtras(extras101);
+				context.startActivity(is101);
+				is101.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+				break;
+
+			case UDENNIK:
+				Intent is102 = new Intent(context, ShowPdfActivity.class);
+				Bundle extras102 = new Bundle();
+				extras102.putString("fromact", "102");
+				extras102.putString("drhx", "102");
+				extras102.putString("ucex", "0");
+				extras102.putString("dokx", "0");
+				extras102.putString("icox", "0");
+				is102.putExtras(extras102);
+				context.startActivity(is102);
+				is102.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+				break;
+
 		}
 
 	}

@@ -50,7 +50,9 @@ class AccountDoubleReportsActivityUI (val mReport: String, val prefs: SharedPref
                     id = R.id.rep01
                     textResource = R.string.popisbtnobrat
                     onClick {
-
+                        AccountReportsHelperFacade.generateReport(AccountReportsHelperFacade.DBTypes.MYSQL
+                                , AccountReportsHelperFacade.ReportTypes.PDF
+                                , AccountReportsHelperFacade.ReportName.OBRATOV, context);
                     }
                 }.lparams {
                     width = matchParent
@@ -62,7 +64,9 @@ class AccountDoubleReportsActivityUI (val mReport: String, val prefs: SharedPref
                     id = R.id.rep02
                     textResource = R.string.popisbtndenn
                     onClick {
-
+                        AccountReportsHelperFacade.generateReport(AccountReportsHelperFacade.DBTypes.MYSQL
+                                , AccountReportsHelperFacade.ReportTypes.PDF
+                                , AccountReportsHelperFacade.ReportName.UDENNIK, context);
                     }
                 }.lparams {
                     width = matchParent
