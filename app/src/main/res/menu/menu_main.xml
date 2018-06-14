@@ -13,6 +13,11 @@
         android:title="@string/idcsandother"
         app:showAsAction="never" />
     <item
+        android:id="@+id/action_setdomain"
+        android:orderInCategory="100"
+        android:title="@string/action_setdomain"
+        app:showAsAction="never" />
+    <item
         android:id="@+id/action_settings"
         android:orderInCategory="100"
         android:title="@string/action_settings"

@@ -289,6 +289,7 @@ class MainFantozziActivity : AppCompatActivity() {
         R.id.action_settings -> consume { navigateToSettings() }
         R.id.action_setmonth -> consume { navigateToSetMonth() }
         R.id.action_idc -> consume { navigateToIdCompanies() }
+        R.id.action_setdomain -> consume { navigateToSetDomain() }
         R.id.action_search -> consume { navigateToDocSearch() }
         R.id.privacy_policy -> consume { navigateToPrivacyPolicy() }
 
@@ -316,6 +317,17 @@ class MainFantozziActivity : AppCompatActivity() {
         }else {
             val `is` = Intent(this, DocSearchActivity::class.java)
             startActivity(`is`)
+        }
+
+    }
+
+    fun navigateToSetDomain(){
+        val usuid = prefs.getString("usuid", "")
+        if (usuid == "" || usuid == "0") {
+            //val `is` = Intent(this, DocSearchActivity::class.java)
+            //startActivity(`is`)
+        }else {
+            showLoginAlert()
         }
 
     }
@@ -619,6 +631,15 @@ class MainFantozziActivity : AppCompatActivity() {
 
     }
 
+    fun showLoginAlert() {
+
+        alert(getString(R.string.nologin), getString(R.string.action_nologin)) {
+            yesButton { navigateToLogin() }
+            noButton {}
+        }.show()
+
+
+    }
 
     fun showDonotloginAlert() {
 

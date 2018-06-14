@@ -7,6 +7,7 @@
     <string name="privacy_policy">Ochrana osobných údajov</string>
     <string name="privacy_policy_file">privacy_policy_samfantozzi_sk</string>
     <string name="action_settings">Nastavenia</string>
+    <string name="action_setdomain">Vybrať Server</string>
     <string name="action_loginout">Login / Logout</string>
     <string name="action_login">Login</string>
     <string name="action_loginadmin">Login admin</string>
@@ -36,6 +37,8 @@
     <string name="didnotadmin">Nie ste Admin užívateľ</string>
     <string name="descimg">Popis</string>
     <string name="mixedreports">Rôzne</string>
+    <string name="nologin">Musíte sa odhlásiť pred výberom Servera.</string>
+    <string name="action_nologin">Odhlásiť sa.</string>
 
 
     //firebase auth
