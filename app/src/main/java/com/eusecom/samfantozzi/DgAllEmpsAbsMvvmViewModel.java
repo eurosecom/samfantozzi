@@ -14,6 +14,7 @@ import com.eusecom.samfantozzi.models.Employee;
 import com.eusecom.samfantozzi.models.InvoiceList;
 import com.eusecom.samfantozzi.mvvmdatamodel.DgAllEmpsAbsIDataModel;
 import com.eusecom.samfantozzi.mvvmschedulers.ISchedulerProvider;
+import com.eusecom.samfantozzi.realm.RealmDomain;
 import com.eusecom.samfantozzi.realm.RealmInvoice;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
@@ -242,6 +243,30 @@ public class DgAllEmpsAbsMvvmViewModel {
         return mDataModel.getCompaniesFromMysqlServer(serverx, encrypted, ds);
     }
     //end get companies from MySql server
+
+    //emit SaveDomain ToRealm
+    public void emitSaveDomainToRealm(RealmDomain domx) {
+        mObservableSaveDomainToRealm.onNext(domx);
+    }
+
+    @NonNull
+    private BehaviorSubject<RealmDomain> mObservableSaveDomainToRealm = BehaviorSubject.create();
+
+    @NonNull
+    public Observable<RealmDomain> getMyObservableSaveDomainToRealm() {
+
+        return mObservableSaveDomainToRealm
+                .observeOn(mSchedulerProvider.ui())
+                .flatMap(domx -> mDataModel.saveDomainToRealm(domx ));
+
+    }
+
+    public void clearObservableSaveDomainToRealm() {
+
+        mObservableSaveDomainToRealm = BehaviorSubject.create();
+
+    }
+    //end emit Save DomainToRealm
 
 
     //recyclerview method for CashListKtFragment

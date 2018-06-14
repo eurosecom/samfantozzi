@@ -20,6 +20,7 @@ import com.eusecom.samfantozzi.models.Attendance;
 import com.eusecom.samfantozzi.models.Employee;
 import com.eusecom.samfantozzi.models.InvoiceList;
 import com.eusecom.samfantozzi.realm.RealmAccount;
+import com.eusecom.samfantozzi.realm.RealmDomain;
 import com.eusecom.samfantozzi.realm.RealmIdCompany;
 import com.eusecom.samfantozzi.realm.RealmInvoice;
 import com.eusecom.samfantozzi.retrofit.AbsServerService;
@@ -152,6 +153,55 @@ public class DgAllEmpsAbsDataModel implements DgAllEmpsAbsIDataModel {
 
         setRetrofit(servername);
         return mAbsServerService.getCompaniesFromServer(userhash, userid);
+
+    }
+
+    @NonNull
+    @Override
+    public Observable<RealmDomain> saveDomainToRealm(@NonNull final RealmDomain domx) {
+
+        //System.out.println("existRealmDomain " + domx.getDomain());
+        //does exist invoice in Realm?
+        RealmDomain domainexists = existRealmDomain( domx );
+
+        if(domainexists != null){
+            //System.out.println("existRealmDomain " + true);
+            deleteRealmDomainData( domx );
+        }else{
+            //System.out.println("existRealmDomain " + false);
+        }
+        //save to realm and get String OK or ERROR
+        setRealmDomainData( domx );
+
+        return Observable.just(domx);
+
+    }
+
+    public RealmDomain existRealmDomain(@NonNull final RealmDomain domx) {
+
+        String dokx = domx.getDomain();
+        return mRealm.where(RealmDomain.class).equalTo("domain", dokx).findFirst();
+    }
+
+    private void setRealmDomainData(@NonNull final RealmDomain domx) {
+
+            mRealm.beginTransaction();
+            mRealm.copyToRealm(domx);
+            mRealm.commitTransaction();
+
+    }
+
+    private void deleteRealmDomainData(@NonNull final RealmDomain domx) {
+
+        String dokx = domx.getDomain();
+
+        mRealm.executeTransaction(new Realm.Transaction() {
+            @Override
+            public void execute(Realm realm) {
+                RealmResults<RealmDomain> result = realm.where(RealmDomain.class).equalTo("domain", dokx).findAll();
+                result.clear();
+            }
+        });
 
     }
 
@@ -1203,6 +1253,8 @@ public class DgAllEmpsAbsDataModel implements DgAllEmpsAbsIDataModel {
     @Override
     public Observable<List<Account>> getTaxPayFromMysqlServer(String servername, String userhash, String userid, String fromfir
             , String vyb_rok, String drh, String serverx) {
+
+        //Log.d("mAbsServerService ", mAbsServerService.toString());
 
         setRetrofit(servername);
         return mAbsServerService.getTaxPayFromSqlServer(userhash, userid, fromfir, vyb_rok, drh, serverx

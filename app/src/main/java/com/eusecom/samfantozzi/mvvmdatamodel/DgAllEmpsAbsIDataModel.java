@@ -13,6 +13,7 @@ import com.eusecom.samfantozzi.Month;
 import com.eusecom.samfantozzi.models.Attendance;
 import com.eusecom.samfantozzi.models.Employee;
 import com.eusecom.samfantozzi.models.InvoiceList;
+import com.eusecom.samfantozzi.realm.RealmDomain;
 import com.eusecom.samfantozzi.realm.RealmEmployee;
 import com.eusecom.samfantozzi.realm.RealmInvoice;
 
@@ -49,6 +50,9 @@ public interface DgAllEmpsAbsIDataModel {
     //recyclerview method for ChooseCompanyActivity
     @NonNull
     public Observable<List<CompanyKt>> getCompaniesFromMysqlServer(String servername, String userhash, String userid);
+
+    @NonNull
+    public Observable<RealmDomain> saveDomainToRealm(RealmDomain domx);
 
     //recyclerview method for SupplierListActivity
     @NonNull

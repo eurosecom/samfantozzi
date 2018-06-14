@@ -12,6 +12,7 @@ import android.view.MenuItem
 import android.view.View
 import android.widget.LinearLayout
 import android.widget.ProgressBar
+import com.eusecom.samfantozzi.realm.RealmDomain
 import org.jetbrains.anko.support.v4.toast
 import org.jetbrains.anko.toast
 import rx.Observable
@@ -72,14 +73,33 @@ class ChooseCompanyActivity : AppCompatActivity() {
                 .onErrorResumeNext({ throwable -> Observable.empty() })
                 .subscribe({ it -> setCompanies(it) }))
 
+        mSubscription.add(mViewModel.myObservableSaveDomainToRealm
+                .subscribeOn(Schedulers.computation())
+                .observeOn(rx.android.schedulers.AndroidSchedulers.mainThread())
+                .doOnError { throwable ->
+                    Log.e("ChooseCompanyActivity", "Error Throwable " + throwable.message)
+                    hideProgressBar()
+                    toast("Server not connected")
+                }
+                .onErrorResumeNext({ throwable -> Observable.empty() })
+                .subscribe({ it -> savedDomain(it) }))
+
 
     }
 
+    private fun savedDomain(domain: RealmDomain) {
+        toast("Server " + domain.domain)
+    }
 
     private fun setCompanies(companies: List<CompanyKt>) {
 
         recyclerView.adapter = ChooseCompanyAdapter(companies){
             toast("${it.xcf + " " + it.naz + " " + it.rok } Clicked")
+
+            var domainx: RealmDomain = RealmDomain()
+            domainx.setDomain(prefs.getString("servername", ""))
+            mViewModel.emitSaveDomainToRealm(domainx)
+
             val editor = prefs.edit()
             editor.putString("fir", it.xcf).apply();
             editor.putString("usico", it.firico).apply();
@@ -127,6 +147,7 @@ class ChooseCompanyActivity : AppCompatActivity() {
         mSubscription?.unsubscribe()
         mSubscription?.clear()
         hideProgressBar()
+        mViewModel.clearObservableSaveDomainToRealm()
     }
 
 
