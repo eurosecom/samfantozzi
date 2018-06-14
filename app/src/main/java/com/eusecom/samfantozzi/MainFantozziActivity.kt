@@ -324,8 +324,8 @@ class MainFantozziActivity : AppCompatActivity() {
     fun navigateToSetDomain(){
         val usuid = prefs.getString("usuid", "")
         if (usuid == "" || usuid == "0") {
-            //val `is` = Intent(this, DocSearchActivity::class.java)
-            //startActivity(`is`)
+            val `is` = Intent(this, DomainsViewModelActivity::class.java)
+            startActivity(`is`)
         }else {
             showLoginAlert()
         }

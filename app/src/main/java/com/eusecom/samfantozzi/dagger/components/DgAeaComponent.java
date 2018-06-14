@@ -9,6 +9,7 @@ import com.eusecom.samfantozzi.ChooseAccountActivity;
 import com.eusecom.samfantozzi.ChooseCompanyActivity;
 import com.eusecom.samfantozzi.ChooseMonthActivity;
 import com.eusecom.samfantozzi.DocSearchActivity;
+import com.eusecom.samfantozzi.DomainsViewModelActivity;
 import com.eusecom.samfantozzi.GeneralDocActivity;
 import com.eusecom.samfantozzi.GeneralDocFragment;
 import com.eusecom.samfantozzi.IdcListKtFragment;
@@ -67,7 +68,7 @@ public interface DgAeaComponent {
   void inject(DocSearchActivity docSearchActivity);
   void inject(GeneralDocActivity generalDocActivity);
   void inject(GeneralDocFragment generalDocfragment);
-
+  void inject(DomainsViewModelActivity domainsViewModelActivity);
 
 
 
