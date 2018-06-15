@@ -162,4 +162,9 @@ public interface DgAllEmpsAbsIDataModel {
     public Observable<List<Account>> getTaxPayFromMysqlServer(String servername, String userhash, String userid, String fromfir
             , String vyb_rok, String drh, String serverx);
 
+
+    //recyclerview method for DomainsActivity
+    @NonNull
+    public Observable<List<RealmDomain>> getDomainsFromRealm();
+
 }

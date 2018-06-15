@@ -327,7 +327,9 @@ class MainFantozziActivity : AppCompatActivity() {
             val `is` = Intent(this, DomainsViewModelActivity::class.java)
             startActivity(`is`)
         }else {
-            showLoginAlert()
+            //showLoginAlert()
+            val `is` = Intent(this, DomainsViewModelActivity::class.java)
+            startActivity(`is`)
         }
 
     }

@@ -1262,6 +1262,18 @@ public class DgAllEmpsAbsDataModel implements DgAllEmpsAbsIDataModel {
 
     }
 
+    //recyclerview method for DomainsActivity
+    @NonNull
+    @Override
+    public Observable<List<RealmDomain>> getDomainsFromRealm() {
+
+        List<RealmDomain> results = null;
+        results = mRealm.where(RealmDomain.class).findAll();
+
+        return Observable.just(results);
+    }
+
+
     //set retrofit by runtime
     public void setRetrofit(String servername) {
 
