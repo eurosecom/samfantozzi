@@ -1,9 +1,11 @@
 package com.eusecom.samfantozzi;
 
+import android.arch.lifecycle.Observer;
 import android.arch.lifecycle.ViewModelProviders;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -45,6 +47,16 @@ public class DomainsViewModelActivity extends AppCompatActivity {
     private DomainsAdapter.ClickOnItemListener listener;
     private LinearLayoutManager mLayoutManager;
 
+    //LiveData approach
+    private final Observer<List<RealmDomain>> liveDomainsObserver = new Observer<List<RealmDomain>>() {
+        @Override
+        public void onChanged(@Nullable final List<RealmDomain> newValue) {
+
+            Log.d("DomainsViewModel nwdom ", newValue.get(0).getDomain());
+            savedDomains(newValue);
+        }
+    };
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -79,9 +91,17 @@ public class DomainsViewModelActivity extends AppCompatActivity {
         mAdapter = new DomainsAdapter(listener);
         mRecyclerView.setAdapter(mAdapter);
 
-        bindData();
+        //Rx subscription classic approach
+        //bindData();
+        //LiveData approach
         viewModel.onStart();
+        subscribeLiveDomainsObserverObserver();
 
+    }
+
+    //LiveData approach
+    private void subscribeLiveDomainsObserverObserver() {
+        viewModel.getLiveDomains().observe(this, liveDomainsObserver);
     }
 
     private void savedDomains(@NonNull final List<RealmDomain> domains) {
@@ -103,12 +123,14 @@ public class DomainsViewModelActivity extends AppCompatActivity {
     @Override
     public void onDestroy() {
         super.onDestroy();
-        mSubscription.unsubscribe();
-        mSubscription.clear();
+        //Rx subscription classic approach
+        //mSubscription.unsubscribe();
+        //mSubscription.clear();
         viewModel.onDestroy();
     }
 
 
+    //Rx subscription classic approach
     public void bindData() {
 
         mSubscription = new CompositeSubscription();
