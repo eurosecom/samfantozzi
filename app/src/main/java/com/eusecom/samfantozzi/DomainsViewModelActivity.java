@@ -68,46 +68,26 @@ public class DomainsViewModelActivity extends AppCompatActivity {
         getSupportActionBar().setTitle(getString(R.string.action_setdomain) + " / "
                 + mSharedPreferences.getString("servername", ""));
 
-        mSubscription = new CompositeSubscription();
-        mSubscription.add(viewModel.getNoSavedDocFromRealm("3")
-                .subscribeOn(Schedulers.computation())
-                .observeOn(rx.android.schedulers.AndroidSchedulers.mainThread())
-                .doOnError(throwable -> { Log.e(TAG, "Error DomainsViewModel " + throwable.getMessage());
-                    //hideProgressBar();
-                    Toast.makeText(this, "Server not connected", Toast.LENGTH_SHORT).show();
-                })
-                .onErrorResumeNext(throwable -> empty())
-                .subscribe(this::noSavedDocs));
-
-        mSubscription.add(viewModel.getSavedDomainFromRealm()
-                .subscribeOn(Schedulers.computation())
-                .observeOn(rx.android.schedulers.AndroidSchedulers.mainThread())
-                .doOnError(throwable -> { Log.e(TAG, "Error DomainsViewModel " + throwable.getMessage());
-                    //hideProgressBar();
-                    Toast.makeText(this, "Server not connected", Toast.LENGTH_SHORT).show();
-                })
-                .onErrorResumeNext(throwable -> empty())
-                .subscribe(this::savedDomains));
-
         listener = (item, pos) -> {
-            //Toast.makeText(getContext(), "Dok " + item.getDok(), Toast.LENGTH_SHORT).show();
-            Log.d("DomainsViewModel dom ", item.getDomain());
-            //getItemDialog(item);
+            Toast.makeText(this, "Server " + item.getDomain(), Toast.LENGTH_SHORT).show();
+            //Log.d("DomainsViewModel dom ", item.getDomain());
+            SharedPreferences.Editor editor = mSharedPreferences.edit();
+            editor.putString("servername", item.getDomain()).apply();
+            editor.commit();
+            finish();
         };
         mAdapter = new DomainsAdapter(listener);
         mRecyclerView.setAdapter(mAdapter);
+
+        bindData();
+        viewModel.onStart();
 
     }
 
     private void savedDomains(@NonNull final List<RealmDomain> domains) {
 
-        Log.d("DomainsViewModel dom ", domains.get(0).getDomain());
+        //Log.d("DomainsViewModel dom ", domains.get(0).getDomain());
         mAdapter.setDomainItems(domains);
-    }
-
-    private void noSavedDocs(@NonNull final List<RealmInvoice> invoices) {
-
-        Log.d("DomainsViewModel doc ", invoices.get(0).getDok());
     }
 
     @OnClick(R.id.increment_button)
@@ -125,7 +105,24 @@ public class DomainsViewModelActivity extends AppCompatActivity {
         super.onDestroy();
         mSubscription.unsubscribe();
         mSubscription.clear();
+        viewModel.onDestroy();
     }
+
+
+    public void bindData() {
+
+        mSubscription = new CompositeSubscription();
+        mSubscription.add(viewModel.getSavedDomainFromRealm()
+                .subscribeOn(Schedulers.computation())
+                .observeOn(rx.android.schedulers.AndroidSchedulers.mainThread())
+                .doOnError(throwable -> { Log.e(TAG, "Error DomainsViewModel " + throwable.getMessage());
+                    //hideProgressBar();
+                    Toast.makeText(this, "Server not connected", Toast.LENGTH_SHORT).show();
+                })
+                .onErrorResumeNext(throwable -> empty())
+                .subscribe(this::savedDomains));
+    }
+
 
 
 

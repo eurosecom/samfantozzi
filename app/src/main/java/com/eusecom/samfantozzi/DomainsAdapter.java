@@ -61,7 +61,7 @@ public class DomainsAdapter extends RecyclerView.Adapter<DomainsAdapter.DomainsV
 
       holder.invoice_name.setText(mListabsserver.get(position).getDomain());
 
-      Picasso.with(holder.mContext).load(R.drawable.ic_insert_drive_file_black_24dp).resize(120, 120).into(holder.invoice_photo);
+      Picasso.with(holder.mContext).load(R.drawable.eurosecom).resize(120, 120).into(holder.invoice_photo);
 
       holder.setClickListener(new DomainsAdapter.DomainsViewHolder.ClickListener() {
           public void onClick(View v, int pos, boolean isLongClick) {
