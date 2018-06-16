@@ -52,6 +52,7 @@ public class DomainsViewModel extends DomainsBaseViewModel {
     private void savedDomainsInViewModel(@NonNull final List<RealmDomain> domains) {
 
         Log.d("DomainsViewModel dom ", domains.get(0).getDomain());
+        super.setLiveDomains(domains);
     }
 
     public void onDestroy() {
