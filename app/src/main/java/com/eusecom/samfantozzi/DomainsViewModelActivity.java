@@ -5,6 +5,8 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
@@ -32,9 +34,16 @@ public class DomainsViewModelActivity extends AppCompatActivity {
     @BindView(R.id.click_count_text)
     protected TextView clickCountText;
 
+    @BindView(R.id.recyclerview)
+    protected RecyclerView mRecyclerView;
+
     private DomainsViewModel viewModel;
 
     private CompositeSubscription mSubscription;
+
+    private DomainsAdapter mAdapter;
+    private DomainsAdapter.ClickOnItemListener listener;
+    private LinearLayoutManager mLayoutManager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,8 +51,12 @@ public class DomainsViewModelActivity extends AppCompatActivity {
 
         ((SamfantozziApp) getApplication()).dgaeacomponent().inject(this);
 
-        setContentView(R.layout.loggingactivity_viewmodel_demo);
+        setContentView(R.layout.domains_activity);
         ButterKnife.bind(this);
+
+        mRecyclerView.setHasFixedSize(true);
+        mLayoutManager = new LinearLayoutManager(this);
+        mRecyclerView.setLayoutManager(mLayoutManager);
 
         // the factory and its dependencies instead should be injected with DI framework like Dagger
         DomainsViewModelFactory factory =
@@ -76,12 +89,20 @@ public class DomainsViewModelActivity extends AppCompatActivity {
                 .onErrorResumeNext(throwable -> empty())
                 .subscribe(this::savedDomains));
 
+        listener = (item, pos) -> {
+            //Toast.makeText(getContext(), "Dok " + item.getDok(), Toast.LENGTH_SHORT).show();
+            Log.d("DomainsViewModel dom ", item.getDomain());
+            //getItemDialog(item);
+        };
+        mAdapter = new DomainsAdapter(listener);
+        mRecyclerView.setAdapter(mAdapter);
 
     }
 
     private void savedDomains(@NonNull final List<RealmDomain> domains) {
 
         Log.d("DomainsViewModel dom ", domains.get(0).getDomain());
+        mAdapter.setDomainItems(domains);
     }
 
     private void noSavedDocs(@NonNull final List<RealmInvoice> invoices) {
