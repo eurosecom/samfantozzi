@@ -18,8 +18,8 @@ android {
         applicationId "com.eusecom.samfantozzi"
         minSdkVersion 18
         targetSdkVersion 26
-        versionCode 431
-        versionName "4.31"
+        versionCode 432
+        versionName "4.32"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
         multiDexEnabled true
         //because of realm added
