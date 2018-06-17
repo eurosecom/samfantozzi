@@ -15,7 +15,6 @@ import android.widget.TextView;
 import android.widget.Toast;
 import com.eusecom.samfantozzi.mvvmdatamodel.DgAllEmpsAbsIDataModel;
 import com.eusecom.samfantozzi.realm.RealmDomain;
-import com.eusecom.samfantozzi.realm.RealmInvoice;
 import java.util.List;
 import javax.inject.Inject;
 import butterknife.BindView;
@@ -25,6 +24,10 @@ import rx.schedulers.Schedulers;
 import rx.subscriptions.CompositeSubscription;
 import static android.content.ContentValues.TAG;
 import static rx.Observable.empty;
+
+/**
+ * Demonstrates usage of new Android Architecture Components. Namely ViewModel, LiveData and LifecycleObserver.
+ */
 
 public class DomainsViewModelActivity extends AppCompatActivity {
 
@@ -96,6 +99,9 @@ public class DomainsViewModelActivity extends AppCompatActivity {
         //LiveData approach
         //viewModel.getDomainsLiveData(); does not create LiveData object in onCreate Activity, have to create by initialize ViewModel
         subscribeLiveDomainsObserverObserver();
+
+        //lifecycleObserver
+        getLifecycle().addObserver(new DomainsLifecycleObserver());
 
     }
 
