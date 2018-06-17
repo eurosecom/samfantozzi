@@ -94,7 +94,7 @@ public class DomainsViewModelActivity extends AppCompatActivity {
         //Rx subscription classic approach
         //bindData();
         //LiveData approach
-        viewModel.onStart();
+        //viewModel.getDomainsLiveData(); does not create LiveData object in onCreate Activity, have to create by initialize ViewModel
         subscribeLiveDomainsObserverObserver();
 
     }

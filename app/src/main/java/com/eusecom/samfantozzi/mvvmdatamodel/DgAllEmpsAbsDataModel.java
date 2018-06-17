@@ -1267,6 +1267,7 @@ public class DgAllEmpsAbsDataModel implements DgAllEmpsAbsIDataModel {
     @Override
     public Observable<List<RealmDomain>> getDomainsFromRealm() {
 
+        Log.d("DomainsViewModel dom ", "read Realm");
         List<RealmDomain> results = null;
         results = mRealm.where(RealmDomain.class).findAll();
 

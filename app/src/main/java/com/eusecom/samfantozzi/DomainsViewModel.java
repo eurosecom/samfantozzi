@@ -27,6 +27,7 @@ public class DomainsViewModel extends DomainsBaseViewModel {
     public DomainsViewModel(LoggingClickInterceptor loggingInterceptor, DgAllEmpsAbsIDataModel dataModel ) {
         this.loggingInterceptor = loggingInterceptor;
         this.mDataModel = dataModel;
+        getDomainsLiveData();
     }
 
     @Override
@@ -35,7 +36,7 @@ public class DomainsViewModel extends DomainsBaseViewModel {
         loggingInterceptor.intercept(count);
     }
 
-    public void onStart(){
+    public void getDomainsLiveData(){
 
         mSubscription = new CompositeSubscription();
         mSubscription.add(mDataModel.getDomainsFromRealm()
