@@ -75,7 +75,7 @@ public class DomainsViewModelActivity extends AppCompatActivity {
 
         // the factory and its dependencies instead should be injected with DI framework like Dagger
         DomainsViewModelFactory factory =
-                new DomainsViewModelFactory(new LoggingClickInterceptor(), mDgAllEmpsAbsIDataModel);
+                new DomainsViewModelFactory(new DomainsClickInterceptor(), mDgAllEmpsAbsIDataModel);
 
         viewModel = ViewModelProviders.of(this, factory).get(DomainsViewModel.class);
         displayClickCount(viewModel.getCount());

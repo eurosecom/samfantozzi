@@ -20,11 +20,11 @@ import static rx.Observable.empty;
  */
 public class DomainsViewModel extends DomainsBaseViewModel {
 
-    private final LoggingClickInterceptor loggingInterceptor;
+    private final DomainsClickInterceptor loggingInterceptor;
     DgAllEmpsAbsIDataModel mDataModel;
     private CompositeSubscription mSubscription;
 
-    public DomainsViewModel(LoggingClickInterceptor loggingInterceptor, DgAllEmpsAbsIDataModel dataModel ) {
+    public DomainsViewModel(DomainsClickInterceptor loggingInterceptor, DgAllEmpsAbsIDataModel dataModel ) {
         this.loggingInterceptor = loggingInterceptor;
         this.mDataModel = dataModel;
         getDomainsLiveData();

@@ -207,7 +207,7 @@ class MainFantozziActivity : AppCompatActivity() {
             if (BuildConfig.DEBUG) {
 
                 divider {}
-                secondaryItem("RfGitHub") {
+                secondaryItem("RfGitHub DEMO") {
 
                     onClick { _ ->
                         //Log.d("DRAWER", "Click.")
@@ -222,11 +222,11 @@ class MainFantozziActivity : AppCompatActivity() {
             if (BuildConfig.DEBUG) {
 
                 divider {}
-                secondaryItem("LoggingViewModelDemo") {
+                secondaryItem("Demo 1") {
 
                     onClick { _ ->
                         //Log.d("DRAWER", "Click.")
-                        navigateToLoggingViewModelDemo()
+                        navigateToDemo1()
                         false
                     }
                 }
@@ -237,11 +237,11 @@ class MainFantozziActivity : AppCompatActivity() {
             if (BuildConfig.DEBUG) {
 
                 divider {}
-                secondaryItem("LiveDataDemo") {
+                secondaryItem("Demo 2") {
 
                     onClick { _ ->
                         //Log.d("DRAWER", "Click.")
-                        navigateToLiveDataDemo()
+                        navigateToDemo2()
                         false
                     }
                 }
@@ -327,9 +327,7 @@ class MainFantozziActivity : AppCompatActivity() {
             val `is` = Intent(this, DomainsViewModelActivity::class.java)
             startActivity(`is`)
         }else {
-            //showLoginAlert()
-            val `is` = Intent(this, DomainsViewModelActivity::class.java)
-            startActivity(`is`)
+            showLoginAlert()
         }
 
     }
@@ -418,12 +416,12 @@ class MainFantozziActivity : AppCompatActivity() {
 
     }
 
-    fun navigateToLoggingViewModelDemo(){
-        startActivity<LoggingViewModelDemoActivity>()
+    fun navigateToDemo1(){
+        //startActivity<LoggingViewModelDemoActivity>()
     }
 
-    fun navigateToLiveDataDemo(){
-        startActivity<LiveDataDemoActivity>()
+    fun navigateToDemo2(){
+        //startActivity<LiveDataDemoActivity>()
     }
 
 

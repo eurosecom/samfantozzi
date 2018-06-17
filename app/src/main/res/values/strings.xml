@@ -3,7 +3,7 @@
     //mainactivity
     <string name="app_name">Samfantozzi</string>
     <string name="helloworld">Hello World!</string>
-    <string name="app_desc">Samfantozzi accounting system v.4.31</string>
+    <string name="app_desc">Samfantozzi accounting system v.4.32</string>
     <string name="privacy_policy">Privacy policy</string>
     <string name="privacy_policy_file">privacy_policy_samfantozzi</string>
     <string name="action_settings">Settings</string>

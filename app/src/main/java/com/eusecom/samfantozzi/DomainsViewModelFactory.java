@@ -6,10 +6,10 @@ import com.eusecom.samfantozzi.mvvmdatamodel.DgAllEmpsAbsIDataModel;
 
 public class DomainsViewModelFactory implements ViewModelProvider.Factory {
 
-    private final LoggingClickInterceptor loggingInterceptor;
+    private final DomainsClickInterceptor loggingInterceptor;
     DgAllEmpsAbsIDataModel mDataModel;
 
-    public DomainsViewModelFactory(LoggingClickInterceptor loggingInterceptor, DgAllEmpsAbsIDataModel dataModel) {
+    public DomainsViewModelFactory(DomainsClickInterceptor loggingInterceptor, DgAllEmpsAbsIDataModel dataModel) {
         this.loggingInterceptor = loggingInterceptor;
         this.mDataModel = dataModel;
     }
