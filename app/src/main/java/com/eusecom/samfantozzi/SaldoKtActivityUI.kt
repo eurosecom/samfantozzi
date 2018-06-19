@@ -44,23 +44,6 @@ class SaldoKtActivityUI (val _rxBus: RxBus, val prefs: SharedPreferences
 
             }
 
-            floatingActionButton{
-
-                imageResource = android.R.drawable.ic_input_add
-                id = R.id.fab
-
-                onClick{
-                    //_rxBus.send(SaldoListKtFragment.ClickFobEvent())
-
-                }
-
-            }.lparams {
-                width = wrapContent
-                height = wrapContent
-                alignParentBottom()
-                alignParentRight()
-            }
-
             bottomNavigationView {
                 id = R.id.botnav
                 inflateMenu(R.menu.saldo_bottommenu)
