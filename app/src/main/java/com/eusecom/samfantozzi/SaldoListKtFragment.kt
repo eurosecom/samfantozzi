@@ -18,7 +18,6 @@ import android.util.Log
 import android.view.*
 import android.widget.ProgressBar
 import android.widget.TextView
-import com.eusecom.samfantozzi.realm.RealmInvoice
 import com.eusecom.samfantozzi.rxbus.RxBus
 import io.reactivex.ObservableOnSubscribe
 import io.reactivex.android.schedulers.AndroidSchedulers
@@ -27,7 +26,6 @@ import io.reactivex.disposables.Disposable
 import io.reactivex.functions.Function
 import org.jetbrains.anko.AlertDialogBuilder
 import org.jetbrains.anko.support.v4.toast
-import org.jetbrains.anko.toast
 import rx.Observable
 import rx.schedulers.Schedulers
 import rx.subscriptions.CompositeSubscription
@@ -156,7 +154,18 @@ abstract class SaldoListKtFragment : Fragment() {
                 .subscribeOn(Schedulers.computation())
                 .observeOn(rx.android.schedulers.AndroidSchedulers.mainThread())
                 .doOnError { throwable ->
-                    Log.e("AutopohListKtFragment", "Error Throwable " + throwable.message)
+                    Log.e("SaldoListKtFragment", "Error Throwable " + throwable.message)
+                    hideProgressBar()
+                    toast("Server not connected")
+                }
+                .onErrorResumeNext { throwable -> Observable.empty() }
+                .subscribe { it -> setPohyby(it) })
+
+        mSubscription?.add(mViewModel.getMyObservableRecountSaldo()
+                .subscribeOn(Schedulers.computation())
+                .observeOn(rx.android.schedulers.AndroidSchedulers.mainThread())
+                .doOnError { throwable ->
+                    Log.e("SaldoListKtFragment", "Error Throwable " + throwable.message)
                     hideProgressBar()
                     toast("Server not connected")
                 }
@@ -167,7 +176,7 @@ abstract class SaldoListKtFragment : Fragment() {
                 .subscribeOn(Schedulers.computation())
                 .observeOn(rx.android.schedulers.AndroidSchedulers.mainThread())
                 .doOnError { throwable ->
-                    Log.e("AutoPohListKtFragment", "Error Throwable " + throwable.message)
+                    Log.e("SaldoListKtFragment", "Error Throwable " + throwable.message)
                     hideProgressBar()
                     toast("Server not connected")
                 }
@@ -177,7 +186,7 @@ abstract class SaldoListKtFragment : Fragment() {
         mSubscription?.add(mViewModel.myObservableSaveReminderToServer
                 .subscribeOn(Schedulers.computation())
                 .observeOn(rx.android.schedulers.AndroidSchedulers.mainThread())
-                .doOnError { throwable -> Log.e("NoSavedDocAktivity ", "Error Throwable " + throwable.message) }
+                .doOnError { throwable -> Log.e("SaldoListKtFragment ", "Error Throwable " + throwable.message) }
                 .onErrorResumeNext({ throwable -> Observable.empty() })
                 .subscribe({ it -> savedReminder(it) }))
 
@@ -196,7 +205,7 @@ abstract class SaldoListKtFragment : Fragment() {
 
         mViewModel.clearObservableCashListQuery()
         mViewModel.clearMyObservableSaveReminderToServer()
-        //mViewModel.clearMyObservableRecountSaldo()
+        mViewModel.clearMyObservableRecountSaldo()
         mSubscription?.unsubscribe()
         mSubscription?.clear()
         _disposables.dispose()
@@ -224,6 +233,7 @@ abstract class SaldoListKtFragment : Fragment() {
         //toast(" pohyb0 " + pohyby.get(0).nai)
         mAdapter?.setAbsserver(pohyby)
         nastavResultAs(pohyby)
+        //mViewModel.clearMyObservableRecountSaldo()
         hideProgressBar()
     }
 
@@ -310,7 +320,17 @@ abstract class SaldoListKtFragment : Fragment() {
 
         if (id == R.id.action_recountsaldo) {
 
-            //mViewModel.emitMyObservableRecountSaldo()
+            showProgressBar()
+            var drhx: String = getSaldoType("xxx").toString()
+            var icox: String = salico.toString()
+            var ucex: String = mSharedPreferences.getString("odbuce", "0")
+            if( saltype == 1 ) { ucex = mSharedPreferences.getString("doduce", "0") }
+
+            var invoice: Invoice = Invoice(drhx,ucex,"",icox,"","","",""
+                    ,"","","","","","","","","","",""
+                    ,false,0,"","","","" );
+
+            mViewModel.emitMyObservableRecountSaldo(invoice)
 
             return true
         }

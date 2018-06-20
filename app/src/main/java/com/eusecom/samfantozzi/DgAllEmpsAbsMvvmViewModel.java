@@ -1077,9 +1077,10 @@ public class DgAllEmpsAbsMvvmViewModel {
             ucex = mSharedPreferences.getString("doduce", "");
         }
         String serverx = mSharedPreferences.getString("servername", "");
+        String recount = "0";
 
         Log.d("ucex ", ucex);
-        return mDataModel.getSaldoFromSql(serverx, encrypted, ds, firx, rokx, drh, ucex, uctox, salico);
+        return mDataModel.getSaldoFromSql(serverx, encrypted, ds, firx, rokx, drh, ucex, uctox, salico, recount);
 
 
     }
@@ -1134,6 +1135,56 @@ public class DgAllEmpsAbsMvvmViewModel {
 
     }
     //end save reminder to Mysql
+
+    //emit recount saldo
+    public void emitMyObservableRecountSaldo(Invoice invx) {
+
+        mObservableRecountSaldo.onNext(invx);
+    }
+
+    @NonNull
+    private BehaviorSubject<Invoice> mObservableRecountSaldo = BehaviorSubject.create();
+
+    @NonNull
+    public Observable<List<Invoice>> getMyObservableRecountSaldo() {
+
+        Random r = new Random();
+        double d = -10.0 + r.nextDouble() * 20.0;
+        String ds = String.valueOf(d);
+
+        String usuidx = mSharedPreferences.getString("usuid", "");
+        String userxplus =  ds + "/" + usuidx + "/" + ds;
+        encrypted = "";
+
+
+        try {
+            encrypted = mMcrypt.bytesToHex( mMcrypt.encrypt(userxplus) );
+        } catch (Exception e1) {
+            // TODO Auto-generated catch block
+            e1.printStackTrace();
+        }
+        Log.d("userxplus ", encrypted + " " + ds);
+        	/* Decrypt */
+        //String decrypted = new String( mMcrypt.decrypt( encrypted ) );
+
+        String firx = mSharedPreferences.getString("fir", "");
+        String rokx = mSharedPreferences.getString("rok", "");
+        String uctox = mSharedPreferences.getString("firduct", "");
+        String serverx = mSharedPreferences.getString("servername", "");
+        String recount = "1";
+
+        return mObservableRecountSaldo
+                .observeOn(mSchedulerProvider.computation())
+                .flatMap(invx -> mDataModel.getSaldoFromSql(serverx, encrypted, ds, firx, rokx, Integer.parseInt(invx.getDrh())
+                        , invx.getUce(), uctox, Integer.parseInt(invx.getIco()), recount));
+    }
+
+    public void clearMyObservableRecountSaldo() {
+
+        mObservableRecountSaldo = BehaviorSubject.create();
+
+    }
+    //end emit recount saldo
 
 
     //recyclerview method for TaxPaymentsActivity

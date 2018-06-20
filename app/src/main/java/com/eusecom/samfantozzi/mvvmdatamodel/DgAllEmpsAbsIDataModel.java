@@ -151,7 +151,7 @@ public interface DgAllEmpsAbsIDataModel {
 
     @NonNull
     public Observable<List<Invoice>> getSaldoFromSql(String servername, String userhash, String userid, String fromfir
-            , String vyb_rok, int drh, String ucex, String ucto, int salico);
+            , String vyb_rok, int drh, String ucex, String ucto, int salico, String recount);
 
     @NonNull
     public Observable<List<Invoice>> getObservableReminderToMysql(String servername, String userhash, String userid, String fromfir

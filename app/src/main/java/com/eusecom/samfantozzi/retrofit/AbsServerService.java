@@ -128,8 +128,8 @@ public interface AbsServerService {
     @GET("/androidfantozzi/get_saldo.php")
     Observable<List<Invoice>> getSaldoFromSqlServer(@Query("userhash") String userhash
             , @Query("userid") String userid, @Query("fromfir") String fromfir
-            , @Query("vyb_rok") String vyb_rok, @Query("drh") int drh
-            , @Query("ucex") String ucex, @Query("ucto") String ucto, @Query("salico") int salico);
+            , @Query("vyb_rok") String vyb_rok, @Query("drh") int drh, @Query("ucex") String ucex
+            , @Query("ucto") String ucto, @Query("salico") int salico, @Query("recount") String recount);
 
     //@GET("/androidfantozzi/get_accounttypes.php")
     @GET("/ucto/platbyju.php")
