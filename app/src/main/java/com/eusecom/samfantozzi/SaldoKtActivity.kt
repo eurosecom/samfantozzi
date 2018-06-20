@@ -9,6 +9,7 @@ import android.support.design.widget.TabLayout
 import android.support.v4.app.Fragment
 import android.support.v4.app.FragmentPagerAdapter
 import android.support.v4.view.ViewPager
+import android.util.Log
 import android.view.View
 import com.eusecom.samfantozzi.rxbus.RxBus
 import org.jetbrains.anko.*
@@ -131,13 +132,9 @@ class SaldoKtActivity : AppCompatActivity() {
 
         val tabLayout = findViewById<View>(R.id.tabs) as TabLayout
         tabLayout.setupWithViewPager(mViewPager)
-        //mViewPager?.setCurrentItem( saltype )
 
     }
 
-    override fun onDestroy() {
-        super.onDestroy()
-    }
 
     override fun onResume() {
         super.onResume()

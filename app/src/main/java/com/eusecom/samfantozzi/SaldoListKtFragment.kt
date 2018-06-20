@@ -61,7 +61,9 @@ abstract class SaldoListKtFragment : Fragment() {
 
     //searchview
     private var searchView: SearchView? = null
+    private var menuItem: MenuItem? = null
     private var onQueryTextListener: SearchView.OnQueryTextListener? = null
+    private var querystring = ""
     private var mDisposable: Disposable? = null
     protected var mSaldoSearchEngine: SaldoSearchEngine? = null
     var searchManager: SearchManager? = null
@@ -203,27 +205,22 @@ abstract class SaldoListKtFragment : Fragment() {
 
     private fun unBind() {
 
-        mViewModel.clearObservableCashListQuery()
         mViewModel.clearMyObservableSaveReminderToServer()
         mViewModel.clearMyObservableRecountSaldo()
         mSubscription?.unsubscribe()
         mSubscription?.clear()
         _disposables.dispose()
-        if (mDisposable != null) {
-            mDisposable?.dispose()
-        }
 
         hideProgressBar()
 
     }
 
-    private fun setQueryString(querystring: String) {
+    private fun setQueryString(querystringx: String) {
 
-        //toast(" querystring " + querystring)
-        if( querystring.equals("")){
+        if (querystringx == "") {
 
-        }else {
-            searchView?.setQuery(querystring, false)
+        } else {
+            querystring = querystringx
         }
 
     }
@@ -233,7 +230,15 @@ abstract class SaldoListKtFragment : Fragment() {
         //toast(" pohyb0 " + pohyby.get(0).nai)
         mAdapter?.setAbsserver(pohyby)
         nastavResultAs(pohyby)
-        //mViewModel.clearMyObservableRecountSaldo()
+
+        if (querystring == "") {
+
+        } else {
+            searchView?.setIconified(false)
+            searchView?.setQuery(querystring, false)
+            menuItem?.setVisible(true)
+        }
+
         hideProgressBar()
     }
 
@@ -265,20 +270,24 @@ abstract class SaldoListKtFragment : Fragment() {
 
     override fun onDestroy() {
         super.onDestroy()
-        //Log.d("SaldoListKtFragment ", "onDestroy");
+        //Log.d("SaldoListKtFragment ", "onDestroy" + querystring);
         unBind()
+        if (mDisposable != null) {
+            mDisposable?.dispose()
+        }
 
     }
 
     override fun onResume() {
         super.onResume()
-        //Log.d("SaldoListKtFragment ", "onResume");
+        //Log.d("SaldoListKtFragment ", "onResume" + querystring);
         bind()
+        ActivityCompat.invalidateOptionsMenu(activity)
     }
 
     override fun onPause() {
         super.onPause()
-        //Log.d("SaldoListKtFragment ", "onPause");
+        //Log.d("SaldoListKtFragment ", "onPause" + querystring);
         unBind()
     }
 
@@ -287,6 +296,7 @@ abstract class SaldoListKtFragment : Fragment() {
         // Retrieve the SearchView and plug it into SearchManager
         inflater!!.inflate(R.menu.menu_saldo, menu)
         searchView = MenuItemCompat.getActionView(menu!!.findItem(R.id.action_search)) as SearchView
+        menuItem = menu.findItem(R.id.action_search)
         searchManager = activity.getSystemService(Context.SEARCH_SERVICE) as SearchManager
         searchView?.setSearchableInfo(searchManager?.getSearchableInfo(activity.componentName))
         getObservableSearchViewText()

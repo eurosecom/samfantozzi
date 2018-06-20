@@ -1219,7 +1219,7 @@ public class DgAllEmpsAbsDataModel implements DgAllEmpsAbsIDataModel {
     public Observable<List<Invoice>> getSaldoFromSql(String servername, String userhash, String userid, String fromfir
             , String vyb_rok, int drh, String ucex, String ucto, int salico, String recount) {
 
-        System.out.println("getSaldo recount " + recount);
+        //System.out.println("getSaldo recount " + recount);
         setRetrofit(servername);
         return mAbsServerService.getSaldoFromSqlServer(userhash, userid, fromfir, vyb_rok, drh, ucex, ucto, salico, recount);
 
