@@ -196,6 +196,7 @@ abstract class SaldoListKtFragment : Fragment() {
 
         mViewModel.clearObservableCashListQuery()
         mViewModel.clearMyObservableSaveReminderToServer()
+        //mViewModel.clearMyObservableRecountSaldo()
         mSubscription?.unsubscribe()
         mSubscription?.clear()
         _disposables.dispose()
@@ -304,6 +305,13 @@ abstract class SaldoListKtFragment : Fragment() {
             if( saltype == 1 ) { extras.putString("fromact", "2") }
             `is`.putExtras(extras)
             startActivity(`is`)
+            return true
+        }
+
+        if (id == R.id.action_recountsaldo) {
+
+            //mViewModel.emitMyObservableRecountSaldo()
+
             return true
         }
 

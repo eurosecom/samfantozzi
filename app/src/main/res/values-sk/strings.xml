@@ -3,7 +3,7 @@
     //mainactivity
     <string name="app_name">Samfantozzi</string>
     <string name="helloworld">Ahoj Svet!</string>
-    <string name="app_desc">Samfantozzi účtovný systém v.4.32</string>
+    <string name="app_desc">Samfantozzi účtovný systém v.4.33</string>
     <string name="privacy_policy">Ochrana osobných údajov</string>
     <string name="privacy_policy_file">privacy_policy_samfantozzi_sk</string>
     <string name="action_settings">Nastavenia</string>
@@ -378,6 +378,7 @@
     <string name="created">Vystavené</string>
     <string name="createdshort">Vst.</string>
     <string name="remindermessage">%s - Neevidujeme uhradu sumy %s Eur. Uhradou na ucet %s a VSY %s predidete upomienke za neuhradenu fakturu. Dakujeme.</string>
+    <string name="action_recountsaldo">Prepočítať saldo</string>
 
     //taxpaymentsactivity
     <string name="taxpay">Platby dane</string>

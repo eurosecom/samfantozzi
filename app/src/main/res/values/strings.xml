@@ -3,7 +3,7 @@
     //mainactivity
     <string name="app_name">Samfantozzi</string>
     <string name="helloworld">Hello World!</string>
-    <string name="app_desc">Samfantozzi accounting system v.4.32</string>
+    <string name="app_desc">Samfantozzi accounting system v.4.33</string>
     <string name="privacy_policy">Privacy policy</string>
     <string name="privacy_policy_file">privacy_policy_samfantozzi</string>
     <string name="action_settings">Settings</string>
@@ -374,6 +374,7 @@
     <string name="created">Created</string>
     <string name="createdshort">Crd</string>
     <string name="remindermessage">%s - We do not record the paid of % s Eur. By paying for% s and VSY% s, you will not receive a reminder for an outstanding invoice. We thank you.</string>
+    <string name="action_recountsaldo">Recount saldo</string>
 
     //taxpaymentsactivity
     <string name="taxpay">Tax payments</string>
