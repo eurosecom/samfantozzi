@@ -78,7 +78,7 @@ public class DocSearchInteractorImpl implements DocSearchInteractor {
             @Override public void run() {
                 listener.onFinishedSearchItems(createSearchItemsList());
             }
-        }, 200);
+        }, 1);
     }
 
     private List<BankItem> createSearchItemsList() {
@@ -98,7 +98,7 @@ public class DocSearchInteractorImpl implements DocSearchInteractor {
             @Override public void run() {
                 listener.onFinishedNext20SearchItems(createNext20SearchItemsList(start, end));
             }
-        }, 2000);
+        }, 1);
     }
 
     private List<BankItem> createNext20SearchItemsList(int start, int end) {

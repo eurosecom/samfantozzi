@@ -1,5 +1,6 @@
 package com.eusecom.samfantozzi;
 
+import android.app.ProgressDialog;
 import android.app.SearchManager;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -7,6 +8,7 @@ import android.graphics.Color;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.v4.view.MenuItemCompat;
+import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.SearchView;
@@ -40,13 +42,15 @@ import io.reactivex.functions.Consumer;
 import io.reactivex.functions.Function;
 import io.reactivex.functions.Predicate;
 
+import static java.util.Collections.emptyList;
+
 /*
 * How to Implement Load More in #RecyclerView
 * by https://medium.com/@programmerasi/how-to-implement-load-more-in-recyclerview-3c6358297f4
 *
 */
 
-public class DocSearchActivity  extends BaseListActivity implements DocSearchMvpView {
+public class DocSearchActivity  extends AppCompatActivity implements DocSearchMvpView {
 
     private Toolbar toolbar;
 
@@ -57,6 +61,7 @@ public class DocSearchActivity  extends BaseListActivity implements DocSearchMvp
     private LinearLayoutManager mLayoutManager;
     protected Handler handler;
     private List<BankItem> searchitems;
+    private ProgressDialog mProgressDialog;
 
     //MVP
     private DocSearchMvpPresenter presenter;
@@ -89,6 +94,9 @@ public class DocSearchActivity  extends BaseListActivity implements DocSearchMvp
         listed = (TextSwitcher) findViewById(R.id.listed);
         //listed = (TextView) findViewById(R.id.listed);
 
+        searchitems = new ArrayList<BankItem>();
+        searchitems = emptyList();
+
         // Set the ViewFactory of the TextSwitcher that will create TextView object when asked
         listed.setFactory(new ViewSwitcher.ViewFactory() {
 
@@ -115,6 +123,9 @@ public class DocSearchActivity  extends BaseListActivity implements DocSearchMvp
         handler = new Handler();
         total.setText("0");
         listed.setText("0");
+
+        mAdapter = new DocSearchAdapter(searchitems, mRecyclerView);
+        mRecyclerView.setAdapter(mAdapter);
 
         presenter = (DocSearchMvpPresenter) getLastCustomNonConfigurationInstance();
         if (presenter == null) {
@@ -149,11 +160,19 @@ public class DocSearchActivity  extends BaseListActivity implements DocSearchMvp
 
 
     @Override public void showProgress() {
-        showProgressDialog();
+        if (mProgressDialog == null) {
+            mProgressDialog = new ProgressDialog(this);
+            mProgressDialog.setCancelable(false);
+            mProgressDialog.setMessage("Loading...");
+        }
+
+        mProgressDialog.show();
     }
 
     @Override public void hideProgress() {
-        hideProgressDialog();
+        if (mProgressDialog != null && mProgressDialog.isShowing()) {
+            mProgressDialog.dismiss();
+        }
     }
 
     @Override public void showMessage(String message) {
@@ -168,7 +187,7 @@ public class DocSearchActivity  extends BaseListActivity implements DocSearchMvp
         //Log.d("DocSearchMvp ", "firstitems " + first20searchitems.get(0).getDok());
         Log.d("DocSearchMvp ", "firstitems ");
 
-        searchitems = new ArrayList<BankItem>();
+        //searchitems = new ArrayList<BankItem>();
         searchitems = first20searchitems;
         mAdapter = new DocSearchAdapter(searchitems, mRecyclerView);
         mRecyclerView.setAdapter(mAdapter);
@@ -231,6 +250,7 @@ public class DocSearchActivity  extends BaseListActivity implements DocSearchMvp
         mAdapter.notifyDataSetChanged();
 
         for (int i = 0; i < querysearchitems.size(); i++) {
+            // Caused by: rx.exceptions.OnErrorNotImplementedException
             searchitems.add(querysearchitems.get(i));
         }
         mAdapter.setLoaded();
@@ -283,14 +303,17 @@ public class DocSearchActivity  extends BaseListActivity implements DocSearchMvp
                 .doOnNext(new Consumer<String>() {
                     @Override
                     public void accept(String s) {
-                        showProgress();
+
                     }
                 })
                 .observeOn(io.reactivex.schedulers.Schedulers.io())
                 .map(new Function<String, String>() {
                     @Override
                     public String apply(String query) {
-                        presenter.getForQueryFirst20SearchItemsFromSql(query);
+                        if(!query.equals(querystring)) {
+                            //java.lang.RuntimeException: Can't create handler inside thread that has not called Looper.prepare()
+                            //showProgress();
+                            presenter.getForQueryFirst20SearchItemsFromSql(query); }
                         return query;
                     }
                 })

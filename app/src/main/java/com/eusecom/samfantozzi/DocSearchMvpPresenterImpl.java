@@ -55,6 +55,8 @@ public class DocSearchMvpPresenterImpl implements DocSearchMvpPresenter, DocSear
     public void attachView(DocSearchMvpView view) {
         this.mainView = view;
 
+        mSubscription = new CompositeSubscription();
+
         Log.d("DocSearchMvpPresenter ", "attachView " + searchQuery);
         if (mainView != null) {
             mainView.setQueryToSearch(searchQuery);
@@ -65,6 +67,8 @@ public class DocSearchMvpPresenterImpl implements DocSearchMvpPresenter, DocSear
     public void detachView() {
         this.mainView = null;
         Log.d("DocSearchMvpPresenter ", "detachView " + searchQuery);
+        mSubscription.clear();
+        mSubscription.unsubscribe();
     }
 
 
@@ -191,8 +195,6 @@ public class DocSearchMvpPresenterImpl implements DocSearchMvpPresenter, DocSear
             //do not use activity progressbar but progressbar in adapter
             //mainView.showProgress();
 
-            mSubscription = new CompositeSubscription();
-
             Random r = new Random();
             double d = 10.0 + r.nextDouble() * 20.0;
             String ds = String.valueOf(d);
@@ -256,7 +258,9 @@ public class DocSearchMvpPresenterImpl implements DocSearchMvpPresenter, DocSear
     @Override
     public void getForQueryFirst20SearchItemsFromSql(String query) {
         if (mainView != null) {
-            mainView.showProgress();
+
+            //java.lang.RuntimeException: Can't create handler inside thread that has not called Looper.prepare()
+            //mainView.showProgress();
 
             mSubscription = new CompositeSubscription();
 
