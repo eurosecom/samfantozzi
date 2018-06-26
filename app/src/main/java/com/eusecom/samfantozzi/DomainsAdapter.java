@@ -30,7 +30,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
-import com.eusecom.samfantozzi.models.BankItem;
 import com.eusecom.samfantozzi.realm.RealmDomain;
 import com.squareup.picasso.Picasso;
 import java.util.List;
@@ -96,10 +95,6 @@ public class DomainsAdapter extends RecyclerView.Adapter<DomainsAdapter.DomainsV
 
       public TextView invoice_name;
       public ImageView invoice_photo;
-      public TextView datex;
-      public TextView invoicex;
-      public TextView valuex;
-      public TextView docx;
       private ClickListener clickListener;
       Context mContext;
 
@@ -108,10 +103,6 @@ public class DomainsAdapter extends RecyclerView.Adapter<DomainsAdapter.DomainsV
 
         invoice_name = (TextView) itemView.findViewById(R.id.invoice_name);
         invoice_photo = (ImageView) itemView.findViewById(R.id.invoice_photo);
-        datex = (TextView) itemView.findViewById(R.id.datex);
-        invoicex = (TextView) itemView.findViewById(R.id.invoicex);
-        valuex = (TextView) itemView.findViewById(R.id.valuex);
-        docx = (TextView) itemView.findViewById(R.id.docx);
         mContext = itemView.getContext();
         itemView.setOnClickListener(this);
         itemView.setOnLongClickListener(this);
