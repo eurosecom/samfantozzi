@@ -1,5 +1,6 @@
 package com.eusecom.samfantozzi;
 
+import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -8,9 +9,25 @@ import android.util.Pair;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.ListView;
+import android.widget.Toast;
+
+import com.eusecom.samfantozzi.soaphello.HelloApi;
+import com.eusecom.samfantozzi.soaphello.HelloRequestBody;
+import com.eusecom.samfantozzi.soaphello.HelloRequestEnvelope;
+import com.eusecom.samfantozzi.soaphello.HelloRequestModel;
+import com.eusecom.samfantozzi.soaphello.HelloResponseEnvelope;
+import com.eusecom.samfantozzi.soaphello.HelloService;
+import com.eusecom.samfantozzi.soapweather.RequestBody;
+import com.eusecom.samfantozzi.soapweather.RequestEnvelope;
+import com.eusecom.samfantozzi.soapweather.RequestModel;
+import com.eusecom.samfantozzi.soapweather.ResponseEnvelope;
+import com.eusecom.samfantozzi.soapweather.WeatherApi;
+import com.eusecom.samfantozzi.soapweather.WeatherService;
+
 import java.util.ArrayList;
 import java.util.List;
 import butterknife.BindView;
@@ -32,6 +49,8 @@ public class RfFragment extends Fragment {
 
     private ArrayAdapter<String> _adapter;
     private RfGithubApi _githubService;
+    private WeatherApi _weatherService;
+    private HelloApi _helloService;
     private CompositeDisposable _disposables;
 
     @Override
@@ -40,7 +59,8 @@ public class RfFragment extends Fragment {
         String githubToken = Constants.GITHUB_API_KEY;
         String githubToken2 = Constants.GITHUB_API_KEY2;
         _githubService = RfGithubService.createGithubService(githubToken, githubToken2);
-
+        _weatherService = WeatherService.createWeatherService(githubToken, githubToken2);
+        _helloService = HelloService.createHelloService(githubToken, githubToken2);
         _disposables = new CompositeDisposable();
     }
 
@@ -68,6 +88,91 @@ public class RfFragment extends Fragment {
     public void onDestroy() {
         super.onDestroy();
         _disposables.dispose();
+    }
+
+    @OnClick(R.id.bt_make_request)
+    public void onMakeRequestClicked() {
+        Log.d("RfFragment", "on MakeRequest Clicked");
+        hideKeyboard();
+
+        RequestEnvelope requestEnvelop = new RequestEnvelope();
+        RequestBody requestBody = new RequestBody();
+        RequestModel requestModel = new RequestModel();
+        requestModel.theCityName = "vienna";
+        requestModel.cityNameAttribute = "http://WebXml.com.cn/";
+        requestBody.getWeatherbyCityName = requestModel;
+        requestEnvelop.body = requestBody;
+
+        _adapter.clear();
+
+        _disposables.add(//
+                _weatherService.getWeatherbyCityName(requestEnvelop)
+                        .subscribeOn(Schedulers.io())
+                        .observeOn(AndroidSchedulers.mainThread())
+                        .subscribeWith(new DisposableObserver<ResponseEnvelope>() {
+
+                            @Override
+                            public void onComplete() {
+                                Log.d("Rf Weather completed", "");
+                            }
+
+                            @Override
+                            public void onError(Throwable e) {
+                                Log.e( "Rf Weather error ", e.toString());
+                            }
+
+                            @Override
+                            public void onNext(ResponseEnvelope contributors) {
+                                Log.d("Rf Weather onnext", "");
+                            }
+                        }));
+
+    }
+
+    @OnClick(R.id.bt_make_request2)
+    public void onHelloClicked() {
+        Log.d("RfFragment", "on Hello Clicked");
+        hideKeyboard();
+
+        HelloRequestEnvelope requestEnvelop = new HelloRequestEnvelope();
+        HelloRequestBody requestBody = new HelloRequestBody();
+        HelloRequestModel requestModel = new HelloRequestModel();
+        //requestModel.theCityName = "vienna";
+        requestModel.setHelloAttribute = "http://Wsdl2CodeTestService/";
+        requestBody.getHelloString = requestModel;
+        requestEnvelop.body = requestBody;
+
+        _adapter.clear();
+
+        _disposables.add(//
+                _helloService.getWeatherbyCityName(requestEnvelop)
+                        .subscribeOn(Schedulers.io())
+                        .observeOn(AndroidSchedulers.mainThread())
+                        .subscribeWith(new DisposableObserver<HelloResponseEnvelope>() {
+
+                            @Override
+                            public void onComplete() {
+                                Log.d("Rf Hello completed", "");
+                            }
+
+                            @Override
+                            public void onError(Throwable e) {
+                                Log.e( "Rf Hello error ", e.toString());
+                            }
+
+                            @Override
+                            public void onNext(HelloResponseEnvelope responseEnvelop) {
+                                Log.d("Rf Hello onnext", "");
+
+                                if (responseEnvelop != null ) {
+                                    String helloresult = responseEnvelop.body.getHelloResponse.result;
+                                    Log.d("Rf Hello result", helloresult);
+                                    Toast.makeText(getActivity(), helloresult, Toast.LENGTH_LONG).show();
+                                }
+
+                            }
+                        }));
+
     }
 
     @OnClick(R.id.btn_demo_retrofit_contributors)
@@ -146,4 +251,14 @@ public class RfFragment extends Fragment {
                   }
               }));
     }
+
+    private void hideKeyboard(){
+        View view = getActivity().getCurrentFocus();
+        if (view != null) {
+            InputMethodManager imm = (InputMethodManager)getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
+            imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
+        }
+
+    }
+
 }
