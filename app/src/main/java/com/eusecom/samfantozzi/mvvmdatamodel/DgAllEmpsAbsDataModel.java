@@ -632,10 +632,11 @@ public class DgAllEmpsAbsDataModel implements DgAllEmpsAbsIDataModel {
 
         if (invx.getDrh().equals("103")) {
 
+            Log.d("vyb_ume ", umex);
             uri = Uri.parse("http://" + serverx +
                     "/ucto/suv_mala.php?copern=10&drupoh=1&page=1&zandroidu=1&anduct=1&kli_vume="+ umex
                     + "&serverx=" + adresx + "&userhash=" + encrypted + "&rokx=" + rokx + "&firx=" + firx
-                    + "&newfntz=1" );
+                    + "&newfntz=1&vyb_ume="+ umex );
 
         }
 
