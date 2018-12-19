@@ -9,8 +9,6 @@ import com.eusecom.samfantozzi.dagger.components.DgAeaComponent;
 import com.eusecom.samfantozzi.dagger.modules.ApplicationModule;
 import com.eusecom.samfantozzi.dagger.modules.DgAeaModule;
 import com.eusecom.samfantozzi.di.DaggerAppComponent;
-import com.eusecom.samfantozzi.mvvmschedulers.ISchedulerProvider;
-import com.eusecom.samfantozzi.mvvmschedulers.SchedulerProvider;
 import com.eusecom.samfantozzi.rxbus.RxBus;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
@@ -69,11 +67,6 @@ public class SamfantozziApp extends MultiDexApplication implements HasActivityIn
     @NonNull
     public Realm getRealm() {
         return Realm.getDefaultInstance();
-    }
-
-    @NonNull
-    public ISchedulerProvider getSchedulerProvider() {
-        return SchedulerProvider.getInstance();
     }
 
     @NonNull

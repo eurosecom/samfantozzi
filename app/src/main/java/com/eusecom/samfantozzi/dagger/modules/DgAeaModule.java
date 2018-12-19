@@ -4,13 +4,13 @@ import android.app.Application;
 import android.content.SharedPreferences;
 import android.content.res.Resources;
 import android.net.ConnectivityManager;
-
 import com.eusecom.samfantozzi.DgAllEmpsAbsMvvmViewModel;
 import com.eusecom.samfantozzi.MCrypt;
 import com.eusecom.samfantozzi.SamfantozziApp;
 import com.eusecom.samfantozzi.mvvmdatamodel.DgAllEmpsAbsDataModel;
 import com.eusecom.samfantozzi.mvvmdatamodel.DgAllEmpsAbsIDataModel;
 import com.eusecom.samfantozzi.mvvmschedulers.ISchedulerProvider;
+import com.eusecom.samfantozzi.mvvmschedulers.SchedulerProvider;
 import com.eusecom.samfantozzi.retrofit.AbsServerService;
 import com.eusecom.samfantozzi.retrofit.ExampleInterceptor;
 import com.google.firebase.database.DatabaseReference;
@@ -18,7 +18,6 @@ import javax.inject.Singleton;
 import dagger.Module;
 import dagger.Provides;
 import javax.inject.Named;
-
 import io.realm.Realm;
 import okhttp3.Cache;
 import com.google.gson.FieldNamingPolicy;
@@ -42,7 +41,7 @@ public class DgAeaModule {
     @Provides
     @Singleton
     ExampleInterceptor provideInterceptor() { // This is where the Interceptor object is constructed
-        return ExampleInterceptor.get();
+        return new ExampleInterceptor();
     }
 
     @Provides
@@ -134,9 +133,9 @@ public class DgAeaModule {
 
     @Provides
     @Singleton
-    public ISchedulerProvider providesISchedulerProvider(Application application) {
+    public ISchedulerProvider providesISchedulerProvider() {
 
-        return ((SamfantozziApp) application).getSchedulerProvider();
+        return new SchedulerProvider();
     }
 
     @Provides

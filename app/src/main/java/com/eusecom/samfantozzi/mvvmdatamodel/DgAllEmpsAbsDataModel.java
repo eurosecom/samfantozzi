@@ -1283,6 +1283,7 @@ public class DgAllEmpsAbsDataModel implements DgAllEmpsAbsIDataModel {
         System.out.println("invxstring servername " + servername);
         String urlname = "http://" + servername;
 
+        System.out.println("invxstring interceptor " + mInterceptor.toString());
         mInterceptor.setInterceptor(urlname);
 
     }
