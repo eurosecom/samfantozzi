@@ -4,6 +4,7 @@ import android.app.PendingIntent
 import android.app.SearchManager
 import android.content.*
 import android.content.pm.PackageManager
+import android.net.Uri
 import android.os.Build
 import android.os.Bundle
 import android.support.v4.app.ActivityCompat
@@ -563,7 +564,11 @@ abstract class SaldoListKtFragment : Fragment() {
 
                         val msgtel = invoice.tel + ""
 
-                        checkPermissionSMS(msgtel, msgtext, invoice)
+                        //sending SMS by intent direct - need permission SENDSMS in manifest
+                        //checkPermissionSMS(msgtel, msgtext, invoice)
+
+                        //sending SMS by intent through inapp - does not need permission SENDSMS
+                        sendIntentSMS(msgtel, msgtext, invoice)
                     }else{
                         //generating MySql PDF report with using CommandExecutorProxy and Facade
                         callCommandExecutorProxy("lgn", AccountReportsHelperFacade.DBTypes.MYSQL
@@ -672,6 +677,16 @@ abstract class SaldoListKtFragment : Fragment() {
 
 
         }
+
+    }
+
+    fun sendIntentSMS(phoneNumber: String, message: String, invoice: Invoice) {
+
+        mViewModel.emitMyObservableSaveReminderToServer(invoice)
+        var intent: Intent = Intent( Intent.ACTION_VIEW, Uri.parse( "sms:" + phoneNumber));
+        intent.putExtra( "sms_body", message );
+        startActivity(intent);
+
 
     }
 

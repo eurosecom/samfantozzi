@@ -115,29 +115,7 @@ public class NewIdcActivity extends BaseListActivity {
             @Override
             public void onClick(View arg0) {
 
-                PackageManager packageManager = getBaseContext().getPackageManager();
-                boolean jetel = packageManager.hasSystemFeature(PackageManager.FEATURE_TELEPHONY);
 
-                if (jetel) {
-                    EditText num = (EditText) findViewById(R.id.inputTel);
-                    String number = "tel:" + num.getText().toString().trim();
-                    number = number.replace('/', ' ');
-                    Intent callIntent = new Intent(Intent.ACTION_CALL, Uri.parse(number));
-                    if (ActivityCompat.checkSelfPermission(NewIdcActivity.this, Manifest.permission.CALL_PHONE) != PackageManager.PERMISSION_GRANTED) {
-                        // TODO: Consider calling
-                        //    ActivityCompat#requestPermissions
-                        // here to request the missing permissions, and then overriding
-                        //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
-                        //                                          int[] grantResults)
-                        // to handle the case where the user grants the permission. See the documentation
-                        // for ActivityCompat#requestPermissions for more details.
-                        return;
-                    }
-                    //startActivity(callIntent);
-                }else{
-            			
-            			
-            		}
 
             }
         });
