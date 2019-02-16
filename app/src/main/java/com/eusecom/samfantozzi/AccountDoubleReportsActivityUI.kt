@@ -217,7 +217,7 @@ class AccountDoubleReportsActivityUI (val mReport: String, val prefs: SharedPref
 
                 button() {
                     id = R.id.rep23
-                    textResource = R.string.customers
+                    textResource = R.string.saldocus
                     onClick {
                         val `is` = Intent(context, SaldoKtActivity::class.java)
                         val extras = Bundle()
@@ -234,7 +234,7 @@ class AccountDoubleReportsActivityUI (val mReport: String, val prefs: SharedPref
 
                 button() {
                     id = R.id.rep24
-                    textResource = R.string.suppliers
+                    textResource = R.string.saldosup
                     onClick {
                         val `is` = Intent(context, SaldoKtActivity::class.java)
                         val extras = Bundle()
