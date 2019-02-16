@@ -20,29 +20,18 @@ class SaldoKtActivityUI (val _rxBus: RxBus, val prefs: SharedPreferences
 
         return relativeLayout{
             padding = dip(5)
-            lparams (width = matchParent, height = wrapContent)
-
-            verticalLayout{
-
-                tabLayout{
-                    lparams {
-                    width = matchParent
-                    height = wrapContent
-                    }
-                    id = R.id.tabs
-
-                }
+            lparams (width = matchParent, height = matchParent)
 
                 viewPager{
-                    lparams {
-                    width = matchParent
-                    height = matchParent
-                    }
+
                     id = R.id.container
 
+                }.lparams {
+                    width = matchParent
+                    height = matchParent
+                    above(R.id.botnav)
+                    alignParentTop()
                 }
-
-            }
 
             bottomNavigationView {
                 id = R.id.botnav
@@ -53,8 +42,6 @@ class SaldoKtActivityUI (val _rxBus: RxBus, val prefs: SharedPreferences
             }.lparams {
                 width = matchParent
                 height = wrapContent
-                //gravity = Gravity.BOTTOM
-                //android:layout_gravity="bottom"
                 alignParentBottom()
             }.setOnNavigationItemSelectedListener { item ->
                 when (item.itemId) {

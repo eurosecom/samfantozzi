@@ -130,9 +130,6 @@ class SaldoKtActivity : AppCompatActivity() {
                 }
             })
 
-        val tabLayout = findViewById<View>(R.id.tabs) as TabLayout
-        tabLayout.setupWithViewPager(mViewPager)
-
     }
 
 
