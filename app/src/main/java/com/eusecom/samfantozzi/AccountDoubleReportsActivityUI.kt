@@ -34,223 +34,234 @@ class AccountDoubleReportsActivityUI (val mReport: String, val prefs: SharedPref
             padding = dip(10)
             lparams (width = matchParent, height = matchParent)
 
-            button() {
-                id = R.id.rep00
-                textResource = R.string.action_setmonth
-                onClick { startActivity<ChooseMonthActivity>() }
+            scrollView(){
+                relativeLayout(){
+
+                    button() {
+                        id = R.id.rep00
+                        textResource = R.string.action_setmonth
+                        onClick { startActivity<ChooseMonthActivity>() }
+                    }.lparams {
+                        width = matchParent
+                        height = wrapContent
+                        top
+                    }
+
+                    if( mReport.equals("0")) {
+
+                        button() {
+                            id = R.id.rep01
+                            textResource = R.string.popisbtnobrat
+                            onClick {
+                                AccountReportsHelperFacade.generateReport(AccountReportsHelperFacade.DBTypes.MYSQL
+                                        , AccountReportsHelperFacade.ReportTypes.PDF
+                                        , AccountReportsHelperFacade.ReportName.OBRATOV, context);
+                            }
+                        }.lparams {
+                            width = matchParent
+                            height = wrapContent
+                            below(R.id.rep00)
+                        }
+
+                        button() {
+                            id = R.id.rep02
+                            textResource = R.string.popisbtndenn
+                            onClick {
+                                AccountReportsHelperFacade.generateReport(AccountReportsHelperFacade.DBTypes.MYSQL
+                                        , AccountReportsHelperFacade.ReportTypes.PDF
+                                        , AccountReportsHelperFacade.ReportName.UDENNIK, context);
+                            }
+                        }.lparams {
+                            width = matchParent
+                            height = wrapContent
+                            below(R.id.rep01)
+                        }
+
+                        button() {
+                            id = R.id.rep03
+                            textResource = R.string.popisbtnsuv
+                            onClick {
+                                AccountReportsHelperFacade.generateReport(AccountReportsHelperFacade.DBTypes.MYSQL
+                                        , AccountReportsHelperFacade.ReportTypes.PDF
+                                        , AccountReportsHelperFacade.ReportName.SUVAHA, context);
+                            }
+                        }.lparams {
+                            width = matchParent
+                            height = wrapContent
+                            below(R.id.rep02)
+                        }
+
+                        button() {
+                            id = R.id.rep04
+                            textResource = R.string.popisbtnvys
+                            onClick {
+                                AccountReportsHelperFacade.generateReport(AccountReportsHelperFacade.DBTypes.MYSQL
+                                        , AccountReportsHelperFacade.ReportTypes.PDF
+                                        , AccountReportsHelperFacade.ReportName.VYSLED, context);
+                            }
+                        }.lparams {
+                            width = matchParent
+                            height = wrapContent
+                            below(R.id.rep03)
+                        }
+
+                        button() {
+                            id = R.id.rep05
+                            textResource = R.string.popisbtnkniodb
+                            onClick {
+                                AccountReportsHelperFacade.generateReport(AccountReportsHelperFacade.DBTypes.MYSQL
+                                        , AccountReportsHelperFacade.ReportTypes.PDF
+                                        , AccountReportsHelperFacade.ReportName.KNIODB, context);
+                            }
+                        }.lparams {
+                            width = matchParent
+                            height = wrapContent
+                            below(R.id.rep04)
+                        }
+
+                        button() {
+                            id = R.id.rep06
+                            textResource = R.string.popisbtnknidod
+                            onClick {
+                                AccountReportsHelperFacade.generateReport(AccountReportsHelperFacade.DBTypes.MYSQL
+                                        , AccountReportsHelperFacade.ReportTypes.PDF
+                                        , AccountReportsHelperFacade.ReportName.KNIDOD, context);
+                            }
+                        }.lparams {
+                            width = matchParent
+                            height = wrapContent
+                            below(R.id.rep05)
+                        }
+
+                    }//report 0
+
+
+                    if( mReport.equals("1")) {
+
+                        button() {
+                            id = R.id.rep11
+                            textResource = R.string.popisbtndph
+                            onClick {
+                                //generating MySql PDF report with using CommandExecutorProxy and Facade
+                                callCommandExecutorProxy("lgn", AccountReportsHelperFacade.DBTypes.MYSQL
+                                        , AccountReportsHelperFacade.ReportTypes.PDF
+                                        , AccountReportsHelperFacade.ReportName.DPHPRZ, context)
+                            }
+                        }.lparams {
+                            width = matchParent
+                            height = wrapContent
+                            below(R.id.rep00)
+                        }
+
+                        button() {
+                            id = R.id.rep12
+                            textResource = R.string.popisbtnfinsta
+                            onClick {
+                                //generating MySql PDF report with using CommandExecutorProxy and Facade
+                                callCommandExecutorProxy("lgn", AccountReportsHelperFacade.DBTypes.MYSQL
+                                        , AccountReportsHelperFacade.ReportTypes.PDF
+                                        , AccountReportsHelperFacade.ReportName.NEXTVERSION, context)
+
+                            }
+                        }.lparams {
+                            width = matchParent
+                            height = wrapContent
+                            below(R.id.rep11)
+                        }
+
+                        button() {
+                            id = R.id.rep13
+                            textResource = R.string.popisbtndppo
+                            onClick {
+                                //generating MySql PDF report with using CommandExecutorProxy and Facade
+                                callCommandExecutorProxy("lgn", AccountReportsHelperFacade.DBTypes.MYSQL
+                                        , AccountReportsHelperFacade.ReportTypes.PDF
+                                        , AccountReportsHelperFacade.ReportName.NEXTVERSION, context)
+
+                            }
+                        }.lparams {
+                            width = matchParent
+                            height = wrapContent
+                            below(R.id.rep12)
+                        }
+
+
+                    }//report 1
+
+
+                    if( mReport.equals("2")) {
+
+                        button() {
+                            id = R.id.rep21
+                            textResource = R.string.popisbtnhlkn
+                            onClick {
+                                AccountReportsHelperFacade.generateReport(AccountReportsHelperFacade.DBTypes.MYSQL
+                                        , AccountReportsHelperFacade.ReportTypes.PDF
+                                        , AccountReportsHelperFacade.ReportName.HLKNIHA, context);
+                            }
+                        }.lparams {
+                            width = matchParent
+                            height = wrapContent
+                            below(R.id.rep00)
+                        }
+
+                        button() {
+                            id = R.id.rep22
+                            textResource = R.string.popisbtnhladok
+                            onClick {
+                                val `is` = Intent(context, DocSearchActivity::class.java)
+                                context.startActivity(`is`)
+                            }
+                        }.lparams {
+                            width = matchParent
+                            height = wrapContent
+                            below(R.id.rep21)
+                        }
+
+                        button() {
+                            id = R.id.rep23
+                            textResource = R.string.saldocus
+                            onClick {
+                                val `is` = Intent(context, SaldoKtActivity::class.java)
+                                val extras = Bundle()
+                                extras.putInt("saltype", 0)
+                                extras.putInt("salico", 0)
+                                `is`.putExtras(extras)
+                                context.startActivity(`is`)
+                            }
+                        }.lparams {
+                            width = matchParent
+                            height = wrapContent
+                            below(R.id.rep22)
+                        }
+
+                        button() {
+                            id = R.id.rep24
+                            textResource = R.string.saldosup
+                            onClick {
+                                val `is` = Intent(context, SaldoKtActivity::class.java)
+                                val extras = Bundle()
+                                extras.putInt("saltype", 1)
+                                extras.putInt("salico", 0)
+                                `is`.putExtras(extras)
+                                context.startActivity(`is`)
+                            }
+                        }.lparams {
+                            width = matchParent
+                            height = wrapContent
+                            below(R.id.rep23)
+                        }
+
+
+                    }//report 2
+
+                }
             }.lparams {
                 width = matchParent
-                height = wrapContent
-                top
+                height = matchParent
+                above(R.id.botnav)
+                alignParentTop()
             }
-
-            if( mReport.equals("0")) {
-
-                button() {
-                    id = R.id.rep01
-                    textResource = R.string.popisbtnobrat
-                    onClick {
-                        AccountReportsHelperFacade.generateReport(AccountReportsHelperFacade.DBTypes.MYSQL
-                                , AccountReportsHelperFacade.ReportTypes.PDF
-                                , AccountReportsHelperFacade.ReportName.OBRATOV, context);
-                    }
-                }.lparams {
-                    width = matchParent
-                    height = wrapContent
-                    below(R.id.rep00)
-                }
-
-                button() {
-                    id = R.id.rep02
-                    textResource = R.string.popisbtndenn
-                    onClick {
-                        AccountReportsHelperFacade.generateReport(AccountReportsHelperFacade.DBTypes.MYSQL
-                                , AccountReportsHelperFacade.ReportTypes.PDF
-                                , AccountReportsHelperFacade.ReportName.UDENNIK, context);
-                    }
-                }.lparams {
-                    width = matchParent
-                    height = wrapContent
-                    below(R.id.rep01)
-                }
-
-                button() {
-                    id = R.id.rep03
-                    textResource = R.string.popisbtnsuv
-                    onClick {
-                        AccountReportsHelperFacade.generateReport(AccountReportsHelperFacade.DBTypes.MYSQL
-                                , AccountReportsHelperFacade.ReportTypes.PDF
-                                , AccountReportsHelperFacade.ReportName.SUVAHA, context);
-                    }
-                }.lparams {
-                    width = matchParent
-                    height = wrapContent
-                    below(R.id.rep02)
-                }
-
-                button() {
-                    id = R.id.rep04
-                    textResource = R.string.popisbtnvys
-                    onClick {
-                        AccountReportsHelperFacade.generateReport(AccountReportsHelperFacade.DBTypes.MYSQL
-                                , AccountReportsHelperFacade.ReportTypes.PDF
-                                , AccountReportsHelperFacade.ReportName.VYSLED, context);
-                    }
-                }.lparams {
-                    width = matchParent
-                    height = wrapContent
-                    below(R.id.rep03)
-                }
-
-                button() {
-                    id = R.id.rep05
-                    textResource = R.string.popisbtnkniodb
-                    onClick {
-                        AccountReportsHelperFacade.generateReport(AccountReportsHelperFacade.DBTypes.MYSQL
-                                , AccountReportsHelperFacade.ReportTypes.PDF
-                                , AccountReportsHelperFacade.ReportName.KNIODB, context);
-                    }
-                }.lparams {
-                    width = matchParent
-                    height = wrapContent
-                    below(R.id.rep04)
-                }
-
-                button() {
-                    id = R.id.rep06
-                    textResource = R.string.popisbtnknidod
-                    onClick {
-                        AccountReportsHelperFacade.generateReport(AccountReportsHelperFacade.DBTypes.MYSQL
-                                , AccountReportsHelperFacade.ReportTypes.PDF
-                                , AccountReportsHelperFacade.ReportName.KNIDOD, context);
-                    }
-                }.lparams {
-                    width = matchParent
-                    height = wrapContent
-                    below(R.id.rep05)
-                }
-
-            }//report 0
-
-
-            if( mReport.equals("1")) {
-
-                button() {
-                    id = R.id.rep11
-                    textResource = R.string.popisbtndph
-                    onClick {
-                        //generating MySql PDF report with using CommandExecutorProxy and Facade
-                        callCommandExecutorProxy("lgn", AccountReportsHelperFacade.DBTypes.MYSQL
-                                , AccountReportsHelperFacade.ReportTypes.PDF
-                                , AccountReportsHelperFacade.ReportName.DPHPRZ, context)
-                    }
-                }.lparams {
-                    width = matchParent
-                    height = wrapContent
-                    below(R.id.rep00)
-                }
-
-                button() {
-                    id = R.id.rep12
-                    textResource = R.string.popisbtnfinsta
-                    onClick {
-                        //generating MySql PDF report with using CommandExecutorProxy and Facade
-                        callCommandExecutorProxy("lgn", AccountReportsHelperFacade.DBTypes.MYSQL
-                                , AccountReportsHelperFacade.ReportTypes.PDF
-                                , AccountReportsHelperFacade.ReportName.NEXTVERSION, context)
-
-                    }
-                }.lparams {
-                    width = matchParent
-                    height = wrapContent
-                    below(R.id.rep11)
-                }
-
-                button() {
-                    id = R.id.rep13
-                    textResource = R.string.popisbtndppo
-                    onClick {
-                        //generating MySql PDF report with using CommandExecutorProxy and Facade
-                        callCommandExecutorProxy("lgn", AccountReportsHelperFacade.DBTypes.MYSQL
-                                , AccountReportsHelperFacade.ReportTypes.PDF
-                                , AccountReportsHelperFacade.ReportName.NEXTVERSION, context)
-
-                    }
-                }.lparams {
-                    width = matchParent
-                    height = wrapContent
-                    below(R.id.rep12)
-                }
-
-
-            }//report 1
-
-
-            if( mReport.equals("2")) {
-
-                button() {
-                    id = R.id.rep21
-                    textResource = R.string.popisbtnhlkn
-                    onClick {
-                        AccountReportsHelperFacade.generateReport(AccountReportsHelperFacade.DBTypes.MYSQL
-                                , AccountReportsHelperFacade.ReportTypes.PDF
-                                , AccountReportsHelperFacade.ReportName.HLKNIHA, context);
-                    }
-                }.lparams {
-                    width = matchParent
-                    height = wrapContent
-                    below(R.id.rep00)
-                }
-
-                button() {
-                    id = R.id.rep22
-                    textResource = R.string.popisbtnhladok
-                    onClick {
-                        val `is` = Intent(context, DocSearchActivity::class.java)
-                        context.startActivity(`is`)
-                    }
-                }.lparams {
-                    width = matchParent
-                    height = wrapContent
-                    below(R.id.rep21)
-                }
-
-                button() {
-                    id = R.id.rep23
-                    textResource = R.string.saldocus
-                    onClick {
-                        val `is` = Intent(context, SaldoKtActivity::class.java)
-                        val extras = Bundle()
-                        extras.putInt("saltype", 0)
-                        extras.putInt("salico", 0)
-                        `is`.putExtras(extras)
-                        context.startActivity(`is`)
-                    }
-                }.lparams {
-                    width = matchParent
-                    height = wrapContent
-                    below(R.id.rep22)
-                }
-
-                button() {
-                    id = R.id.rep24
-                    textResource = R.string.saldosup
-                    onClick {
-                        val `is` = Intent(context, SaldoKtActivity::class.java)
-                        val extras = Bundle()
-                        extras.putInt("saltype", 1)
-                        extras.putInt("salico", 0)
-                        `is`.putExtras(extras)
-                        context.startActivity(`is`)
-                    }
-                }.lparams {
-                    width = matchParent
-                    height = wrapContent
-                    below(R.id.rep23)
-                }
-
-
-            }//report 2
 
             bottomNavigationView {
                 id = R.id.botnav
@@ -262,8 +273,6 @@ class AccountDoubleReportsActivityUI (val mReport: String, val prefs: SharedPref
             }.lparams {
                 width = matchParent
                 height = wrapContent
-                //gravity = Gravity.BOTTOM
-                //android:layout_gravity="bottom"
                 alignParentBottom()
             }.setOnNavigationItemSelectedListener { item ->
                 when (item.itemId) {
